@@ -877,6 +877,182 @@ const COURSES = [
   { par: 4, yds: 460, path: [[0,0],[0,265],[30,460]], fw: [195,445,32], green: { rx: 14, ry: 13, rot: 6 }, raise: 1.5, pin: [3, -3],
     bunkers: [[285,-20,10,5,0],[452,-17,7,4,0],[467,18,6,4,0]], waste: [], water: [], side: -40, elev: [[0,20],[460,55]] },
 ] },
+// ----- Island courses: ocean courses (same sea format) with a range inland behind the far land (range as on the mountain
+// courses, plus cone.p, how sharply the volcano's sides steepen toward the top), and pal.cliff / pal.sand (shore rock and
+// beach colours), seaC (sea colour), rock (shore rock tint), edge (share of flowering shrubs along the rough), and leaf
+// as { hardwood, shrub } colours.
+{ id: 'frigate-point', name: 'Frigate Point', place: 'Kohala coast, Hawaii', sub: 'Lava Course', seed: 13, mix: [0, 0], sig: 15,
+  coast: true, coves: true, flora: { palm: 0.6, hardwood: 0.4 }, treeK: 0.25, corner: 'bigHardwood', beach: 0, mounds: 1.5, wind: [6, 20], far: [58, 56, 50],
+  pal: { rough: [84, 110, 50], scrub: 'lava', straw: 'Lava rock', cliff: [50, 46, 44], sand: [64, 60, 58] }, tuft: [1.3, 1.15, 0.75], tuftOut: 3, palmetto: 0.15, edge: 0.6,
+  seaC: 0x0b4f70, rock: [0.38, 0.36, 0.36], fog: 0.00016, fogC: 0xbfd4e4,
+  range: { h: 300, near: 1500, d: 5000, hills: 30, tree: 700, cone: { d: 8000, r: 11000, h: 3000, p: 1.3, az: 0.3 } }, farPal: { forest: [96, 92, 58], forest2: [72, 66, 50], rock: [60, 52, 46] },
+  leaf: { hardwood: [[0.3, 0.46, 0.15, 3], [0.4, 0.5, 0.18, 1]], shrub: [[0.86, 0.2, 0.55, 2], [0.8, 0.12, 0.1, 1], [0.95, 0.55, 0.12, 1], [0.3, 0.46, 0.15, 1]] }, holes: [
+  { par: 4, yds: 400, path: [[0,0],[0,240],[30,400]], fw: [175,385,34], green: { rx: 13, ry: 12, rot: 8 }, pin: [2, 3],
+    bunkers: [[250,-21,9,5,0],[392,-17,6,4,0]], waste: [], water: [], sea: [[0,150,400,120]], elev: [[0,30],[400,24]] },
+  { par: 5, yds: 545, path: [[0,0],[0,280],[-35,420],[-40,545]], fw: [205,530,33], green: { rx: 12, ry: 13, rot: -8 }, pin: [-2, 3],
+    bunkers: [[290,21,10,5,0],[430,20,9,5,0],[538,17,6,4,0]], waste: [], water: [], sea: [[0,-90,560,-60,10]], elev: [[0,24],[545,18]] },
+  { par: 3, yds: 175, path: [[0,0],[5,175]], fw: null, green: { rx: 12, ry: 14, rot: 6 }, pin: [3, -2],
+    bunkers: [[170,-19,6,4,0],[190,8,3,5,0]], waste: [], water: [{ t: 'lake', s0: 25, s1: 150, d0: -70, d1: 30 }], sea: [[0,-75,210,-60]], elev: [[0,30],[175,26]] },
+  { par: 4, yds: 430, path: [[0,0],[-5,250],[15,430]], fw: [185,415,33], green: { rx: 13, ry: 12, rot: 6 }, pin: [2, -2],
+    bunkers: [[262,20,9,5,0],[423,-17,6,4,0]], waste: [[180,-34,45,10,0]], water: [], sea: [[0,260,430,240]], elev: [[0,20],[430,30]] },
+  { par: 4, yds: 365, path: [[0,0],[0,220],[55,355]], fw: [160,345,31], green: { rx: 11, ry: 12, rot: 14 }, pin: [2, 2],
+    bunkers: [[230,-20,9,5,0],[360,-17,5,4,0]], waste: [], water: [{ t: 'lake', s0: 160, s1: 250, d0: 30, d1: 120 }], sea: [[0,110,420,80]], elev: [[0,32],[365,28]] },
+  { par: 3, yds: 205, path: [[0,0],[-6,205]], fw: [165,190,24], green: { rx: 13, ry: 14, rot: -8 }, pin: [-3, 2],
+    bunkers: [[200,19,7,4,0],[222,4,3,6,0]], waste: [], water: [], sea: [[0,-260,205,-240]], elev: [[0,40],[205,30]] },
+  { par: 4, yds: 455, path: [[0,0],[5,260],[-8,455]], fw: [195,440,33], green: { rx: 14, ry: 13, rot: 0 }, pin: [3, -2],
+    bunkers: [[270,-21,10,5,0],[285,21,9,5,0],[448,-17,7,4,0]], waste: [[160,36,40,12,0]], water: [], sea: [[0,-240,455,-220]], elev: [[0,30],[455,36]] },
+  { par: 5, yds: 520, path: [[0,0],[0,265],[40,410],[45,520]], fw: [200,460,33], green: { rx: 12, ry: 13, rot: 10 }, pin: [2, -3],
+    bunkers: [[285,-21,10,5,0],[513,-17,6,4,0]], waste: [], water: [{ t: 'lake', s0: 470, s1: 492, d0: -60, d1: 60 }], sea: [[0,120,560,62,8]], elev: [[0,26],[520,22]] },
+  { par: 4, yds: 440, path: [[0,0],[0,255],[-30,440]], fw: [190,425,32], green: { rx: 14, ry: 12, rot: -6 }, pin: [-2, 3],
+    bunkers: [[265,20,10,5,0],[433,17,7,4,0]], waste: [], water: [], sea: [[0,200,440,180]], elev: [[0,24],[440,40]] },
+  { par: 4, yds: 410, path: [[0,0],[0,240],[30,410]], fw: [180,395,33], green: { rx: 13, ry: 12, rot: 8 }, pin: [2, 3],
+    bunkers: [[255,-21,9,5,0],[402,-17,6,4,0]], waste: [], water: [], sea: [[0,-80,430,-62,12]], elev: [[0,40],[410,30]] },
+  { par: 3, yds: 150, path: [[0,0],[0,150]], fw: null, green: { rx: 11, ry: 12, rot: 0 }, pin: [2, 1],
+    bunkers: [[148,-17,5,3,0],[150,17,5,3,0]], waste: [], water: [], sea: [[0,-55,170,-40],[180,-60,180,60,6]], elev: [[0,28],[150,22]] },
+  { par: 4, yds: 470, path: [[0,0],[0,270],[35,470]], fw: [195,455,33], green: { rx: 14, ry: 12, rot: 4 }, pin: [2, -2],
+    bunkers: [[285,-21,10,5,0],[462,-17,7,4,0]], waste: [[300,36,60,10,0]], water: [], sea: [[0,-200,470,-180]], elev: [[0,30],[470,24]] },
+  { par: 5, yds: 570, path: [[0,0],[-10,285],[15,450],[0,570]], fw: [205,555,33], green: { rx: 12, ry: 12, rot: 0 }, pin: [-2, -2],
+    bunkers: [[300,-20,10,5,0],[465,20,9,5,0],[562,-16,6,4,0]], waste: [], water: [], sea: [[0,220,570,200]], elev: [[0,22],[570,36]] },
+  { par: 4, yds: 340, path: [[0,0],[0,200],[-35,330]], fw: [150,320,30], green: { rx: 11, ry: 11, rot: -14 }, pin: [-2, 2],
+    bunkers: [[205,20,8,5,0],[322,17,5,4,0]], waste: [], water: [], sea: [[0,-60,360,-45,8]], elev: [[0,30],[340,26]] },
+  { par: 4, yds: 425, path: [[0,0],[0,250],[25,425]], fw: [185,410,33], green: { rx: 13, ry: 12, rot: 6 }, pin: [2, 3],
+    bunkers: [[262,-21,10,5,0],[418,-16,6,4,0]], waste: [], water: [], sea: [[0,75,450,62]], elev: [[0,26],[425,32]] },
+  { par: 3, yds: 220, path: [[0,0],[-8,220]], fw: null, green: { rx: 13, ry: 15, rot: -10 }, pin: [-3, 2],
+    bunkers: [[212,19,6,4,0],[238,8,3,6,0]], waste: [], water: [{ t: 'lake', s0: 36, s1: 185, d0: -90, d1: 35 }], sea: [[0,-95,240,-70]], elev: [[0,40],[220,34]] },
+  { par: 4, yds: 445, path: [[0,0],[8,255],[-8,445]], fw: [190,430,33], green: { rx: 14, ry: 13, rot: 0 }, pin: [3, -2],
+    bunkers: [[265,-21,10,5,0],[280,21,9,5,0],[438,-17,7,4,0]], waste: [], water: [], sea: [[0,-240,445,-220]], elev: [[0,34],[445,26]] },
+  { par: 5, yds: 555, path: [[0,0],[0,280],[40,430],[45,555]], fw: [205,540,33], green: { rx: 13, ry: 12, rot: 6 }, pin: [2, 3],
+    bunkers: [[300,-21,10,5,0],[430,-20,9,5,0],[548,-17,6,4,0]], waste: [], water: [], sea: [[0,70,580,60,12]], elev: [[0,22],[555,16]] },
+] },
+{ id: 'tern-reef', name: 'Tern Reef', place: 'Maui, Hawaii', sub: 'Beach Course', seed: 14, mix: [0, 0], sig: 15,
+  coast: true, flora: { palm: 0.65, hardwood: 0.35 }, treeK: 0.35, corner: 'bigHardwood', beach: 22, mounds: 2.5, wind: [8, 22], far: [74, 104, 50],
+  pal: { rough: [78, 112, 50], scrub: 'coral', straw: 'Sand and scrub', cliff: [86, 80, 72], sand: [232, 220, 192] }, tuft: [1.2, 1.1, 0.8], tuftOut: 3, palmetto: 0.2, edge: 0.7,
+  seaC: 0x0e6a8a, rock: [0.6, 0.58, 0.56], fog: 0.00026, fogC: 0xc4d8e8,
+  range: { h: 1300, near: 1800, d: 5000, hills: 40, tree: 1100 }, farPal: { forest: [40, 82, 38], forest2: [62, 98, 44], rock: [92, 84, 64] },
+  leaf: { hardwood: [[0.28, 0.46, 0.14, 1]], shrub: [[0.86, 0.2, 0.55, 3], [0.8, 0.12, 0.1, 1], [0.95, 0.8, 0.7, 1]] }, holes: [
+  { par: 4, yds: 390, path: [[0,0],[0,235],[-30,390]], fw: [170,375,33], green: { rx: 13, ry: 12, rot: -8 }, pin: [-2, 2],
+    bunkers: [[245,21,9,5,0],[382,-16,6,4,0]], waste: [], water: [], sea: [[0,-110,410,-90]], elev: [[0,10],[390,8]] },
+  { par: 4, yds: 425, path: [[0,0],[0,250],[30,425]], fw: [185,410,33], green: { rx: 13, ry: 12, rot: 8 }, pin: [3, 2],
+    bunkers: [[262,-21,10,5,0],[418,-17,6,4,0]], waste: [], water: [{ t: 'lake', s0: 150, s1: 250, d0: -75, d1: -24 }], sea: [[0,240,425,220]], elev: [[0,8],[425,6]] },
+  { par: 3, yds: 165, path: [[0,0],[5,165]], fw: null, green: { rx: 11, ry: 13, rot: 8 }, pin: [2, 2],
+    bunkers: [[160,-19,5,4,0],[180,-4,3,5,0]], waste: [], water: [], sea: [[0,60,200,48,20]], elev: [[0,12],[165,8]] },
+  { par: 5, yds: 560, path: [[0,0],[0,280],[-40,430],[-45,560]], fw: [205,545,33], green: { rx: 13, ry: 12, rot: -8 }, pin: [-2, -3],
+    bunkers: [[295,21,10,5,0],[440,21,9,5,0],[553,17,6,4,0]], waste: [], water: [], sea: [[0,-80,580,-60,24]], elev: [[0,6],[560,8]] },
+  { par: 4, yds: 445, path: [[0,0],[6,255],[-8,445]], fw: [190,430,33], green: { rx: 14, ry: 13, rot: 0 }, pin: [3, -2],
+    bunkers: [[268,-21,10,5,0],[285,21,9,5,0],[438,-17,7,4,0]], waste: [], water: [], sea: [[0,-250,445,-230]], elev: [[0,10],[445,14]] },
+  { par: 4, yds: 335, path: [[0,0],[-5,190],[10,335]], fw: [195,320,30], green: { rx: 11, ry: 12, rot: 8 }, pin: [2, 2],
+    bunkers: [[312,-16,5,4,0],[318,17,5,4,0]], waste: [[170,0,22,26,0]], water: [], sea: [[0,70,360,58,22]], elev: [[0,8],[335,6]] },
+  { par: 3, yds: 195, path: [[0,0],[0,195]], fw: [155,180,24], green: { rx: 12, ry: 14, rot: -6 }, pin: [-3, 2],
+    bunkers: [[190,-20,6,4,0],[192,20,6,4,0]], waste: [], water: [{ t: 'lake', s0: 40, s1: 150, d0: -50, d1: 20 }], sea: [[0,-240,195,-220]], elev: [[0,10],[195,6]] },
+  { par: 4, yds: 410, path: [[0,0],[0,240],[35,410]], fw: [180,395,33], green: { rx: 13, ry: 12, rot: 8 }, pin: [2, 3],
+    bunkers: [[255,-21,9,5,0],[402,-17,6,4,0]], waste: [], water: [], sea: [[0,90,430,72,22]], elev: [[0,6],[410,10]] },
+  { par: 5, yds: 530, path: [[0,0],[0,270],[-35,410],[-40,530]], fw: [200,515,33], green: { rx: 12, ry: 13, rot: -8 }, pin: [-2, -3],
+    bunkers: [[290,20,10,5,0],[420,-21,9,5,0],[523,18,6,4,0]], waste: [], water: [{ t: 'lake', s0: 420, s1: 480, d0: -70, d1: -20 }], sea: [[0,240,530,220]], elev: [[0,10],[530,8]] },
+  { par: 4, yds: 400, path: [[0,0],[0,240],[30,400]], fw: [175,385,34], green: { rx: 13, ry: 12, rot: 8 }, pin: [2, 3],
+    bunkers: [[250,-21,10,5,0],[392,-17,6,4,0]], waste: [], water: [], sea: [[0,-90,420,-70,22]], elev: [[0,8],[400,6]] },
+  { par: 5, yds: 545, path: [[0,0],[0,280],[35,420],[40,545]], fw: [205,470,33], green: { rx: 12, ry: 13, rot: 8 }, pin: [2, -3],
+    bunkers: [[290,-21,10,5,0],[538,18,6,4,0]], waste: [], water: [{ t: 'lake', s0: 480, s1: 510, d0: -60, d1: 60 }], sea: [[0,250,545,230]], elev: [[0,10],[545,6]] },
+  { par: 3, yds: 140, path: [[0,0],[0,140]], fw: null, green: { rx: 10, ry: 12, rot: -10 }, pin: [-2, 2],
+    bunkers: [[138,19,5,4,0],[158,-6,3,5,0]], waste: [], water: [], sea: [[0,-55,160,-42,18],[180,-60,180,60,16]], elev: [[0,12],[140,8]] },
+  { par: 4, yds: 455, path: [[0,0],[0,265],[-35,455]], fw: [195,440,33], green: { rx: 14, ry: 12, rot: -6 }, pin: [-2, 3],
+    bunkers: [[285,20,10,5,0],[448,17,7,4,0]], waste: [], water: [], sea: [[0,-200,455,-180]], elev: [[0,8],[455,12]] },
+  { par: 4, yds: 380, path: [[0,0],[0,225],[-60,370]], fw: [165,360,32], green: { rx: 12, ry: 12, rot: -14 }, pin: [-2, 2],
+    bunkers: [[232,21,9,5,0],[374,18,5,4,0]], waste: [], water: [], oaks: [[215,-34]], sea: [[0,80,400,70,22]], elev: [[0,12],[380,10]] },
+  { par: 4, yds: 440, path: [[0,0],[0,255],[30,440]], fw: [190,425,32], green: { rx: 14, ry: 12, rot: 8 }, pin: [3, -2],
+    bunkers: [[265,-20,10,5,0],[285,20,9,5,0],[432,-17,7,4,0]], waste: [], water: [], sea: [[0,-230,440,-210]], elev: [[0,10],[440,14]] },
+  { par: 3, yds: 185, path: [[0,0],[6,185]], fw: null, green: { rx: 12, ry: 14, rot: 10 }, pin: [3, -2],
+    bunkers: [[180,-19,6,4,0],[200,8,3,5,0]], waste: [], water: [], sea: [[0,48,210,42,18]], elev: [[0,12],[185,8]] },
+  { par: 4, yds: 420, path: [[0,0],[-5,240],[20,420]], fw: [180,405,33], green: { rx: 13, ry: 12, rot: 8 }, pin: [-2, 2],
+    bunkers: [[255,20,9,5,0],[412,-16,6,4,0]], waste: [], water: [], sea: [[0,-250,420,-230]], elev: [[0,10],[420,8]] },
+  { par: 5, yds: 575, path: [[0,0],[0,285],[-40,445],[-45,575]], fw: [205,560,33], green: { rx: 13, ry: 12, rot: -6 }, pin: [-2, 3],
+    bunkers: [[300,21,10,5,0],[310,-21,10,5,0],[568,17,6,4,0]], waste: [], water: [], sea: [[0,-70,600,-62,24]], elev: [[0,8],[575,6]] },
+] },
+{ id: 'petrel-cliffs', name: 'Petrel Cliffs', place: 'Kauai, Hawaii', sub: 'Cliffs Course', seed: 15, mix: [0, 0], sig: 11,
+  coast: true, coves: true, flora: { palm: 0.35, hardwood: 0.65 }, treeK: 0.6, corner: 'bigHardwood', beach: 18, mounds: 3, wind: [4, 16], far: [54, 92, 40],
+  pal: { rough: [66, 108, 46], scrub: 'jungle', straw: 'Undergrowth', cliff: [104, 78, 58], sand: [214, 190, 148] }, tuft: [1.1, 1.15, 0.8], tuftOut: 3, palmetto: 0.3, edge: 0.4,
+  seaC: 0x0c4e6e, rock: [0.75, 0.62, 0.52], fog: 0.00024, fogC: 0xbccfdc,
+  range: { h: 1200, near: 700, d: 2600, hills: 60, tree: 1e5 }, farPal: { forest: [34, 78, 34], forest2: [52, 96, 40], rock: [96, 90, 60] },
+  leaf: { hardwood: [[0.26, 0.44, 0.14, 3], [0.34, 0.5, 0.16, 1]], shrub: [[0.8, 0.12, 0.1, 2], [0.95, 0.6, 0.14, 1], [0.86, 0.2, 0.55, 1]] }, holes: [
+  { par: 4, yds: 410, path: [[0,0],[0,245],[-30,410]], fw: [180,395,33], green: { rx: 13, ry: 12, rot: -8 }, pin: [-2, 2],
+    bunkers: [[255,21,9,5,0],[402,-16,6,4,0]], waste: [], water: [], sea: [[0,260,410,240]], elev: [[0,110],[410,104]] },
+  { par: 3, yds: 190, path: [[0,0],[-6,190]], fw: null, green: { rx: 12, ry: 14, rot: -10 }, pin: [-3, 2],
+    bunkers: [[185,19,6,4,0],[207,6,3,5,0]], waste: [], water: [{ t: 'lake', s0: 42, s1: 148, d0: -80, d1: 30 }], sea: [[0,-85,215,-62]], elev: [[0,108],[190,100]] },
+  { par: 5, yds: 555, path: [[0,0],[0,280],[40,430],[45,555]], fw: [205,540,33], green: { rx: 13, ry: 12, rot: 6 }, pin: [2, 3],
+    bunkers: [[300,-21,10,5,0],[430,-20,9,5,0],[548,-17,6,4,0]], waste: [], water: [], sea: [[0,110,580,70]], elev: [[0,100],[555,120]] },
+  { par: 4, yds: 440, path: [[0,0],[5,255],[-10,440]], fw: [190,425,33], green: { rx: 14, ry: 13, rot: 0 }, pin: [3, -2],
+    bunkers: [[265,-21,10,5,0],[285,21,9,5,0],[433,-17,7,4,0]], waste: [], water: [], sea: [[0,-240,440,-220]], elev: [[0,120],[440,112]] },
+  { par: 4, yds: 375, path: [[0,0],[0,225],[45,365]], fw: [165,355,32], green: { rx: 12, ry: 12, rot: 14 }, pin: [2, 2],
+    bunkers: [[232,-20,9,5,0],[372,-18,5,4,0]], waste: [], water: [], sea: [[0,75,400,62]], elev: [[0,112],[375,104]] },
+  { par: 4, yds: 460, path: [[0,0],[0,265],[-30,460]], fw: [195,445,33], green: { rx: 14, ry: 13, rot: -6 }, pin: [-2, 3],
+    bunkers: [[285,21,10,5,0],[453,17,7,4,0]], waste: [], water: [], sea: [[0,-220,460,-200]], elev: [[0,104],[460,96]] },
+  { par: 3, yds: 160, path: [[0,0],[0,160]], fw: null, green: { rx: 11, ry: 12, rot: -6 }, pin: [-2, 2],
+    bunkers: [[156,17,5,4,0],[158,-17,5,3,0]], waste: [], water: [], sea: [[0,-62,180,-52,0],[204,-60,204,60,0]], elev: [[0,98],[160,94]] },
+  { par: 4, yds: 420, path: [[0,0],[0,250],[25,420]], fw: [185,405,33], green: { rx: 13, ry: 12, rot: 6 }, pin: [2, 3],
+    bunkers: [[262,-21,10,5,0],[413,-16,6,4,0]], waste: [], water: [], sea: [[0,240,420,220]], elev: [[0,94],[420,110]] },
+  { par: 5, yds: 535, path: [[0,0],[-10,270],[-40,415],[-45,535]], fw: [205,520,33], green: { rx: 13, ry: 12, rot: -8 }, pin: [-3, 3],
+    bunkers: [[290,20,10,5,0],[425,21,9,5,0],[528,16,6,4,0]], waste: [], water: [], sea: [[0,-90,560,-68]], elev: [[0,110],[535,100]] },
+  { par: 4, yds: 400, path: [[0,0],[0,240],[30,400]], fw: [175,385,33], green: { rx: 13, ry: 12, rot: 8 }, pin: [2, 3],
+    bunkers: [[250,-21,9,5,0],[392,-17,6,4,0]], waste: [], water: [], sea: [[0,-230,400,-210]], elev: [[0,104],[400,96]] },
+  { par: 4, yds: 435, path: [[0,0],[0,255],[-20,435]], fw: [190,420,33], green: { rx: 14, ry: 12, rot: -5 }, pin: [-3, 2],
+    bunkers: [[265,-21,10,5,0],[428,-17,7,4,0]], waste: [], water: [], sea: [[0,72,460,64]], elev: [[0,96],[435,92]] },
+  { par: 3, yds: 210, path: [[0,0],[5,210]], fw: null, green: { rx: 13, ry: 15, rot: 6 }, pin: [3, -2],
+    bunkers: [[205,-20,7,4,0],[230,4,3,7,0]], waste: [], water: [{ t: 'lake', s0: 42, s1: 166, d0: -35, d1: 95 }], sea: [[0,95,235,70]], elev: [[0,100],[210,96]] },
+  { par: 4, yds: 360, path: [[0,0],[0,215],[55,350]], fw: [160,340,31], green: { rx: 11, ry: 12, rot: 15 }, pin: [2, 2],
+    bunkers: [[225,-20,9,5,0],[354,-16,5,4,0]], waste: [], water: [], sea: [[0,72,380,62]], elev: [[0,96],[360,100]] },
+  { par: 5, yds: 570, path: [[0,0],[0,285],[40,445],[45,570]], fw: [205,555,34], green: { rx: 13, ry: 12, rot: 6 }, pin: [2, 3],
+    bunkers: [[305,-21,11,5,0],[445,22,9,5,0],[563,-17,6,4,0]], waste: [], water: [], sea: [[0,240,570,220]], elev: [[0,100],[570,110]] },
+  { par: 4, yds: 450, path: [[0,0],[5,260],[-10,450]], fw: [195,435,33], green: { rx: 14, ry: 13, rot: 0 }, pin: [-2, 3],
+    bunkers: [[275,-21,10,5,0],[290,20,9,5,0],[443,-17,7,4,0]], waste: [], water: [], sea: [[0,-90,470,-70]], elev: [[0,110],[450,104]] },
+  { par: 3, yds: 175, path: [[0,0],[-5,175]], fw: null, green: { rx: 12, ry: 14, rot: -10 }, pin: [-3, 2],
+    bunkers: [[170,19,6,4,0],[192,6,3,5,0]], waste: [], water: [], sea: [[0,-260,175,-240]], elev: [[0,112],[175,100]] },
+  { par: 4, yds: 430, path: [[0,0],[0,250],[-35,430]], fw: [185,415,33], green: { rx: 13, ry: 12, rot: -8 }, pin: [-2, 2],
+    bunkers: [[260,21,9,5,0],[422,-16,6,4,0]], waste: [], water: [], sea: [[0,82,450,72]], elev: [[0,104],[430,100]] },
+  { par: 5, yds: 545, path: [[0,0],[0,275],[35,420],[40,545]], fw: [205,530,33], green: { rx: 12, ry: 13, rot: 8 }, pin: [2, -3],
+    bunkers: [[290,-21,10,5,0],[538,18,6,4,0]], waste: [], water: [], sea: [[0,-80,570,-72,16]], elev: [[0,100],[545,96]] },
+] },
+{ id: 'tropicbird-bay', name: 'Tropicbird Bay', place: 'Leeward Islands, Caribbean', sub: 'Reef Course', seed: 16, mix: [0, 0], sig: 10,
+  coast: true, coves: true, flora: { palm: 0.8, hardwood: 0.2 }, treeK: 0.3, corner: 'bigHardwood', beach: 0, mounds: 1.5, wind: [8, 20], far: [86, 110, 56],
+  pal: { rough: [86, 116, 52], scrub: 'coral', straw: 'Sand and scrub', cliff: [200, 192, 170], sand: [242, 236, 216] }, tuft: [1.2, 1.12, 0.85], tuftOut: 3, palmetto: 0.2, edge: 0.5,
+  seaC: 0x10789a, rock: [1.35, 1.32, 1.2], fog: 0.00035, fogC: 0xc8dcea,
+  range: { h: 260, near: 1200, d: 4000, hills: 25, round: true, tree: 1e5 }, farPal: { forest: [56, 92, 44], forest2: [80, 106, 52], rock: [150, 140, 110] },
+  leaf: { hardwood: [[0.3, 0.48, 0.16, 1]], shrub: [[0.86, 0.2, 0.55, 2], [0.95, 0.5, 0.1, 1], [0.8, 0.12, 0.1, 1]] }, holes: [
+  { par: 4, yds: 380, path: [[0,0],[0,230],[-25,380]], fw: [170,365,32], green: { rx: 13, ry: 12, rot: -6 }, pin: [-2, 3],
+    bunkers: [[240,20,9,5,0],[372,-16,6,4,0]], waste: [], water: [], sea: [[0,250,380,230]], elev: [[0,16],[380,14]] },
+  { par: 4, yds: 420, path: [[0,0],[0,250],[30,420]], fw: [185,405,33], green: { rx: 13, ry: 12, rot: 8 }, pin: [2, 3],
+    bunkers: [[260,-21,10,5,0],[413,-17,6,4,0]], waste: [], water: [], sea: [[0,-70,440,-55,10]], elev: [[0,14],[420,18]] },
+  { par: 5, yds: 540, path: [[0,0],[0,275],[-40,420],[-45,540]], fw: [205,525,33], green: { rx: 12, ry: 13, rot: -8 }, pin: [-2, 3],
+    bunkers: [[290,21,10,5,0],[430,20,9,5,0],[533,17,6,4,0]], waste: [], water: [], sea: [[0,-240,540,-220]], elev: [[0,18],[540,14]] },
+  { par: 3, yds: 160, path: [[0,0],[-4,160]], fw: null, green: { rx: 11, ry: 13, rot: -10 }, pin: [-2, 2],
+    bunkers: [[155,18,5,4,0],[176,4,3,5,0]], waste: [], water: [], sea: [[0,-48,185,-36]], elev: [[0,16],[160,14]] },
+  { par: 4, yds: 445, path: [[0,0],[6,255],[-8,445]], fw: [190,430,33], green: { rx: 14, ry: 13, rot: 0 }, pin: [3, -2],
+    bunkers: [[268,-21,10,5,0],[285,21,9,5,0],[438,-17,7,4,0]], waste: [], water: [], sea: [[0,-58,470,-50]], elev: [[0,14],[445,16]] },
+  { par: 3, yds: 175, path: [[0,0],[5,175]], fw: null, green: { rx: 12, ry: 14, rot: 8 }, pin: [3, 2],
+    bunkers: [[170,-19,6,4,0],[190,8,3,5,0]], waste: [], water: [{ t: 'lake', s0: 20, s1: 148, d0: -80, d1: 25 }], sea: [[0,-85,200,-60]], elev: [[0,16],[175,14]] },
+  { par: 4, yds: 365, path: [[0,0],[0,220],[-55,355]], fw: [160,345,31], green: { rx: 11, ry: 12, rot: -14 }, pin: [-2, 2],
+    bunkers: [[230,20,9,5,0],[360,17,5,4,0]], waste: [], water: [], sea: [[0,-62,390,-50]], elev: [[0,14],[365,16]] },
+  { par: 5, yds: 525, path: [[0,0],[0,270],[35,410],[40,525]], fw: [200,510,33], green: { rx: 12, ry: 13, rot: 8 }, pin: [2, -3],
+    bunkers: [[290,-21,10,5,0],[518,18,6,4,0]], waste: [], water: [], sea: [[0,-200,525,-180]], elev: [[0,16],[525,12]] },
+  { par: 4, yds: 450, path: [[0,0],[0,260],[30,450]], fw: [195,435,33], green: { rx: 14, ry: 12, rot: 6 }, pin: [3, -2],
+    bunkers: [[280,-21,10,5,0],[443,-17,7,4,0]], waste: [[200,34,40,12,0]], water: [], sea: [[0,260,450,240]], elev: [[0,12],[450,18]] },
+  { par: 4, yds: 395, path: [[0,0],[0,235],[40,390]], fw: [175,380,32], green: { rx: 12, ry: 12, rot: 12 }, pin: [2, 3],
+    bunkers: [[245,-20,9,5,0],[386,-16,6,4,0]], waste: [], water: [], sea: [[0,66,420,56,10]], elev: [[0,16],[395,14]] },
+  { par: 3, yds: 145, path: [[0,0],[0,145]], fw: null, green: { rx: 10, ry: 12, rot: 0 }, pin: [1, 1],
+    bunkers: [[160,0,3,6,0]], waste: [], water: [{ t: 'lake', s0: 30, s1: 122, d0: -55, d1: 60 }], sea: [[0,-60,170,-36],[180,-60,180,60]], elev: [[0,16],[145,14]] },
+  { par: 4, yds: 470, path: [[0,0],[0,270],[35,470]], fw: [195,455,33], green: { rx: 14, ry: 12, rot: 4 }, pin: [2, -2],
+    bunkers: [[285,-21,10,5,0],[462,-17,7,4,0]], waste: [], water: [], sea: [[0,-220,470,-200]], elev: [[0,14],[470,20]] },
+  { par: 4, yds: 340, path: [[0,0],[0,200],[-40,330]], fw: [150,315,30], green: { rx: 11, ry: 11, rot: -14 }, pin: [-2, 2],
+    bunkers: [[205,20,8,5,0],[318,-14,5,3,0]], waste: [], water: [], sea: [[0,-58,360,-46]], elev: [[0,16],[340,14]] },
+  { par: 5, yds: 560, path: [[0,0],[0,280],[40,430],[45,560]], fw: [205,545,33], green: { rx: 13, ry: 12, rot: 6 }, pin: [2, 3],
+    bunkers: [[300,-21,10,5,0],[430,-20,9,5,0],[553,-17,6,4,0]], waste: [], water: [], sea: [[0,240,560,220]], elev: [[0,14],[560,18]] },
+  { par: 4, yds: 430, path: [[0,0],[0,250],[-35,430]], fw: [185,415,33], green: { rx: 13, ry: 12, rot: -8 }, pin: [-2, 2],
+    bunkers: [[260,21,9,5,0],[422,-16,6,4,0]], waste: [], water: [], sea: [[0,-62,460,-56,10]], elev: [[0,18],[430,14]] },
+  { par: 3, yds: 210, path: [[0,0],[0,210]], fw: [170,195,25], green: { rx: 13, ry: 15, rot: 0 }, pin: [-3, 2],
+    bunkers: [[205,20,7,4,0],[230,-4,3,7,0]], waste: [], water: [], sea: [[0,-52,235,-44]], elev: [[0,16],[210,14]] },
+  { par: 4, yds: 455, path: [[0,0],[8,260],[-8,455]], fw: [195,440,33], green: { rx: 14, ry: 13, rot: 0 }, pin: [3, -2],
+    bunkers: [[270,-21,10,5,0],[448,-17,7,4,0],[462,17,6,4,0]], waste: [], water: [], sea: [[0,250,455,230]], elev: [[0,14],[455,16]] },
+  { par: 5, yds: 550, path: [[0,0],[0,280],[-40,430],[-45,550]], fw: [205,535,33], green: { rx: 13, ry: 12, rot: -8 }, pin: [-2, -3],
+    bunkers: [[295,21,10,5,0],[440,21,9,5,0],[543,17,6,4,0]], waste: [], water: [{ t: 'lake', s0: 480, s1: 505, d0: -80, d1: -24 }], sea: [[0,-70,580,-60,10]], elev: [[0,16],[550,14]] },
+] },
 ];
 let CI = 0, COURSE = COURSES[0], HOLES = COURSE.holes, PAR_TOTAL = 0, YDS_TOTAL = 0;
 function useCourse(i) {
@@ -1259,9 +1435,16 @@ function buildHardwood(seed, big = 1, lite = false) {
   }
   return { wood: mergeGeometries(wood), leaf: mergeGeometries(leaf) };
 }
+// Flowering shrub (bougainvillea, hibiscus): a few short stems under a low mound of leaves, tinted by the course.
+function buildShrub(seed) {
+  const r = mulberry(seed), wood = [], leaf = [];
+  for (let k = 0; k < 3; k++) { const t = trunk(0.07, 0.04, 1.1, UV.bark, srgb(140, 120, 100), (r() - 0.5) * 0.6, 5, 2); t.rotateY(r() * 6.28); wood.push(t); }
+  for (let k = 0; k < 7; k++) { const a = r() * 6.28, rad = Math.sqrt(r()) * 1.1; leaf.push(...clump(Math.cos(a) * rad, 0.9 + r() * 0.8 - rad * 0.3, Math.sin(a) * rad, 1.5 + r() * 0.5, 4, UV.leaf, WHITE, r, 0.6)); }
+  return { wood: mergeGeometries(wood), leaf: mergeGeometries(leaf) };
+}
 const TREE_GEO = { pine: [buildPine(1), buildPine(2), buildPine(3)], oak: [buildOak(4), buildOak(5)], palm: [buildPalm(6), buildPalm(7)], palmetto: buildPalmetto(8), bigOak: buildOak(9, 1.55),
   cypress: [buildCypress(21), buildCypress(22), buildCypress(23)], bigCypress: buildCypress(24, 1.5),
-  fir: [buildFir(41), buildFir(42), buildFir(43)], bigFir: buildFir(44, 1.4), aspen: [buildAspen(45), buildAspen(46)], hardwood: [buildHardwood(47), buildHardwood(48)], bigHardwood: buildHardwood(49, 1.5) };
+  fir: [buildFir(41), buildFir(42), buildFir(43)], bigFir: buildFir(44, 1.4), aspen: [buildAspen(45), buildAspen(46)], hardwood: [buildHardwood(47), buildHardwood(48)], bigHardwood: buildHardwood(49, 1.5), shrub: [buildShrub(50), buildShrub(51)] };
 // low-detail stand-ins for the forest beyond the hole
 const TREE_GEO_FAR = { pine: [buildPine(1, true), buildPine(2, true), buildPine(3, true)], fir: [buildFir(41, 1, true), buildFir(42, 1, true), buildFir(43, 1, true)], aspen: [buildAspen(45, true), buildAspen(46, true)], hardwood: [buildHardwood(47, 1, true), buildHardwood(48, 1, true)] };
 const ROCK_GEO = [buildRock(31), buildRock(32), buildRock(33)];
@@ -1274,7 +1457,7 @@ const tuftMat = new THREE.MeshStandardMaterial({ vertexColors: true, side: THREE
 const TREE_DIM = { pine: { tr: 0.3, top: 14, cy: 12.2, cr: 3.0, ch: 2.8 }, oak: { tr: 0.6, top: 4.5, cy: 6.6, cr: 7.0, ch: 2.8 }, palm: { tr: 0.24, top: 8, cy: 8.3, cr: 3.0, ch: 1.2 }, bigOak: { tr: 1.0, top: 7, cy: 10.2, cr: 10.5, ch: 4.3 },
   cypress: { tr: 0.45, top: 4.5, cy: 6.3, cr: 5.5, ch: 2.0 }, bigCypress: { tr: 0.7, top: 6.5, cy: 9.4, cr: 8.2, ch: 3.0 },
   fir: { tr: 0.34, top: 18, cy: 8, cr: 3.0, ch: 7.5 }, bigFir: { tr: 0.48, top: 25, cy: 11.2, cr: 4.2, ch: 10.5 }, aspen: { tr: 0.2, top: 12, cy: 9, cr: 2.2, ch: 3.5 },
-  hardwood: { tr: 0.45, top: 8, cy: 10, cr: 5.0, ch: 3.5 }, bigHardwood: { tr: 0.68, top: 12, cy: 15, cr: 7.5, ch: 5.2 } };
+  hardwood: { tr: 0.45, top: 8, cy: 10, cr: 5.0, ch: 3.5 }, bigHardwood: { tr: 0.68, top: 12, cy: 15, cr: 7.5, ch: 5.2 }, shrub: { tr: 0.5, top: 1.6, cy: 1.2, cr: 1.6, ch: 0.9 } };
 
 // Distant ground and treeline, always present.
 const FAR_COLOR = srgb(66, 70, 40);
@@ -1348,6 +1531,19 @@ function coastScrub(kind, m, blot, fine, x, y) {
   } else if (kind === 'sea-oats') {
     const sand = smooth(0.15, 0.5, big); c[0] = lerp(122 + blot * 22, 220, sand * 0.8); c[1] = lerp(90 + blot * 16, 204, sand * 0.8); c[2] = lerp(52 + blot * 10, 166, sand * 0.8);
     if (fine > 0.55) { c[0] = lerp(c[0], 160, 0.5); c[1] = lerp(c[1], 150, 0.5); c[2] = lerp(c[2], 92, 0.5); }
+  } else if (kind === 'lava') {
+    // old black lava flows, cracked, with clumps of pale fountain grass and a few green shrubs
+    c[0] = 46 + blot * 14; c[1] = 44 + blot * 12; c[2] = 42 + blot * 10;
+    if (fine > 0.35) { c[0] = 22; c[1] = 21; c[2] = 20; } else if (big > 0.15 && fine < -0.2) { c[0] = 176; c[1] = 160; c[2] = 112; } else if (big < -0.35) { c[0] = 74; c[1] = 96; c[2] = 46; }
+  } else if (kind === 'jungle') {
+    // dense green undergrowth over red earth
+    c[0] = 52 + blot * 16; c[1] = 88 + blot * 20; c[2] = 34 + blot * 8;
+    if (fine > 0.45) { c[0] = 138; c[1] = 72; c[2] = 44; } else if (big > 0.3) { c[0] = 40; c[1] = 70; c[2] = 30; }
+  } else if (kind === 'coral') {
+    // bright coral sand with sea grape and low green scrub
+    const sand = smooth(-0.05, 0.3, big + 0.3 * blot);
+    c[0] = lerp(72 + blot * 16, 228, sand); c[1] = lerp(104 + blot * 18, 220, sand); c[2] = lerp(48 + blot * 8, 196, sand);
+    if (fine > 0.5) { c[0] = lerp(c[0], 90, 0.6); c[1] = lerp(c[1], 118, 0.6); c[2] = lerp(c[2], 56, 0.6); }
   } else if (kind === 'chaparral') {
     c[0] = 128 + blot * 30; c[1] = 122 + blot * 20; c[2] = 84 + blot * 14;
     if (big > 0.2) { c[0] = lerp(c[0], 74, 0.6); c[1] = lerp(c[1], 84, 0.6); c[2] = lerp(c[2], 52, 0.6); }
@@ -1471,10 +1667,23 @@ function buildHole(idx) {
     h += (MR.h || 900) * smooth(MR.near || 500, MR.d || 3500, rr) * dirW * shape;
     if (MR.cone) {
       const C = MR.cone, q = Math.hypot(x - hcx - Math.sin(C.az) * C.d, y - hcy - Math.cos(C.az) * C.d) / C.r;
-      if (q < 1) h += C.h * Math.pow(1 - q, 1.7) * (0.94 + 0.06 * tn(Math.atan2(y, x) * 20, q * 6));
+      if (q < 1) h += C.h * Math.pow(1 - q, C.p || 1.7) * (0.94 + 0.06 * tn(Math.atan2(y, x) * 20, q * 6));
     }
     return Math.max(h, WL + 1);
   }
+  // Island courses (coast plus a range): mountains inland behind the flat far land, green ridges and a volcano (range.cone,
+  // set inland from the hole, away from the sea). Below the flat land near the hole and under the sea off the shore.
+  function islandH(x, y) {
+    const sea = seaStraight(x, y), land = smooth(-150, -1400, sea), rr = Math.hypot(Math.max(minX - x, 0, x - maxX), Math.max(minY - y, 0, y - maxY));
+    let h = 0;
+    if (MR.round) h = 0.55 + 0.5 * tn(x * 0.018 + 13, y * 0.018 + 77) + 0.25 * tn(x * 0.045 + 41, y * 0.045 + 9);
+    else { const r1 = clamp(1 - 2.2 * Math.abs(tn(x * 0.011 + 13, y * 0.011 + 77)), 0, 1), r2 = clamp(1 - 2.2 * Math.abs(tn(x * 0.03 + 41, y * 0.03 + 9)), 0, 1); h = r1 * r1 * 0.8 + r2 * r2 * 0.35; }
+    h = (MR.h || 600) * smooth(MR.near || 900, MR.d || 3500, rr) * h + (MR.hills ?? 40) * smooth(300, 1500, rr) * (0.6 + 0.6 * tn(x * 0.03 + 31, y * 0.03 + 57));
+    // (the volcano's foot can reach past the hole, so it only starts to rise well out from the hole's ground)
+    if (MR.cone && islandC) { const q = Math.hypot(x - islandC[0], y - islandC[1]) / MR.cone.r; if (q < 1) h += smooth((MR.near || 900) * 0.5, (MR.near || 900) * 2.5, rr) * MR.cone.h * Math.pow(1 - q, MR.cone.p || 1.7) * (0.94 + 0.06 * tn(Math.atan2(y - islandC[1], x - islandC[0]) * 20, q * 6)); }
+    return lerp(WL - 6, farH - 3, smooth(-40, -260, sea)) + h * land;
+  }
+  let islandC = null;
   function evalPoint(x, y, s, d, o) {
     const ad = Math.abs(d); o.s = s; o.ad = ad;
     o.tD = Math.max(Math.abs(s) - 5.5, ad - 4.5);
@@ -1645,7 +1854,7 @@ function buildHole(idx) {
   if (HOLE.hasWater) {
     // ocean holes get a sea that runs out to the horizon, bluer and with bigger swell than a lake
     const sea = seaL.length > 0, wg = sea ? new THREE.PlaneGeometry(16000, 16000) : new THREE.PlaneGeometry(nx + 500, ny + 500);
-    const water = new Water(wg, { textureWidth: 512, textureHeight: 512, waterNormals, sunDirection: sunDir.clone(), sunColor: 0xfff2dc, waterColor: sea ? 0x0f3a56 : mtn ? 0x163a40 : 0x24525a, distortionScale: sea ? 0.6 : 0.45, fog: true, alpha: 1 });
+    const water = new Water(wg, { textureWidth: 512, textureHeight: 512, waterNormals, sunDirection: sunDir.clone(), sunColor: 0xfff2dc, waterColor: sea ? COURSE.seaC || 0x0f3a56 : mtn ? 0x163a40 : 0x24525a, distortionScale: sea ? 0.6 : 0.45, fog: true, alpha: 1 });
     water.rotation.x = -Math.PI / 2; water.position.set((minX + maxX) / 2, WL, -(minY + maxY) / 2);
     water.material.uniforms.size.value = sea ? 1.8 : 3.0;
     // the open sea mirrors less of the hazy sky than a still lake, so it stays a deep blue except at the horizon
@@ -1661,7 +1870,15 @@ function buildHole(idx) {
     outer.holes.push(new THREE.Path([new THREE.Vector2(minX + 1, minY + 1), new THREE.Vector2(minX + 1, maxY - 1), new THREE.Vector2(maxX - 1, maxY - 1), new THREE.Vector2(maxX - 1, minY + 1)]));
     const fg = new THREE.ShapeGeometry(outer); fg.rotateX(-Math.PI / 2);
     const far = new THREE.Mesh(fg, farGroundMat); far.position.y = coast ? farH - 0.1 : -0.55; far.receiveShadow = true; far.userData.sharedMat = true; holeGroup.add(far);
-  } else buildFarCoast();
+  } else {
+    buildFarCoast();
+    if (COURSE.range) {
+      // the volcano stands inland: the opposite way from the sea lines' outward normals
+      let ix = 0, iy = 0; for (const l of seaL) { ix -= l.nx; iy -= l.ny; } const il = Math.hypot(ix, iy) || 1;
+      if (MR.cone) { const a = Math.atan2(ix / il, iy / il) + (MR.cone.az || 0); islandC = [(minX + maxX) / 2 + Math.sin(a) * MR.cone.d, (minY + maxY) / 2 + Math.cos(a) * MR.cone.d]; }
+      buildFarMountains(islandH, () => farH, 250);
+    }
+  }
   if (coast) { buildRocks(rng); if (seaL.length || waterF.length) buildSurf(); }
   if (mtn) buildBoulders(rng);
   buildPinAndTee();
@@ -1673,12 +1890,15 @@ function buildHole(idx) {
   function fieldAt(Fa, x, y) { return sampleField(Fa, x, y); }
   function placeTrees(r) {
     const mkLists = () => ({ pine: [[], [], []], oak: [[], []], palm: [[], []], palmetto: [], bigOak: [], cypress: [[], [], []], bigCypress: [],
-      fir: [[], [], []], bigFir: [], aspen: [[], []], hardwood: [[], []], bigHardwood: [] });
+      fir: [[], [], []], bigFir: [], aspen: [[], []], hardwood: [[], []], bigHardwood: [], shrub: [[], []] });
     // trees out past the hole's ground go in their own meshes that cast no shadow
     const lists = mkLists(), farLists = mkLists();
-    // leaf colours for aspens and hardwoods: COURSE.leaf [[r, g, b, weight], ...] multiplies the pale leaf texture
-    const LEAF = COURSE.leaf || [[0.42, 0.6, 0.24, 1]], LW = LEAF.reduce((a, e) => a + e[3], 0);
-    const leafCol = () => { let a = r() * LW; for (const e of LEAF) if ((a -= e[3]) <= 0) { const l = 0.85 + r() * 0.3; return new THREE.Color(e[0] * l, e[1] * l, e[2] * l); } return new THREE.Color(...LEAF[0]); };
+    // leaf colours for aspens, hardwoods and shrubs: COURSE.leaf [[r, g, b, weight], ...] multiplies the pale leaf texture;
+    // it can also be { hardwood: [...], shrub: [...] } to give each kind its own colours
+    const leafCol = type => {
+      const P = Array.isArray(COURSE.leaf) ? COURSE.leaf : (COURSE.leaf && COURSE.leaf[type === 'bigHardwood' ? 'hardwood' : type]) || [[0.3, 0.44, 0.15, 1]];
+      let a = r() * P.reduce((t, e) => t + e[3], 0); for (const e of P) if ((a -= e[3]) <= 0) { const l = 0.85 + r() * 0.3; return new THREE.Color(e[0] * l, e[1] * l, e[2] * l); } return new THREE.Color(...P[0]);
+    };
     // cypress lean away from the nearest sea (inland, all one way, as if from the prevailing wind)
     const leanYaw = (x, y) => {
       let best = null, bm = -1e9; for (const l of seaL) { const m = (x - l.ax) * l.nx + (y - l.ay) * l.ny; if (m > bm) { bm = m; best = l; } }
@@ -1688,7 +1908,7 @@ function buildHole(idx) {
       const cyp = type === 'cypress' || type === 'bigCypress', L2 = far ? farLists : lists;
       const yaw = cyp ? leanYaw(x, y) : r() * 6.28, m = new THREE.Matrix4().compose(new V3(x, h, -y), new THREE.Quaternion().setFromEuler(new THREE.Euler((r() - 0.5) * 0.06, yaw, (r() - 0.5) * 0.06)), new V3(sc, sc * (0.9 + r() * 0.2), sc));
       const tint = 0.82 + r() * 0.3, c = new THREE.Color(tint * (0.95 + r() * 0.1), tint, tint * (0.9 + r() * 0.1));
-      (v === null ? L2[type] : L2[type][v]).push([m, c, type === 'aspen' || type === 'hardwood' || type === 'bigHardwood' ? leafCol() : c]);
+      (v === null ? L2[type] : L2[type][v]).push([m, c, type === 'aspen' || type === 'hardwood' || type === 'bigHardwood' || type === 'shrub' ? leafCol(type) : c]);
       if (TREE_DIM[type] && x > minX && x < maxX && y > minY && y < maxY) {
         const D = TREE_DIM[type], lo = cyp ? (type === 'bigCypress' ? 2.7 : 1.8) * sc : 0;
         const t = { id: HOLE.trees.length, x, z: -y, y0: h, tr: D.tr * sc, top: h + D.top * sc, cy: h + D.cy * sc, cr: D.cr * sc, ch: D.ch * sc, type, ox: Math.cos(yaw) * lo, oz: -Math.sin(yaw) * lo };
@@ -1724,7 +1944,9 @@ function buildHole(idx) {
       const x = minX + r() * (nx - 1), y = minY + r() * (ny - 1), c = fieldAt(F.c, x, y);
       if (c < -1 || c > 12 || fieldAt(F.wat, x, y) > -3 || fieldAt(F.t, x, y) < 6 || fieldAt(F.g, x, y) < 8 || fieldAt(F.b, x, y) < 2) continue;
       if (r() > (COURSE.palmetto ?? 0.35) || (coast && fieldAt(F.cz, x, y) > -3)) continue;
-      add('palmetto', null, x, y, sampleField(F.h, x, y), 0.8 + r() * 0.6);
+      // island courses mix flowering shrubs into the edge (COURSE.edge: their share)
+      if (COURSE.edge && r() < COURSE.edge) add('shrub', Math.floor(r() * 2), x, y, sampleField(F.h, x, y) - 0.05, 0.75 + r() * 0.5);
+      else add('palmetto', null, x, y, sampleField(F.h, x, y), 0.8 + r() * 0.6);
     }
     // outer band on the flat far ground (in the mountains, a wider band of forest up the slopes to the tree line)
     if (mtn) for (let k = 0, band = 520; k < 5000 * (COURSE.treeK || 1); k++) {
@@ -1801,12 +2023,12 @@ function buildHole(idx) {
         else if (wat > 0) { r = 40; g = 54; b = 38; }
         else if (coast && S4(Frk) < 0) {
           // cliff rock in bands, darker in the cracks
-          const hh = S4(Fh), band = 0.86 + 0.14 * Math.sin(hh * 4.2 + blot * 2.5); r = (128 + blot * 16) * band; g = (114 + blot * 12) * band; b = (96 + blot * 10) * band;
+          const hh = S4(Fh), band = 0.86 + 0.14 * Math.sin(hh * 4.2 + blot * 2.5), cc = pal.cliff || [128, 114, 96]; r = (cc[0] + blot * 16) * band; g = (cc[1] + blot * 12) * band; b = (cc[2] + blot * 10) * band;
           if (fine > 0.45) { r *= 0.72; g *= 0.72; b *= 0.74; }
         }
         else if (coast && S4(Fbc) < 0) {
           // beach sand, wet and darker at the water's edge, with bits of kelp and driftwood
-          const wet = smooth(-2.2, -0.2, wat); r = lerp(206, 150, wet) + blot * 10; g = lerp(186, 136, wet) + blot * 9; b = lerp(146, 104, wet) + blot * 7;
+          const wet = smooth(-2.2, -0.2, wat), sn = pal.sand || [206, 186, 146]; r = lerp(sn[0], sn[0] * 0.73, wet) + blot * 10; g = lerp(sn[1], sn[1] * 0.73, wet) + blot * 9; b = lerp(sn[2], sn[2] * 0.71, wet) + blot * 7;
           if (fine > 0.66 && wet > 0.2) { r = 84; g = 76; b = 52; }
         }
         else if (mtn && wat > -1.6) { const st = fine > 0.15 ? 0.7 + 0.2 * blot : 1; r = 132 * st; g = 128 * st; b = 118 * st; }   // river stones
@@ -1842,7 +2064,8 @@ function buildHole(idx) {
   // Far land on an ocean hole: four strips around the hole's own ground, each cut off along the straight shorelines, with a
   // cliff face dropping from the cut edge into the sea.
   function buildFarCoast() {
-    const E = 4500, y = farH - 0.1, yb = WL - 1, pos = [], idx = [], sp = [], sc = [], si = [], top = srgb(150, 132, 108), bot = srgb(196, 182, 150);
+    const cl = COURSE.pal.cliff, E = COURSE.range ? 12000 : 4500, y = farH - 0.1, yb = WL - 1, pos = [], idx = [], sp = [], sc = [], si = [];
+    const top = cl ? srgb(cl[0] * 0.9, cl[1] * 0.9, cl[2] * 0.9) : srgb(150, 132, 108), bot = cl ? srgb(...cl) : srgb(196, 182, 150);
     const f = (p, l) => (p[0] - l.ax) * l.nx + (p[1] - l.ay) * l.ny;
     const clip = (poly, l) => {
       const out = [];
@@ -1903,7 +2126,7 @@ function buildHole(idx) {
       else if (w > 24 && stacks < 5 && r() < 0.004) { stacks++; sc = 4 + r() * 5; sy = 1.8 + r() * 1.6; hh = WL - sc * 0.3; }
       else continue;
       E3.set((r() - 0.5) * 0.4, r() * 6.28, (r() - 0.5) * 0.4); Q.setFromEuler(E3); S.set(sc * (0.8 + r() * 0.5), sc * sy, sc * (0.8 + r() * 0.5)); P.set(x, hh, -y);
-      lists[(r() * 3) | 0].push([M4.compose(P, Q, S).clone(), new THREE.Color(tint, tint * 0.97, tint * 0.93)]);
+      const rt = COURSE.rock || [1, 0.97, 0.93]; lists[(r() * 3) | 0].push([M4.compose(P, Q, S).clone(), new THREE.Color(tint * rt[0], tint * rt[1], tint * rt[2])]);
     }
     lists.forEach((arr, i) => {
       if (!arr.length) return;
@@ -1913,8 +2136,9 @@ function buildHole(idx) {
   }
   // Far terrain on a mountain hole: one mesh of rings out to 14 km around the hole's own ground. The inner ring runs
   // along the grid edge (corners included), so the two meet exactly; each ring out is 5% farther than the last. Forest
-  // below the tree line, bare rock above it and on steep faces, snow on the high ground.
-  function buildFarMountains() {
+  // below the tree line, bare rock above it and on steep faces, snow on the high ground. An island hole uses the same
+  // mesh for the mountains inland (hFn islandH, starting off metres out past the grid edge, rising out of the flat far land).
+  function buildFarMountains(hFn = mtnH, baseFn = mtnBase, off = 0) {
     const cx = (minX + maxX) / 2, cy = (minY + maxY) / 2, hx = (maxX - minX) / 2, hy = (maxY - minY) / 2, ca = Math.atan2(hy, hx);
     const angs = []; for (let i = 0; i < 512; i++) angs.push(i / 512 * Math.PI * 2);
     for (const c of [ca, Math.PI - ca, Math.PI + ca, 2 * Math.PI - ca]) angs.push(c); angs.sort((p, q) => p - q);
@@ -1924,7 +2148,7 @@ function buildHole(idx) {
       const a = angs[i], dx = Math.cos(a), dy = Math.sin(a), t = Math.min(hx / Math.max(Math.abs(dx), 1e-9), hy / Math.max(Math.abs(dy), 1e-9));
       // the ray from the centre meets the grid edge at (ex, ey); snap to the edge so no rounding opens a crack
       let ex = cx + dx * t, ey = cy + dy * t; if (Math.abs(Math.abs(ex - cx) - hx) < 1e-6) ex = dx > 0 ? maxX : minX; else ey = dy > 0 ? maxY : minY;
-      for (let j = 0; j < NY; j++) { const k = (j * NX + i) * 3, x = ex + dx * rads[j], y = ey + dy * rads[j]; pos[k] = x; pos[k + 1] = mtnH(x, y); pos[k + 2] = -y; }
+      for (let j = 0; j < NY; j++) { const k = (j * NX + i) * 3, x = ex + dx * (off + rads[j]), y = ey + dy * (off + rads[j]); pos[k] = x; pos[k + 1] = hFn(x, y); pos[k + 2] = -y; }
     }
     for (let j = 0; j < NY - 1; j++) for (let i = 0; i < NX; i++) {
       const i1 = (i + 1) % NX, a = j * NX + i, b = j * NX + i1, c = a + NX, d = b + NX; idx.push(a, c, b, b, c, d);
@@ -1934,7 +2158,7 @@ function buildHole(idx) {
     const nrm = g.attributes.normal, col = new Float32Array(NX * NY * 3), P = COURSE.farPal || {}, fo = P.forest || [34, 52, 30], fo2 = P.forest2 || fo, rock = P.rock || [118, 116, 110], mead = P.meadow;
     const treeL = MR.tree ?? 600, snowL = MR.snow ?? 1e9;
     for (let j = 0; j < NY; j++) for (let i = 0; i < NX; i++) {
-      const k = j * NX + i, x = pos[k * 3], y = -pos[k * 3 + 2], h = pos[k * 3 + 1], rel = h - mtnBase(x, y), up = nrm.getY(k), n = tn(x * 0.006 + 3, y * 0.006 + 8), n2 = tn(x * 0.03 + 11, y * 0.03 + 5);
+      const k = j * NX + i, x = pos[k * 3], y = -pos[k * 3 + 2], h = pos[k * 3 + 1], rel = h - baseFn(x, y), up = nrm.getY(k), n = tn(x * 0.006 + 3, y * 0.006 + 8), n2 = tn(x * 0.03 + 11, y * 0.03 + 5);
       // forest, thinning to bare rock toward the tree line and on steep faces, then snow where it is high and not too steep
       const u = clamp(0.5 + n2 * 1.2, 0, 1); let c = [lerp(fo[0], fo2[0], u), lerp(fo[1], fo2[1], u), lerp(fo[2], fo2[2], u)];
       if (mead && up > 0.96 && rel < 80 && n > 0.15) c = mead.slice();
@@ -1956,7 +2180,7 @@ function buildHole(idx) {
           diffuseColor.rgb *= 0.62 + 0.55 * bl * (0.7 + 0.6 * fn);`);
     };
     const m = new THREE.Mesh(g, mat); m.receiveShadow = true; holeGroup.add(m);
-    let mx = 0; for (let k = 0; k < NX * NY; k++) mx = Math.max(mx, pos[k * 3 + 1] - mtnBase(pos[k * 3], -pos[k * 3 + 2])); HOLE.farMax = mx;
+    let mx = 0; for (let k = 0; k < NX * NY; k++) mx = Math.max(mx, pos[k * 3 + 1] - baseFn(pos[k * 3], -pos[k * 3 + 2])); HOLE.farMax = mx;
   }
   // Granite boulders in the woods and a few at the edge of the rough; the ones near play knock the ball away like a trunk.
   function buildBoulders(r) {

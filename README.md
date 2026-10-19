@@ -11,9 +11,10 @@ for less.
 
 ## The courses
 
-All twelve courses are made up. The first four are in a Florida style with pines, oaks, palms, waste areas and
-water; the next four are on the ocean, with cliffs, beaches, coves and surf; the last four are in mountain
-forest, with big elevation changes, hillsides, creeks and ranges on the horizon. Each is par 72.
+All sixteen courses are made up. The first four are in a Florida style with pines, oaks, palms, waste areas and
+water; the next four are on the ocean, with cliffs, beaches, coves and surf; the next four are in mountain
+forest, with big elevation changes, hillsides, creeks and ranges on the horizon; the last four are on tropical
+islands, with lava or coral shores, palms, flowering shrubs and mountains inland. Each is par 72.
 
 | Course | Style | Yards |
 | --- | --- | --- |
@@ -29,6 +30,10 @@ forest, with big elevation changes, hillsides, creeks and ranges on the horizon.
 | Osprey Creek, River Course | A Montana valley with a creek on most holes, lodgepole pines and a far range | 7,085 |
 | Kettle Lake, Lake Course | Tight Cascade firs, lakes, a snow-capped volcano on the horizon | 7,120 |
 | Sourwood Gap, Gap Course | Blue Ridge hardwoods in fall colour, rolling holes, a par 3 at 13 that drops about 115 feet | 7,050 |
+| Frigate Point, Lava Course | Black lava fields and cliffs, coves to carry at 3 and 16, a volcano inland | 7,120 |
+| Tern Reef, Beach Course | White sand beaches, palms and bougainvillea, lagoons, green ridges inland | 6,995 |
+| Petrel Cliffs, Cliffs Course | Red cliffs about 100 feet above the sea, jungle, sharp green ridges close by | 7,120 |
+| Tropicbird Bay, Reef Course | Low coral rock along the sea for whole holes, a par 3 to a point at 11 | 7,015 |
 
 Courses are data in the `COURSES` table near the top of the script. Each hole lists its par and yardage, a
 centreline, the green, bunkers, waste areas, water, elevation along the hole and any corner trees. Ocean holes
@@ -36,6 +41,8 @@ add `sea`, a list of straight shorelines given by two points along and across th
 width; the course settings choose the trees, the scrub colour and the wind. Mountain holes add `side`, how many
 feet the hillside climbs about 100 yards off the line of play (plus for the right, minus for the left), and `wl`,
 the water level in feet for a creek or pond up in the hills; the course's `range` sets the mountains around it.
+Island courses are ocean courses with a `range` as well, which puts mountains (and an optional volcano, `cone`)
+inland behind the far land; `pal.cliff` and `pal.sand` colour the shore rock and the beach.
 
 ## Scores
 
