@@ -60,12 +60,6 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 #shotDash .sd-big small { font-size: 14px; color: var(--dim); font-weight: 600; margin-left: 5px; }
 #shotDash .line { font-size: 13px; display: flex; justify-content: space-between; gap: 14px; }
 #shotDash .line b { font-weight: 700; text-align: right; }
-#info .spinCtl { display: flex; align-items: center; gap: 6px; pointer-events: auto; }
-#info .spinCtl b { min-width: 46px; text-align: center; }
-#info .spinCtl button { width: 20px; height: 20px; padding: 0; border-radius: 4px; border: 1px solid rgba(255,255,255,.3); background: rgba(255,255,255,.08); color: var(--ink); font: 700 14px/1 var(--body); cursor: pointer; }
-#info .spinCtl button:hover { background: rgba(255,255,255,.18); }
-#info select { pointer-events: auto; background: rgba(255,255,255,.08); color: var(--ink); border: 1px solid rgba(255,255,255,.25); border-radius: 4px; font: 600 12px var(--body); padding: 2px 4px; cursor: pointer; }
-#info select option { background: var(--panel-solid); }
 #windBox { display: flex; align-items: center; gap: 10px; border-top: 1px solid var(--line); padding-top: 8px; margin-top: 2px; }
 #windArrow { width: 30px; height: 30px; transition: transform .3s; }
 #windTxt { font-size: 13px; }
@@ -202,9 +196,7 @@ table.sc .cur { background: rgba(232,195,90,.14); }
     <div class="line"><span>Lie</span><b id="lie">Tee box</b></div>
     <div class="line"><span>Elevation</span><b id="elev" class="num">level</b></div>
     <div class="line"><span>Carry</span><b id="carryTxt" class="num">–</b></div>
-    <div class="line" id="spinLine"><span>Spin</span><span class="spinCtl"><button id="spinDn" aria-label="Less spin">−</button><b id="spinTxt">Normal</b><button id="spinUp" aria-label="More spin">+</button></span></div>
     <div class="line" id="loftLine"><span>Loft <small class="dimtxt">scroll</small></span><b id="loftTxt" class="num">31°</b></div>
-    <div class="line" id="spinModeLine"><span>Spin by</span><select id="spinMode" aria-label="How spin is set"><option value="keys">Q / E keys</option><option value="accel">Speed-up at the ball</option><option value="follow">Follow-through</option><option value="smooth">Stroke smoothness</option></select></div>
     <div class="line" id="readLine" hidden><span>Read</span><b id="readTxt" class="num"></b></div>
     <div id="windBox">
       <svg id="windArrow" viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="13.5" fill="none" stroke="rgba(255,255,255,.28)"/><path d="M15 4 L21 16 L16.5 14.5 L16.5 25 L13.5 25 L13.5 14.5 L9 16 Z" fill="#e8c35a"/></svg>
@@ -233,7 +225,7 @@ table.sc .cur { background: rgba(232,195,90,.14); }
     <div class="sm-bar"><i class="sm-mid"></i><i id="smNeedle"></i></div>
   </div>
   <div id="toast" class="panel"><div class="t1" id="toast1"></div><div class="t2" id="toast2"></div></div>
-  <div id="help">Hold the left mouse button, pull back (sets distance), push forward smoothly and straight · <kbd>←</kbd><kbd>→</kbd> aim · <kbd>↑</kbd><kbd>↓</kbd> club · <kbd>Q</kbd><kbd>E</kbd> spin · scroll loft · <kbd>V</kbd> overview · <kbd>Space</kbd> or click to speed up the ball · <kbd>Tab</kbd> scorecard</div>
+  <div id="help">Hold the left mouse button, pull back (sets distance), push forward smoothly and straight · <kbd>←</kbd><kbd>→</kbd> aim · <kbd>↑</kbd><kbd>↓</kbd> club · stop short past the ball for backspin · scroll loft · <kbd>V</kbd> overview · <kbd>Space</kbd> or click to speed up the ball · <kbd>Tab</kbd> scorecard</div>
   <div id="clubs" class="panel"></div>
   <div id="btns"><button class="btn" id="bView">Overview</button><button class="btn" id="bCard">Scorecard</button><button class="btn" id="bMenu">Menu</button></div>
 </div>
@@ -247,7 +239,7 @@ table.sc .cur { background: rgba(232,195,90,.14); }
     <div class="sub" id="courseSub"></div>
     <div class="courseRec" id="cRecord"></div>
     <div class="coursePick"><button class="btn" id="cPrev" aria-label="Previous course">‹</button><span id="cCount"></span><button class="btn" id="cNext" aria-label="Next course">›</button></div>
-    <p class="how">Hold the left mouse button, pull the mouse straight back toward you, then push it straight forward through where you started. How far back you pull sets the distance: with a normal push forward, half a backswing carries about half as far (the blue dot on the Backswing meter shows about how far back for the pin). A slow push loses distance; pulling back past full adds power you can't control. Push up and a little to the right for a draw, up and a little to the left for a fade; the more you slant it, the more it bends, until it hooks or slices. Spin is set with Q and E, or from the stroke itself: choose how in the Spin by menu. The scroll wheel adds or takes off loft. Arrow keys aim and change clubs.</p>
+    <p class="how">Hold the left mouse button, pull the mouse straight back toward you, then push it straight forward through where you started. How far back you pull sets the distance: with a normal push forward, half a backswing carries about half as far (the blue dot on the Backswing meter shows about how far back for the pin). A slow push loses distance; pulling back past full adds power you can't control. Push up and a little to the right for a draw, up and a little to the left for a fade; the more you slant it, the more it bends, until it hooks or slices. Backspin comes from your follow-through: stop short and sharp just past where you started for more backspin, or keep pushing through for a long follow-through and the ball comes off with less spin and runs. The scroll wheel adds or takes off loft. Arrow keys aim and change clubs.</p>
     <div class="actions"><button class="btn gold" id="bPlay18">Play 18 holes</button><button class="btn" id="bBoard">Leaderboard</button></div>
     <div>
       <div class="eyebrow" style="color:var(--dim);margin-bottom:8px">Or play one hole</div>
@@ -533,6 +525,186 @@ const COURSES = [
   { par: 4, yds: 440, path: [[0,0],[0,255],[-35,440]], fw: [190,425,31], green: { rx: 13, ry: 12, rot: 0 }, raise: 1.6, pin: [-2, 3],
     bunkers: [[270,18,9,5,0],[432,-17,6,4,0],[448,16,6,4,0]], waste: [], water: [], oaks: [[248,-30]], elev: [[0,0],[440,14]] },
 ] },
+// ----- Ocean courses. Same hole format, plus sea: [[s0, d0, s1, d1, beach?], ...] shorelines (see buildHole) and
+// course fields: coast, flora (tree weights), treeK (tree density), corner (corner tree type), beach (default sand width, yds),
+// mounds (height of the humps off the fairways, m), wind [min, max] mph, far (far-land colour), pal (rough tint + scrub kind),
+// tuft (fescue tint), tuftOut (how far out the fescue reaches), palmetto (share of palmettos on the edges).
+{ id: 'cormorant-head', name: 'Cormorant Head', place: 'Central California coast', sub: 'Cliffs Course', seed: 5, mix: [0.3, 0.1], sig: 15,
+  coast: true, coves: true, flora: { cypress: 0.8, pine: 0.2 }, treeK: 0.22, corner: 'bigCypress', beach: 0, wind: [4, 18], far: [100, 106, 64],
+  pal: { rough: [100, 112, 56], scrub: 'iceplant' }, tuft: [1.4, 1.15, 0.7], tuftOut: 6, palmetto: 0, holes: [
+  { par: 4, yds: 380, path: [[0,0],[0,230],[-25,380]], fw: [170,365,32], green: { rx: 13, ry: 12, rot: -6 }, pin: [-2, 3],
+    bunkers: [[240,20,9,5,0],[372,-16,6,4,0],[388,17,5,4,0]], waste: [], water: [], oaks: [[220,-32]], sea: [[0,300,380,280]], elev: [[0,52],[380,46]] },
+  { par: 5, yds: 520, path: [[0,0],[0,270],[30,400],[35,520]], fw: [200,505,32], green: { rx: 12, ry: 13, rot: 8 }, pin: [2, -3],
+    bunkers: [[285,-21,10,5,0],[430,-20,9,5,0],[512,18,6,4,0]], waste: [], water: [], sea: [[150,95,560,52]], elev: [[0,48],[520,36]] },
+  { par: 4, yds: 400, path: [[0,0],[0,230],[35,400]], fw: [175,385,32], green: { rx: 13, ry: 12, rot: 10 }, pin: [3, 2],
+    bunkers: [[250,-20,10,5,0],[392,-17,6,4,0],[410,17,5,4,0]], waste: [],
+    water: [{ t: 'lake', s0: 150, s1: 205, d0: 8, d1: 120 }], sea: [[0,75,420,45]], elev: [[0,40],[400,34]] },
+  { par: 3, yds: 120, path: [[0,0],[-4,120]], fw: null, green: { rx: 10, ry: 11, rot: -15 }, pin: [-2, 2],
+    bunkers: [[112,14,5,3,0],[126,-15,4,3,0]], waste: [], water: [], sea: [[0,-42,150,-24],[150,-60,150,60]], elev: [[0,45],[120,25]] },
+  { par: 4, yds: 445, path: [[0,0],[-8,250],[-28,445]], fw: [190,430,32], green: { rx: 14, ry: 12, rot: -5 }, pin: [-3, -3],
+    bunkers: [[265,20,10,5,0],[300,-19,6,4,0],[438,18,7,4,0]], waste: [], water: [], sea: [[0,-70,470,-42]], elev: [[0,36],[445,40]] },
+  { par: 5, yds: 540, path: [[0,0],[12,270],[5,410],[0,540]], fw: [205,525,32], green: { rx: 13, ry: 12, rot: 0 }, pin: [2, 3],
+    bunkers: [[290,-20,10,5,0],[420,22,9,5,0],[532,-17,6,4,0]], waste: [],
+    water: [{ t: 'lake', s0: 25, s1: 150, d0: -40, d1: 80 }], sea: [[0,62,560,48]], elev: [[0,25],[270,42],[540,70]] },
+  { par: 3, yds: 195, path: [[0,0],[6,195]], fw: null, green: { rx: 13, ry: 14, rot: 5 }, pin: [3, -2],
+    bunkers: [[188,-19,7,4,0],[204,18,6,4,0]], waste: [[95,0,45,22,0]], water: [], sea: [[0,-260,195,-240]], elev: [[0,30],[195,38]] },
+  { par: 4, yds: 430, path: [[0,0],[0,260],[-25,430]], fw: [180,300,32], green: { rx: 12, ry: 13, rot: -8 }, pin: [-2, 2],
+    bunkers: [[424,18,6,4,0],[440,-14,4,3,0]], waste: [],
+    water: [{ t: 'lake', s0: 330, s1: 395, d0: -110, d1: 25 }], sea: [[0,-75,460,-50]], elev: [[0,60],[300,62],[430,52]] },
+  { par: 4, yds: 470, path: [[0,0],[6,265],[-6,470]], fw: [195,455,33], green: { rx: 15, ry: 13, rot: 0 }, pin: [-3, 3],
+    bunkers: [[280,-21,10,5,0],[300,19,6,4,0],[462,-17,7,4,0]], waste: [], water: [], sea: [[0,62,495,40]], elev: [[0,62],[470,38]] },
+  { par: 4, yds: 425, path: [[0,0],[0,250],[25,425]], fw: [185,410,32], green: { rx: 13, ry: 12, rot: 6 }, pin: [2, 3],
+    bunkers: [[262,-21,10,5,0],[418,-16,6,4,0]], waste: [], water: [], sea: [[0,52,450,36]], elev: [[0,40],[425,34]] },
+  { par: 4, yds: 390, path: [[0,0],[-5,230],[20,390]], fw: [175,375,31], green: { rx: 12, ry: 12, rot: 10 }, pin: [-2, 2],
+    bunkers: [[240,20,9,5,0],[255,-20,9,5,0],[384,-16,6,4,0],[396,17,5,4,0]], waste: [], water: [], oaks: [[215,-30]], trees: 1.3,
+    sea: [[0,-320,390,-300]], elev: [[0,30],[390,50]] },
+  { par: 3, yds: 200, path: [[0,0],[0,200]], fw: [160,186,24], green: { rx: 13, ry: 14, rot: -8 }, raise: 1.6, pin: [-3, 2],
+    bunkers: [[194,-19,7,4,0],[196,19,7,4,0],[218,0,3,7,0]], waste: [], water: [], sea: [[0,240,200,260]], elev: [[0,50],[200,46]] },
+  { par: 5, yds: 560, path: [[0,0],[0,280],[-40,440],[-45,560]], fw: [200,545,33], green: { rx: 13, ry: 12, rot: -6 }, pin: [-2, 3],
+    bunkers: [[300,20,10,5,0],[430,-21,9,5,0],[553,17,6,4,0]], waste: [[470,0,6,20,0]], water: [], sea: [[250,-110,600,-55]], elev: [[0,46],[560,30]] },
+  { par: 4, yds: 330, path: [[0,0],[-10,180],[-35,330]], fw: [135,315,30], green: { rx: 11, ry: 12, rot: -12 }, pin: [-2, 2],
+    bunkers: [[205,16,9,5,0],[270,10,5,4,0],[328,18,5,4,0]], waste: [], water: [], sea: [[0,-55,350,-40]], elev: [[0,32],[330,30]] },
+  { par: 4, yds: 405, path: [[0,0],[0,230],[45,405]], fw: [175,390,32], green: { rx: 13, ry: 12, rot: 12 }, pin: [3, 2],
+    bunkers: [[245,-21,10,5,0],[398,-16,6,4,0]], waste: [], water: [], sea: [[0,62,430,40]], elev: [[0,38],[405,44]] },
+  { par: 3, yds: 215, path: [[0,0],[-10,215]], fw: null, green: { rx: 13, ry: 15, rot: -12 }, pin: [-3, 2],
+    bunkers: [[205,19,6,4,0],[232,8,3,6,0]], waste: [],
+    water: [{ t: 'lake', s0: 22, s1: 176, d0: -90, d1: 35 }], sea: [[0,-95,240,-65]], elev: [[0,55],[215,48]] },
+  { par: 4, yds: 440, path: [[0,0],[0,250],[30,440]], fw: [185,425,32], green: { rx: 14, ry: 12, rot: 8 }, pin: [3, -2],
+    bunkers: [[265,-20,10,5,0],[285,20,9,5,0],[432,-17,7,4,0]], waste: [], water: [], oaks: [[240,30]], sea: [[0,150,440,125]], elev: [[0,44],[440,30]] },
+  { par: 5, yds: 565, path: [[0,0],[-15,270],[-45,440],[-50,565]], fw: [205,550,33], green: { rx: 13, ry: 12, rot: -8 }, pin: [-3, 3],
+    bunkers: [[290,20,10,5,0],[300,-19,5,3,0],[440,22,9,5,0],[558,16,6,4,0]], waste: [], water: [], oaks: [[480,26]],
+    sea: [[0,-52,590,-46,18]], elev: [[0,18],[565,14]] },
+] },
+{ id: 'gullhaven-dunes', name: 'Gullhaven Dunes', place: 'Oregon coast', sub: 'Dunes Course', seed: 6, mix: [0.4, 0.05], sig: 15,
+  coast: true, flora: { pine: 0.55, cypress: 0.45 }, treeK: 0.12, corner: 'bigCypress', beach: 22, mounds: 6, wind: [8, 24], far: [138, 132, 90],
+  pal: { rough: [124, 122, 68], scrub: 'dune', straw: 'Dunes' }, tuft: [1.5, 1.25, 0.75], tuftOut: 14, palmetto: 0, holes: [
+  { par: 4, yds: 410, path: [[0,0],[0,240],[30,410]], fw: [175,395,34], green: { rx: 14, ry: 13, rot: 8 }, pin: [2, 3],
+    bunkers: [[250,-22,8,5,0],[402,-17,6,4,0]], waste: [[200,32,40,12,0]], water: [], sea: [[0,120,410,95]], elev: [[0,12],[410,10]] },
+  { par: 4, yds: 365, path: [[0,0],[0,215],[-70,355]], fw: [160,345,33], green: { rx: 12, ry: 12, rot: -18 }, pin: [-2, 2],
+    bunkers: [[225,22,9,5,0],[358,16,5,4,0]], waste: [[230,-32,35,14,0]], water: [], sea: [[0,-130,365,-160]], elev: [[0,14],[365,18]] },
+  { par: 3, yds: 175, path: [[0,0],[5,175]], fw: null, green: { rx: 12, ry: 14, rot: 10 }, pin: [3, 2],
+    bunkers: [[168,-19,6,4,0]], waste: [[90,0,40,20,0]], water: [], sea: [[0,70,200,52,20]], elev: [[0,16],[175,10]] },
+  { par: 5, yds: 545, path: [[0,0],[0,280],[25,420],[20,545]], fw: [205,530,33], green: { rx: 13, ry: 12, rot: 0 }, pin: [-2, 3],
+    bunkers: [[300,-21,10,5,0],[430,-20,9,5,0],[538,17,6,4,0]], waste: [[350,24,40,8,0]], water: [], sea: [[0,75,560,70,24]], elev: [[0,10],[545,8]] },
+  { par: 4, yds: 445, path: [[0,0],[8,255],[-10,445]], fw: [190,430,33], green: { rx: 14, ry: 13, rot: 0 }, pin: [3, -2],
+    bunkers: [[265,-21,10,5,0],[280,20,9,5,0],[438,-17,7,4,0]], waste: [[150,-36,50,12,0],[330,36,60,12,0]], water: [], sea: [[0,-260,445,-240]], elev: [[0,20],[445,28]] },
+  { par: 3, yds: 145, path: [[0,0],[0,145]], fw: null, green: { rx: 11, ry: 12, rot: 0 }, raise: 1.4, pin: [2, 2],
+    bunkers: [[138,-17,5,4,0],[140,17,5,4,0],[162,0,3,7,0]], waste: [[70,0,40,24,0]], water: [], sea: [[0,200,145,180]], elev: [[0,34],[145,16]] },
+  { par: 5, yds: 530, path: [[0,0],[0,260],[50,410],[60,530]], fw: [195,515,33], green: { rx: 12, ry: 13, rot: 10 }, pin: [2, -3],
+    bunkers: [[285,-21,10,5,0],[420,-18,9,5,0],[522,-17,6,4,0]], waste: [[280,32,30,12,0]], water: [], sea: [[0,95,560,60,22]], elev: [[0,12],[530,14]] },
+  { par: 4, yds: 330, path: [[0,0],[-5,180],[10,330]], fw: [205,315,30], green: { rx: 11, ry: 12, rot: 10 }, pin: [2, 2],
+    bunkers: [[322,-16,5,4,0],[326,17,5,4,0]], waste: [[150,0,25,30,0]], water: [], sea: [[0,-90,330,-70,20]], elev: [[0,14],[330,12]] },
+  { par: 4, yds: 460, path: [[0,0],[0,265],[-30,460]], fw: [195,445,34], green: { rx: 15, ry: 13, rot: -6 }, pin: [-3, 3],
+    bunkers: [[290,21,10,5,0],[450,-17,7,4,0],[466,19,6,4,0]], waste: [[230,-34,40,12,0]], water: [], sea: [[0,-160,460,-140]], elev: [[0,22],[460,12]] },
+  { par: 4, yds: 420, path: [[0,0],[-5,250],[-25,420]], fw: [185,405,33], green: { rx: 13, ry: 12, rot: -8 }, pin: [-2, 3],
+    bunkers: [[262,20,10,5,0],[412,16,6,4,0]], waste: [], water: [], sea: [[0,-80,440,-70,24]], elev: [[0,8],[420,8]] },
+  { par: 5, yds: 575, path: [[0,0],[0,290],[-30,450],[-25,575]], fw: [210,560,34], green: { rx: 13, ry: 12, rot: 0 }, pin: [2, 3],
+    bunkers: [[310,21,10,5,0],[440,20,9,5,0],[568,-17,6,4,0]], waste: [[470,0,10,24,0]], water: [], sea: [[0,-230,575,-200]], elev: [[0,10],[290,22],[575,26]] },
+  { par: 3, yds: 210, path: [[0,0],[-6,210]], fw: [170,196,26], green: { rx: 13, ry: 15, rot: -8 }, pin: [-4, 2],
+    bunkers: [[205,20,7,4,0],[230,4,3,7,0]], waste: [], water: [], sea: [[0,-62,240,-56,22]], elev: [[0,20],[210,10]] },
+  { par: 4, yds: 400, path: [[0,0],[0,230],[45,395]], fw: [170,380,32], green: { rx: 13, ry: 12, rot: 12 }, pin: [3, 2],
+    bunkers: [[245,-21,9,5,0],[388,-17,6,4,0]], waste: [[220,36,45,14,0]], water: [], oaks: [[205,30]], sea: [[0,240,400,220]], elev: [[0,16],[400,22]] },
+  { par: 4, yds: 345, path: [[0,0],[5,190],[25,345]], fw: [140,330,31], green: { rx: 11, ry: 12, rot: 12 }, pin: [2, 2],
+    bunkers: [[205,-16,8,5,0],[275,-8,5,4,0],[340,-17,5,4,0]], waste: [], water: [], sea: [[0,70,370,58,22]], elev: [[0,10],[345,8]] },
+  { par: 4, yds: 455, path: [[0,0],[0,265],[-25,455]], fw: [195,440,33], green: { rx: 14, ry: 13, rot: -6 }, pin: [-2, -3],
+    bunkers: [[285,21,10,5,0],[300,-20,8,5,0],[448,-17,7,4,0]], waste: [[160,36,50,12,0]], water: [], sea: [[0,180,455,160]], elev: [[0,18],[455,14]] },
+  { par: 3, yds: 165, path: [[0,0],[4,165]], fw: null, green: { rx: 12, ry: 13, rot: 15 }, pin: [3, 2],
+    bunkers: [[160,-19,6,4,0],[150,16,4,3,0]], waste: [[80,0,35,22,0]], water: [], sea: [[0,60,190,49,14],[212,-60,212,60,12]], elev: [[0,18],[165,9]] },
+  { par: 4, yds: 430, path: [[0,0],[0,250],[30,430]], fw: [185,415,33], green: { rx: 14, ry: 12, rot: 8 }, pin: [3, -2],
+    bunkers: [[262,-20,10,5,0],[422,-17,7,4,0]], waste: [[300,36,60,12,0]], water: [], sea: [[0,-200,430,-180]], elev: [[0,14],[430,20]] },
+  { par: 5, yds: 555, path: [[0,0],[-10,275],[-40,430],[-45,555]], fw: [205,540,34], green: { rx: 13, ry: 12, rot: -8 }, pin: [-3, 3],
+    bunkers: [[290,20,10,5,0],[430,21,9,5,0],[548,16,6,4,0]], waste: [[330,-30,40,10,0]], water: [], sea: [[0,-72,580,-70,22]], elev: [[0,12],[555,10]] },
+] },
+{ id: 'driftwood-shoals', name: 'Driftwood Shoals', place: 'South Carolina coast', sub: 'Ocean Course', seed: 7, mix: [0.2, 0.35], sig: 16,
+  coast: true, flora: { palm: 0.45, oak: 0.35, pine: 0.2 }, treeK: 0.38, corner: 'bigOak', beach: 20, mounds: 3.5, wind: [5, 18], far: [92, 100, 58],
+  pal: { rough: [96, 112, 54], scrub: 'sea-oats', straw: 'Sand and straw' }, tuft: [1.25, 1.12, 0.8], tuftOut: 4, palmetto: 0.3, holes: [
+  { par: 4, yds: 395, path: [[0,0],[0,235],[35,390]], fw: [175,380,33], green: { rx: 13, ry: 12, rot: 10 }, pin: [2, 2],
+    bunkers: [[245,21,9,5,0],[385,-17,6,4,0]], waste: [],
+    water: [{ t: 'lake', s0: 150, s1: 260, d0: -75, d1: -22 }], sea: [[0,260,395,240]], elev: [[0,6],[395,6]] },
+  { par: 5, yds: 530, path: [[0,0],[0,270],[-40,410],[-45,530]], fw: [200,515,33], green: { rx: 12, ry: 13, rot: -8 }, pin: [-2, 3],
+    bunkers: [[290,21,10,5,0],[523,17,6,4,0]], waste: [[430,24,40,8,0]],
+    water: [{ t: 'strip', side: -1, s0: 300, s1: 560, d0: 22, d1: 70 }], sea: [[0,240,530,220]], elev: [[0,5],[530,4]] },
+  { par: 4, yds: 360, path: [[0,0],[0,215],[45,350]], fw: [160,340,31], green: { rx: 11, ry: 12, rot: 15 }, pin: [2, 2],
+    bunkers: [[225,-20,9,5,0],[355,-17,5,4,0]], waste: [], water: [], sea: [[0,95,380,70,22]], elev: [[0,8],[360,10]] },
+  { par: 3, yds: 180, path: [[0,0],[0,180]], fw: null, green: { rx: 12, ry: 14, rot: -10 }, pin: [-3, 2],
+    bunkers: [[175,19,6,4,0],[198,-6,3,6,0]], waste: [],
+    water: [{ t: 'lake', s0: 30, s1: 150, d0: -45, d1: 35 }], sea: [[0,190,180,170]], elev: [[0,6],[180,4]] },
+  { par: 4, yds: 440, path: [[0,0],[-5,255],[10,440]], fw: [190,425,33], green: { rx: 14, ry: 13, rot: 0 }, pin: [-2, 3],
+    bunkers: [[268,-21,10,5,0],[432,-17,7,4,0]], waste: [[300,28,50,8,0]], water: [], sea: [[0,80,465,72,24]], elev: [[0,10],[440,8]] },
+  { par: 4, yds: 410, path: [[0,0],[0,240],[-45,405]], fw: [180,390,32], green: { rx: 13, ry: 12, rot: -10 }, pin: [-2, 2],
+    bunkers: [[255,20,9,5,0],[400,16,6,4,0]], waste: [], water: [], oaks: [[225,-30]], trees: 1.3, sea: [[0,-260,410,-240]], elev: [[0,4],[410,6]] },
+  { par: 5, yds: 560, path: [[0,0],[0,280],[30,430],[25,560]], fw: [200,545,33], green: { rx: 13, ry: 12, rot: 5 }, pin: [2, -3],
+    bunkers: [[300,-21,10,5,0],[553,-17,6,4,0]], waste: [],
+    water: [{ t: 'lake', s0: 440, s1: 470, d0: -70, d1: 70 }], sea: [[0,210,560,190]], elev: [[0,4],[560,6]] },
+  { par: 3, yds: 150, path: [[0,0],[3,150]], fw: null, green: { rx: 11, ry: 13, rot: 12 }, pin: [2, 2],
+    bunkers: [[145,-18,5,4,0],[168,-4,3,6,0]], waste: [], water: [], sea: [[0,58,180,50,16],[197,-60,197,60,12]], elev: [[0,10],[150,6]] },
+  { par: 4, yds: 455, path: [[0,0],[0,265],[-25,455]], fw: [195,440,33], green: { rx: 14, ry: 13, rot: -6 }, pin: [-3, 3],
+    bunkers: [[285,21,10,5,0],[448,-17,7,4,0]], waste: [],
+    water: [{ t: 'strip', side: -1, s0: 200, s1: 470, d0: 24, d1: 75 }], sea: [[0,230,455,210]], elev: [[0,6],[455,4]] },
+  { par: 4, yds: 425, path: [[0,0],[0,250],[-20,425]], fw: [185,410,33], green: { rx: 13, ry: 12, rot: -6 }, pin: [-2, 3],
+    bunkers: [[262,21,10,5,0],[418,16,6,4,0]], waste: [[300,-27,50,8,0]], water: [], sea: [[0,-78,450,-70,22]], elev: [[0,8],[425,6]] },
+  { par: 5, yds: 540, path: [[0,0],[0,275],[40,420],[45,540]], fw: [200,525,33], green: { rx: 12, ry: 13, rot: 8 }, pin: [2, -3],
+    bunkers: [[290,-21,10,5,0],[430,-20,9,5,0],[533,-17,6,4,0]], waste: [],
+    water: [{ t: 'strip', side: 1, s0: 380, s1: 560, d0: 20, d1: 70 }], sea: [[0,-240,540,-220]], elev: [[0,4],[540,6]] },
+  { par: 4, yds: 385, path: [[0,0],[5,230],[-15,385]], fw: [170,370,32], green: { rx: 13, ry: 12, rot: 0 }, pin: [2, 2],
+    bunkers: [[240,-20,9,5,0],[255,21,9,5,0],[378,-16,6,4,0]], waste: [], water: [], oaks: [[210,32]], sea: [[0,220,385,200]], elev: [[0,6],[385,8]] },
+  { par: 3, yds: 205, path: [[0,0],[5,205]], fw: [165,190,25], green: { rx: 13, ry: 14, rot: 6 }, pin: [3, -2],
+    bunkers: [[200,-19,7,4,0],[225,4,3,6,0]], waste: [], water: [], sea: [[0,64,230,58,22]], elev: [[0,12],[205,8]] },
+  { par: 4, yds: 470, path: [[0,0],[0,270],[25,470]], fw: [195,455,33], green: { rx: 15, ry: 13, rot: 0 }, pin: [2, 3],
+    bunkers: [[290,-21,10,5,0],[462,18,7,4,0]], waste: [[320,26,60,8,0]], water: [], sea: [[0,90,495,80,24]], elev: [[0,8],[470,8]] },
+  { par: 4, yds: 325, path: [[0,0],[-8,180],[12,320]], fw: [140,305,30], green: { rx: 10, ry: 12, rot: 15 }, pin: [2, 2],
+    bunkers: [[200,-15,8,5,0],[318,-17,5,4,0]], waste: [],
+    water: [{ t: 'strip', side: 1, s0: 170, s1: 345, d0: 17, d1: 60 }], sea: [[0,-220,325,-200]], elev: [[0,4],[325,4]] },
+  { par: 5, yds: 560, path: [[0,0],[0,280],[-40,440],[-50,560]], fw: [205,545,33], green: { rx: 13, ry: 12, rot: -8 }, pin: [-3, 3],
+    bunkers: [[300,21,10,5,0],[440,20,9,5,0],[553,16,6,4,0]], waste: [], water: [], sea: [[0,-82,590,-78,24]], elev: [[0,6],[560,6]] },
+  { par: 3, yds: 195, path: [[0,0],[-6,195]], fw: null, green: { rx: 12, ry: 15, rot: -12 }, pin: [-3, 2],
+    bunkers: [[190,21,6,4,0],[212,6,3,6,0]], waste: [],
+    water: [{ t: 'lake', s0: 20, s1: 172, d0: -60, d1: 30 }], sea: [[0,-70,220,-60,18],[238,-60,238,60,14]], elev: [[0,8],[195,6]] },
+  { par: 4, yds: 465, path: [[0,0],[0,265],[-30,465]], fw: [195,450,33], green: { rx: 14, ry: 13, rot: -6 }, pin: [-2, 3],
+    bunkers: [[285,21,10,5,0],[458,17,7,4,0]], waste: [],
+    water: [{ t: 'strip', side: -1, s0: 300, s1: 490, d0: 22, d1: 70 }], sea: [[0,250,465,230]], elev: [[0,6],[465,6]] },
+] },
+{ id: 'kestrel-bluffs', name: 'Kestrel Bluffs', place: 'Southern California coast', sub: 'Canyon Course', seed: 8, mix: [0.5, 0.1], sig: 15,
+  coast: true, coves: true, flora: { pine: 0.5, palm: 0.25, cypress: 0.25 }, treeK: 0.3, corner: 'bigCypress', beach: 16, mounds: 3, wind: [3, 14], far: [118, 114, 78],
+  pal: { rough: [110, 112, 64], scrub: 'chaparral' }, tuft: [1.35, 1.2, 0.8], tuftOut: 5, palmetto: 0, holes: [
+  { par: 4, yds: 400, path: [[0,0],[0,240],[30,400]], fw: [175,385,33], green: { rx: 13, ry: 12, rot: 8 }, pin: [2, 3],
+    bunkers: [[250,-21,9,5,0],[392,-17,6,4,0],[408,18,5,4,0]], waste: [[200,36,45,12,0]], water: [], sea: [[0,-220,400,-200]], elev: [[0,96],[400,92]] },
+  { par: 4, yds: 435, path: [[0,0],[0,255],[-20,435]], fw: [190,420,33], green: { rx: 14, ry: 12, rot: -5 }, pin: [-3, 2],
+    bunkers: [[265,-21,10,5,0],[428,-17,7,4,0]], waste: [], water: [], sea: [[0,72,460,64,16]], elev: [[0,98],[435,94]] },
+  { par: 3, yds: 185, path: [[0,0],[4,185]], fw: null, green: { rx: 12, ry: 14, rot: 6 }, pin: [3, -2],
+    bunkers: [[180,-19,6,4,0],[200,17,5,4,0]], waste: [[95,0,50,25,0]], water: [], sea: [[0,-200,185,-190]], elev: [[0,90],[185,88]] },
+  { par: 5, yds: 555, path: [[0,0],[0,280],[45,420],[50,555]], fw: [205,540,33], green: { rx: 13, ry: 12, rot: 6 }, pin: [2, 3],
+    bunkers: [[300,-21,10,5,0],[430,-20,9,5,0],[548,-17,6,4,0]], waste: [[350,0,12,26,0]], water: [], sea: [[0,110,555,95,16]], elev: [[0,94],[555,90]] },
+  { par: 4, yds: 360, path: [[0,0],[0,215],[55,350]], fw: [160,340,31], green: { rx: 11, ry: 12, rot: 15 }, pin: [2, 2],
+    bunkers: [[225,-20,9,5,0],[354,-16,5,4,0]], waste: [], water: [], sea: [[0,72,380,62,14]], elev: [[0,92],[360,90]] },
+  { par: 3, yds: 135, path: [[0,0],[-4,135]], fw: null, green: { rx: 10, ry: 12, rot: -12 }, pin: [-2, 2],
+    bunkers: [[128,15,5,3,0],[150,6,3,5,0]], waste: [], water: [], sea: [[0,-58,160,-55,12],[200,-60,200,60,12]], elev: [[0,96],[135,90]] },
+  { par: 4, yds: 450, path: [[0,0],[5,260],[-10,450]], fw: [195,435,33], green: { rx: 14, ry: 13, rot: 0 }, pin: [-2, 3],
+    bunkers: [[275,-21,10,5,0],[290,20,9,5,0],[443,-17,7,4,0]], waste: [[180,-36,50,12,0]], water: [], sea: [[0,240,450,220]], elev: [[0,88],[450,96]] },
+  { par: 5, yds: 525, path: [[0,0],[0,270],[-35,410],[-40,525]], fw: [195,510,32], green: { rx: 12, ry: 13, rot: -8 }, pin: [-2, -3],
+    bunkers: [[285,20,10,5,0],[518,17,6,4,0]], waste: [[420,0,10,26,0]], water: [], sea: [[0,-90,550,-66,16]], elev: [[0,94],[525,92]] },
+  { par: 4, yds: 465, path: [[0,0],[0,265],[25,465]], fw: [195,450,33], green: { rx: 15, ry: 13, rot: 4 }, pin: [3, -3],
+    bunkers: [[285,-21,10,5,0],[458,-19,7,4,0],[472,18,6,4,0]], waste: [], water: [], sea: [[0,-230,465,-210]], elev: [[0,96],[465,98]] },
+  { par: 4, yds: 410, path: [[0,0],[0,240],[-30,410]], fw: [180,395,33], green: { rx: 13, ry: 12, rot: -8 }, pin: [-2, 2],
+    bunkers: [[255,21,9,5,0],[402,-16,6,4,0]], waste: [], water: [], sea: [[0,-110,430,-78,16]], elev: [[0,98],[410,90]] },
+  { par: 3, yds: 215, path: [[0,0],[0,215]], fw: [175,200,25], green: { rx: 13, ry: 15, rot: 0 }, pin: [-3, 2],
+    bunkers: [[210,-20,7,4,0],[236,-4,3,7,0]], waste: [], water: [], sea: [[0,62,240,56,14]], elev: [[0,92],[215,90]] },
+  { par: 4, yds: 340, path: [[0,0],[-5,190],[10,340]], fw: [200,325,30], green: { rx: 11, ry: 12, rot: 8 }, pin: [2, 2],
+    bunkers: [[318,-16,5,4,0],[322,17,5,4,0]], waste: [[170,0,22,28,0]], water: [], sea: [[0,-230,340,-210]], elev: [[0,90],[340,94]] },
+  { par: 5, yds: 570, path: [[0,0],[0,285],[40,445],[45,570]], fw: [205,555,34], green: { rx: 13, ry: 12, rot: 6 }, pin: [2, 3],
+    bunkers: [[305,-21,11,5,0],[445,22,9,5,0],[563,-17,6,4,0]], waste: [[380,-32,40,10,0]], water: [], oaks: [[260,30]], sea: [[0,240,570,220]], elev: [[0,96],[570,92]] },
+  { par: 4, yds: 420, path: [[0,0],[0,250],[25,420]], fw: [185,405,33], green: { rx: 13, ry: 12, rot: 6 }, pin: [2, 3],
+    bunkers: [[262,-21,10,5,0],[413,-16,6,4,0]], waste: [], water: [], sea: [[0,78,445,64,16]], elev: [[0,92],[420,90]] },
+  { par: 4, yds: 445, path: [[0,0],[8,255],[-8,445]], fw: [190,430,33], green: { rx: 14, ry: 13, rot: 0 }, pin: [3, -2],
+    bunkers: [[265,-21,10,5,0],[280,21,9,5,0],[438,-17,7,4,0]], waste: [[150,-36,40,12,0]], water: [], sea: [[0,-260,445,-240]], elev: [[0,90],[445,96]] },
+  { par: 3, yds: 160, path: [[0,0],[-6,160]], fw: null, green: { rx: 11, ry: 13, rot: -10 }, pin: [-2, 2],
+    bunkers: [[156,18,5,4,0],[176,6,3,5,0]], waste: [],
+    water: [{ t: 'lake', s0: 30, s1: 115, d0: -80, d1: 22 }], sea: [[0,-90,190,-58,12],[212,-60,212,60,10]], elev: [[0,96],[160,92]] },
+  { par: 4, yds: 440, path: [[0,0],[0,250],[30,440]], fw: [185,425,32], green: { rx: 14, ry: 12, rot: 8 }, pin: [3, -2],
+    bunkers: [[265,-20,10,5,0],[285,20,9,5,0],[432,-17,7,4,0]], waste: [[200,-36,40,12,0]], water: [], sea: [[0,-240,440,-220]], elev: [[0,94],[440,90]] },
+  { par: 5, yds: 545, path: [[0,0],[-10,270],[-40,425],[-45,545]], fw: [205,530,33], green: { rx: 13, ry: 12, rot: -8 }, pin: [-3, 3],
+    bunkers: [[290,20,10,5,0],[430,21,9,5,0],[538,16,6,4,0]], waste: [[360,-30,30,10,0]], water: [], sea: [[0,-80,570,-72,16]], elev: [[0,96],[545,92]] },
+] },
 ];
 let CI = 0, COURSE = COURSES[0], HOLES = COURSE.holes, PAR_TOTAL = 0, YDS_TOTAL = 0;
 function useCourse(i) {
@@ -546,7 +718,7 @@ function useCourse(i) {
 // soft turf and the push comes from the front of the hole it makes, so backspin survives the first bounce), plow = pace lost digging in (grows with how hard the ball comes down), bite = how much leftover spin the grass
 // lets act once the ball settles (full on a green, little in rough), roll = rolling deceleration (m/s²),
 // drag = extra rolling resistance that grows with speed (long grass), lv/ls = speed and spin kept when hitting from this lie.
-const T_STRAW = 0, T_ROUGH = 1, T_CUT = 2, T_FAIR = 3, T_FRINGE = 4, T_GREEN = 5, T_SAND = 6, T_WATER = 7, T_TEE = 8, T_WASTE = 9;
+const T_STRAW = 0, T_ROUGH = 1, T_CUT = 2, T_FAIR = 3, T_FRINGE = 4, T_GREEN = 5, T_SAND = 6, T_WATER = 7, T_TEE = 8, T_WASTE = 9, T_BEACH = 10, T_ROCK = 11;
 // Green and fairway are fitted to measured rollouts (green rolls 13 on the stimpmeter; a drive skips about 4 times, first hop
 // about 1.4 m high, and rolls about 20 yards): full irons with no backspin run about 11% of carry (4 iron) down to 4.5%
 // (wedge), normal spin about half that, and bump-and-run chips run 1:4.5 (5 iron) to 1:1.25 (wedge).
@@ -561,6 +733,8 @@ const SURF = [
   { name: 'Water',      e: 0.00, mu: 0, tq: 0, plow: 0, bite: 0, drag: 0, roll: 9.0, lv: 1.00, ls: 1.00 },
   { name: 'Tee box',    e: 0.32, mu: 0.35, tq: 0.6, plow: 0.06, bite: 0.8, drag: 0.12, roll: 0.9, lv: 1.00, ls: 1.00 },
   { name: 'Waste area', e: 0.12, mu: 0.6, tq: 0.5, plow: 0.22, bite: 0.2, drag: 0.6, roll: 4.0, lv: 0.88, ls: 0.70 },
+  { name: 'Beach',      e: 0.06, mu: 0.75, tq: 0.35, plow: 0.35, bite: 0.05, drag: 1.6, roll: 5.0, lv: 0.82, ls: 0.70 },
+  { name: 'Rocks',      e: 0.45, mu: 0.3, tq: 0.4, plow: 0.03, bite: 0.1, drag: 0.1, roll: 1.4, lv: 0.80, ls: 0.60 },
 ];
 
 // Clubs: ball speed m/s, launch °, backspin rpm, cf = how much a crooked stroke matters.
@@ -821,19 +995,83 @@ function buildTuft() {
   g.computeVertexNormals(); const n = g.attributes.normal; for (let i = 0; i < n.count; i++) n.setXYZ(i, 0, 1, 0);
   return g;
 }
-const TREE_GEO = { pine: [buildPine(1), buildPine(2), buildPine(3)], oak: [buildOak(4), buildOak(5)], palm: [buildPalm(6), buildPalm(7)], palmetto: buildPalmetto(8), bigOak: buildOak(9, 1.55) };
+// Coastal cypress: a short trunk leaning downwind, limbs reaching out the same way, and the foliage in flat dark pads.
+// The lean is local +x; on the coast it is turned away from the sea.
+function buildCypress(seed, big = 1) {
+  const r = mulberry(seed), H = (4.2 + r() * 1.2) * big, lean = (1.6 + r() * 0.8) * big;
+  const parts = [trunk(0.5 * big, 0.3 * big, H, UV.bark, srgb(150, 135, 125), lean)];
+  const pads = [];
+  for (let k = 0; k < 4; k++) {
+    const a = (r() - 0.5) * 2.4, len = (3 + r() * 2.5) * big, y0 = H * (0.55 + r() * 0.4);
+    const b = new THREE.CylinderGeometry(0.1 * big, 0.22 * big, len, 6); b.translate(0, len / 2, 0); b.rotateZ(-1.15 - r() * 0.3); b.rotateY(a); b.translate(lean * (y0 / H) ** 2, y0, 0);
+    remapUV(b, UV.bark); parts.push(paint(b, srgb(140, 125, 115)));
+    const tip = new V3(0, len, 0).applyAxisAngle(new V3(0, 0, 1), -1.15).applyAxisAngle(new V3(0, 1, 0), a);
+    pads.push([lean * (y0 / H) ** 2 + tip.x, y0 + tip.y + 0.6 * big, tip.z]);
+  }
+  pads.push([lean, H + 0.8 * big, 0], [lean * 0.4, H * 0.8 + 1.2 * big, (r() - 0.5) * 2 * big]);
+  for (const [cx, cy, cz] of pads) for (let t = 0; t < 2; t++) {
+    const px = cx + (r() - 0.5) * 1.6 * big, pz = cz + (r() - 0.5) * 1.6 * big, py = cy + (r() - 0.5) * 0.6 * big, sz = (3.2 + r() * 1.4) * big;
+    for (const g of clump(px, py, pz, sz, 7, UV.pine, srgb(150, 175, 150), r, 0.45)) { g.translate(-px, -py, -pz); g.scale(1.25, 0.42, 1.25); g.translate(px, py, pz); parts.push(g); }
+  }
+  return mergeGeometries(parts);
+}
+// Rocks for cliff faces, the foot of the cliffs and the surf: a lumpy sphere, squashed, with grey-brown speckle.
+function buildRock(seed) {
+  const r = mulberry(seed), g = new THREE.IcosahedronGeometry(1, 2), p = g.attributes.position, o = r() * 100;
+  // a few flat cuts give it broken, blocky faces instead of a dome
+  const cuts = []; for (let k = 0; k < 6; k++) cuts.push([new V3(r() - 0.5, r() * 0.8 - 0.2, r() - 0.5).normalize(), 0.55 + r() * 0.3]);
+  for (let i = 0; i < p.count; i++) {
+    const v = new V3(p.getX(i), p.getY(i), p.getZ(i)), k = 1 + 0.32 * tn(v.x * 1.6 + o, v.z * 1.6 + v.y * 1.3 + o) + 0.16 * tn(v.x * 5 + o, v.y * 5 - o);
+    v.multiplyScalar(k);
+    for (const [n, off] of cuts) { const q = v.dot(n); if (q > off) v.addScaledVector(n, off - q); }
+    p.setXYZ(i, v.x * 1.1, v.y * 0.75, v.z);
+  }
+  g.computeVertexNormals();
+  return paint(g, srgb(118, 108, 96), (x, y, z) => 0.7 + 0.25 * clamp(y + 0.5, 0, 1) + 0.12 * tn(x * 5 + o, z * 5 + y * 3));
+}
+const TREE_GEO = { pine: [buildPine(1), buildPine(2), buildPine(3)], oak: [buildOak(4), buildOak(5)], palm: [buildPalm(6), buildPalm(7)], palmetto: buildPalmetto(8), bigOak: buildOak(9, 1.55),
+  cypress: [buildCypress(21), buildCypress(22), buildCypress(23)], bigCypress: buildCypress(24, 1.5) };
+const ROCK_GEO = [buildRock(31), buildRock(32), buildRock(33)];
+const rockMat = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.95, metalness: 0, flatShading: true });
 const TUFT_GEO = buildTuft();
 const foliageMat = new THREE.MeshStandardMaterial({ map: atlas, vertexColors: true, alphaTest: 0.5, side: THREE.DoubleSide, roughness: 0.9, metalness: 0 });
 const foliageDepth = new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking, map: atlas, alphaTest: 0.5, side: THREE.DoubleSide });
 const tuftMat = new THREE.MeshStandardMaterial({ vertexColors: true, side: THREE.DoubleSide, roughness: 1 });
 // tree collision sizes per type (meters, before instance scale)
-const TREE_DIM = { pine: { tr: 0.3, top: 14, cy: 12.2, cr: 3.0, ch: 2.8 }, oak: { tr: 0.6, top: 4.5, cy: 6.6, cr: 7.0, ch: 2.8 }, palm: { tr: 0.24, top: 8, cy: 8.3, cr: 3.0, ch: 1.2 }, bigOak: { tr: 1.0, top: 7, cy: 10.2, cr: 10.5, ch: 4.3 } };
+const TREE_DIM = { pine: { tr: 0.3, top: 14, cy: 12.2, cr: 3.0, ch: 2.8 }, oak: { tr: 0.6, top: 4.5, cy: 6.6, cr: 7.0, ch: 2.8 }, palm: { tr: 0.24, top: 8, cy: 8.3, cr: 3.0, ch: 1.2 }, bigOak: { tr: 1.0, top: 7, cy: 10.2, cr: 10.5, ch: 4.3 },
+  cypress: { tr: 0.45, top: 4.5, cy: 6.3, cr: 5.5, ch: 2.0 }, bigCypress: { tr: 0.7, top: 6.5, cy: 9.4, cr: 8.2, ch: 3.0 } };
 
 // Distant ground and treeline, always present.
-const farGroundMat = new THREE.MeshStandardMaterial({ color: srgb(66, 70, 40), roughness: 1 });
+const FAR_COLOR = srgb(66, 70, 40);
+const farGroundMat = new THREE.MeshStandardMaterial({ color: FAR_COLOR.clone(), roughness: 1 });
 farGroundMat.userData = {};
-const treeline = new THREE.Mesh(new THREE.CylinderGeometry(950, 950, 46, 96, 1, true), new THREE.MeshBasicMaterial({ map: treelineTex, transparent: true, alphaTest: 0.4, side: THREE.BackSide, fog: true }));
+const TREELINE_FULL = new THREE.CylinderGeometry(950, 950, 46, 96, 1, true);
+const treeline = new THREE.Mesh(TREELINE_FULL, new THREE.MeshBasicMaterial({ map: treelineTex, transparent: true, alphaTest: 0.4, side: THREE.BackSide, fog: true }));
 treeline.position.y = 21; scene.add(treeline);
+// the cliff edge of the far land along the sea, and the surf
+const skirtMat = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.95, side: THREE.DoubleSide });
+const surfMat = new THREE.ShaderMaterial({
+  uniforms: THREE.UniformsUtils.merge([THREE.UniformsLib.fog, { time: { value: 0 }, detailMap: { value: null } }]),
+  vertexShader: `attribute float sm; varying float vM; varying vec2 vXZ;
+    #include <fog_pars_vertex>
+    void main() { vM = sm; vXZ = position.xz; vec4 mvPosition = modelViewMatrix * vec4(position, 1.0); gl_Position = projectionMatrix * mvPosition;
+    #include <fog_vertex>
+    }`,
+  fragmentShader: `uniform float time; uniform sampler2D detailMap; varying float vM; varying vec2 vXZ;
+    #include <fog_pars_fragment>
+    void main() {
+      float n = texture2D(detailMap, vXZ * 0.045).g, f = texture2D(detailMap, vXZ * 0.21 + vec2(time * 0.01)).r;
+      float w = fract((vM + time * 1.4) / 9.0 + 0.5 * n);
+      float band = smoothstep(0.0, 0.06, w) * (1.0 - smoothstep(0.06, 0.4, w)) * (1.0 - smoothstep(5.0, 15.0, vM));
+      float edge = (1.0 - smoothstep(0.3, 2.6 + 1.2 * sin(time * 0.9 + vXZ.x * 0.05), vM)) * smoothstep(-1.5, 0.2, vM);
+      float a = max(edge * 0.9, band * 0.75) * smoothstep(0.25, 0.65, f + 0.35 * edge);
+      if (a < 0.02) discard;
+      gl_FragColor = vec4(vec3(0.94, 0.97, 0.98), a);
+      #include <fog_fragment>
+    }`,
+  transparent: true, depthWrite: false, fog: true, side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: -4, polygonOffsetUnits: -4,
+});
+surfMat.uniforms.detailMap.value = detailTex;
 
 // ---------------------------------------------------------------------------
 // Hole builder
@@ -859,6 +1097,31 @@ function disposeHole() {
     if (o.material && !o.userData.sharedMat) { (Array.isArray(o.material) ? o.material : [o.material]).forEach(m => { if (m.map && m.map !== atlas) m.map.dispose(); m.dispose(); }); }
   });
   scene.remove(holeGroup); holeGroup = new THREE.Group(); scene.add(holeGroup);
+}
+
+// Ground beyond the rough on the ocean courses. m runs 0 at the edge of the rough to 1 a few yards out.
+//   iceplant: sage scrub and gold grass with mats of ice plant, some in pink flower; dune: open sand with marram grass;
+//   sea-oats: pale dune sand and sea oats near the beach, pine straw under the trees; chaparral: dusty sage, tan grass, dark brush.
+const _c3 = [0, 0, 0];
+function coastScrub(kind, m, blot, fine, x, y) {
+  const rr = [74, 98, 44], c = _c3, big = tn(x * 0.11 + 70, y * 0.11 + 20);
+  if (kind === 'dune') {
+    const sand = smooth(-0.1, 0.35, big + 0.3 * blot);
+    c[0] = lerp(140 + blot * 18, 214 + blot * 10, sand); c[1] = lerp(140 + blot * 14, 198 + blot * 10, sand); c[2] = lerp(88 + blot * 8, 158 + blot * 8, sand);
+    if (sand > 0.5 && fine > 0.5) { c[0] = 150; c[1] = 148; c[2] = 96; }
+  } else if (kind === 'sea-oats') {
+    const sand = smooth(0.15, 0.5, big); c[0] = lerp(122 + blot * 22, 220, sand * 0.8); c[1] = lerp(90 + blot * 16, 204, sand * 0.8); c[2] = lerp(52 + blot * 10, 166, sand * 0.8);
+    if (fine > 0.55) { c[0] = lerp(c[0], 160, 0.5); c[1] = lerp(c[1], 150, 0.5); c[2] = lerp(c[2], 92, 0.5); }
+  } else if (kind === 'chaparral') {
+    c[0] = 128 + blot * 30; c[1] = 122 + blot * 20; c[2] = 84 + blot * 14;
+    if (big > 0.2) { c[0] = lerp(c[0], 74, 0.6); c[1] = lerp(c[1], 84, 0.6); c[2] = lerp(c[2], 52, 0.6); }
+    if (fine > 0.6) { c[0] *= 0.8; c[1] *= 0.82; c[2] *= 0.8; }
+  } else {
+    c[0] = 104 + blot * 34; c[1] = 112 + blot * 22; c[2] = 64 + blot * 12;
+    if (big > 0.25) { const pink = fine > 0.58 && blot < 0.1; c[0] = pink ? 182 : 112; c[1] = pink ? 96 : 130; c[2] = pink ? 128 : 52; }
+  }
+  c[0] = lerp(rr[0], c[0], m); c[1] = lerp(rr[1], c[1], m); c[2] = lerp(rr[2], c[2], m);
+  return c;
 }
 
 function buildHole(idx) {
@@ -898,6 +1161,16 @@ function buildHole(idx) {
   const islandR = spec.island ? spec.island * YD : 0;
   const fw = spec.fw ? { s0: spec.fw[0] * YD, s1: spec.fw[1] * YD, h: spec.fw[2] * YD / 2 } : null;
   const cor = (spec.cor || 40) * YD;
+  // Ocean: each sea entry [s0, d0, s1, d1, beach] is a straight shoreline through two points given in hole coordinates
+  // (yards along and across the hole); the sea is the side away from the tee. In the hole the line wanders into coves and
+  // points; out past the hole's ground it stays straight so the far land can be cut along it. beach = sand width in yards.
+  const coast = !!COURSE.coast, tee0 = pointAt(0, 0), sK = L / (spec.yds * YD);
+  const seaL = (spec.sea || []).map(([s0, d0, s1, d1, bch], i) => {
+    const a = pointAt(s0 * YD * sK, d0 * YD), b = pointAt(s1 * YD * sK, d1 * YD), tx = b[0] - a[0], ty = b[1] - a[1], tl = Math.hypot(tx, ty);
+    let nx = ty / tl, ny = -tx / tl; if ((tee0[0] - a[0]) * nx + (tee0[1] - a[1]) * ny > 0) { nx = -nx; ny = -ny; }
+    return { ax: a[0], ay: a[1], nx, ny, B: (bch ?? spec.beach ?? COURSE.beach ?? 0) * YD, o: 400 + i * 77 };
+  });
+  const seaStraight = (x, y) => { let m = -1e9; for (const l of seaL) m = Math.max(m, (x - l.ax) * l.nx + (y - l.ay) * l.ny); return m; };
   const pinLocal = spec.pin.map(v => v * YD);
   const cup = [gc[0] + gux * pinLocal[1] + guy * pinLocal[0], gc[1] + guy * pinLocal[1] - gux * pinLocal[0]];
 
@@ -915,8 +1188,8 @@ function buildHole(idx) {
     o.gD = ellDist(green, x, y, o); o.gu = o.du; o.gv = o.dv;
     let b = 60; for (const e of bunkers) { const v = ellDist(e, x, y, null); if (v < b) b = v; } o.bD = b;
     let w = 60; for (const e of wastes) { const v = ellDist(e, x, y, null); if (v < w) w = v; } o.wsD = w;
-    let wat = -60;
-    if (waterF.length) {
+    let wat = -60; o.B = 0; o.lk = true;
+    if (waterF.length || seaL.length) {
       const nz = 1.6 * tn(x * 1.5 + 33, y * 1.5 + 77) + 3.5 * tn(x * 0.45 + 120, y * 0.45 + 60);
       for (const f of waterF) {
         let m;
@@ -925,6 +1198,18 @@ function buildHole(idx) {
         const qx = Math.abs(s - (f.s0 + f.s1) / 2) - hs + rr, qy = Math.abs(dd - (f.d0 + f.d1) / 2) - hd + rr;
         m = rr - Math.hypot(Math.max(qx, 0), Math.max(qy, 0)) - Math.min(Math.max(qx, qy), 0);
         m += nz; if (m > wat) wat = m;
+      }
+      if (seaL.length) {
+        // the shoreline wanders less near the tee, the green and the line of play, so those stay where the hole puts them
+        const edge = Math.min(x - minX, maxX - x, y - minY, maxY - y), wig = smooth(0, 45, edge) * smooth(8, 30, o.gD) * smooth(6, 24, o.tD) * smooth(8, 26, ad);
+        // where two shorelines meet they join in a rounded point rather than a sharp corner
+        let sm = -1e9, sB = 0;
+        for (const l of seaL) {
+          const m = (x - l.ax) * l.nx + (y - l.ay) * l.ny + wig * (16 * tn(x * 0.012 + l.o, y * 0.012 + 90) + 5 * tn(x * 0.05 + 30, y * 0.05 + l.o) + 1.2 * tn(x * 0.3, y * 0.3));
+          if (sm < -1e8) { sm = m; sB = l.B; continue; }
+          const k = 22, t = clamp(0.5 + 0.5 * (m - sm) / k, 0, 1); if (m > sm) sB = l.B; sm = lerp(sm, m, t) + k * t * (1 - t);
+        }
+        if (sm > wat) { wat = sm; o.B = sB; o.lk = false; }
       }
       if (islandR) { const m = islandR - o.gD; if (-m < wat) wat = -m; wat = Math.min(wat, b - 1.5); }
       for (const l of walks) { const m = Math.min(s - l[0], l[1] - s, d - l[2], l[3] - d); if (-m < wat) wat = -m; }
@@ -966,15 +1251,28 @@ function buildHole(idx) {
   function heightAt(x, y, o) {
     const small = 0.32 * tn(x * 2.1 + 50, y * 2.1 + 80);
     let h = 1.3 * tn(x * 0.5, y * 0.5) + small * (1 - 0.75 * smooth(4, -4, o.fF));
-    h += 2.6 * smooth(0, 24, o.fC) * (0.5 + 0.5 * tn(x * 1.3 + 11, y * 1.3 + 7));
+    h += (COURSE.mounds || 2.6) * smooth(0, 24, o.fC) * (0.5 + 0.5 * tn(x * 1.3 + 11, y * 1.3 + 7));
     h += 0.5 * smooth(2, 14, o.fF) * smooth(4, -6, o.fC) * (0.5 + 0.5 * tn(x * 1.8 + 90, y * 1.8 + 40));
-    h += elevAt(o.s) * (1 - 0.65 * smooth(cor + 12, cor + 80, o.ad));
-    if (o.wat > -16) h = lerp(h, WL + 0.75, smooth(-16, -2, o.wat));
+    // on the coast the land keeps its height right out to the cliffs; inland a raised hole sits on a rise
+    h += elevAt(o.s) * (coast ? 1 : 1 - 0.65 * smooth(cor + 12, cor + 80, o.ad));
+    // the sea (and, on cliff courses, its coves) gets a shore; lagoons and creeks keep grass banks
+    const shore = coast && (!o.lk || COURSE.coves);
+    o.rk = o.bch = 60; o.cz = o.wat;
+    if (shore) {
+      // Shore profile, from the water in: a sand beach rising gently, then a face up to the land. Where the land stands well
+      // above the beach the face is a steep rock cliff; where it is low it is a short grassy bank.
+      const m = o.wat, B = o.B, top = WL + 0.2 + B * 0.05, rise = h - top, rocky = rise > 4, cw = rocky ? clamp(rise * 0.5, 3, 12) : Math.max(4, rise * 3);
+      o.cz = m + B + cw; o.bch = B > 0.5 ? Math.max(m, -(m + B)) : 60; o.rk = rocky ? Math.max(m + B, -(m + B + cw)) : 60;
+      if (m >= 0) h = WL - 0.25 - Math.min(2.5, m * 0.12);
+      else if (m >= -B) h = WL + 0.2 + (-m) * 0.05;
+      else if (m > -(B + cw)) { const t = (-m - B) / cw; h = lerp(top, h, rocky ? 1 - (1 - t) ** 2.2 : smooth(0, 1, t)) + (rocky ? 0.5 * Math.sin(Math.PI * t) * tn(x * 0.9 + 7, y * 0.9 + 3) : 0); }
+    } else if (o.wat > -16) h = lerp(h, WL + 0.75, smooth(-16, -2, o.wat));
     const tm = smooth(4, 0, o.tD); if (tm > 0) h = lerp(h, teeH, tm);
     const gm = smooth(6, -0.6, o.gD);
     if (gm > 0) h = lerp(h, greenSurf(x, y, o), gm);
     if (o.bD < 3.5) h += 0.25 * Math.exp(-(((o.bD - 0.9) / 0.8) ** 2)) * smooth(-2, 0.3, o.gD) - 0.85 * smooth(0.15, -2.6, o.bD);   // no bunker lip on the putting surface
     if (o.wsD < 2) h -= 0.12 * smooth(1.5, -2, o.wsD);
+    if (shore) return o.wat >= 0 ? h : Math.max(h, WL + 0.15);
     h = Math.max(h, WL + 0.35);
     if (o.wat > -0.6) h = lerp(h, WL - 1.3, smooth(-0.6, 0.8, o.wat));
     return h;
@@ -985,7 +1283,8 @@ function buildHole(idx) {
   for (const p of pts) { minX = Math.min(minX, p[0]); maxX = Math.max(maxX, p[0]); minY = Math.min(minY, p[1]); maxY = Math.max(maxY, p[1]); }
   minX = Math.floor(minX - 115); maxX = Math.ceil(maxX + 115); minY = Math.floor(minY - 80); maxY = Math.ceil(maxY + 80);
   const nx = maxX - minX + 1, ny = maxY - minY + 1, N = nx * ny;
-  const F = { t: new Float32Array(N), g: new Float32Array(N), b: new Float32Array(N), ws: new Float32Array(N), wat: new Float32Array(N), f: new Float32Array(N), c: new Float32Array(N), s: new Float32Array(N), d: new Float32Array(N), h: new Float32Array(N) };
+  const F = { t: new Float32Array(N), g: new Float32Array(N), b: new Float32Array(N), ws: new Float32Array(N), wat: new Float32Array(N), f: new Float32Array(N), c: new Float32Array(N), s: new Float32Array(N), d: new Float32Array(N), h: new Float32Array(N),
+    rk: new Float32Array(N), bch: new Float32Array(N), cz: new Float32Array(N), lg: new Uint8Array(N) };
   const o = {};
   for (let j = 0; j < ny; j++) {
     const y = minY + j;
@@ -993,13 +1292,21 @@ function buildHole(idx) {
       const x = minX + i, k = j * nx + i, [s, d] = project(x, y);
       evalPoint(x, y, s, d, o);
       F.t[k] = o.tD; F.g[k] = o.gD; F.b[k] = o.bD; F.ws[k] = o.wsD; F.wat[k] = o.wat; F.f[k] = o.fF; F.c[k] = o.fC; F.s[k] = s; F.d[k] = d;
-      let h = heightAt(x, y, o);
-      const edge = Math.min(i, nx - 1 - i, j, ny - 1 - j);
-      h = lerp(-0.45, h, smooth(0, 30, edge));
-      F.h[k] = h;
+      F.h[k] = heightAt(x, y, o); F.rk[k] = o.rk; F.bch[k] = o.bch; F.cz[k] = o.cz; F.lg[k] = o.lk && !COURSE.coves ? 1 : 0;
     }
   }
-  HOLE = { idx, ci: CI, spec, L, nx, ny, minX, minY, maxX, maxY, F, green, cup, project, pointAt, dirAt, gc, gux, guy, trees: [], treeGrid: new Map(), hasWater: waterF.length > 0 };
+  // the edges of the hole's ground ease down to the far land around it (on the coast, to the land's own height, or under the sea)
+  let farH = -0.45;
+  if (coast) {
+    const hs = []; for (let j = 0; j < ny; j += 2) for (let i = 0; i < nx; i += 2) { const k = j * nx + i; if (Math.min(i, nx - 1 - i, j, ny - 1 - j) < 4 && F.wat[k] < -12) hs.push(F.h[k]); }
+    hs.sort((a, b) => a - b); farH = hs.length ? hs[hs.length >> 1] : 0;
+  }
+  for (let j = 0; j < ny; j++) for (let i = 0; i < nx; i++) {
+    const k = j * nx + i, edge = Math.min(i, nx - 1 - i, j, ny - 1 - j);
+    if (edge < 30) F.h[k] = lerp(coast && F.wat[k] > 0 ? WL - 1.5 : farH, F.h[k], smooth(0, 30, edge));
+  }
+  HOLE = { idx, ci: CI, spec, L, nx, ny, minX, minY, maxX, maxY, F, green, cup, project, pointAt, dirAt, gc, gux, guy, trees: [], treeGrid: new Map(), hasWater: waterF.length > 0 || seaL.length > 0,
+    coast, seaL, seaAt: seaL.length ? (x, y) => seaStraight(x, y) > 0 : null, farH };
 
   // terrain mesh
   const pos = new Float32Array(N * 3), uvs = new Float32Array(N * 2);
@@ -1038,60 +1345,79 @@ function buildHole(idx) {
 
   // water
   if (HOLE.hasWater) {
-    const wg = new THREE.PlaneGeometry(nx + 500, ny + 500);
-    const water = new Water(wg, { textureWidth: 512, textureHeight: 512, waterNormals, sunDirection: sunDir.clone(), sunColor: 0xfff2dc, waterColor: 0x24525a, distortionScale: 0.45, fog: true, alpha: 1 });
+    // ocean holes get a sea that runs out to the horizon, bluer and with bigger swell than a lake
+    const sea = seaL.length > 0, wg = sea ? new THREE.PlaneGeometry(16000, 16000) : new THREE.PlaneGeometry(nx + 500, ny + 500);
+    const water = new Water(wg, { textureWidth: 512, textureHeight: 512, waterNormals, sunDirection: sunDir.clone(), sunColor: 0xfff2dc, waterColor: sea ? 0x0f3a56 : 0x24525a, distortionScale: sea ? 0.6 : 0.45, fog: true, alpha: 1 });
     water.rotation.x = -Math.PI / 2; water.position.set((minX + maxX) / 2, WL, -(minY + maxY) / 2);
-    water.material.uniforms.size.value = 3.0;
+    water.material.uniforms.size.value = sea ? 1.8 : 3.0;
+    // the open sea mirrors less of the hazy sky than a still lake, so it stays a deep blue except at the horizon
+    if (sea) water.material.fragmentShader = water.material.fragmentShader.replace('( vec3( 0.1 ) + reflectionSample * 0.9 + reflectionSample * specularLight )', '( vec3( 0.02, 0.07, 0.11 ) + reflectionSample * vec3( 0.42, 0.56, 0.66 ) + reflectionSample * specularLight )');
     holeGroup.add(water); HOLE.water = water;
   }
 
   // distant ground around the hole, with the hole's own terrain cut out
-  const outer = new THREE.Shape([new THREE.Vector2(minX - 4500, minY - 4500), new THREE.Vector2(maxX + 4500, minY - 4500), new THREE.Vector2(maxX + 4500, maxY + 4500), new THREE.Vector2(minX - 4500, maxY + 4500)]);
-  outer.holes.push(new THREE.Path([new THREE.Vector2(minX + 1, minY + 1), new THREE.Vector2(minX + 1, maxY - 1), new THREE.Vector2(maxX - 1, maxY - 1), new THREE.Vector2(maxX - 1, minY + 1)]));
-  const fg = new THREE.ShapeGeometry(outer); fg.rotateX(-Math.PI / 2);
-  const far = new THREE.Mesh(fg, farGroundMat); far.position.y = -0.55; far.receiveShadow = true; far.userData.sharedMat = true; holeGroup.add(far);
+  farGroundMat.color.copy(COURSE.far ? srgb(...COURSE.far) : FAR_COLOR);
+  if (!seaL.length) {
+    const outer = new THREE.Shape([new THREE.Vector2(minX - 4500, minY - 4500), new THREE.Vector2(maxX + 4500, minY - 4500), new THREE.Vector2(maxX + 4500, maxY + 4500), new THREE.Vector2(minX - 4500, maxY + 4500)]);
+    outer.holes.push(new THREE.Path([new THREE.Vector2(minX + 1, minY + 1), new THREE.Vector2(minX + 1, maxY - 1), new THREE.Vector2(maxX - 1, maxY - 1), new THREE.Vector2(maxX - 1, minY + 1)]));
+    const fg = new THREE.ShapeGeometry(outer); fg.rotateX(-Math.PI / 2);
+    const far = new THREE.Mesh(fg, farGroundMat); far.position.y = coast ? farH - 0.1 : -0.55; far.receiveShadow = true; far.userData.sharedMat = true; holeGroup.add(far);
+  } else buildFarCoast();
+  if (coast) { buildRocks(rng); if (seaL.length || waterF.length) buildSurf(); }
   buildPinAndTee();
   buildSlopeArrows();
-  treeline.position.x = (minX + maxX) / 2; treeline.position.z = -(minY + maxY) / 2;
+  placeTreeline();
   return HOLE;
 
   // ---- inner helpers that share the closure ----
   function fieldAt(Fa, x, y) { return sampleField(Fa, x, y); }
   function placeTrees(r) {
-    const lists = { pine: [[], [], []], oak: [[], []], palm: [[], []], palmetto: [], bigOak: [] };
+    const lists = { pine: [[], [], []], oak: [[], []], palm: [[], []], palmetto: [], bigOak: [], cypress: [[], [], []], bigCypress: [] };
+    // cypress lean away from the nearest sea (inland, all one way, as if from the prevailing wind)
+    const leanYaw = (x, y) => {
+      let best = null, bm = -1e9; for (const l of seaL) { const m = (x - l.ax) * l.nx + (y - l.ay) * l.ny; if (m > bm) { bm = m; best = l; } }
+      const lx = best ? -best.nx : 0.6, ly = best ? -best.ny : 0.8; return Math.atan2(ly, lx) + (r() - 0.5) * 0.7;
+    };
     const add = (type, v, x, y, h, sc) => {
-      const yaw = r() * 6.28, m = new THREE.Matrix4().compose(new V3(x, h, -y), new THREE.Quaternion().setFromEuler(new THREE.Euler((r() - 0.5) * 0.06, yaw, (r() - 0.5) * 0.06)), new V3(sc, sc * (0.9 + r() * 0.2), sc));
+      const cyp = type === 'cypress' || type === 'bigCypress';
+      const yaw = cyp ? leanYaw(x, y) : r() * 6.28, m = new THREE.Matrix4().compose(new V3(x, h, -y), new THREE.Quaternion().setFromEuler(new THREE.Euler((r() - 0.5) * 0.06, yaw, (r() - 0.5) * 0.06)), new V3(sc, sc * (0.9 + r() * 0.2), sc));
       const tint = 0.82 + r() * 0.3, c = new THREE.Color(tint * (0.95 + r() * 0.1), tint, tint * (0.9 + r() * 0.1));
       (v === null ? lists[type] : lists[type][v]).push([m, c]);
       if (TREE_DIM[type] && x > minX && x < maxX && y > minY && y < maxY) {
-        const D = TREE_DIM[type], t = { id: HOLE.trees.length, x, z: -y, y0: h, tr: D.tr * sc, top: h + D.top * sc, cy: h + D.cy * sc, cr: D.cr * sc, ch: D.ch * sc, type };
+        const D = TREE_DIM[type], lo = cyp ? (type === 'bigCypress' ? 2.7 : 1.8) * sc : 0;
+        const t = { id: HOLE.trees.length, x, z: -y, y0: h, tr: D.tr * sc, top: h + D.top * sc, cy: h + D.cy * sc, cr: D.cr * sc, ch: D.ch * sc, type, ox: Math.cos(yaw) * lo, oz: -Math.sin(yaw) * lo };
         HOLE.trees.push(t);
-        for (let gx = Math.floor((x - t.cr) / 10); gx <= Math.floor((x + t.cr) / 10); gx++) for (let gz = Math.floor((-y - t.cr) / 10); gz <= Math.floor((-y + t.cr) / 10); gz++) {
+        const rr = t.cr + Math.hypot(t.ox, t.oz); for (let gx = Math.floor((x - rr) / 10); gx <= Math.floor((x + rr) / 10); gx++) for (let gz = Math.floor((-y - rr) / 10); gz <= Math.floor((-y + rr) / 10); gz++) {
           const key = gx * 100000 + gz; if (!HOLE.treeGrid.has(key)) HOLE.treeGrid.set(key, []); HOLE.treeGrid.get(key).push(t);
         }
       }
     };
     // tree mix per course: [pine, oak], the rest palms; palms crowd the water's edge
-    const [mp, mo] = COURSE.mix, wp = Math.min(0.55, (1 - mp - mo) * 4);
-    const pick = (nearWater) => { const u = r(); if (nearWater) return u < wp ? 'palm' : u < wp + (1 - wp) * mo / (mp + mo) ? 'oak' : 'pine'; return u < mp ? 'pine' : u < mp + mo ? 'oak' : 'palm'; };
-    const dens = spec.trees || 1;
+    // An ocean course lists its trees by weight in flora (cypress, pine, oak, palm) and thins them with treeK.
+    const [mp, mo] = COURSE.mix, wp = Math.min(0.55, (1 - mp - mo) * 4), FL = COURSE.flora ? Object.entries(COURSE.flora) : null, FLT = FL ? FL.reduce((a, e) => a + e[1], 0) : 0;
+    const pick = (nearWater) => {
+      const u = r(); if (FL) { let a = u * FLT; for (const [t, w] of FL) { if ((a -= w) <= 0) return t; } return FL[0][0]; }
+      if (nearWater) return u < wp ? 'palm' : u < wp + (1 - wp) * mo / (mp + mo) ? 'oak' : 'pine'; return u < mp ? 'pine' : u < mp + mo ? 'oak' : 'palm';
+    };
+    const nVar = type => type === 'pine' || type === 'cypress' ? Math.floor(r() * 3) : Math.floor(r() * 2);
+    const dens = (spec.trees || 1) * (COURSE.treeK || 1);
     const area = nx * ny, tries = Math.floor(area / 22);
     for (let k = 0; k < tries; k++) {
       const x = minX + r() * (nx - 1), y = minY + r() * (ny - 1);
       const c = fieldAt(F.c, x, y), wat = fieldAt(F.wat, x, y), t = fieldAt(F.t, x, y), g = fieldAt(F.g, x, y);
-      if (wat > -4 || t < 14 || g < 14) continue;
+      if (wat > -4 || t < 14 || g < 14 || (coast && fieldAt(F.cz, x, y) > -5)) continue;
       const fwy = fieldAt(F.f, x, y), bun = fieldAt(F.b, x, y), ws = fieldAt(F.ws, x, y);
       if (bun < 3 || ws < 2) continue;
       const pf = c > 3 ? 0.55 * smooth(3, 16, c) + 0.06 : (c > -12 && fwy > 12 ? 0.012 : 0);
       if (r() > pf * dens) continue;
-      const type = pick(wat > -18), v = type === 'pine' ? Math.floor(r() * 3) : Math.floor(r() * 2);
-      add(type, v, x, y, sampleField(F.h, x, y) - 0.05, 0.8 + r() * 0.45);
+      const type = pick(wat > -18);
+      add(type, nVar(type), x, y, sampleField(F.h, x, y) - 0.05, 0.8 + r() * 0.45);
     }
     // palmettos along the forest edge
     for (let k = 0; k < tries * 0.35; k++) {
       const x = minX + r() * (nx - 1), y = minY + r() * (ny - 1), c = fieldAt(F.c, x, y);
       if (c < -1 || c > 12 || fieldAt(F.wat, x, y) > -3 || fieldAt(F.t, x, y) < 6 || fieldAt(F.g, x, y) < 8 || fieldAt(F.b, x, y) < 2) continue;
-      if (r() > 0.35) continue;
+      if (r() > (COURSE.palmetto ?? 0.35) || (coast && fieldAt(F.cz, x, y) > -3)) continue;
       add('palmetto', null, x, y, sampleField(F.h, x, y), 0.8 + r() * 0.6);
     }
     // outer band on the flat far ground
@@ -1099,10 +1425,12 @@ function buildHole(idx) {
     for (let k = 0; k < outerTries; k++) {
       const x = minX - band + r() * (nx + 2 * band), y = minY - band + r() * (ny + 2 * band);
       if (x > minX - 4 && x < maxX + 4 && y > minY - 4 && y < maxY + 4) continue;
-      const type = pick(false), v = type === 'pine' ? Math.floor(r() * 3) : Math.floor(r() * 2);
-      add(type, v, x, y, -0.6, 0.85 + r() * 0.45);
+      if (coast && (r() > Math.min(1, (COURSE.treeK || 1) * 0.8) || (seaL.length && seaStraight(x, y) > -15))) continue;
+      const type = pick(false);
+      add(type, nVar(type), x, y, coast ? farH - 0.15 : -0.6, 0.85 + r() * 0.45);
     }
-    for (const [os, od] of spec.oaks || []) { const p = pointAt(os * YD * L / (spec.yds * YD), od * YD); add('bigOak', null, p[0], p[1], sampleField(F.h, p[0], p[1]) - 0.1, 0.9 + r() * 0.2); }
+    const corner = COURSE.corner || 'bigOak';
+    for (const [os, od] of spec.oaks || []) { const p = pointAt(os * YD * L / (spec.yds * YD), od * YD); add(corner, null, p[0], p[1], sampleField(F.h, p[0], p[1]) - 0.1, 0.9 + r() * 0.2); }
     HOLE.treeAO = [];
     const mk = (geo, arr, shadow) => {
       if (!arr.length) return;
@@ -1117,17 +1445,22 @@ function buildHole(idx) {
     lists.palm.forEach((a, i) => mk(TREE_GEO.palm[i], a, true));
     mk(TREE_GEO.palmetto, lists.palmetto, false);
     mk(TREE_GEO.bigOak, lists.bigOak, true);
+    lists.cypress.forEach((a, i) => mk(TREE_GEO.cypress[i], a, true));
+    mk(TREE_GEO.bigCypress, lists.bigCypress, true);
     // grass tufts in the rough
     const tuftMats = []; let tc = 0; const TMAX = 46000;
     const tm = new THREE.InstancedMesh(TUFT_GEO, tuftMat, TMAX); tm.userData.shared = true; tm.userData.sharedMat = true;
     const M4 = new THREE.Matrix4(), Q = new THREE.Quaternion(), E = new THREE.Euler(), S = new V3(), P = new V3(), C = new THREE.Color();
     for (let k = 0; k < 260000 && tc < TMAX; k++) {
       const x = minX + 5 + r() * (nx - 11), y = minY + 5 + r() * (ny - 11);
-      const c = fieldAt(F.c, x, y); if (c > 1 || c < -45) continue;
+      const c = fieldAt(F.c, x, y); if (c > (COURSE.tuftOut || 1) || c < -45) continue;
       const f = fieldAt(F.f, x, y), g = fieldAt(F.g, x, y), b = fieldAt(F.b, x, y), wat = fieldAt(F.wat, x, y), t = fieldAt(F.t, x, y), ws = fieldAt(F.ws, x, y);
       if (f < 1.8 || g < 3.5 || b < 0.3 || wat > -0.8 || t < 0.5 || ws < 0) continue;
-      E.set(0, r() * 6.28, 0); Q.setFromEuler(E); const sc = 0.8 + r() * 0.9; S.set(sc, sc * (0.7 + r() * 0.7), sc); P.set(x, sampleField(F.h, x, y), -y);
-      M4.compose(P, Q, S); tm.setMatrixAt(tc, M4); const l = 0.8 + r() * 0.35; C.setRGB(l, l * (0.95 + r() * 0.1), l); tm.setColorAt(tc, C); tc++;
+      if (coast && (fieldAt(F.rk, x, y) < 0.5 || fieldAt(F.bch, x, y) < 0.5)) continue;
+      // ocean courses: taller fescue and dune grass, gold and sage instead of green
+      const tH = coast ? 1.5 : 1, tint = COURSE.tuft;
+      E.set(0, r() * 6.28, 0); Q.setFromEuler(E); const sc = 0.8 + r() * 0.9; S.set(sc, sc * (0.7 + r() * 0.7) * tH, sc); P.set(x, sampleField(F.h, x, y), -y);
+      M4.compose(P, Q, S); tm.setMatrixAt(tc, M4); const l = 0.8 + r() * 0.35; C.setRGB(l, l * (0.95 + r() * 0.1), l); if (tint) { const u = coast ? tn(x * 0.15 + 3, y * 0.15) * 0.5 + 0.5 : 0; C.r *= lerp(1, tint[0], u); C.g *= lerp(1, tint[1], u); C.b *= lerp(1, tint[2], u); } tm.setColorAt(tc, C); tc++;
     }
     tm.count = tc; tm.receiveShadow = true; tm.instanceMatrix.needsUpdate = true; if (tm.instanceColor) tm.instanceColor.needsUpdate = true;
     holeGroup.add(tm);
@@ -1138,7 +1471,7 @@ function buildHole(idx) {
     const TW = Math.round(W * ppm), TH = Math.round(Hh * ppm);
     const cv = document.createElement('canvas'); cv.width = TW; cv.height = TH;
     const ctx = cv.getContext('2d'), img = ctx.createImageData(TW, TH), D = img.data;
-    const { t: Ft, g: Fg, b: Fb, ws: Fws, wat: Fw, f: Ff, c: Fc, s: Fs, d: Fd } = F;
+    const { t: Ft, g: Fg, b: Fb, ws: Fws, wat: Fw, f: Ff, c: Fc, s: Fs, d: Fd, rk: Frk, bch: Fbc, h: Fh } = F, pal = COURSE.pal;
     let seed = 1234567, k = 0, w00 = 0, w10 = 0, w01 = 0, w11 = 0;
     const S4 = A => A[k] * w00 + A[k + 1] * w10 + A[k + nx] * w01 + A[k + nx + 1] * w11;
     for (let j = 0; j < TH; j++) {
@@ -1155,11 +1488,22 @@ function buildHole(idx) {
         else if (gD < 1.3) { r = 82; g = 128; b = 50; }
         else if (bD < 0) { const lip = smooth(-0.5, 0, bD); r = lerp(232, 168, lip); g = lerp(222, 160, lip); b = lerp(194, 132, lip); const rake = 0.97 + 0.04 * Math.sin(s * 9); r *= rake; g *= rake; b *= rake; }
         else if (wat > 0) { r = 40; g = 54; b = 38; }
-        else if (wat > -0.9) { const plank = (Math.floor((s + d) * 2.2) & 1) ? 1 : 0.86; r = 92 * plank; g = 70 * plank; b = 46 * plank; }
+        else if (coast && S4(Frk) < 0) {
+          // cliff rock in bands, darker in the cracks
+          const hh = S4(Fh), band = 0.86 + 0.14 * Math.sin(hh * 4.2 + blot * 2.5); r = (128 + blot * 16) * band; g = (114 + blot * 12) * band; b = (96 + blot * 10) * band;
+          if (fine > 0.45) { r *= 0.72; g *= 0.72; b *= 0.74; }
+        }
+        else if (coast && S4(Fbc) < 0) {
+          // beach sand, wet and darker at the water's edge, with bits of kelp and driftwood
+          const wet = smooth(-2.2, -0.2, wat); r = lerp(206, 150, wet) + blot * 10; g = lerp(186, 136, wet) + blot * 9; b = lerp(146, 104, wet) + blot * 7;
+          if (fine > 0.66 && wet > 0.2) { r = 84; g = 76; b = 52; }
+        }
+        else if (!coast && wat > -0.9) { const plank = (Math.floor((s + d) * 2.2) & 1) ? 1 : 0.86; r = 92 * plank; g = 70 * plank; b = 46 * plank; }
         else if (wsD < 0) { r = 184 + blot * 18; g = 168 + blot * 16; b = 134 + blot * 12; if (fine > 0.55) { r = 110; g = 116; b = 72; } }
         else if (fF < 0) { const st = ((Math.floor(s / 8) & 1) ? 1.06 : 0.94); r = 88 * st; g = 134 * st; b = 50 * st; }
         else if (fF < 1.8 || gD < 3.6) { r = 76; g = 112; b = 44; }
-        else if (fC < 0) { r = 64 + blot * 10; g = 94 + blot * 12; b = 38 + blot * 4; if (blot > 0.35) { r += 8; g += 4; } }
+        else if (fC < 0) { r = 64 + blot * 10; g = 94 + blot * 12; b = 38 + blot * 4; if (blot > 0.35) { r += 8; g += 4; } if (coast) { const u = 0.5 + 0.5 * blot; r = lerp(r, pal.rough[0], u); g = lerp(g, pal.rough[1], u); b = lerp(b, pal.rough[2], u); } }
+        else if (coast) { [r, g, b] = coastScrub(pal.scrub, smooth(0, 4, fC), blot, fine, x, y); }
         else {
           const m = smooth(0, 3, fC); const sr = 124 + blot * 26, sg = 86 + blot * 18, sb = 48 + blot * 10;
           r = lerp(64, sr, m); g = lerp(94, sg, m); b = lerp(38, sb, m);
@@ -1180,6 +1524,91 @@ function buildHole(idx) {
     ctx.globalCompositeOperation = 'source-over';
     HOLE.ppm = ppm; HOLE.TW = TW; HOLE.TH = TH;
     const t = canvasTex(cv); return t;
+  }
+
+  // Far land on an ocean hole: four strips around the hole's own ground, each cut off along the straight shorelines, with a
+  // cliff face dropping from the cut edge into the sea.
+  function buildFarCoast() {
+    const E = 4500, y = farH - 0.1, yb = WL - 1, pos = [], idx = [], sp = [], sc = [], si = [], top = srgb(150, 132, 108), bot = srgb(196, 182, 150);
+    const f = (p, l) => (p[0] - l.ax) * l.nx + (p[1] - l.ay) * l.ny;
+    const clip = (poly, l) => {
+      const out = [];
+      for (let i = 0; i < poly.length; i++) {
+        const a = poly[i], b = poly[(i + 1) % poly.length], fa = f(a, l), fb = f(b, l);
+        if (fa <= 0) out.push(a);
+        if ((fa <= 0) !== (fb <= 0)) { const t = fa / (fa - fb); out.push([a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t]); }
+      }
+      return out;
+    };
+    const tri = (P, I, a, b, c) => { const ax = P[a * 3], az = P[a * 3 + 2], ny = (P[b * 3 + 2] - az) * (P[c * 3] - ax) - (P[b * 3] - ax) * (P[c * 3 + 2] - az); if (ny >= 0) I.push(a, b, c); else I.push(a, c, b); };
+    for (const [x0, y0, x1, y1] of [[minX - E, minY - E, maxX + E, minY + 1], [minX - E, maxY - 1, maxX + E, maxY + E], [minX - E, minY + 1, minX + 1, maxY - 1], [maxX - 1, minY + 1, maxX + E, maxY - 1]]) {
+      let poly = [[x0, y0], [x1, y0], [x1, y1], [x0, y1]];
+      for (const l of seaL) { poly = clip(poly, l); if (poly.length < 3) break; }
+      if (poly.length < 3) continue;
+      const base = pos.length / 3; for (const p of poly) pos.push(p[0], y, -p[1]);
+      for (let i = 1; i < poly.length - 1; i++) tri(pos, idx, base, base + i, base + i + 1);
+      for (let i = 0; i < poly.length; i++) {
+        const a = poly[i], b = poly[(i + 1) % poly.length];
+        if (!seaL.some(l => Math.abs(f(a, l)) < 0.05 && Math.abs(f(b, l)) < 0.05)) continue;
+        const q = sp.length / 3; sp.push(a[0], y, -a[1], b[0], y, -b[1], b[0], yb, -b[1], a[0], yb, -a[1]);
+        for (const c of [top, top, bot, bot]) sc.push(c.r, c.g, c.b);
+        si.push(q, q + 1, q + 2, q, q + 2, q + 3);
+      }
+    }
+    const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.setIndex(idx); g.computeVertexNormals();
+    const far = new THREE.Mesh(g, farGroundMat); far.receiveShadow = true; far.userData.sharedMat = true; holeGroup.add(far);
+    if (sp.length) {
+      const k = new THREE.BufferGeometry(); k.setAttribute('position', new THREE.Float32BufferAttribute(sp, 3)); k.setAttribute('color', new THREE.Float32BufferAttribute(sc, 3)); k.setIndex(si); k.computeVertexNormals();
+      const m = new THREE.Mesh(k, skirtMat); m.userData.sharedMat = true; holeGroup.add(m);
+    }
+  }
+  // Surf: a foam sheet just above the water near every shore, white at the waterline with lines of foam rolling in.
+  function buildSurf() {
+    const st = 2, P = [], M = [], I = [], vid = new Map();
+    const v = (i, j) => {
+      const key = j * nx + i; let id = vid.get(key);
+      if (id === undefined) { id = P.length / 3; vid.set(key, id); P.push(minX + i, WL + 0.13, -(minY + j)); const e = Math.min(i, nx - 1 - i, j, ny - 1 - j); M.push(F.lg[key] ? 30 : lerp(30, F.wat[key], smooth(4, 40, e))); }
+      return id;
+    };
+    for (let j = 0; j < ny - st; j += st) for (let i = 0; i < nx - st; i += st) {
+      const w = F.wat[j * nx + i]; if (w < -3 || w > 17) continue;
+      const a = v(i, j), b = v(i + st, j), c = v(i, j + st), d = v(i + st, j + st); I.push(a, c, b, b, c, d);
+    }
+    if (!I.length) return;
+    const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(P, 3)); g.setAttribute('sm', new THREE.Float32BufferAttribute(M, 1)); g.setIndex(I);
+    const m = new THREE.Mesh(g, surfMat); m.userData.sharedMat = true; m.renderOrder = 2; m.frustumCulled = false; holeGroup.add(m); HOLE.surf = m;
+  }
+  // Rocks on the cliff faces, scattered in the shallows, and a few sea stacks farther out.
+  function buildRocks(r) {
+    const lists = [[], [], []], M4 = new THREE.Matrix4(), Q = new THREE.Quaternion(), E3 = new THREE.Euler(), S = new V3(), P = new V3();
+    let stacks = 0;
+    for (let k = 0, tries = Math.floor(nx * ny / 16); k < tries; k++) {
+      const x = minX + 4 + r() * (nx - 9), y = minY + 4 + r() * (ny - 9), rk = sampleField(F.rk, x, y), w = sampleField(F.wat, x, y), tint = 0.75 + r() * 0.4;
+      let sc, sy, hh;
+      if (rk < 0 && w < 0) { const h0 = sampleField(F.h, x, y); if (h0 > WL + 3.5 || r() > 0.4) continue; sc = 0.8 + r() * 2.2; sy = 0.7 + r() * 0.6; hh = h0 - sc * 0.25; }
+      else if (w > 0.4 && w < 10) { if (r() > 0.05) continue; sc = 0.7 + r() * 2.2; sy = 0.8 + r() * 0.7; hh = WL - sc * 0.22; }
+      else if (w > 24 && stacks < 5 && r() < 0.004) { stacks++; sc = 4 + r() * 5; sy = 1.8 + r() * 1.6; hh = WL - sc * 0.3; }
+      else continue;
+      E3.set((r() - 0.5) * 0.4, r() * 6.28, (r() - 0.5) * 0.4); Q.setFromEuler(E3); S.set(sc * (0.8 + r() * 0.5), sc * sy, sc * (0.8 + r() * 0.5)); P.set(x, hh, -y);
+      lists[(r() * 3) | 0].push([M4.compose(P, Q, S).clone(), new THREE.Color(tint, tint * 0.97, tint * 0.93)]);
+    }
+    lists.forEach((arr, i) => {
+      if (!arr.length) return;
+      const im = new THREE.InstancedMesh(ROCK_GEO[i], rockMat, arr.length); im.userData.shared = true; im.userData.sharedMat = true;
+      arr.forEach(([m, c], j) => { im.setMatrixAt(j, m); im.setColorAt(j, c); }); im.instanceMatrix.needsUpdate = true; im.instanceColor.needsUpdate = true; im.castShadow = true; im.receiveShadow = true; holeGroup.add(im);
+    });
+  }
+  // The far treeline ring; on an ocean hole it only stands over the land, leaving the sea open to the horizon.
+  function placeTreeline() {
+    const cx = (minX + maxX) / 2, cy = (minY + maxY) / 2, R = 950;
+    treeline.position.x = cx; treeline.position.z = -cy; treeline.visible = true;
+    if (treeline.geometry !== TREELINE_FULL) { treeline.geometry.dispose(); treeline.geometry = TREELINE_FULL; }
+    if (!seaL.length) return;
+    const n = 180, land = []; for (let i = 0; i < n; i++) { const th = i / n * Math.PI * 2; land.push(seaStraight(cx + R * Math.sin(th), cy - R * Math.cos(th)) < -40); }
+    if (land.every(Boolean)) return;
+    let best = 0, bestAt = 0; for (let i = 0; i < n; i++) { if (!land[i] || land[(i + n - 1) % n]) continue; let k = 0; while (k < n && land[(i + k) % n]) k++; if (k > best) { best = k; bestAt = i; } }
+    if (!best) { treeline.visible = false; return; }
+    treeline.geometry = new THREE.CylinderGeometry(R, R, 46, Math.max(8, best), 1, true, bestAt / n * Math.PI * 2, best / n * Math.PI * 2);
   }
 
   function buildPinAndTee() {
@@ -1262,6 +1691,7 @@ function surfAt(x, y) {
   const g = sampleField(F.g, x, y); if (g < 0) return T_GREEN; if (g < 1.3) return T_FRINGE;
   if (sampleField(F.b, x, y) < 0) return T_SAND;
   if (sampleField(F.wat, x, y) > 0) return T_WATER;
+  if (HOLE.coast) { if (sampleField(F.rk, x, y) < 0) return T_ROCK; if (sampleField(F.bch, x, y) < 0) return T_BEACH; }
   if (sampleField(F.ws, x, y) < 0) return T_WASTE;
   const f = sampleField(F.f, x, y); if (f < 0) return T_FAIR; if (f < 1.8 || g < 3.6) return T_CUT;
   return sampleField(F.c, x, y) < 0 ? T_ROUGH : T_STRAW;
@@ -1297,7 +1727,7 @@ function stepBall(b, dt, env) {
     if (env.trees) { const r = treeCheck(b); if (r) return r; }
     const gh = env.h(b.p.x, b.p.z);
     if (b.p.y <= gh + BR) { b.p.y = gh + BR; return groundImpact(b, env); }
-    if (env.oob && !env.oob(b.p.x, b.p.z) && b.p.y < gh + 3) return 'ob';
+    if (env.oob && !env.oob(b.p.x, b.p.z) && b.p.y < gh + 3) return HOLE.seaAt && HOLE.seaAt(b.p.x, -b.p.z) ? 'water' : 'ob';
     return null;
   }
   if (b.mode === 'roll') {
@@ -1325,7 +1755,7 @@ function stepBall(b, dt, env) {
         if (sp < 2.3 && !b.lipped) { b.lipped = true; const a = (Math.random() < 0.5 ? -1 : 1) * (0.5 + Math.random() * 0.5), c = Math.cos(a), sn = Math.sin(a); b.v.x = (nvx * c - nvz * sn) * 0.55; b.v.z = (nvx * sn + nvz * c) * 0.55; return 'lip'; }
       }
     }
-    if (env.oob && !env.oob(b.p.x, b.p.z)) return 'ob';
+    if (env.oob && !env.oob(b.p.x, b.p.z)) return HOLE.seaAt && HOLE.seaAt(b.p.x, -b.p.z) ? 'water' : 'ob';
     if (b.t > 30) { b.v.set(0, 0, 0); b.mode = 'rest'; return 'rest'; }
     return null;
   }
@@ -1367,7 +1797,7 @@ function treeCheck(b) {
       if (vn < 0) { b.v.x -= 1.6 * vn * nx; b.v.z -= 1.6 * vn * nz; b.v.x *= 0.5; b.v.z *= 0.5; b.w *= 0.5; return { ev: 'knock' }; }
     }
     if (b.hit.has(t.id)) continue;
-    const ex = dx / t.cr, ey = (b.p.y - t.cy) / t.ch, ez = dz / t.cr;
+    const ex = (dx - (t.ox || 0)) / t.cr, ey = (b.p.y - t.cy) / t.ch, ez = (dz - (t.oz || 0)) / t.cr;
     if (ex * ex + ey * ey + ez * ez < 1) {
       b.hit.add(t.id);
       if (Math.random() < 0.72) {
@@ -1930,7 +2360,7 @@ function sTone(freq, dur, gain, type = 'sine', delay = 0, slide = 0) {
 }
 const SND = {
   hit(c, power) { if (c.putter) { sTone(880, 0.07, 0.25, 'triangle'); sNoise(0.03, 2500, 2, 0.15); return; } if (c.head === 'driver' || c.head === 'wood') { sNoise(0.09, 1700, 1.2, 0.9 * power + 0.1); sTone(1250, 0.12, 0.18, 'sine'); } else { sNoise(0.06, 3200, 1.4, 0.8 * power + 0.1); sNoise(0.12, 500, 0.8, 0.25 * power, 'lowpass'); } },
-  bounce(type, sp) { const g = clamp(sp / 25, 0.03, 0.4); if (type === T_SAND) sNoise(0.18, 900, 0.7, g, 'lowpass'); else sNoise(0.05, 700, 1, g * 0.6, 'lowpass'); },
+  bounce(type, sp) { const g = clamp(sp / 25, 0.03, 0.4); if (type === T_SAND || type === T_BEACH) sNoise(0.18, 900, 0.7, g, 'lowpass'); else sNoise(0.05, 700, 1, g * 0.6, 'lowpass'); },
   cup() { for (let k = 0; k < 4; k++) sTone(520 + Math.random() * 300, 0.06, 0.18, 'triangle', k * 0.07); sTone(180, 0.18, 0.25, 'sine', 0.3); },
   splash() { sNoise(0.7, 900, 0.5, 0.5, 'lowpass'); sNoise(0.35, 2400, 0.8, 0.2, 'bandpass', 0.05); },
   leaves() { sNoise(0.25, 4000, 0.6, 0.18, 'highpass'); },
@@ -1941,7 +2371,7 @@ const SND = {
 // ---------------------------------------------------------------------------
 // Game state
 // ---------------------------------------------------------------------------
-const G = { spin: 0, loft: 0, mode: 'title', round: null, hole: 0, strokes: 0, club: 0, aim: 0, lie: T_TEE, wind: new V3(), windMph: 0, windFrom: 0, ball: newBall(), prev: new V3(), t: 0, restT: 0, overview: false, shot: null, trails: [], pending: null, keys: new Set(), acc: 0, intro: null, lastPutt: false };
+const G = { loft: 0, mode: 'title', round: null, hole: 0, strokes: 0, club: 0, aim: 0, lie: T_TEE, wind: new V3(), windMph: 0, windFrom: 0, ball: newBall(), prev: new V3(), t: 0, restT: 0, overview: false, shot: null, trails: [], pending: null, keys: new Set(), acc: 0, intro: null, lastPutt: false };
 const env = { h: hW, normal: surfaceNormal, surf: (X, Z) => surfAt(X, -Z), wind: G.wind, trees: true, cup: null, oob: inBounds };
 
 const ballXY = () => [G.ball.p.x, -G.ball.p.z];
@@ -1950,7 +2380,9 @@ const aimVec = (a = G.aim) => new V3(Math.sin(a), 0, -Math.cos(a));
 // Lies that cost a set share of carry (rough about one club: 8.5%, and never less than 12 yards). The ball speed that gives
 // that loss is found once per club, so every club loses about a club rather than the long clubs losing far more.
 // Spin from these lies drops more for the high-spin clubs.
-const LIE_LOSS = { [T_ROUGH]: [0.085, 12], [T_CUT]: [0.03, 4], [T_STRAW]: [0.1, 14], [T_WASTE]: [0.09, 12] };
+// off the corridor an ocean course has coastal scrub, not pine straw (same lie, same cost)
+const lieName = t => t === T_STRAW && COURSE.coast ? (COURSE.pal.straw || 'Scrub') : SURF[t].name;
+const LIE_LOSS = { [T_ROUGH]: [0.085, 12], [T_CUT]: [0.03, 4], [T_STRAW]: [0.1, 14], [T_WASTE]: [0.09, 12], [T_BEACH]: [0.12, 15], [T_ROCK]: [0.15, 18] };
 const LIE_V = new Map();
 function lieMul(c, lie) {
   const S = SURF[lie];
@@ -1979,25 +2411,14 @@ function spinAt(x) {
   const u = clamp(x, -2, 2) + 2, i = Math.min(3, Math.floor(u)), f = u - i, A = SPIN[i], B = SPIN[i + 1];
   return { s: lerp(A.s, B.s, f), la: lerp(A.la, B.la, f), v: lerp(A.v, B.v, f), name: SPIN[Math.round(u)].name };
 }
-// How spin is chosen. keys: picked before the shot. The others read it from the stroke:
-// accel  - speeding up late through the ball adds spin, easing off takes it away;
-// follow - a short, sharp stop just past the ball adds backspin, a long follow-through takes it off (spin rate only, read just after impact);
-// smooth - an even push gives full spin, a jerky one comes off with less.
-const SPIN_MODES = {
-  keys: ['Spin from Q / E', 'Press Q for less spin and E for more (or use − and +) before you swing.'],
-  accel: ['Spin from speed-up at the ball', 'Snap through the ball, getting faster at the end, for more spin. Keep an even speed or ease off into it for less (easing off also costs a little distance).'],
-  follow: ['Spin from follow-through', 'Stop short and sharp just past the start point to put backspin on it. A long, full follow-through takes spin off so the ball runs.'],
-  smooth: ['Spin from smoothness', 'A smooth, even push gives full spin. A jerky one comes off with less.'],
-};
-let SPIN_MODE = 'keys';
-try { const v = localStorage.getItem('golf.spinMode') || localStorage.getItem('sawgrass.spinMode'); if (v && SPIN_MODES[v]) SPIN_MODE = v; } catch (_) {}
-const manualSpin = () => SPIN_MODE === 'keys';
+// Spin comes only from the follow-through: a short, sharp stop just past the ball adds backspin, a long follow-through takes
+// it off. It sets the spin rate only, read just after impact.
 // The distance guide always assumes a clean fairway lie, so from rough or sand the player has to allow for the lie.
 const SPIN_CARRY = new Map();
 function guideCarry(ci) {
-  const c = CLUBS[ci]; if (c.putter || (!G.spin && !G.loft)) return CARRY[ci];
-  const k = `${ci}:${G.spin}:${G.loft}`; let r = SPIN_CARRY.get(k);
-  if (!r) { const sp = SPIN[G.spin + 2], lf = loftFx(c, G.loft); r = simFlat(c, 1, sp.s * lf.s, sp.la + lf.la, sp.v * lf.v, 0, T_FAIR, lf.rel); SPIN_CARRY.set(k, r); } return r;
+  const c = CLUBS[ci]; if (c.putter || !G.loft) return CARRY[ci];
+  const k = `${ci}:${G.loft}`; let r = SPIN_CARRY.get(k);
+  if (!r) { const lf = loftFx(c, G.loft); r = simFlat(c, 1, lf.s, lf.la, lf.v, 0, T_FAIR, lf.rel); SPIN_CARRY.set(k, r); } return r;
 }
 function expectedTotal(ci) { return guideCarry(ci).total; }
 function expectedCarry(ci) { return guideCarry(ci).carry; }
@@ -2034,7 +2455,7 @@ projRest.renderOrder = 5; projG.add(projRest);
 function projectShot() {
   const c = CLUBS[G.club]; if (c.putter || !HOLE) return null;
   const pe = { ...env, trees: false, cup: null, oob: null }, b = newBall(); b.p.copy(G.ball.p); b.p.y += 0.002;
-  const lm = lieMul(c, G.lie), sp = spinAt(manualSpin() ? G.spin : 0), lf = loftFx(c, G.loft);
+  const lm = lieMul(c, G.lie), sp = spinAt(0), lf = loftFx(c, G.loft);
   b.w = launchVel(c, lm.v, lm.s * sp.s * lf.s, G.aim, b.v, sp.la + lf.la, sp.v * lf.v); b.mode = 'fly'; b.rel = lf.rel;
   const air = [b.p.clone()], roll = []; let apex = 0, end = null;
   for (let i = 0; i < 240 * 25; i++) {
@@ -2095,9 +2516,8 @@ function updateSpinMeter() {
   const fmt = r => (Math.round(r / 50) * 50).toLocaleString('en-US');
   let rpm, txt, pending = false;
   if (aiming) {
-    const ls = lieMul(c, G.lie).s, lieTxt = ls < 0.97 ? ` · ${SURF[G.lie].name.toLowerCase()}` : '';
-    rpm = c.rpm * spinAt(manualSpin() ? G.spin : 0).s * ls;
-    if (manualSpin()) txt = `${SPIN[G.spin + 2].name}${lieTxt} · ${fmt(rpm)} rpm`; else { pending = true; txt = `Set by your stroke${lieTxt}`; }
+    const ls = lieMul(c, G.lie).s, lieTxt = ls < 0.97 ? ` · ${lieName(G.lie).toLowerCase()}` : '';
+    rpm = c.rpm * ls; pending = true; txt = `Set by your follow-through${lieTxt}`;
   } else { rpm = G.shot.rpm; txt = `${SPIN[Math.round(clamp(xFromS(rpm / c.rpm), -2, 2)) + 2].name} · ${fmt(rpm)} rpm`; }
   $('smVal').textContent = txt; el.classList.toggle('pending', pending);
   $('smNeedle').style.left = `${50 - clamp(xFromS(rpm / c.rpm), -2, 2) * 25}%`;
@@ -2158,8 +2578,8 @@ function updateHud() {
   const d = distToPin(), onGreen = G.lie === T_GREEN || (CLUBS[G.club].putter && d < 25);
   $('distLab').textContent = 'To pin';
   $('dist').innerHTML = onGreen ? `${(d / FT).toFixed(d < 3 ? 1 : 0)}<small>ft</small>` : `${Math.round(d / YD)}<small>yds</small>`;
-  $('lie').textContent = SURF[G.lie].name;
-  const putting = CLUBS[G.club].putter; $('readLine').hidden = !putting; $('spinLine').hidden = $('spinModeLine').hidden = $('loftLine').hidden = putting; if (putting) $('readTxt').textContent = greenRead();
+  $('lie').textContent = lieName(G.lie);
+  const putting = CLUBS[G.club].putter; $('readLine').hidden = !putting; $('loftLine').hidden = putting; if (putting) $('readTxt').textContent = greenRead();
   const dh = (HOLE.cupW.y - (G.ball.p.y - BR)) / FT;
   $('elev').textContent = Math.abs(dh) < 1.5 ? 'level' : `${dh > 0 ? 'up' : 'down'} ${Math.abs(dh).toFixed(0)} ft`;
   const rel = (G.windFrom - G.aim) / DEG + 180; $('windArrow').style.transform = `rotate(${rel}deg)`;
@@ -2579,7 +2999,8 @@ function loadHole(idx, titleOnly = false) {
     if (HOLE.water) HOLE.water.material.uniforms.sunDirection.value.copy(sunDir);
     env.cup = HOLE.cupW;
     G.hole = idx; G.strokes = 0; G.trails = []; G.pending = null; resetTrace(); $('shotDash').hidden = true;
-    G.windMph = titleOnly ? 3 : r() < 0.15 ? 0 : 2 + r() * 12; G.windFrom = r() * Math.PI * 2;
+    // ocean courses blow harder: wind is a range per course
+    const [w0, w1] = COURSE.wind || [2, 14]; G.windMph = titleOnly ? 3 : r() < (COURSE.wind ? 0.05 : 0.15) ? 0 : w0 + r() * (w1 - w0); G.windFrom = r() * Math.PI * 2;
     const ws = G.windMph * 0.447; G.wind.set(-Math.sin(G.windFrom) * ws, 0, Math.cos(G.windFrom) * ws);
     const tp = HOLE.pointAt(0, 0); G.ball.p.set(tp[0], hW(tp[0], -tp[1]) + BR, -tp[1]); G.ball.mode = 'rest'; G.ball.v.set(0, 0, 0);
     ballMesh.position.copy(G.ball.p);
@@ -2598,21 +3019,6 @@ function setLoft(dL, say) {
   if (HOLE && G.mode === 'aim') { updateAimVisuals(); updateMeterGuide(); }
   if (say) toast(`Loft ${L}°`, G.loft < 0 ? 'Lower flight, less spin, more roll' : G.loft > 0 ? 'Higher flight, more spin, stops sooner' : `Stock loft · range ${c.loftMin}–${c.loftMax}°`, 1.6);
 }
-function setSpin(v, say) {
-  if (say && G.mode !== 'aim') return;
-  if (say && !manualSpin()) { toast(SPIN_MODES[SPIN_MODE][0], SPIN_MODES[SPIN_MODE][1], 2.6); return; }
-  G.spin = manualSpin() ? clamp(v, -2, 2) : 0; const sp = SPIN[G.spin + 2];
-  $('spinTxt').textContent = manualSpin() ? sp.name : 'Stroke'; $('spinDn').hidden = $('spinUp').hidden = !manualSpin();
-  if (HOLE && G.mode === 'aim') { updateAimVisuals(); updateMeterGuide(); }
-  if (say) toast(`${sp.name} spin`, sp.tip, 1.8);
-}
-$('spinDn').addEventListener('click', e => { setSpin(G.spin - 1, true); e.currentTarget.blur(); });
-$('spinUp').addEventListener('click', e => { setSpin(G.spin + 1, true); e.currentTarget.blur(); });
-$('spinMode').value = SPIN_MODE;
-$('spinMode').addEventListener('change', e => {
-  SPIN_MODE = e.target.value; e.target.blur(); try { localStorage.setItem('golf.spinMode', SPIN_MODE); } catch (_) {}
-  setSpin(0); toast(SPIN_MODES[SPIN_MODE][0], SPIN_MODES[SPIN_MODE][1], 4);
-});
 function setupShot() {
   const b = G.ball; b.mode = 'rest'; b.v.set(0, 0, 0); ballMesh.visible = true;
   const [bx, by] = ballXY(); G.lie = surfAt(bx, by);
@@ -2622,7 +3028,7 @@ function setupShot() {
   [...clubsEl.children].forEach((el, k) => el.classList.toggle('on', k === G.club));
   SWING.p = 0; SWING.phase = 'addr'; golfer.visible = true;
   placeGolfer(); poseGolfer();
-  G.mode = 'aim'; G.overview = false; setSpin(0); setLoft(0);
+  G.mode = 'aim'; G.overview = false; setLoft(0);
   $('meterPct').dataset.hold = 0; resetTrace();
   updateAimVisuals(); updateHud(); updateMeterGuide(); setMeter(0);
   camSnap = true;
@@ -2684,28 +3090,7 @@ function swingSample(x, y, t) {
     if (span > 0) { SW.vInst = (q[1] - y) / span; setSpeed(SW.vInst / speedRef(CLUBS[G.club], SW.bTop)); }
   }
 }
-function strokeSpin(s, it, vImp) {
-  // both readings start when the forward push gets moving, so the pause at the top of the backswing doesn't count
-  const top = s[SW.iTop], dy = Math.max(1, top[1] - SW.y0); let i0 = SW.iTop;
-  while (i0 < s.length - 1 && s[i0][1] > top[1] - 4) i0++;
-  const tAt = frac => { const yy = top[1] - dy * frac; for (let i = i0; i < s.length; i++) if (s[i][1] <= yy) { const p = s[i - 1], q = s[i], f = (p[1] - yy) / Math.max(1e-3, p[1] - q[1]); return lerp(p[2], q[2], clamp(f, 0, 1)); } return it; };
-  if (SPIN_MODE === 'accel') {
-    // speed through the ball against speed early in the push: 1.2x (a natural speed-up) is normal spin
-    const vEarly = dy * 0.3 / Math.max(4, tAt(0.55) - tAt(0.25)), r = vImp / Math.max(vEarly, 1e-3);
-    return { spinX: clamp((r - 1.2) * 3.3, -2, 2), spinNote: `sped up ${r.toFixed(2)}×` };
-  }
-  if (SPIN_MODE !== 'smooth') return {};
-  // forward speed every 15 ms; jitter is how far each step strays from the average of its neighbours, against the mean speed
-  // (a steady speed-up counts as smooth, only changes in it count against you)
-  let k = i0; const yAt = t => { while (k < s.length - 2 && s[k + 1][2] < t) k++; const a = s[k], b = s[k + 1] || a, f = b[2] > a[2] ? clamp((t - a[2]) / (b[2] - a[2]), 0, 1) : 0; return lerp(a[1], b[1], f); };
-  const ys = []; for (let t = s[i0][2]; t <= it; t += 15) ys.push(yAt(t));
-  const v = []; for (let i = 1; i < ys.length; i++) v.push(ys[i - 1] - ys[i]);
-  const mean = v.reduce((a, x) => a + x, 0) / Math.max(1, v.length); let jit = 0;
-  for (let i = 1; i < v.length - 1; i++) jit += Math.abs(v[i] - (v[i - 1] + v[i + 1]) / 2);
-  jit /= Math.max(1, v.length - 2) * Math.max(mean, 1e-3);
-  return { spinX: clamp(1.5 - jit * 12, -2, 1.5), spinNote: `smoothness ${Math.round(100 * clamp(1 - jit * 3, 0, 1))}%` };
-}
-// Follow-through mode keeps reading the mouse for a quarter second after impact, then sets the spin rate on the ball in the air.
+// The follow-through is read from the mouse for a quarter second after impact, then sets the spin rate on the ball in the air.
 function followSample(x, y, t) { const F = SW.follow; F.past = Math.max(F.past, F.y0 - y); SW.samples.push([x, y, t]); if (t > F.until) finishFollow(); }
 function finishFollow() {
   const F = SW.follow; if (!F) return; SW.follow = null;
@@ -2732,9 +3117,8 @@ function impact(x, y, t) {
   let i0 = SW.iTop; while (i0 < s.length - 1 && s[i0][1] > top[1] - 3) i0++;
   let j = s.length - 1; while (j > i0 && (it - s[j][2] < 70 || s[j][1] - SW.y0 < dyTop * 0.25)) j--;
   const span = it - s[j][2], vImp = (s[j][1] - SW.y0) / Math.max(span, 4), vAvg = dyTop / dur;
-  const sp = CLUBS[G.club].putter ? {} : strokeSpin(s, it, vImp);
-  launchShot({ b: SW.bTop, back, fwd, curv, dur, vImp, vAvg, ...sp });
-  if (SPIN_MODE === 'follow' && !CLUBS[G.club].putter) { SW.follow = { y0: SW.y0, past: 0, until: it + 250 }; SW.shownUntil = performance.now() + 470; }
+  launchShot({ b: SW.bTop, back, fwd, curv, dur, vImp, vAvg });
+  if (!CLUBS[G.club].putter) { SW.follow = { y0: SW.y0, past: 0, until: it + 250 }; SW.shownUntil = performance.now() + 470; }
 }
 
 // ---------------------------------------------------------------------------
@@ -2774,11 +3158,11 @@ function launchShot(m) {
     b.v.set(Math.sin(dir) * speed, 0, -Math.cos(dir) * speed); b.w = 0; b.tilt = 0; b.mode = 'roll'; G.lastPutt = true;
   } else {
     const lm = lieMul(c, G.lie);
-    const sp = spinAt(manualSpin() ? G.spin : m.spinX ?? 0), lf = loftFx(c, G.loft);
+    const sp = spinAt(m.spinX ?? 0), lf = loftFx(c, G.loft);
     b.w = launchVel(c, power * lm.v, lm.s * sp.s * lf.s, dir, b.v, sp.la + lf.la, sp.v * lf.v); b.rel = lf.rel; b.tilt = shape.tilt * DEG; b.mode = 'fly'; G.lastPutt = false;
     b.p.y += 0.002;
   }
-  G.shot = { club: c, shape, power, tempo, accelF, m, loft: c.loft + G.loft, spinX: manualSpin() ? G.spin : m.spinX ?? 0, spinNote: m.spinNote, start: b.p.clone(), camPos: camPos.clone(), dir: aimVec(dir), landed: false, u: 0,
+  G.shot = { club: c, shape, power, tempo, accelF, m, loft: c.loft + G.loft, spinX: m.spinX ?? 0, spinNote: m.spinNote, start: b.p.clone(), camPos: camPos.clone(), dir: aimVec(dir), landed: false, u: 0,
     side: shape.tilt > 2 ? -1 : 1, sideD: c.putter ? 0 : clamp(expectedCarry(G.club, G.lie) * 0.07, 7, 18) };
   G.shot.rpm = b.w * 60 / (2 * Math.PI); updateSpinMeter(); dashStart();
   G.trails.push([ballXY()]);
@@ -2804,7 +3188,7 @@ function onBallEvent(r) {
   const b = G.ball;
   if (r === 'rest') return;
   if (typeof r === 'object') {
-    if (r.ev === 'bounce') { SND.bounce(r.type, r.speed); if (b.bounces === 1) { if (r.type === T_SAND) splashAt(b.p, true); } }
+    if (r.ev === 'bounce') { SND.bounce(r.type, r.speed); if (b.bounces === 1) { if (r.type === T_SAND || r.type === T_BEACH) splashAt(b.p, true); } }
     else if (r.ev === 'leaves') SND.leaves(); else if (r.ev === 'knock') SND.knock();
     return;
   }
@@ -2827,7 +3211,7 @@ function dropFromWater(entry) {
   const to = new V3().subVectors(G.prev, entry); to.y = 0; const L = to.length(); to.normalize();
   for (let s = 0; s < L; s += 0.5) {
     const x = entry.x + to.x * s, z = entry.z + to.z * s;
-    if (sampleField(HOLE.F.wat, x, -z) < -2.5) { const x2 = x + to.x * 2, z2 = z + to.z * 2; b.p.set(x2, hW(x2, z2) + BR, z2); return; }
+    if (inBounds(x, z) && sampleField(HOLE.coast ? HOLE.F.cz : HOLE.F.wat, x, -z) < (HOLE.coast ? -3 : -2.5)) { const x2 = x + to.x * 2, z2 = z + to.z * 2; b.p.set(x2, hW(x2, z2) + BR, z2); return; }
   }
   b.p.copy(G.prev);
 }
@@ -2851,6 +3235,8 @@ function showHoleDone(words) {
   scoreTable($('doneTable'));
   const last = G.round.type === '18' && G.hole === 17;
   $('doneNext').textContent = G.round.type === 'single' ? (G.hole < 17 ? `Play hole ${G.hole + 2}` : 'Play hole 1') : last ? 'Finish round' : `Hole ${G.hole + 2}`;
+  // a scored 18-hole round plays each hole once, so there is no replay
+  $('doneReplay').hidden = G.round.type === '18';
   $('holeDone').hidden = false;
 }
 $('doneNext').onclick = () => {
@@ -2860,7 +3246,7 @@ $('doneNext').onclick = () => {
 };
 let toMenuAfterCard = false;
 $('scClose').addEventListener('click', () => { if (toMenuAfterCard) { toMenuAfterCard = false; toMenu(); } });
-$('doneReplay').onclick = () => { $('holeDone').hidden = true; G.round.scores[G.hole] = null; loadHole(G.hole); };
+$('doneReplay').onclick = () => { if (G.round.type === '18') return; $('holeDone').hidden = true; G.round.scores[G.hole] = null; loadHole(G.hole); };
 $('doneMenu').onclick = () => toMenu();
 
 function afterShotSetup() {
@@ -2890,7 +3276,7 @@ function dashStart() {
   sdSet('sdLoft', `${S.loft}°${S.loft !== c.loft ? ` (stock ${c.loft}°)` : ''}`);
   sdSet('sdSpin', `${spinAt(S.spinX).name} · ${(Math.round(S.rpm / 50) * 50).toLocaleString('en-US')} rpm`);
   const hv = Math.hypot(b.v.x, b.v.z); sdSet('sdLaunch', `${(Math.atan2(b.v.y, hv) / DEG).toFixed(1)}° · ${Math.round(b.v.length() * 2.237)} mph`);
-  sdSet('sdLie', SURF[G.lie].name); S.apexY = b.p.y;
+  sdSet('sdLie', lieName(G.lie)); S.apexY = b.p.y;
 }
 function dashTick() {
   const S = G.shot, b = G.ball; if (!S || $('shotDash').hidden) return;
@@ -3030,6 +3416,7 @@ function update(dt) {
     HOLE.flagG.rotation.y = Math.atan2(G.wind.x, G.wind.z) - Math.PI / 2 + (G.windMph < 1 ? 0.8 : 0);
   }
   if (HOLE.water) HOLE.water.material.uniforms.time.value += dt * 0.35;
+  if (HOLE.surf) surfMat.uniforms.time.value += dt;
   updateCamera(dt);
   // the ball is drawn larger than life so it stays visible in the air and across the green
   { ballMesh.position.copy(G.ball.p); const s = Math.max(BALL_VIS, camera.position.distanceTo(G.ball.p) * 0.24); ballMesh.scale.setScalar(s); ballMesh.position.y += BR * (s - 1); }
@@ -3071,7 +3458,6 @@ addEventListener('keydown', e => {
   if (k === 'ArrowUp' || k === 'w') { e.preventDefault(); setClub(G.club - 1); return; }
   if (k === 'ArrowDown' || k === 's') { e.preventDefault(); setClub(G.club + 1); return; }
   if (k === 'v') { toggleOverview(); return; }
-  if (k === 'q' || k === 'e') { setSpin(G.spin + (k === 'e' ? 1 : -1), true); return; }
   if (k === 'ArrowLeft' || k === 'ArrowRight') e.preventDefault();
   G.keys.add(k); if (e.shiftKey) G.keys.add('Shift');
 });
@@ -3100,7 +3486,7 @@ if (TEST) {
     setClub, setAim(a) { G.aim = a; placeGolfer(); updateAimVisuals(); },
     pose(p, phase = 'back') { G.freezePose = true; SWING.p = p; SWING.phase = phase; SWING.pTop = -1; poseGolfer(); },
     cam(px, py, pz, lx, ly, lz) { G.freezeCam = true; camPos.set(px, py, pz); camLook.set(lx, ly, lz); camera.position.copy(camPos); camera.lookAt(camLook); renderer.render(scene, camera); },
-    render() { renderer.render(scene, camera); }, simFlat, SPIN, setSpin, setLoft, loftFx, LK, powerForCarry, lieMul, spinMode(v) { $('spinMode').value = v; $('spinMode').dispatchEvent(new Event('change')); }, camera, golfer, scene, renderer, HUMAN, clubG,
+    render() { renderer.render(scene, camera); }, simFlat, SPIN, setLoft, loftFx, LK, powerForCarry, lieMul, finishFollow, SW, camera, golfer, scene, renderer, HUMAN, clubG,
   };
 }
 </script>
