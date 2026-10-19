@@ -9,6 +9,13 @@ forward through where you started. Slant the push to draw or fade the ball and s
 Backspin comes from the follow-through: stop short just past where you started for more, keep pushing through
 for less.
 
+Off the short grass the lie matters. Rough, pine straw, waste areas, beaches, rocks and bunkers each roll a lie when the
+ball stops (in rough it can sit up, sit in the grass or sit down; in sand it can lie clean or plug), and every shot from
+there comes out a little different. A wedge cuts through and stays close to its normal distance; a long iron or a wood
+gets grabbed and comes out shorter and much less predictable, and it can be caught heavy. A ball sitting up in rough can
+come out as a flier, long and with no spin. From these lies the projected flight shows the average shot, a dashed
+outline shows where most shots would come down, and the carry reads as a range.
+
 ## The courses
 
 All sixteen courses are made up. The first four are in a Florida style with pines, oaks, palms, waste areas and
@@ -18,7 +25,7 @@ islands, with lava or coral shores, palms, flowering shrubs and mountains inland
 
 | Course | Style | Yards |
 | --- | --- | --- |
-| Heronwood, Heron Course | Waste areas and lakes, a forced-carry par 3 at 17 | 6,999 |
+| Heronwood, Heron Course | Sharp doglegs with corners to cut, a drivable 5th, a par 5 at 16 reachable over water, a forced-carry par 3 at 17 | 7,300 |
 | Coquina Ridge, Ridge Course | Hills, elevated tees, up to about 30 feet of drop | 7,035 |
 | Palmetto Run, Lakes Course | Water on most holes, reachable par 5s, drivable par 4s | 7,040 |
 | Blackwater Bend, Oak Course | Tight oak corridors, creeks, small greens | 7,030 |
@@ -36,7 +43,9 @@ islands, with lava or coral shores, palms, flowering shrubs and mountains inland
 | Tropicbird Bay, Reef Course | Low coral rock along the sea for whole holes, a par 3 to a point at 11 | 7,015 |
 
 Courses are data in the `COURSES` table near the top of the script. Each hole lists its par and yardage, a
-centreline, the green, bunkers, waste areas, water, elevation along the hole and any corner trees. Ocean holes
+centreline, the green, bunkers, waste areas, water, elevation along the hole and any corner trees. `open` cuts
+clearings into the woods ([yards along, yards across, radius]) so the inside of a dogleg can be carried, and `stand` leaves a
+clump of trees inside the corridor. Greenside bunkers are dug deeper than fairway bunkers, with a higher lip. Ocean holes
 add `sea`, a list of straight shorelines given by two points along and across the hole, with an optional beach
 width; the course settings choose the trees, the scrub colour and the wind. Mountain holes add `side`, how many
 feet the hillside climbs about 100 yards off the line of play (plus for the right, minus for the left), and `wl`,

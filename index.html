@@ -337,53 +337,53 @@ function tn(x, y) {
 // ---------------------------------------------------------------------------
 const COURSES = [
 { id: 'heronwood', name: 'Heronwood', place: 'Northeast Florida', sub: 'Heron Course', seed: 1, mix: [0.6, 0.28], sig: 16, holes: [
-  { par: 4, yds: 405, path: [[0,0],[0,245],[-30,405]], fw: [185,390,34], green: { rx: 15, ry: 13, rot: -6 }, pin: [-2, 5],
-    bunkers: [[250,22,9,5,10],[400,18,6,4,0],[410,-19,6,4,0]], waste: [[230,-36,45,9,0]], water: [], elev: [[0,6],[200,0],[405,3]] },
-  { par: 5, yds: 548, path: [[0,0],[0,280],[45,548]], fw: [205,525,32], green: { rx: 12, ry: 15, rot: 12 }, pin: [3, -2],
-    bunkers: [[290,-20,11,5,0],[470,-22,10,5,0],[560,-21,5,4,0]], waste: [[360,35,50,9,0]],
-    water: [{ t: 'strip', side: 1, s0: 440, s1: 565, d0: 19, d1: 62 }], elev: [[0,0],[300,4],[548,0]] },
-  { par: 3, yds: 168, path: [[0,0],[-6,168]], fw: [125,150,24], green: { rx: 11, ry: 12, rot: -15 }, raise: 2.2, pin: [-4, 3],
-    bunkers: [[150,-12,6,4,-20],[184,0,3,7,0]], waste: [], water: [], elev: [[0,8],[168,4]] },
-  { par: 4, yds: 402, path: [[0,0],[0,225],[18,402]], fw: [175,385,31], green: { rx: 13, ry: 12, rot: 8 }, pin: [3, 2],
-    bunkers: [[240,-20,9,5,0],[395,-17,6,4,0],[420,0,3,7,0]], waste: [],
-    water: [{ t: 'strip', side: 1, s0: 280, s1: 420, d0: 18, d1: 62 }], elev: [[0,0],[402,-3]] },
-  { par: 4, yds: 455, path: [[0,0],[-4,255],[10,455]], fw: [195,440,33], green: { rx: 15, ry: 13, rot: 0 }, pin: [-3, -4],
-    bunkers: [[262,21,10,5,0],[290,-22,11,5,0],[448,18,7,4,0],[462,-18,7,4,0]], waste: [[140,36,50,10,0]], water: [], elev: [[0,10],[250,2],[455,0]] },
-  { par: 4, yds: 345, path: [[0,0],[0,215],[-90,320]], fw: [160,330,32], green: { rx: 11, ry: 12, rot: -20 }, pin: [-2, 3],
-    bunkers: [[225,22,10,5,0],[350,18,5,4,0]], waste: [],
-    water: [{ t: 'strip', side: -1, s0: 120, s1: 290, d0: 24, d1: 75 }], elev: [[0,0],[345,2]] },
-  { par: 4, yds: 440, path: [[0,0],[0,255],[22,440]], fw: [190,425,33], green: { rx: 14, ry: 13, rot: 5 }, pin: [2, -3],
-    bunkers: [[260,21,9,5,0],[432,18,7,4,0],[446,-18,6,4,0]], waste: [[300,-34,90,10,0]], water: [], elev: [[0,0],[220,-6],[440,2]] },
-  { par: 3, yds: 215, path: [[0,0],[8,215]], fw: [165,198,26], green: { rx: 14, ry: 15, rot: 0 }, pin: [-4, 2],
-    bunkers: [[208,20,8,4,0],[234,-4,3,8,0]], waste: [],
-    water: [{ t: 'strip', side: -1, s0: 60, s1: 225, d0: 19, d1: 70 }], elev: [[0,4],[215,0]] },
-  { par: 5, yds: 565, path: [[0,0],[0,270],[-35,430],[-28,565]], fw: [200,550,33], green: { rx: 13, ry: 12, rot: 0 }, pin: [3, 3],
-    bunkers: [[290,21,10,5,0],[420,-22,10,5,0],[558,17,7,4,0],[572,-17,6,4,0]], waste: [[455,0,7,22,0]], water: [], elev: [[0,0],[300,6],[565,10]] },
-  { par: 4, yds: 412, path: [[0,0],[0,245],[-40,412]], fw: [185,395,33], green: { rx: 14, ry: 12, rot: -5 }, pin: [-3, 2],
-    bunkers: [[408,-17,6,4,0],[420,17,7,4,0]], waste: [[265,35,50,10,0]], water: [], oaks: [[235,-34]], elev: [[0,3],[412,0]] },
-  { par: 5, yds: 530, path: [[0,0],[0,275],[35,420],[30,530]], fw: [200,515,33], green: { rx: 13, ry: 12, rot: 10 }, pin: [3, 2],
-    bunkers: [[290,21,9,5,0],[522,-17,6,4,0]], waste: [[330,-32,60,10,0]],
-    water: [{ t: 'strip', side: 1, s0: 430, s1: 560, d0: 19, d1: 62 }], elev: [[0,0],[530,-4]] },
-  { par: 4, yds: 318, path: [[0,0],[10,190],[28,318]], fw: [140,300,30], green: { rx: 10, ry: 12, rot: 15 }, pin: [2, 3],
-    bunkers: [[205,-16,9,5,0],[255,-4,5,4,0],[312,-17,6,4,0]], waste: [],
-    water: [{ t: 'strip', side: 1, s0: 240, s1: 340, d0: 17, d1: 58 }], elev: [[0,0],[318,3]] },
-  { par: 3, yds: 176, path: [[0,0],[0,176]], fw: [135,160,24], green: { rx: 13, ry: 13, rot: 0 }, pin: [3, 0],
-    bunkers: [[170,-18,7,4,0],[192,-6,3,6,0]], waste: [],
-    water: [{ t: 'strip', side: 1, s0: 30, s1: 195, d0: 16, d1: 72 }], elev: [[0,0],[176,0]] },
-  { par: 4, yds: 468, path: [[0,0],[0,265],[38,468]], fw: [190,450,33], green: { rx: 14, ry: 12, rot: 0 }, pin: [-2, 3],
-    bunkers: [[295,-22,10,5,0],[462,-17,7,4,0]], waste: [[330,35,90,10,0]],
-    water: [{ t: 'strip', side: -1, s0: 25, s1: 180, d0: 24, d1: 74 }], elev: [[0,5],[468,0]] },
-  { par: 4, yds: 437, path: [[0,0],[6,255],[12,437]], fw: [190,420,32], green: { rx: 14, ry: 13, rot: 0 }, pin: [3, -3],
-    bunkers: [[262,21,9,5,0],[285,-21,9,5,0],[430,19,7,4,0],[444,-19,7,4,0]], waste: [[175,-34,40,10,0]], water: [], elev: [[0,0],[250,-3],[437,2]] },
-  { par: 5, yds: 515, path: [[0,0],[15,250],[5,400],[-15,515]], fw: [195,500,33], green: { rx: 13, ry: 12, rot: -10 }, pin: [-4, 2],
-    bunkers: [[300,21,10,5,0],[508,17,7,4,0]], waste: [], oaks: [[350,-30]],
-    water: [{ t: 'strip', side: -1, s0: 380, s1: 555, d0: 19, d1: 75 }], elev: [[0,0],[515,0]] },
-  { par: 3, yds: 152, path: [[0,0],[0,152]], fw: null, green: { rx: 11, ry: 14, rot: -25 }, pin: [-3, 2],
-    bunkers: [[150,19,5,4,0],[168,12,4,5,0]], waste: [],
-    water: [{ t: 'lake', s0: 18, s1: 134, d0: -45, d1: 40 }, { t: 'strip', side: -1, s0: 120, s1: 190, d0: 17, d1: 65 }], elev: [[0,10],[152,0]] },
-  { par: 4, yds: 448, path: [[0,0],[0,255],[32,448]], fw: [185,432,32], green: { rx: 14, ry: 12, rot: 6 }, pin: [3, 3],
-    bunkers: [[280,-21,10,5,0],[440,-17,7,4,0]], waste: [],
-    water: [{ t: 'strip', side: 1, s0: 15, s1: 470, d0: 22, d1: 92 }], elev: [[0,2],[448,4]] },
+  { par: 4, yds: 425, path: [[0,0],[0,245],[-45,425]], fw: [185,410,30], green: { rx: 14, ry: 13, rot: -6 }, pin: [-3, 4],
+    bunkers: [[238,-19,12,5,0],[275,22,10,5,0],[410,16,7,4,10],[422,-19,6,4,0]], waste: [[150,36,40,9,0]], water: [], oaks: [[300,-32]], elev: [[0,8],[240,2],[425,6]] },
+  { par: 5, yds: 575, path: [[0,0],[0,255],[30,300],[75,420],[70,575]], fw: [200,560,30], green: { rx: 13, ry: 14, rot: 8 }, pin: [3, -3],
+    bunkers: [[285,-21,10,5,0],[520,-18,8,4,0],[560,19,6,4,0],[585,-17,5,4,0]], waste: [], oaks: [[255,30]],
+    water: [{ t: 'strip', side: 1, s0: 330, s1: 500, d0: 20, d1: 70 }, { t: 'lake', s0: 452, s1: 468, d0: -70, d1: 40 }], elev: [[0,0],[300,6],[575,2]] },
+  { par: 3, yds: 190, path: [[0,0],[-8,190]], fw: null, green: { rx: 12, ry: 15, rot: -18 }, raise: 1.5, pin: [4, 3],
+    bunkers: [[188,-22,6,4,0],[200,20,5,4,20],[206,-6,3,6,0]], waste: [[95,0,55,22,0]], water: [], elev: [[0,26],[190,6]] },
+  { par: 4, yds: 455, path: [[0,0],[0,200],[4,250],[30,272],[200,280]], fw: [180,440,30], cor: 34, green: { rx: 14, ry: 12, rot: 0 }, pin: [3, 2],
+    bunkers: [[440,-16,7,4,0],[448,17,7,4,0]], waste: [[228,42,30,16,25]], open: [[228,42,34]],
+    water: [{ t: 'lake', s0: 240, s1: 310, d0: -75, d1: -19 }], elev: [[0,4],[250,0],[455,8]] },
+  { par: 4, yds: 330, path: [[0,0],[-10,190],[-40,330]], fw: [150,312,28], green: { rx: 11, ry: 13, rot: -20 }, pin: [-5, 3],
+    bunkers: [[215,19,10,5,0],[322,16,6,4,0],[338,18,5,4,0]], waste: [],
+    water: [{ t: 'strip', side: -1, s0: 170, s1: 350, d0: 16, d1: 70 }], elev: [[0,2],[330,0]] },
+  { par: 4, yds: 470, path: [[0,0],[8,270],[0,470]], fw: [190,455,32], green: { rx: 15, ry: 13, rot: 4 }, raise: 1.0, pin: [-2, -4],
+    bunkers: [[255,-20,11,5,0],[278,20,10,5,0],[395,0,5,13,0],[462,-17,7,4,0],[470,19,6,4,0]], waste: [[160,-36,60,10,0]], water: [], elev: [[0,0],[250,10],[470,30]] },
+  { par: 3, yds: 225, path: [[0,0],[10,225]], fw: [170,205,26], green: { rx: 15, ry: 14, rot: 10 }, pin: [4, 3],
+    bunkers: [[215,-18,8,4,0],[245,-6,4,7,0]], waste: [],
+    water: [{ t: 'strip', side: 1, s0: 60, s1: 240, d0: 16, d1: 70 }], elev: [[0,34],[225,4]] },
+  { par: 4, yds: 415, path: [[0,0],[0,210],[18,240],[120,370]], fw: [170,400,30], cor: 36, green: { rx: 13, ry: 13, rot: 10 }, pin: [3, 2],
+    bunkers: [[245,-21,11,5,0],[398,-16,7,4,0],[433,4,3,7,0]], waste: [],
+    water: [{ t: 'lake', s0: 120, s1: 330, d0: 17, d1: 95 }], elev: [[0,6],[415,4]] },
+  { par: 5, yds: 560, path: [[0,0],[0,280],[60,420],[70,560]], fw: [200,545,32], green: { rx: 13, ry: 13, rot: 6 }, pin: [-3, 2],
+    bunkers: [[255,-21,10,5,0],[440,21,10,5,0],[548,16,6,4,0],[566,-18,5,4,0]], waste: [],
+    water: [{ t: 'lake', s0: 298, s1: 314, d0: -70, d1: 70 }, { t: 'strip', side: -1, s0: 470, s1: 580, d0: 18, d1: 70 }], elev: [[0,6],[290,1],[560,8]] },
+  { par: 4, yds: 445, path: [[0,0],[0,230],[8,268],[40,285],[175,300]], fw: [185,430,30], cor: 34, green: { rx: 14, ry: 12, rot: 10 }, pin: [2, 3],
+    open: [[232,40,34]], bunkers: [[278,-20,12,5,0],[432,-17,7,4,0],[452,17,6,4,0]], waste: [[235,32,40,14,0]], water: [], oaks: [[275,-30]], elev: [[0,10],[260,0],[445,4]] },
+  { par: 5, yds: 600, path: [[0,0],[-10,270],[-60,420],[-30,600]], fw: [200,580,30], green: { rx: 13, ry: 12, rot: -8 }, pin: [3, 3],
+    bunkers: [[285,20,10,5,0],[470,-18,9,5,0],[588,-16,7,4,0],[596,18,6,4,0]], waste: [[330,-34,80,10,0]], water: [], stand: [[445,26,9]], elev: [[0,0],[300,8],[600,20]] },
+  { par: 4, yds: 360, path: [[0,0],[0,200],[-6,230],[-28,243],[-125,248]], fw: [160,345,28], cor: 32, green: { rx: 12, ry: 12, rot: 0 }, pin: [2, -2],
+    bunkers: [[228,19,12,5,0],[350,14,6,4,0],[366,-17,6,4,0]], waste: [], water: [], stand: [[175,-38,20]], open: [[300,-38,24]], elev: [[0,2],[360,10]] },
+  { par: 3, yds: 165, path: [[0,0],[4,165]], fw: null, green: { rx: 12, ry: 14, rot: 8 }, raise: 2.0, pin: [-3, 3],
+    bunkers: [[146,-8,6,8,0],[149,12,5,6,0],[176,-17,4,4,0]], waste: [], water: [], elev: [[0,0],[165,14]] },
+  { par: 4, yds: 480, path: [[0,0],[-15,280],[10,480]], fw: [200,465,32], green: { rx: 14, ry: 13, rot: 6 }, raise: 1.2, pin: [-2, 3],
+    bunkers: [[275,20,11,5,0],[470,-16,7,4,0],[486,18,6,4,0]], waste: [[400,30,40,9,0]],
+    water: [{ t: 'strip', side: -1, s0: 230, s1: 330, d0: 18, d1: 60 }], elev: [[0,32],[260,4],[480,18]] },
+  { par: 4, yds: 425, path: [[0,0],[0,200],[-15,240],[-105,410]], fw: [180,410,30], green: { rx: 14, ry: 12, rot: -12 }, pin: [-4, 2],
+    bunkers: [[250,21,12,5,0],[418,17,7,4,0],[444,-4,3,7,0]], waste: [],
+    water: [{ t: 'strip', side: -1, s0: 120, s1: 440, d0: 17, d1: 80 }], elev: [[0,4],[425,0]] },
+  { par: 5, yds: 535, path: [[0,0],[5,280],[-20,535]], fw: [200,445,32], green: { rx: 12, ry: 14, rot: -5 }, pin: [-3, 2],
+    bunkers: [[270,-20,11,5,0],[300,20,10,5,0],[528,-19,6,4,0],[545,18,5,4,0]], waste: [], oaks: [[380,30]],
+    water: [{ t: 'lake', s0: 455, s1: 512, d0: -50, d1: 40 }], elev: [[0,6],[535,0]] },
+  { par: 3, yds: 175, path: [[0,0],[-6,175]], fw: null, green: { rx: 12, ry: 14, rot: -20 }, pin: [4, 2],
+    bunkers: [[172,-21,6,4,0],[192,-8,4,6,0]], waste: [],
+    water: [{ t: 'lake', s0: 40, s1: 158, d0: -30, d1: 34 }, { t: 'strip', side: 1, s0: 140, s1: 200, d0: 15, d1: 60 }], elev: [[0,14],[175,0]] },
+  { par: 4, yds: 470, path: [[0,0],[0,235],[12,268],[120,450]], fw: [185,455,30], green: { rx: 14, ry: 13, rot: 6 }, raise: 1.0, pin: [3, -3],
+    bunkers: [[262,-20,11,5,0],[462,17,7,4,0],[478,-17,5,4,0]], waste: [], stand: [[230,34,18]],
+    water: [{ t: 'strip', side: -1, s0: 300, s1: 490, d0: 18, d1: 70 }], elev: [[0,5],[260,4],[470,22]] },
 ] },
 { id: 'coquina-ridge', name: 'Coquina Ridge', place: 'Central Florida', sub: 'Ridge Course', seed: 2, mix: [0.5, 0.45], sig: 3, holes: [
   { par: 4, yds: 395, path: [[0,0],[0,240],[40,395]], fw: [175,380,34], green: { rx: 14, ry: 12, rot: 10 }, pin: [2, 3],
@@ -1612,6 +1612,8 @@ function buildHole(idx) {
   const islandR = spec.island ? spec.island * YD : 0;
   const fw = spec.fw ? { s0: spec.fw[0] * YD, s1: spec.fw[1] * YD, h: spec.fw[2] * YD / 2 } : null;
   const cor = (spec.cor || 40) * YD;
+  const opens = (spec.open || []).map(([ss, sd, sr]) => [...pointAt(ss * YD, sd * YD), sr * YD]);
+  const stands = (spec.stand || []).map(([ss, sd, sr]) => [...pointAt(ss * YD, sd * YD), sr * YD]);
   // Ocean: each sea entry [s0, d0, s1, d1, beach] is a straight shoreline through two points given in hole coordinates
   // (yards along and across the hole); the sea is the side away from the tee. In the hole the line wanders into coves and
   // points; out past the hole's ground it stays straight so the far land can be cut along it. beach = sand width in yards.
@@ -1724,6 +1726,10 @@ function buildHole(idx) {
     } else o.fF = 60;
     const ch = cor * (0.55 + 0.45 * smooth(0, 110, s)) + 5 * tn(x * 0.8 + 300, y * 0.8 + 100);
     o.fC = Math.max(ad - ch, -(s + 20), s - (L + 30)) + 2 * tn(x * 2.5 + 9, y * 2.5 + 31);
+    // open ground cut into the woods (the inside of a dogleg, so a long carry can cut the corner), then stands of trees
+    // left inside the corridor (a tree to play around)
+    for (const st of opens) { const v = Math.hypot(x - st[0], y - st[1]) - st[2] + 3 * tn(x * 0.4 + st[1], y * 0.4); if (v < o.fC) o.fC = v; }
+    for (const st of stands) { const v = st[2] - Math.hypot(x - st[0], y - st[1]) + 3 * tn(x * 0.4 + st[0], y * 0.4); if (v > o.fC) o.fC = v; }
   }
   const baseH = (x, y) => 1.3 * tn(x * 0.5, y * 0.5) + 0.32 * tn(x * 2.1 + 50, y * 2.1 + 80);
   const teeH = baseH(0, 0) + 0.6 + elevAt(0);
@@ -1775,7 +1781,8 @@ function buildHole(idx) {
     const tm = smooth(4, 0, o.tD); if (tm > 0) h = lerp(h, teeH, tm);
     const gm = smooth(6, -0.6, o.gD);
     if (gm > 0) h = lerp(h, greenSurf(x, y, o), gm);
-    if (o.bD < 3.5) h += 0.25 * Math.exp(-(((o.bD - 0.9) / 0.8) ** 2)) * smooth(-2, 0.3, o.gD) - 0.85 * smooth(0.15, -2.6, o.bD);   // no bunker lip on the putting surface
+    // greenside bunkers are deeper with a higher lip, so a low club from near the face can catch it; no lip on the putting surface
+    if (o.bD < 3.5) { const gs = smooth(18, 7, o.gD); h += (0.25 + 0.4 * gs) * Math.exp(-(((o.bD - 0.9) / 0.8) ** 2)) * smooth(-2, 0.3, o.gD) - (0.85 + 0.75 * gs) * smooth(0.15, -2.6 - 0.4 * gs, o.bD); }
     if (o.wsD < 2) h -= 0.12 * smooth(1.5, -2, o.wsD);
     if (shore) return o.wat >= 0 ? h : Math.max(h, WL + 0.15);
     // (in the mountains the bank slopes into the water over a couple of metres instead of a bulkhead drop)
@@ -1934,7 +1941,7 @@ function buildHole(idx) {
       if (wat > -4 || t < 14 || g < 14 || (coast && fieldAt(F.cz, x, y) > -5)) continue;
       const fwy = fieldAt(F.f, x, y), bun = fieldAt(F.b, x, y), ws = fieldAt(F.ws, x, y);
       if (bun < 3 || ws < 2) continue;
-      const pf = c > 3 ? 0.55 * smooth(3, 16, c) + 0.06 : (c > -12 && fwy > 12 ? 0.012 : 0);
+      const pf = c > 3 ? 0.55 * smooth(3, 16, c) + 0.06 : (c > -12 && fwy > 12 && fieldAt(F.s, x, y) > 110 ? 0.012 : 0);   // (no stray trees in front of the tee)
       if (r() > pf * dens) continue;
       const type = pick(wat > -18);
       add(type, nVar(type), x, y, sampleField(F.h, x, y) - 0.05, 0.8 + r() * 0.45);
@@ -2989,20 +2996,71 @@ const aimVec = (a = G.aim) => new V3(Math.sin(a), 0, -Math.cos(a));
 // Spin from these lies drops more for the high-spin clubs.
 // off the corridor an ocean course has coastal scrub, not pine straw (same lie, same cost)
 const lieName = t => t === T_STRAW && COURSE.pal ? (COURSE.pal.straw || 'Scrub') : SURF[t].name;
-const LIE_LOSS = { [T_ROUGH]: [0.085, 12], [T_CUT]: [0.03, 4], [T_STRAW]: [0.1, 14], [T_WASTE]: [0.09, 12], [T_BEACH]: [0.12, 15], [T_ROCK]: [0.15, 18] };
-const LIE_V = new Map();
+// Lies off the short grass. Each one is rolled when the ball comes to rest (in rough it can sit up, sit in the grass or sit
+// down; in sand it can lie clean or plug), and every shot from it comes out a little different. How far it goes depends on
+// the club: a wedge cuts through rough or sand, while a long iron or a wood gets grabbed and comes out much shorter and
+// less predictable. m = average share of the clean-lie carry, sd = spread, bad = [chance, low, high] of catching it heavy,
+// fly = [chance, low, high] of a flier (no spin, flies long and runs), dir = spread in degrees, pull = average pull left.
+const LIE_Q = {
+  [T_ROUGH]: [['up', 'sitting up', 0.3], ['mid', 'in the grass', 0.45], ['down', 'sitting down', 0.25]],
+  [T_STRAW]: [['ok', 'clean', 0.6], ['bad', 'loose', 0.4]],
+  [T_WASTE]: [['ok', 'firm', 0.65], ['bad', 'soft', 0.35]],
+  [T_BEACH]: [['ok', 'firm', 0.5], ['bad', 'soft', 0.5]],
+  [T_ROCK]: [['ok', 'flat', 0.5], ['bad', 'uneven', 0.5]],
+  [T_SAND]: [['ok', 'clean', 0.75], ['bad', 'plugged', 0.25]],
+};
+const qName = (lie, q) => (LIE_Q[lie] || []).find(e => e[0] === q)?.[1] || '';
+function rollLie(lie, x, y) {
+  const Q = LIE_Q[lie]; if (!Q) return '';
+  let w = Q.map(e => e[2]);
+  // deep in the rough the ball sits down more often; a ball that came down steeply into sand plugs more often
+  if (lie === T_ROUGH) { const f = smooth(2, 14, sampleField(HOLE.F.f, x, y)); w = [0.3 - 0.15 * f, 0.45, 0.25 + 0.15 * f]; }
+  if (lie === T_SAND) { const a = G.ball.landA || 30; w = [0.85 - 0.4 * smooth(35, 60, a), 0.15 + 0.4 * smooth(35, 60, a)]; }
+  let u = Math.random() * w.reduce((a, b) => a + b, 0); for (let i = 0; i < Q.length; i++) if ((u -= w[i]) <= 0) return Q[i][0]; return Q[Q.length - 1][0];
+}
+function lieModel(c, lie, q) {
+  const ci = CLUBS.indexOf(c), k = clamp((CARRY[ci].carry / YD - 90) / 170, 0, 1), wood = c.head === 'driver' || c.head === 'wood';
+  const wedge = c.id === 'GW' || c.id === 'SW' || c.id === 'LW', W = wood ? 1 : 0;
+  switch (lie) {
+    case T_CUT: return { m: 0.98 - 0.03 * k, sd: 0.02, fly: [0.1, 1.02, 1.06], dir: 0.6 };
+    case T_ROUGH:
+      if (q === 'up') return { m: 0.98 - 0.06 * k - 0.04 * W, sd: 0.03 + 0.03 * k, fly: [wood ? 0 : 0.35, 1.04, 1.12], dir: 1 };
+      if (q === 'down') return { m: 0.92 - 0.38 * k - 0.08 * W, sd: 0.04 + 0.1 * k, bad: [0.05 + 0.15 * k, 0.4, 0.65], dir: 3, pull: 1.5 * k };
+      return { m: 0.99 - 0.21 * k - 0.06 * W, sd: 0.02 + 0.08 * k, bad: [0.03 + 0.1 * k, 0.55, 0.75], fly: [wood ? 0 : 0.12, 1.03, 1.08], dir: 2, pull: 0.8 * k };
+    case T_STRAW: return q === 'bad' ? { m: 0.93 - 0.2 * k - 0.05 * W, sd: 0.04 + 0.06 * k, bad: [0.05 + 0.12 * k, 0.45, 0.7], dir: 2.5 }
+      : { m: 0.97 - 0.08 * k, sd: 0.03 + 0.04 * k, bad: [0.03 + 0.08 * k, 0.5, 0.75], dir: 1.5 };
+    case T_WASTE: return q === 'bad' ? { m: 0.9 - 0.2 * k, sd: 0.04 + 0.06 * k, bad: [0.05 + 0.15 * k, 0.4, 0.65], dir: 2 }
+      : { m: 0.96 - 0.1 * k, sd: 0.03 + 0.04 * k, bad: [0.03 + 0.1 * k, 0.5, 0.75], dir: 1.2 };
+    case T_BEACH: return { m: (q === 'bad' ? 0.82 : 0.9) - 0.22 * k - 0.08 * W, sd: 0.04 + 0.07 * k, bad: [0.06 + 0.15 * k, 0.4, 0.65], dir: q === 'bad' ? 3 : 2 };
+    case T_ROCK: return { m: 0.9 - 0.15 * k, sd: 0.07, bad: [q === 'bad' ? 0.25 : 0.1, 0.3, 0.6], fly: [0.1, 1.05, 1.15], dir: q === 'bad' ? 5 : 3 };
+    case T_SAND:
+      if (wedge) return q === 'bad' ? { m: 0.58, sd: 0.1, bad: [0.1, 0.3, 0.45], dir: 3 } : { m: 0.8, sd: 0.06, bad: [0.06, 0.45, 0.65], fly: [0.05, 1.15, 1.3], dir: 1.5 };
+      return q === 'bad' ? { m: 0.5 - 0.15 * k, sd: 0.12, bad: [0.25, 0.2, 0.4], dir: 3 }
+        : { m: 0.96 - 0.26 * k - 0.1 * W, sd: 0.03 + 0.08 * k, bad: [0.05 + 0.15 * k, 0.4, 0.65], dir: 1.5 };
+  }
+  return null;
+}
+// One shot's result from the lie: share of carry, degrees off line, spin kept, and a word for what happened.
+function lieOutcome(c, lie, q) {
+  const M = lieModel(c, lie, q); if (!M || c.putter) return { f: 1, dir: 0, spin: 1, note: '' };
+  const dir = gauss() * (M.dir || 0) - (M.pull || 0);
+  if (M.bad && Math.random() < M.bad[0]) return { f: lerp(M.bad[1], M.bad[2], Math.random()), dir: dir * 1.5, spin: 0.6, note: 'caught it heavy' };
+  if (M.fly && Math.random() < M.fly[0]) return { f: lerp(M.fly[1], M.fly[2], Math.random()), dir, spin: 0.45, note: lie === T_SAND ? 'caught it thin' : 'flier' };
+  return { f: clamp(M.m + gauss() * M.sd, 0.2, 1.1), dir, spin: 1, note: '' };
+}
+// The range the projection shows: from a likely short miss to a likely long one, and how wide.
+function lieRange(c, lie, q) {
+  const M = lieModel(c, lie, q); if (!M) return null;
+  let lo = M.m - 1.5 * M.sd, hi = M.m + 1.5 * M.sd;
+  if (M.bad && M.bad[0] >= 0.15) lo = Math.min(lo, (M.bad[1] + M.bad[2]) / 2);
+  if (M.fly && M.fly[0] >= 0.2) hi = Math.max(hi, (M.fly[1] + M.fly[2]) / 2);
+  return { m: M.m, lo: clamp(lo, 0.2, 1.1), hi: clamp(hi, 0.2, 1.15), dir: 1.5 * (M.dir || 0), pull: M.pull || 0 };
+}
+// Spin kept from the lie (rough and sand take a lot of it away from a long club; a wedge keeps more).
 function lieMul(c, lie) {
   const S = SURF[lie];
-  if (lie === T_SAND && (c.id === 'SW' || c.id === 'LW' || c.id === 'GW')) return { v: 0.86, s: 0.8 };
-  if (lie === T_TEE || c.putter) return { v: 1, s: 1 };
-  const L = LIE_LOSS[lie]; if (!L) return { v: S.lv, s: S.ls };
-  const s = 1 - (1 - S.ls) * clamp(c.rpm / 8000, 0.25, 1), k = `${c.id}:${lie}`; let v = LIE_V.get(k);
-  if (v == null) {
-    const ci = CLUBS.indexOf(c), want = CARRY[ci].carry - Math.max(L[0] * CARRY[ci].carry, L[1] * YD); let lo = 0.6, hi = 1;
-    for (let it = 0; it < 12; it++) { const mid = (lo + hi) / 2; if (simFlat(c, mid, s).carry > want) hi = mid; else lo = mid; }
-    v = (lo + hi) / 2; LIE_V.set(k, v);
-  }
-  return { v, s };
+  if (lie === T_TEE || c.putter || !lieModel(c, lie, '')) return { v: 1, s: lie === T_TEE || c.putter ? 1 : S.ls };
+  return { v: 1, s: 1 - (1 - S.ls) * clamp(c.rpm / 8000, 0.25, 1) };
 }
 // Spin settings: more spin comes from a steeper hit (a touch lower and shorter, stops quicker); less spin is a knockdown
 // that flies lower and runs out. The lie still trims spin on top of this (rough and sand take a lot of it away).
@@ -3039,10 +3097,24 @@ function chooseClub() {
   for (let i = PUTTER - 1; i >= maxI; i--) { if (expectedTotal(i, lie) >= d * 0.97) { best = i; break; } if (i === maxI) best = maxI; }
   return best;
 }
+// A shot starts lined up on the hole, unless that line would finish in the trees or water (around a dogleg): then it
+// starts aimed down the middle of the hole as far as the club goes.
 function autoAim() {
-  const [bx, by] = ballXY(), c = CLUBS[G.club], cupXY = [HOLE.cupW.x, -HOLE.cupW.z];
-  const toPin = Math.atan2(cupXY[0] - bx, cupXY[1] - by);
-  return toPin;   // every shot starts lined up on the hole
+  const [bx, by] = ballXY(), c = CLUBS[G.club], cupXY = [HOLE.cupW.x, -HOLE.cupW.z], F = HOLE.F;
+  const toPin = Math.atan2(cupXY[0] - bx, cupXY[1] - by), dp = Math.hypot(cupXY[0] - bx, cupXY[1] - by);
+  if (c.putter) return toPin;
+  const reach = Math.min(dp, expectedTotal(G.club)), bad = (x, y) => sampleField(F.c, x, y) > 2 || sampleField(F.wat, x, y) > -1;
+  let blocked = false;
+  for (let t = 0.2; t <= 1.001 && !blocked; t += 0.04) { const x = bx + Math.sin(toPin) * reach * t, y = by + Math.cos(toPin) * reach * t; if ((t > 0.85 && bad(x, y)) || (t < 0.55 && sampleField(F.c, x, y) > 10)) blocked = true; }
+  if (!blocked) return toPin;
+  // the farthest point down the middle that the club reaches with the low part of the flight still inside the trees
+  const s0 = HOLE.project(bx, by)[0];
+  for (let f = 0.97; f >= 0.45; f -= 0.04) {
+    const p = HOLE.pointAt(Math.min(HOLE.L, s0 + reach * f), 0), a = Math.atan2(p[0] - bx, p[1] - by), len = Math.hypot(p[0] - bx, p[1] - by);
+    let ok = true; for (let t = 0.05; t < 0.6 && ok; t += 0.05) if (sampleField(F.c, bx + Math.sin(a) * len * t, by + Math.cos(a) * len * t) > -4) ok = false;
+    if (ok) return a;
+  }
+  const p = HOLE.pointAt(Math.min(HOLE.L, s0 + reach * 0.6), 0); return Math.atan2(p[0] - bx, p[1] - by);
 }
 
 // ---------------------------------------------------------------------------
@@ -3056,14 +3128,18 @@ const projRollMat = new LineMaterial({ color: 0xffe07a, linewidth: 3, worldUnits
 projAirMat.resolution.set(innerWidth, innerHeight); projRollMat.resolution.set(innerWidth, innerHeight);
 const projShadowMat = new LineMaterial({ color: 0x000000, linewidth: 2.5, worldUnits: false, transparent: true, opacity: 0.35, depthWrite: false });
 projShadowMat.resolution.set(innerWidth, innerHeight);
-let projAir = null, projRoll = null, projShadow = null;
+let projAir = null, projRoll = null, projShadow = null, projZone = null;
+const projZoneMat = new LineMaterial({ color: 0xffb04a, linewidth: 3, worldUnits: false, transparent: true, opacity: 0.95, depthWrite: false, dashed: true, dashSize: 1.4, gapSize: 0.9 });
+projZoneMat.resolution.set(innerWidth, innerHeight);
 const projRest = new THREE.Mesh(new THREE.CircleGeometry(0.55, 24).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.85, depthWrite: false, toneMapped: false }));
 projRest.renderOrder = 5; projG.add(projRest);
-function projectShot() {
+// Off the short grass the lie makes every shot different, so the flight shown is the average one and a dashed outline
+// marks where most shots from this lie with this club would come down.
+function projectShot(frac = 1, dDeg = 0) {
   const c = CLUBS[G.club]; if (c.putter || !HOLE) return null;
   const pe = { ...env, trees: false, cup: null, oob: null }, b = newBall(); b.p.copy(G.ball.p); b.p.y += 0.002;
-  const lm = lieMul(c, G.lie), sp = spinAt(0), lf = loftFx(c, G.loft);
-  b.w = launchVel(c, lm.v, lm.s * sp.s * lf.s, G.aim, b.v, sp.la + lf.la, sp.v * lf.v); b.mode = 'fly'; b.rel = lf.rel;
+  const lm = lieMul(c, G.lie), sp = spinAt(0), lf = loftFx(c, G.loft), pw = frac === 1 ? lm.v : powerForCarry(G.club, frac);
+  b.w = launchVel(c, pw, lm.s * sp.s * lf.s, G.aim + dDeg * DEG, b.v, sp.la + lf.la, sp.v * lf.v); b.mode = 'fly'; b.rel = lf.rel;
   const air = [b.p.clone()], roll = []; let apex = 0, end = null;
   for (let i = 0; i < 240 * 25; i++) {
     const r = stepBall(b, 1 / 240, pe);
@@ -3077,7 +3153,19 @@ function projectShot() {
   return { air, roll, land: b.landP || b.p.clone(), rest: b.p.clone(), apex, end };
 }
 function showProjection() {
-  const P = G.proj = projectShot(); projG.visible = !!P && G.mode === 'aim'; if (!P) return;
+  const c = CLUBS[G.club], R = c.putter ? null : lieRange(c, G.lie, G.lieQ);
+  const P = G.proj = projectShot(R ? R.m : 1, R ? -R.pull : 0); projG.visible = !!P && G.mode === 'aim'; if (!P) return;
+  P.zone = null;
+  if (R) {
+    const A = projectShot(R.lo, -R.pull).land, B = projectShot(R.hi, -R.pull).land, cx = (A.x + B.x) / 2, cz = (A.z + B.z) / 2;
+    let ux = B.x - A.x, uz = B.z - A.z; const half = Math.max(3, Math.hypot(ux, uz) / 2), ul = Math.hypot(ux, uz) || 1; ux /= ul; uz /= ul;
+    const w = Math.max(2.5, Math.tan(R.dir * DEG) * G.ball.p.distanceTo(P.land)), zone = [];
+    for (let i = 0; i <= 48; i++) { const t = i / 48 * Math.PI * 2, a = Math.cos(t) * half, q = Math.sin(t) * w, x = cx + ux * a - uz * q, z = cz + uz * a + ux * q; zone.push(new V3(x, hW(x, z) + 0.12, z)); }
+    P.zone = zone;
+  }
+  const gz = new LineGeometry(); gz.setPositions(P.zone ? P.zone.flatMap(p => [p.x, p.y, p.z]) : [0, -999, 0, 0, -999, 0]);
+  if (projZone) { projZone.geometry.dispose(); projZone.geometry = gz; } else { projZone = new Line2(gz, projZoneMat); projZone.frustumCulled = false; projZone.renderOrder = 4; projG.add(projZone); }
+  projZone.computeLineDistances(); projZone.visible = !!P.zone;
   const flat = pts => pts.flatMap(p => [p.x, p.y, p.z]);
   const g1 = new LineGeometry(); g1.setPositions(flat(P.air));
   if (projAir) { projAir.geometry.dispose(); projAir.geometry = g1; } else { projAir = new Line2(g1, projAirMat); projAir.frustumCulled = false; projAir.renderOrder = 4; projG.add(projAir); }
@@ -3087,7 +3175,7 @@ function showProjection() {
   const g2 = new LineGeometry(); g2.setPositions(flat(rp.map(p => p.clone().setY(p.y + 0.05))));
   if (projRoll) { projRoll.geometry.dispose(); projRoll.geometry = g2; } else { projRoll = new Line2(g2, projRollMat); projRoll.frustumCulled = false; projRoll.renderOrder = 4; projG.add(projRoll); }
   projRoll.computeLineDistances();
-  projRest.position.copy(P.rest).setY(hW(P.rest.x, P.rest.z) + 0.06); projRest.visible = !P.end;
+  projRest.position.copy(P.rest).setY(hW(P.rest.x, P.rest.z) + 0.06); projRest.visible = !P.end && !P.zone;
 }
 const ring = new THREE.Mesh(new THREE.RingGeometry(0.82, 1, 48), new THREE.MeshBasicMaterial({ color: 0xffe07a, transparent: true, opacity: 0.85, depthWrite: false }));
 ring.rotation.x = -Math.PI / 2; ring.renderOrder = 5; scene.add(ring);
@@ -3148,7 +3236,9 @@ function updateAimVisuals() {
   }
   aimLine.material.dashSize = putting ? 0.15 : 0.9; aimLine.material.gapSize = putting ? 0.12 : 0.7;
   HOLE.slopes.visible = G.mode === 'aim' && (putting || G.overview);   // with the putter out anywhere, and in overview to pick a landing spot
-  $('carryTxt').textContent = putting ? 'Putter' : `${Math.round(dist / YD)} yds`;
+  // from a poor lie the carry reads as the range most shots from it would carry
+  const R = putting ? null : lieRange(c, G.lie, G.lieQ);
+  $('carryTxt').textContent = putting ? 'Putter' : R ? `${Math.round(dist * R.lo / YD)}–${Math.round(dist * R.hi / YD)} yds` : `${Math.round(dist / YD)} yds`;
   drawMap();
 }
 
@@ -3185,7 +3275,7 @@ function updateHud() {
   const d = distToPin(), onGreen = G.lie === T_GREEN || (CLUBS[G.club].putter && d < 25);
   $('distLab').textContent = 'To pin';
   $('dist').innerHTML = onGreen ? `${(d / FT).toFixed(d < 3 ? 1 : 0)}<small>ft</small>` : `${Math.round(d / YD)}<small>yds</small>`;
-  $('lie').textContent = lieName(G.lie);
+  $('lie').textContent = lieName(G.lie) + (G.lieQ ? `, ${qName(G.lie, G.lieQ)}` : '');
   const putting = CLUBS[G.club].putter; $('readLine').hidden = !putting; $('loftLine').hidden = putting; if (putting) $('readTxt').textContent = greenRead();
   const dh = (HOLE.cupW.y - (G.ball.p.y - BR)) / FT;
   $('elev').textContent = Math.abs(dh) < 1.5 ? 'level' : `${dh > 0 ? 'up' : 'down'} ${Math.abs(dh).toFixed(0)} ft`;
@@ -3263,7 +3353,8 @@ function drawMap() {
     const [lx, ly] = toMap(P.land.x, -P.land.z), [rx, ry] = toMap(P.rest.x, -P.rest.z);
     c.strokeStyle = '#ffe07a'; c.lineWidth = 1.5 * d; c.setLineDash([3 * d, 3 * d]); c.beginPath(); c.moveTo(lx, ly); c.lineTo(rx, ry); c.stroke(); c.setLineDash([]);
     c.beginPath(); c.arc(lx, ly, 5 * d, 0, 6.283); c.stroke();
-    c.fillStyle = '#fff'; c.beginPath(); c.arc(rx, ry, 2.5 * d, 0, 6.283); c.fill();
+    if (P.zone) { c.strokeStyle = '#ffb04a'; c.lineWidth = 1.5 * d; c.setLineDash([3 * d, 2 * d]); c.beginPath(); P.zone.forEach((p, i) => { const [zx, zy] = toMap(p.x, -p.z); i ? c.lineTo(zx, zy) : c.moveTo(zx, zy); }); c.closePath(); c.stroke(); c.setLineDash([]); }
+    else { c.fillStyle = '#fff'; c.beginPath(); c.arc(rx, ry, 2.5 * d, 0, 6.283); c.fill(); }
   } else if (G.mode === 'aim') {
     const a = aimVec(), cd = CLUBS[G.club].putter ? Math.min(distToPin(), 30) : expectedCarry(G.club, G.lie);
     const [lx, ly] = toMap(bx + a.x * cd, by - a.z * cd);
@@ -3599,7 +3690,7 @@ function startRound(type, idx) {
 }
 function loadHole(idx, titleOnly = false) {
   $('loadNum').textContent = idx + 1; $('loading').hidden = titleOnly; G.mode = titleOnly ? 'title' : 'loading';
-  setTimeout(() => {
+  later(() => {
     const r = mulberry(900 + idx * 31 + COURSE.seed * 7919 + (G.round ? Math.floor(Math.random() * 1000) : 0));
     setSun(36, 200 + idx * 23);
     // clear mountain air lets the far ranges show; each course can set its own haze
@@ -3630,8 +3721,7 @@ function setLoft(dL, say) {
 }
 function setupShot() {
   const b = G.ball; b.mode = 'rest'; b.v.set(0, 0, 0); ballMesh.visible = true;
-  const [bx, by] = ballXY(); G.lie = surfAt(bx, by);
-  if (G.lie === T_TEE && G.strokes > 0 && G.strokes < 1) G.lie = T_TEE;
+  const [bx, by] = ballXY(); G.lie = surfAt(bx, by); G.lieQ = rollLie(G.lie, bx, by);
   G.club = chooseClub(); setupGolferClub(CLUBS[G.club]);
   G.aim = autoAim();
   [...clubsEl.children].forEach((el, k) => el.classList.toggle('on', k === G.club));
@@ -3757,21 +3847,22 @@ function launchShot(m) {
   const accelF = m.vAvg ? clamp(0.9 + 0.1 * (m.vImp / m.vAvg), 0.86, 1.03) : 1;
   m.speedF = speedF; const shape = shapeFromStroke(m, c);
   const swingF = c.putter ? Math.pow(clamp(speedF, 0.65, 1.12), 0.4) : clamp(0.55 + 0.45 * speedF, 0.6, 1) * Math.min(1, accelF);
-  const frac = clamp(m.b, 0.02, 1.12) * swingF, power = c.putter ? clamp(m.b * swingF, 0.02, 1.08) : powerForCarry(G.club, frac), tempo = speedF;
+  const lo = c.putter ? null : lieOutcome(c, G.lie, G.lieQ);
+  const frac = clamp(m.b, 0.02, 1.12) * swingF * (lo ? lo.f : 1), power = c.putter ? clamp(m.b * swingF, 0.02, 1.08) : powerForCarry(G.club, frac), tempo = speedF;
   setSpeed(speedF); $('meterPct').textContent = `${Math.round((c.putter ? power : frac) * 100)}%`; $('meterPct').dataset.hold = performance.now() + 2500;
   G.prev.copy(b.p); G.strokes++;
   b.hit.clear(); b.bounces = 0; b.t = 0; b.rel = 1; b.lipped = false; b.landP = null; b.apex = b.p.y; b.startP = b.p.clone();
-  const dir = G.aim + shape.start * DEG;
+  const dir = G.aim + (shape.start + (lo ? lo.dir : 0)) * DEG;
   if (c.putter) {
     const rollA = SURF[G.lie].roll, range = puttRange(), speed = rollSpeed(range * clamp(m.b * swingF, 0, 1.15), SURF[T_GREEN]) * (G.lie === T_GREEN ? 1 : Math.sqrt(rollA / SURF[T_GREEN].roll) * 0.9);
     b.v.set(Math.sin(dir) * speed, 0, -Math.cos(dir) * speed); b.w = 0; b.tilt = 0; b.mode = 'roll'; G.lastPutt = true;
   } else {
     const lm = lieMul(c, G.lie);
     const sp = spinAt(m.spinX ?? 0), lf = loftFx(c, G.loft);
-    b.w = launchVel(c, power * lm.v, lm.s * sp.s * lf.s, dir, b.v, sp.la + lf.la, sp.v * lf.v); b.rel = lf.rel; b.tilt = shape.tilt * DEG; b.mode = 'fly'; G.lastPutt = false;
+    b.w = launchVel(c, power * lm.v, lm.s * sp.s * lf.s * lo.spin, dir, b.v, sp.la + lf.la, sp.v * lf.v); b.rel = lf.rel; b.tilt = shape.tilt * DEG; b.mode = 'fly'; G.lastPutt = false;
     b.p.y += 0.002;
   }
-  G.shot = { club: c, shape, power, tempo, accelF, m, loft: c.loft + G.loft, spinX: m.spinX ?? 0, spinNote: m.spinNote, start: b.p.clone(), camPos: camPos.clone(), dir: aimVec(dir), landed: false, u: 0,
+  G.shot = { club: c, lieNote: lo ? lo.note : '', lieQ: G.lieQ, shape, power, tempo, accelF, m, loft: c.loft + G.loft, spinX: m.spinX ?? 0, spinNote: m.spinNote, start: b.p.clone(), camPos: camPos.clone(), dir: aimVec(dir), landed: false, u: 0,
     side: shape.tilt > 2 ? -1 : 1, sideD: c.putter ? 0 : clamp(expectedCarry(G.club, G.lie) * 0.07, 7, 18) };
   G.shot.rpm = b.w * 60 / (2 * Math.PI); updateSpinMeter(); dashStart();
   G.trails.push([ballXY()]);
@@ -3863,7 +3954,9 @@ function afterShotSetup() {
   if (G.strokes >= HOLES[G.hole].par + 6) { G.round.scores[G.hole] = G.strokes; G.mode = 'holed'; banner('Pick up', `${G.strokes} strokes`, 2); setTimeout(() => showHoleDone('Picked up'), 2000); return; }
   fadeThen(() => { ballMesh.position.copy(G.ball.p); setupShot(); });
 }
-function fadeThen(fn) { const f = $('fade'); f.classList.add('on'); G.mode = 'transition'; setTimeout(() => { fn(); camSnap = true; f.classList.remove('on'); }, 380); }
+function fadeThen(fn) { const f = $('fade'); f.classList.add('on'); G.mode = 'transition'; later(() => { fn(); camSnap = true; f.classList.remove('on'); }, 380); }
+// the test harness can run these at once, so a script keeps going when its tab is in the background
+function later(fn, ms) { if (TEST && window.__golfNow) fn(); else setTimeout(fn, ms); }
 // Shot dashboard (left side): fills in at impact, counts carry up while the ball is in the air and total while it runs,
 // then shows the curve the ball really took. It stays up until the next swing.
 const sdSet = (id, v) => { const el = $(id); if (el.textContent !== v) el.textContent = v; };
@@ -3885,7 +3978,7 @@ function dashStart() {
   sdSet('sdLoft', `${S.loft}°${S.loft !== c.loft ? ` (stock ${c.loft}°)` : ''}`);
   sdSet('sdSpin', `${spinAt(S.spinX).name} · ${(Math.round(S.rpm / 50) * 50).toLocaleString('en-US')} rpm`);
   const hv = Math.hypot(b.v.x, b.v.z); sdSet('sdLaunch', `${(Math.atan2(b.v.y, hv) / DEG).toFixed(1)}° · ${Math.round(b.v.length() * 2.237)} mph`);
-  sdSet('sdLie', lieName(G.lie)); S.apexY = b.p.y;
+  sdSet('sdLie', lieName(G.lie) + (S.lieQ ? `, ${qName(G.lie, S.lieQ)}` : '') + (S.lieNote ? ` · ${S.lieNote}` : '')); S.apexY = b.p.y;
 }
 function dashTick() {
   const S = G.shot, b = G.ball; if (!S || $('shotDash').hidden) return;
@@ -4087,7 +4180,7 @@ canvas.addEventListener('wheel', e => {
   if (CLUBS[G.club].putter) return;
   wheelAcc += e.deltaY; if (Math.abs(wheelAcc) >= 50) { setLoft(G.loft + (wheelAcc < 0 ? 1 : -1), true); wheelAcc = 0; }
 }, { passive: false });
-addEventListener('resize', () => { renderer.setSize(innerWidth, innerHeight); camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); sizeTrace(); trMat.resolution.set(innerWidth, innerHeight); projAirMat.resolution.set(innerWidth, innerHeight); projRollMat.resolution.set(innerWidth, innerHeight); projShadowMat.resolution.set(innerWidth, innerHeight); if (HOLE) { buildMapBase(); drawMap(); } });
+addEventListener('resize', () => { renderer.setSize(innerWidth, innerHeight); camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); sizeTrace(); trMat.resolution.set(innerWidth, innerHeight); projAirMat.resolution.set(innerWidth, innerHeight); projRollMat.resolution.set(innerWidth, innerHeight); projShadowMat.resolution.set(innerWidth, innerHeight); projZoneMat.resolution.set(innerWidth, innerHeight); if (HOLE) { buildMapBase(); drawMap(); } });
 
 // boot: hole 17 behind the title screen
 setupGolferClub(CLUBS[0]);
@@ -4103,7 +4196,7 @@ if (TEST) {
     setClub, setAim(a) { G.aim = a; placeGolfer(); updateAimVisuals(); },
     pose(p, phase = 'back') { G.freezePose = true; SWING.p = p; SWING.phase = phase; SWING.pTop = -1; poseGolfer(); },
     cam(px, py, pz, lx, ly, lz) { G.freezeCam = true; camPos.set(px, py, pz); camLook.set(lx, ly, lz); camera.position.copy(camPos); camera.lookAt(camLook); renderer.render(scene, camera); },
-    render() { renderer.render(scene, camera); }, simFlat, SPIN, setLoft, loftFx, LK, powerForCarry, lieMul, finishFollow, SW, camera, golfer, scene, renderer, HUMAN, clubG,
+    render() { renderer.render(scene, camera); }, simFlat, SPIN, setLoft, loftFx, LK, powerForCarry, lieMul, lieModel, lieOutcome, lieRange, rollLie, setupShot, ballXY, T: { T_ROUGH, T_SAND, T_STRAW, T_FAIR, T_CUT, T_WASTE }, finishFollow, SW, camera, golfer, scene, renderer, HUMAN, clubG,
   };
 }
 </script>
