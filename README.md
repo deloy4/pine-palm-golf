@@ -13,8 +13,8 @@ Off the short grass the lie matters. Rough, pine straw, waste areas, beaches, ro
 ball stops (in rough it can sit up, sit in the grass or sit down; in sand it can lie clean or plug), and every shot from
 there comes out a little different. A wedge cuts through and stays close to its normal distance; a long iron or a wood
 gets grabbed and comes out shorter and much less predictable, and it can be caught heavy. A ball sitting up in rough can
-come out as a flier, long and with no spin. From these lies the projected flight shows the average shot, a dashed
-outline shows where most shots would come down, and the carry reads as a range.
+come out as a flier, long and with no spin. The projected flight and the carry always show the clean-lie shot, as if from
+the fairway, so the player has to work out how much the lie will take off.
 
 ## The courses
 

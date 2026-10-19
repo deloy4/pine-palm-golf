@@ -3048,14 +3048,6 @@ function lieOutcome(c, lie, q) {
   if (M.fly && Math.random() < M.fly[0]) return { f: lerp(M.fly[1], M.fly[2], Math.random()), dir, spin: 0.45, note: lie === T_SAND ? 'caught it thin' : 'flier' };
   return { f: clamp(M.m + gauss() * M.sd, 0.2, 1.1), dir, spin: 1, note: '' };
 }
-// The range the projection shows: from a likely short miss to a likely long one, and how wide.
-function lieRange(c, lie, q) {
-  const M = lieModel(c, lie, q); if (!M) return null;
-  let lo = M.m - 1.5 * M.sd, hi = M.m + 1.5 * M.sd;
-  if (M.bad && M.bad[0] >= 0.15) lo = Math.min(lo, (M.bad[1] + M.bad[2]) / 2);
-  if (M.fly && M.fly[0] >= 0.2) hi = Math.max(hi, (M.fly[1] + M.fly[2]) / 2);
-  return { m: M.m, lo: clamp(lo, 0.2, 1.1), hi: clamp(hi, 0.2, 1.15), dir: 1.5 * (M.dir || 0), pull: M.pull || 0 };
-}
 // Spin kept from the lie (rough and sand take a lot of it away from a long club; a wedge keeps more).
 function lieMul(c, lie) {
   const S = SURF[lie];
@@ -3128,18 +3120,16 @@ const projRollMat = new LineMaterial({ color: 0xffe07a, linewidth: 3, worldUnits
 projAirMat.resolution.set(innerWidth, innerHeight); projRollMat.resolution.set(innerWidth, innerHeight);
 const projShadowMat = new LineMaterial({ color: 0x000000, linewidth: 2.5, worldUnits: false, transparent: true, opacity: 0.35, depthWrite: false });
 projShadowMat.resolution.set(innerWidth, innerHeight);
-let projAir = null, projRoll = null, projShadow = null, projZone = null;
-const projZoneMat = new LineMaterial({ color: 0xffb04a, linewidth: 3, worldUnits: false, transparent: true, opacity: 0.95, depthWrite: false, dashed: true, dashSize: 1.4, gapSize: 0.9 });
-projZoneMat.resolution.set(innerWidth, innerHeight);
+let projAir = null, projRoll = null, projShadow = null;
 const projRest = new THREE.Mesh(new THREE.CircleGeometry(0.55, 24).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.85, depthWrite: false, toneMapped: false }));
 projRest.renderOrder = 5; projG.add(projRest);
-// Off the short grass the lie makes every shot different, so the flight shown is the average one and a dashed outline
-// marks where most shots from this lie with this club would come down.
-function projectShot(frac = 1, dDeg = 0) {
+// The flight shown is always the clean-lie shot (as if from the fairway): from rough, sand or straw the player has to
+// work out for themselves how much shorter and less predictable it will come out.
+function projectShot() {
   const c = CLUBS[G.club]; if (c.putter || !HOLE) return null;
   const pe = { ...env, trees: false, cup: null, oob: null }, b = newBall(); b.p.copy(G.ball.p); b.p.y += 0.002;
-  const lm = lieMul(c, G.lie), sp = spinAt(0), lf = loftFx(c, G.loft), pw = frac === 1 ? lm.v : powerForCarry(G.club, frac);
-  b.w = launchVel(c, pw, lm.s * sp.s * lf.s, G.aim + dDeg * DEG, b.v, sp.la + lf.la, sp.v * lf.v); b.mode = 'fly'; b.rel = lf.rel;
+  const sp = spinAt(0), lf = loftFx(c, G.loft);
+  b.w = launchVel(c, 1, sp.s * lf.s, G.aim, b.v, sp.la + lf.la, sp.v * lf.v); b.mode = 'fly'; b.rel = lf.rel;
   const air = [b.p.clone()], roll = []; let apex = 0, end = null;
   for (let i = 0; i < 240 * 25; i++) {
     const r = stepBall(b, 1 / 240, pe);
@@ -3153,19 +3143,7 @@ function projectShot(frac = 1, dDeg = 0) {
   return { air, roll, land: b.landP || b.p.clone(), rest: b.p.clone(), apex, end };
 }
 function showProjection() {
-  const c = CLUBS[G.club], R = c.putter ? null : lieRange(c, G.lie, G.lieQ);
-  const P = G.proj = projectShot(R ? R.m : 1, R ? -R.pull : 0); projG.visible = !!P && G.mode === 'aim'; if (!P) return;
-  P.zone = null;
-  if (R) {
-    const A = projectShot(R.lo, -R.pull).land, B = projectShot(R.hi, -R.pull).land, cx = (A.x + B.x) / 2, cz = (A.z + B.z) / 2;
-    let ux = B.x - A.x, uz = B.z - A.z; const half = Math.max(3, Math.hypot(ux, uz) / 2), ul = Math.hypot(ux, uz) || 1; ux /= ul; uz /= ul;
-    const w = Math.max(2.5, Math.tan(R.dir * DEG) * G.ball.p.distanceTo(P.land)), zone = [];
-    for (let i = 0; i <= 48; i++) { const t = i / 48 * Math.PI * 2, a = Math.cos(t) * half, q = Math.sin(t) * w, x = cx + ux * a - uz * q, z = cz + uz * a + ux * q; zone.push(new V3(x, hW(x, z) + 0.12, z)); }
-    P.zone = zone;
-  }
-  const gz = new LineGeometry(); gz.setPositions(P.zone ? P.zone.flatMap(p => [p.x, p.y, p.z]) : [0, -999, 0, 0, -999, 0]);
-  if (projZone) { projZone.geometry.dispose(); projZone.geometry = gz; } else { projZone = new Line2(gz, projZoneMat); projZone.frustumCulled = false; projZone.renderOrder = 4; projG.add(projZone); }
-  projZone.computeLineDistances(); projZone.visible = !!P.zone;
+  const P = G.proj = projectShot(); projG.visible = !!P && G.mode === 'aim'; if (!P) return;
   const flat = pts => pts.flatMap(p => [p.x, p.y, p.z]);
   const g1 = new LineGeometry(); g1.setPositions(flat(P.air));
   if (projAir) { projAir.geometry.dispose(); projAir.geometry = g1; } else { projAir = new Line2(g1, projAirMat); projAir.frustumCulled = false; projAir.renderOrder = 4; projG.add(projAir); }
@@ -3175,7 +3153,7 @@ function showProjection() {
   const g2 = new LineGeometry(); g2.setPositions(flat(rp.map(p => p.clone().setY(p.y + 0.05))));
   if (projRoll) { projRoll.geometry.dispose(); projRoll.geometry = g2; } else { projRoll = new Line2(g2, projRollMat); projRoll.frustumCulled = false; projRoll.renderOrder = 4; projG.add(projRoll); }
   projRoll.computeLineDistances();
-  projRest.position.copy(P.rest).setY(hW(P.rest.x, P.rest.z) + 0.06); projRest.visible = !P.end && !P.zone;
+  projRest.position.copy(P.rest).setY(hW(P.rest.x, P.rest.z) + 0.06); projRest.visible = !P.end;
 }
 const ring = new THREE.Mesh(new THREE.RingGeometry(0.82, 1, 48), new THREE.MeshBasicMaterial({ color: 0xffe07a, transparent: true, opacity: 0.85, depthWrite: false }));
 ring.rotation.x = -Math.PI / 2; ring.renderOrder = 5; scene.add(ring);
@@ -3211,8 +3189,7 @@ function updateSpinMeter() {
   const fmt = r => (Math.round(r / 50) * 50).toLocaleString('en-US');
   let rpm, txt, pending = false;
   if (aiming) {
-    const ls = lieMul(c, G.lie).s, lieTxt = ls < 0.97 ? ` · ${lieName(G.lie).toLowerCase()}` : '';
-    rpm = c.rpm * ls; pending = true; txt = `Set by your follow-through${lieTxt}`;
+    rpm = c.rpm; pending = true; txt = 'Set by your follow-through';   // clean-lie spin: the lie's cost is left for the player to judge
   } else { rpm = G.shot.rpm; txt = `${SPIN[Math.round(clamp(xFromS(rpm / c.rpm), -2, 2)) + 2].name} · ${fmt(rpm)} rpm`; }
   $('smVal').textContent = txt; el.classList.toggle('pending', pending);
   $('smNeedle').style.left = `${50 - clamp(xFromS(rpm / c.rpm), -2, 2) * 25}%`;
@@ -3236,9 +3213,7 @@ function updateAimVisuals() {
   }
   aimLine.material.dashSize = putting ? 0.15 : 0.9; aimLine.material.gapSize = putting ? 0.12 : 0.7;
   HOLE.slopes.visible = G.mode === 'aim' && (putting || G.overview);   // with the putter out anywhere, and in overview to pick a landing spot
-  // from a poor lie the carry reads as the range most shots from it would carry
-  const R = putting ? null : lieRange(c, G.lie, G.lieQ);
-  $('carryTxt').textContent = putting ? 'Putter' : R ? `${Math.round(dist * R.lo / YD)}–${Math.round(dist * R.hi / YD)} yds` : `${Math.round(dist / YD)} yds`;
+  $('carryTxt').textContent = putting ? 'Putter' : `${Math.round(dist / YD)} yds`;
   drawMap();
 }
 
@@ -3353,8 +3328,7 @@ function drawMap() {
     const [lx, ly] = toMap(P.land.x, -P.land.z), [rx, ry] = toMap(P.rest.x, -P.rest.z);
     c.strokeStyle = '#ffe07a'; c.lineWidth = 1.5 * d; c.setLineDash([3 * d, 3 * d]); c.beginPath(); c.moveTo(lx, ly); c.lineTo(rx, ry); c.stroke(); c.setLineDash([]);
     c.beginPath(); c.arc(lx, ly, 5 * d, 0, 6.283); c.stroke();
-    if (P.zone) { c.strokeStyle = '#ffb04a'; c.lineWidth = 1.5 * d; c.setLineDash([3 * d, 2 * d]); c.beginPath(); P.zone.forEach((p, i) => { const [zx, zy] = toMap(p.x, -p.z); i ? c.lineTo(zx, zy) : c.moveTo(zx, zy); }); c.closePath(); c.stroke(); c.setLineDash([]); }
-    else { c.fillStyle = '#fff'; c.beginPath(); c.arc(rx, ry, 2.5 * d, 0, 6.283); c.fill(); }
+    c.fillStyle = '#fff'; c.beginPath(); c.arc(rx, ry, 2.5 * d, 0, 6.283); c.fill();
   } else if (G.mode === 'aim') {
     const a = aimVec(), cd = CLUBS[G.club].putter ? Math.min(distToPin(), 30) : expectedCarry(G.club, G.lie);
     const [lx, ly] = toMap(bx + a.x * cd, by - a.z * cd);
@@ -4180,7 +4154,7 @@ canvas.addEventListener('wheel', e => {
   if (CLUBS[G.club].putter) return;
   wheelAcc += e.deltaY; if (Math.abs(wheelAcc) >= 50) { setLoft(G.loft + (wheelAcc < 0 ? 1 : -1), true); wheelAcc = 0; }
 }, { passive: false });
-addEventListener('resize', () => { renderer.setSize(innerWidth, innerHeight); camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); sizeTrace(); trMat.resolution.set(innerWidth, innerHeight); projAirMat.resolution.set(innerWidth, innerHeight); projRollMat.resolution.set(innerWidth, innerHeight); projShadowMat.resolution.set(innerWidth, innerHeight); projZoneMat.resolution.set(innerWidth, innerHeight); if (HOLE) { buildMapBase(); drawMap(); } });
+addEventListener('resize', () => { renderer.setSize(innerWidth, innerHeight); camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); sizeTrace(); trMat.resolution.set(innerWidth, innerHeight); projAirMat.resolution.set(innerWidth, innerHeight); projRollMat.resolution.set(innerWidth, innerHeight); projShadowMat.resolution.set(innerWidth, innerHeight); if (HOLE) { buildMapBase(); drawMap(); } });
 
 // boot: hole 17 behind the title screen
 setupGolferClub(CLUBS[0]);
@@ -4196,7 +4170,7 @@ if (TEST) {
     setClub, setAim(a) { G.aim = a; placeGolfer(); updateAimVisuals(); },
     pose(p, phase = 'back') { G.freezePose = true; SWING.p = p; SWING.phase = phase; SWING.pTop = -1; poseGolfer(); },
     cam(px, py, pz, lx, ly, lz) { G.freezeCam = true; camPos.set(px, py, pz); camLook.set(lx, ly, lz); camera.position.copy(camPos); camera.lookAt(camLook); renderer.render(scene, camera); },
-    render() { renderer.render(scene, camera); }, simFlat, SPIN, setLoft, loftFx, LK, powerForCarry, lieMul, lieModel, lieOutcome, lieRange, rollLie, setupShot, ballXY, T: { T_ROUGH, T_SAND, T_STRAW, T_FAIR, T_CUT, T_WASTE }, finishFollow, SW, camera, golfer, scene, renderer, HUMAN, clubG,
+    render() { renderer.render(scene, camera); }, simFlat, SPIN, setLoft, loftFx, LK, powerForCarry, lieMul, lieModel, lieOutcome, rollLie, setupShot, ballXY, T: { T_ROUGH, T_SAND, T_STRAW, T_FAIR, T_CUT, T_WASTE }, finishFollow, SW, camera, golfer, scene, renderer, HUMAN, clubG,
   };
 }
 </script>
