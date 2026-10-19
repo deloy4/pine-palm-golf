@@ -11,8 +11,9 @@ for less.
 
 ## The courses
 
-All eight courses are made up. The first four are in a Florida style with pines, oaks, palms, waste areas and
-water; the other four are on the ocean, with cliffs, beaches, coves and surf. Each is par 72.
+All twelve courses are made up. The first four are in a Florida style with pines, oaks, palms, waste areas and
+water; the next four are on the ocean, with cliffs, beaches, coves and surf; the last four are in mountain
+forest, with big elevation changes, hillsides, creeks and ranges on the horizon. Each is par 72.
 
 | Course | Style | Yards |
 | --- | --- | --- |
@@ -24,11 +25,17 @@ water; the other four are on the ocean, with cliffs, beaches, coves and surf. Ea
 | Gullhaven Dunes, Dunes Course | Wide beaches, big dunes and sand blowouts, few trees, the windiest | 6,960 |
 | Driftwood Shoals, Ocean Course | Beach holes and lagoons, live oaks and palms | 7,050 |
 | Kestrel Bluffs, Canyon Course | Bluffs about 90 feet above the sea, sandy canyons across the holes | 7,055 |
+| Talus Ridge, Summit Course | Colorado spruce and gold aspens, snow peaks, a par 3 at 7 that drops 140 feet | 7,235 |
+| Osprey Creek, River Course | A Montana valley with a creek on most holes, lodgepole pines and a far range | 7,085 |
+| Kettle Lake, Lake Course | Tight Cascade firs, lakes, a snow-capped volcano on the horizon | 7,120 |
+| Sourwood Gap, Gap Course | Blue Ridge hardwoods in fall colour, rolling holes, a par 3 at 13 that drops about 115 feet | 7,050 |
 
 Courses are data in the `COURSES` table near the top of the script. Each hole lists its par and yardage, a
 centreline, the green, bunkers, waste areas, water, elevation along the hole and any corner trees. Ocean holes
 add `sea`, a list of straight shorelines given by two points along and across the hole, with an optional beach
-width; the course settings choose the trees, the scrub colour and the wind.
+width; the course settings choose the trees, the scrub colour and the wind. Mountain holes add `side`, how many
+feet the hillside climbs about 100 yards off the line of play (plus for the right, minus for the left), and `wl`,
+the water level in feet for a creek or pond up in the hills; the course's `range` sets the mountains around it.
 
 ## Scores
 
