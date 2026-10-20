@@ -88,10 +88,10 @@ lowest round first.
 
 ## Players and progress
 
-Players sign in with a name and a 4-digit PIN, or by email (a 6-digit code or a link, through Supabase Auth). The device
-keeps a session token, so a player stays signed in there until they sign out. Five wrong PINs in a row lock a name for 15
-minutes, doubling each time after that, up to a day. Only signed-in players can post to the golf boards; the database
-refuses golf scores sent the old way.
+Sign-in is the arcade's shared one (`auth-v1.js` from https://deloy4.github.io/bfg/, repo deloy4/bfg): one player name
+and PIN, or email, for every game on deloy4.github.io, and signing in on the BFG page or in another game signs you in
+here too. Without that file (the page opened somewhere it can't load it) the game plays as a guest. Only signed-in
+players can post to the golf boards; the database refuses golf scores sent the old way.
 
 Score rounds record, hole by hole: the result (hole in one, albatross, eagle, birdie, par, bogey, double or worse),
 fairways hit on par 4s and 5s, greens in regulation, putts, and shots holed from off the green and from bunkers. Shots
@@ -101,11 +101,11 @@ hole in one, chip-in, hole-out from the sand, finished round and round under par
 the card at the end of the hole; everything shows on the profile page (Profile and stats on the home screen), with a
 summary of each course played. Practice records nothing.
 
-A guest's progress is kept on the device and moves to the account at sign-in. Progress goes to the database as deltas
-(`golf_push`): counts add, personal bests keep the larger and achievements keep the first, so two devices can't undo each
-other. The tables (`golf_players`, `golf_sessions`, `golf_rounds`, `golf_pushes`) are only reached through the `golf_*`
-functions in the arcade-scores Supabase project. Email sign-in needs the game's address as the Site URL and a redirect URL
-in Supabase Auth, and `{{ .Token }}` in the Magic Link and Confirm signup email templates for the code.
+A guest's progress is kept on the device and moves to the account at sign-in; unsent holes are kept per player, so
+signing out never hands them to the next player. Progress goes to the database as deltas (`golf_push`): counts add,
+personal bests keep the larger and achievements keep the first, so two devices can't undo each other. Golf's tables
+(`golf_progress`, `golf_rounds`, `golf_pushes`) sit beside the shared `players` and `sessions` in the arcade-scores
+Supabase project and are only reached through the `golf_*` functions.
 
 ## The golfer
 

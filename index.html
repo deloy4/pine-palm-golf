@@ -170,18 +170,7 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 #who b { color: var(--ink); letter-spacing: .03em; }
 #who button { background: none; border: 0; padding: 0; color: var(--gold); font-size: 14px; font-weight: 600; letter-spacing: .03em; }
 #who button:hover { text-decoration: underline; }
-.si input { box-sizing: border-box; width: 100%; padding: 10px 12px; font: 600 17px var(--body); color: var(--ink); background: rgba(0,0,0,.35); border: 2px solid rgba(226,236,218,.22); border-radius: 8px; outline: none; }
-.si input:focus { border-color: var(--gold); }
-.si label { display: block; font-size: 13px; color: var(--dim); margin: 12px 0 5px; }
-.si .note { font-size: 13px; color: var(--dim); line-height: 1.45; margin: 8px 0 0; }
-.si .msg, .pf .msg { min-height: 1.2em; font-size: 13.5px; color: #f0a593; margin: 8px 0 0; }
-.si .msg:empty { display: none; }
-.si-row { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
-.si-row .btn { font-size: 14px; padding: 10px 16px; }
-.si-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; margin-top: 12px; background: rgba(0,0,0,.35); border-radius: 9px; }
-.si-tabs[hidden] { display: none; }
-.si-tabs button { padding: 8px; color: var(--dim); background: transparent; border: 0; border-radius: 6px; font-weight: 600; font-size: 14px; }
-.si-tabs button[aria-selected="true"] { color: var(--ink); background: rgba(226,236,218,.16); }
+.pf .msg { min-height: 1.2em; font-size: 13.5px; color: #f0a593; margin: 8px 0 0; }
 .pf { width: min(760px, calc(100vw - 32px)); }
 .pf h3 { font-family: var(--display); font-size: 20px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; margin: 18px 0 8px; }
 .ach { display: grid; grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 8px; }
@@ -416,41 +405,6 @@ html.touch #help { display: none; }
   </div>
 </div>
 
-<div id="signin" class="overlay" hidden>
-  <div class="sheet narrow si">
-    <h2 class="sc-title">Sign in</h2>
-    <p class="note" id="siNote"></p>
-    <div class="si-tabs" id="siTabs" role="tablist"><button type="button" role="tab" data-t="pin">Name and PIN</button><button type="button" role="tab" data-t="email">Email</button></div>
-    <div class="si-pane" id="siPin">
-      <label for="siPName">Player name</label><input id="siPName" maxlength="12" autocomplete="username" autocapitalize="words" spellcheck="false">
-      <label for="siPPin">4-digit PIN</label><input id="siPPin" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="current-password">
-      <div class="si-row"><button class="btn gold" id="siLogin">Sign in</button><button class="btn" id="siCreate">New player</button></div>
-      <p class="msg" id="siPMsg" role="status"></p>
-      <p class="note">New player makes a name with this PIN. Five wrong PINs in a row lock the name for a while.</p>
-    </div>
-    <div class="si-pane" id="siEmail" hidden>
-      <label for="siEmail1">Email</label><input id="siEmail1" type="email" autocomplete="email" spellcheck="false">
-      <div class="si-row"><button class="btn gold" id="siSend">Send sign-in email</button></div>
-      <p class="msg" id="siEMsg" role="status"></p>
-      <p class="note">No password. We email you a code and a link; the first time, you pick a player name.</p>
-    </div>
-    <div class="si-pane" id="siCode" hidden>
-      <p class="note" id="siSent"></p>
-      <label for="siCode1">Code</label><input id="siCode1" inputmode="numeric" pattern="[0-9]*" maxlength="8" autocomplete="one-time-code">
-      <div class="si-row"><button class="btn gold" id="siVerify">Sign in</button><button class="btn" id="siOther">Use another email</button></div>
-      <p class="msg" id="siCMsg" role="status"></p>
-    </div>
-    <div class="si-pane" id="siName" hidden>
-      <p class="note">You're in. Pick the player name that shows on the leaderboards.</p>
-      <label for="siName1">Player name</label><input id="siName1" maxlength="12" autocapitalize="words" spellcheck="false">
-      <div class="si-row"><button class="btn gold" id="siSaveName">Save name</button></div>
-      <p class="msg" id="siNMsg" role="status"></p>
-    </div>
-    <p class="note">You stay signed in on this device until you sign out.</p>
-    <div class="sc-actions"><button class="btn" id="siClose">Close</button></div>
-  </div>
-</div>
-
 <div id="profile" class="overlay" hidden>
   <div class="sheet pf">
     <h2 class="sc-title" id="pfName"></h2>
@@ -465,6 +419,8 @@ html.touch #help { display: none; }
 
 <div id="fade"></div>
 
+<!-- the shared arcade sign-in (deloy4/bfg); without it the game plays as a guest -->
+<script src="https://deloy4.github.io/bfg/auth-v1.js"></script>
 <script type="importmap">
 { "imports": {
   "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
@@ -1554,19 +1510,19 @@ const SURF = [
 
 // Clubs: ball speed m/s, launch °, backspin rpm, cf = how much a crooked stroke matters.
 const CLUBS = [
-  { id: 'Dr', name: 'Driver', L: 1.14, v: 76.0, la: 10.5, rpm: 2600, cf: 1.00, head: 'driver', handY: 0.84, bx: 0.10 },
-  { id: '3W', name: '3 wood', L: 1.08, v: 70.0, la: 10.5, rpm: 3500, cf: 0.95, head: 'wood', handY: 0.83, bx: 0.07 },
-  { id: '5W', name: '5 wood', L: 1.06, v: 66.0, la: 12.0, rpm: 4300, cf: 0.90, head: 'wood', handY: 0.82, bx: 0.05 },
-  { id: '4i', name: '4 iron', L: 0.99, v: 60.5, la: 12.5, rpm: 4600, cf: 0.85, head: 'iron', handY: 0.81, bx: 0.03 },
-  { id: '5i', name: '5 iron', L: 0.98, v: 58.5, la: 13.5, rpm: 5000, cf: 0.82, head: 'iron', handY: 0.81, bx: 0.02 },
-  { id: '6i', name: '6 iron', L: 0.965, v: 56.0, la: 15.0, rpm: 5700, cf: 0.78, head: 'iron', handY: 0.80, bx: 0.01 },
-  { id: '7i', name: '7 iron', L: 0.95, v: 53.5, la: 16.5, rpm: 6600, cf: 0.74, head: 'iron', handY: 0.80, bx: 0.0 },
-  { id: '8i', name: '8 iron', L: 0.935, v: 50.5, la: 18.5, rpm: 7500, cf: 0.70, head: 'iron', handY: 0.79, bx: 0.0 },
-  { id: '9i', name: '9 iron', L: 0.92, v: 47.5, la: 21.0, rpm: 8400, cf: 0.66, head: 'iron', handY: 0.79, bx: -0.01 },
-  { id: 'PW', name: 'Pitching wedge', L: 0.905, v: 44.5, la: 24.5, rpm: 9200, cf: 0.62, head: 'wedge', handY: 0.78, bx: -0.01 },
-  { id: 'GW', name: 'Gap wedge', L: 0.90, v: 41.0, la: 28.0, rpm: 9800, cf: 0.60, head: 'wedge', handY: 0.78, bx: -0.02 },
-  { id: 'SW', name: 'Sand wedge', L: 0.89, v: 37.0, la: 32.0, rpm: 10200, cf: 0.58, head: 'wedge', handY: 0.78, bx: -0.02 },
-  { id: 'LW', name: 'Lob wedge', L: 0.885, v: 32.5, la: 36.0, rpm: 10500, cf: 0.56, head: 'wedge', handY: 0.78, bx: -0.02 },
+  { id: 'Dr', name: 'Driver', L: 1.14, v: 73.0, la: 10.5, rpm: 2600, cf: 1.00, head: 'driver', handY: 0.84, bx: 0.10 },
+  { id: '3W', name: '3 wood', L: 1.08, v: 70.8, la: 10.5, rpm: 3500, cf: 0.95, head: 'wood', handY: 0.83, bx: 0.07 },
+  { id: '5W', name: '5 wood', L: 1.06, v: 68.8, la: 12.0, rpm: 4300, cf: 0.90, head: 'wood', handY: 0.82, bx: 0.05 },
+  { id: '4i', name: '4 iron', L: 0.99, v: 63.0, la: 12.5, rpm: 4600, cf: 0.85, head: 'iron', handY: 0.81, bx: 0.03 },
+  { id: '5i', name: '5 iron', L: 0.98, v: 60.8, la: 13.5, rpm: 5000, cf: 0.82, head: 'iron', handY: 0.81, bx: 0.02 },
+  { id: '6i', name: '6 iron', L: 0.965, v: 58.1, la: 15.0, rpm: 5700, cf: 0.78, head: 'iron', handY: 0.80, bx: 0.01 },
+  { id: '7i', name: '7 iron', L: 0.95, v: 55.7, la: 16.5, rpm: 6600, cf: 0.74, head: 'iron', handY: 0.80, bx: 0.0 },
+  { id: '8i', name: '8 iron', L: 0.935, v: 53.0, la: 18.5, rpm: 7500, cf: 0.70, head: 'iron', handY: 0.79, bx: 0.0 },
+  { id: '9i', name: '9 iron', L: 0.92, v: 50.9, la: 21.0, rpm: 8400, cf: 0.66, head: 'iron', handY: 0.79, bx: -0.01 },
+  { id: 'PW', name: 'Pitching wedge', L: 0.905, v: 49.1, la: 24.5, rpm: 9200, cf: 0.62, head: 'wedge', handY: 0.78, bx: -0.01 },
+  { id: 'GW', name: 'Gap wedge', L: 0.90, v: 46.4, la: 28.0, rpm: 9800, cf: 0.60, head: 'wedge', handY: 0.78, bx: -0.02 },
+  { id: 'SW', name: 'Sand wedge', L: 0.89, v: 42.6, la: 32.0, rpm: 10200, cf: 0.58, head: 'wedge', handY: 0.78, bx: -0.02 },
+  { id: 'LW', name: 'Lob wedge', L: 0.885, v: 37.9, la: 36.0, rpm: 10500, cf: 0.56, head: 'wedge', handY: 0.78, bx: -0.02 },
   { id: 'Pt', name: 'Putter', L: 0.86, putter: true, head: 'putter', handY: 0.80, bx: 0.02 },
 ];
 const PUTTER = CLUBS.length - 1;
@@ -2907,7 +2863,10 @@ function stepBall(b, dt, env) {
     const above = b.p.y - env.h(b.p.x, b.p.z), wf = 0.45 + 0.55 * smooth(0, 25, above);
     const vx = b.v.x - env.wind.x * wf, vy = b.v.y, vz = b.v.z - env.wind.z * wf;
     const s = Math.hypot(vx, vy, vz) || 1e-6, S = BR * b.w / s;
-    const Cd = 0.21 + Math.min(0.3 * S, 0.12), Cl = b.w > 5 ? Math.min(0.32, 0.05 + S) : 0;
+    // Drag and lift fitted to TrackMan's 2024 PGA Tour averages (launch, spin -> height, landing angle, carry, driver to PW).
+    // Spin adds drag that levels off at high spin, and drag climbs once the ball slows below about 35 m/s. Lift rises steeply
+    // with the first bit of spin and then more slowly, so a driver loses little height when its spin comes down.
+    const Cd = 0.193 + 0.394 * S / (1 + S / 1.104) + 0.496 * Math.max(0, 1 - s / 34.6), Cl = b.w > 5 ? Math.min(0.45, 0.46 * Math.pow(S, 0.418)) : 0;
     const k = 0.5 * RHO * BA * s * s / BM;
     const dx = -vx / s, dy = -vy / s, dz = -vz / s, hx = -dx, hy = -dy, hz = -dz;
     let lx = -hy * hx, ly = 1 - hy * hy, lz = -hy * hz; const ln = Math.hypot(lx, ly, lz) || 1; lx /= ln; ly /= ln; lz /= ln;
@@ -2915,7 +2874,7 @@ function stepBall(b, dt, env) {
     b.v.x += k * (Cd * dx + Cl * (lx * ct + rx * st)) * dt;
     b.v.y += (k * (Cd * dy + Cl * ly * ct) - GRAV) * dt;
     b.v.z += k * (Cd * dz + Cl * (lz * ct + rz * st)) * dt;
-    b.p.addScaledVector(b.v, dt); b.w *= Math.exp(-dt / 20); b.apex = Math.max(b.apex, b.p.y);
+    b.p.addScaledVector(b.v, dt); b.w *= Math.exp(-dt / 23); b.apex = Math.max(b.apex, b.p.y);
     if (env.trees) { const r = treeCheck(b); if (r) return r; }
     const gh = env.h(b.p.x, b.p.z);
     if (b.p.y <= gh + BR) { b.p.y = gh + BR; return groundImpact(b, env); }
@@ -4236,25 +4195,21 @@ const Leaderboard = (() => {
 })();
 
 
-// Players: sign in with a name and 4-digit PIN, or with an emailed code or link (Supabase Auth). The device keeps a golf
-// session token, so a player stays signed in until they sign out. Progress (counts, personal bests, achievements and
-// finished score rounds) is gathered as a delta: signed in, it goes to the database after each hole; a guest's delta waits
-// on the device and moves to the account at sign-in. The database merges deltas (counts add, bests keep the larger,
-// achievements keep the first), so two devices can't undo each other.
+// Golf progress for the signed-in player. Sign-in itself is the arcade's shared one (window.Arcade, from
+// deloy4.github.io/bfg/auth-v1.js), so a player signed in on the BFG page or in another game is signed in here too.
+// Progress (counts, personal bests, achievements and finished score rounds) is gathered as a delta: signed in, it goes to
+// the database after each hole; a guest's delta waits on the device and moves to the account at sign-in. The database
+// merges deltas (counts add, bests keep the larger, achievements keep the first), so two devices can't undo each other.
+// Without Arcade (the page opened somewhere it can't load) the game plays as a guest.
 const Player = (() => {
-  const BASE = 'https://ffkwudvifwapjcunzbce.supabase.co', KEY = 'sb_publishable_IMzJKKRNE3fzLC4a7-WmgQ_Euc5pSFr';
+  const AR = window.Arcade || null;
   const ls = {
     get(k) { try { return JSON.parse(localStorage.getItem('golf-' + k)); } catch (e) { return null; } },
     set(k, v) { try { if (v == null) localStorage.removeItem('golf-' + k); else localStorage.setItem('golf-' + k, JSON.stringify(v)); } catch (e) { /* private window */ } },
   };
   const empty = () => ({ counts: {}, recs: {}, ach: {}, rounds: [] });
   const isEmpty = d => !d || (!Object.keys(d.counts).length && !Object.keys(d.recs).length && !Object.keys(d.ach).length && !d.rounds.length);
-  let token = ls.get('token'), me = ls.get('me'), pending = ls.get('pending') || empty(), outbox = ls.get('outbox'), pushing = null;
-  const subs = [];
-  const emit = () => subs.forEach(f => f());
-  const save = () => { ls.set('token', token); ls.set('me', me); ls.set('pending', pending); ls.set('outbox', outbox); };
   const uuid = () => crypto.randomUUID ? crypto.randomUUID() : ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16));
-
   // a + b: counts add, bests keep the larger, achievements keep the one already there, rounds join
   function merge(a, b) {
     const o = { counts: { ...a.counts }, recs: { ...a.recs }, ach: { ...a.ach }, rounds: [...(a.rounds || [])] };
@@ -4266,88 +4221,79 @@ const Player = (() => {
     return o;
   }
 
-  async function req(path, body, auth) {
-    const ctl = new AbortController(), timer = setTimeout(() => ctl.abort(), 10000);
-    try {
-      const res = await fetch(BASE + path, {
-        method: 'POST', signal: ctl.signal, body: JSON.stringify(body),
-        headers: { apikey: KEY, 'Content-Type': 'application/json', ...(auth ? { Authorization: 'Bearer ' + auth } : {}) },
-      });
-      const data = await res.json().catch(() => null);
-      if (!res.ok) throw new Error((data && (data.message || data.msg || data.error_description)) || 'The game server said no.');
-      return data;
-    } catch (e) {
-      if (e.name === 'AbortError' || e instanceof TypeError) throw new Error('Could not reach the game server. Check your connection.');
-      throw e;
-    } finally { clearTimeout(timer); }
+  // what waits to be sent is kept per player ('guest' before sign-in), so signing out never hands it to the next player
+  const owner = () => (AR && AR.signedIn() && AR.player ? AR.player.id : 'guest');
+  let who = null, state = null, pending = empty(), outbox = null, pushing = null;
+  const subs = [], emit = () => subs.forEach(f => f());
+  const save = () => { ls.set('pending-' + who, isEmpty(pending) ? null : pending); ls.set('outbox-' + who, outbox); if (who !== 'guest') ls.set('state-' + who, state); };
+  function load() {
+    const was = who; who = owner();
+    if (who === was) return;
+    state = who === 'guest' ? null : ls.get('state-' + who);
+    pending = ls.get('pending-' + who) || empty(); outbox = ls.get('outbox-' + who);
+    // a guest's holes go to the player who signs in on this device
+    if (who !== 'guest') {
+      const g = merge(merge(empty(), ls.get('outbox-guest') && ls.get('outbox-guest').d), ls.get('pending-guest'));
+      if (!isEmpty(g)) { pending = merge(pending, g); ls.set('pending-guest', null); ls.set('outbox-guest', null); }
+    }
+    save(); emit();
+    if (who !== 'guest') { refresh(); push(); }
   }
-  const rpc = (fn, body, auth) => req('/rest/v1/rpc/' + fn, body, auth);
 
-  function dropSession() { token = null; me = null; if (outbox) { pending = merge(outbox.d, pending); outbox = null; } save(); emit(); }
-  function setSession(res) { token = res.token; me = res.me; save(); emit(); push(); }
-
-  // sends what is waiting; resolves when the device has nothing unsent or a send failed
+  // sends what is waiting; resolves true when the device has nothing unsent, false when a send failed
   function push() {
-    if (!token) return Promise.resolve(false);
+    if (who === 'guest') return Promise.resolve(false);
     if (pushing) return pushing;
     pushing = (async () => {
       try {
-        while (token) {
+        const me = who;
+        while (who === me) {
           if (!outbox) { if (isEmpty(pending)) return true; outbox = { id: uuid(), d: pending }; pending = empty(); save(); }
-          try { me = await rpc('golf_push', { p_token: token, p_push_id: outbox.id, p_delta: outbox.d }); outbox = null; save(); emit(); }
-          catch (e) { if (/signed out/.test(e.message)) dropSession(); return false; }
+          try { const st = await AR.rpc('golf_push', { p_push_id: outbox.id, p_delta: outbox.d }); if (who !== me) return false; state = st; outbox = null; save(); emit(); }
+          catch (e) { return false; }
         }
         return false;
       } finally { pushing = null; }
     })();
     return pushing;
   }
-
-  // a magic link comes back to the page with the auth session in the hash
-  let linkAccess = null, linkError = '';
-  if (/access_token=/.test(location.hash) || /error_description=/.test(location.hash)) {
-    const h = new URLSearchParams(location.hash.slice(1));
-    linkAccess = h.get('access_token'); linkError = h.get('error_description') || '';
-    history.replaceState(null, '', location.pathname + location.search);
+  function refresh() {
+    if (who === 'guest') return Promise.resolve();
+    const me = who;
+    return AR.rpc('golf_me').then(st => { if (who === me) { state = st; save(); emit(); } }).catch(() => {});
   }
-
-  async function emailSession(access, name = null) {
-    const res = await rpc('golf_email_session', { p_name: name }, access);
-    if (res.need_name) return { needName: true, error: res.error || '' };
-    if (res.error) throw new Error(res.error);
-    setSession(res); return { ok: true };
+  if (AR) {
+    AR.on(load);
+    // signing out from this page waits until this device's holes are saved
+    AR.beforeSignOut(async () => {
+      if (who !== 'guest' && await push() === false && (outbox || !isEmpty(pending))) throw new Error("Your last holes haven't been saved yet. Check your connection and try again.");
+    });
   }
-  async function pinCall(fn, name, pin) {
-    const res = await rpc(fn, { p_name: name, p_pin: pin });
-    if (res.error) throw new Error(res.error);
-    setSession(res);
+  // before the shared sign-in, unsent holes were kept under one key
+  if (ls.get('pending') || ls.get('outbox')) {
+    ls.set('pending-guest', merge(merge(ls.get('pending-guest') || empty(), ls.get('outbox') && ls.get('outbox').d), ls.get('pending')));
+    ls.set('pending', null); ls.set('outbox', null);
   }
+  ls.set('me', null);
+  load();
 
   return {
     on: f => subs.push(f),
-    signedIn: () => !!token,
-    get me() { return me; },
-    get linkAccess() { return linkAccess; }, get linkError() { return linkError; }, clearLink() { linkAccess = null; linkError = ''; },
+    available: !!AR,
+    signedIn: () => who !== 'guest',
+    // the player and their golf state, in the shape the profile reads
+    get me() { return who === 'guest' ? null : { player: AR.player, ...(state || {}), courses: (state && state.courses) || [] }; },
     // everything this device knows: the account's progress plus whatever hasn't been sent yet
-    view: () => merge(merge(merge(empty(), me && me.progress), outbox && outbox.d), pending),
+    view: () => merge(merge(merge(empty(), state && state.progress), outbox && outbox.d), pending),
     unsentRounds: () => [...(outbox ? outbox.d.rounds : []), ...pending.rounds],
     add(d) { pending = merge(pending, d); save(); emit(); },
-    push,
-    refresh() { if (!token) return Promise.resolve(); return rpc('golf_me', { p_token: token }).then(r => { me = r; save(); emit(); }).catch(e => { if (/signed out/.test(e.message)) dropSession(); }); },
-    pinLogin: (name, pin) => pinCall('golf_pin_login', name, pin),
-    pinCreate: (name, pin) => pinCall('golf_pin_create', name, pin),
-    emailSend: email => req('/auth/v1/otp' + (/^https?:/.test(location.protocol) ? '?redirect_to=' + encodeURIComponent(location.origin + location.pathname) : ''), { email, create_user: true }),
-    async emailVerify(email, code) { const s = await req('/auth/v1/verify', { type: 'email', email, token: code }); return { access: s.access_token, ...(await emailSession(s.access_token)) }; },
-    emailSession,
-    async signOut() {
-      if (await push() === false && (outbox || !isEmpty(pending))) throw new Error("Your last holes haven't been saved yet. Check your connection and try again.");
-      const t = token; token = null; me = null; pending = empty(); outbox = null; save(); emit();
-      rpc('golf_signout', { p_token: t }).catch(() => {});
-    },
+    push, refresh,
+    signIn: note => (AR ? AR.signIn({ note }) : Promise.resolve(false)),
+    signOut: () => AR.signOut(),
     async postRound(id) {
       await push();
-      if (Player.unsentRounds().some(r => r.id === id)) throw new Error("The round hasn't reached the server yet. Check your connection and try again.");
-      return rpc('golf_post_round', { p_token: token, p_round: id });
+      if (this.unsentRounds().some(r => r.id === id)) throw new Error("The round hasn't reached the server yet. Check your connection and try again.");
+      return AR.rpc('golf_post_round', { p_round: id });
     },
     uuid,
   };
@@ -4521,49 +4467,11 @@ function trackHole(sc, holed) {
   Player.add(d); Player.push();
 }
 
-// ----- sign-in sheet -----
+// ----- sign-in: the arcade's shared sheet -----
 const esc = s => String(s ?? '').replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]);
-const SI = { then: null, email: '', access: null };
-function siPane(id) { for (const p of document.querySelectorAll('#signin .si-pane')) p.hidden = p.id !== id; $('siTabs').hidden = id === 'siName'; const f = $(id).querySelector('input'); if (f) setTimeout(() => f.focus(), 30); }
-function siTab(which) { document.querySelectorAll('#siTabs button').forEach(b => b.setAttribute('aria-selected', String(b.dataset.t === which))); siPane(which === 'pin' ? 'siPin' : SI.email ? 'siCode' : 'siEmail'); }
 function openSignIn(note = '', then = null) {
-  SI.then = then; $('siNote').textContent = note || 'Sign in to save your achievements, personal bests and rounds, and to post scores on the leaderboards.';
-  for (const m of document.querySelectorAll('#signin .msg')) m.textContent = '';
-  $('signin').hidden = false; siTab('pin');
-}
-function closeSignIn(done) { $('signin').hidden = true; const f = SI.then; SI.then = null; if (done && f) f(); }
-async function siRun(btn, msg, fn) {
-  const m = $(msg); m.textContent = ''; btn.disabled = true;
-  try { await fn(); } catch (e) { m.textContent = e.message; } finally { btn.disabled = false; }
-}
-const pinVals = () => [$('siPName').value.trim(), $('siPPin').value.trim()];
-$('siLogin').onclick = e => siRun(e.currentTarget, 'siPMsg', async () => { const [n, p] = pinVals(); if (!n || !/^\d{4}$/.test(p)) throw new Error('Type your player name and 4-digit PIN.'); await Player.pinLogin(n, p); closeSignIn(true); toast(`Signed in as ${Player.me.player.name}`, '', 2.4); });
-$('siCreate').onclick = e => siRun(e.currentTarget, 'siPMsg', async () => { const [n, p] = pinVals(); if (!n || !/^\d{4}$/.test(p)) throw new Error('Pick a player name and a 4-digit PIN.'); await Player.pinCreate(n, p); closeSignIn(true); toast(`Welcome, ${Player.me.player.name}`, 'You stay signed in on this device.', 3); });
-$('siSend').onclick = e => siRun(e.currentTarget, 'siEMsg', async () => {
-  const em = $('siEmail1').value.trim(); if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) throw new Error('Type your email address.');
-  await Player.emailSend(em); SI.email = em; $('siSent').textContent = `We sent a sign-in email to ${em}. Type the 6-digit code from it here, or tap the link in it on this device.`; siPane('siCode');
-});
-$('siVerify').onclick = e => siRun(e.currentTarget, 'siCMsg', async () => {
-  const code = $('siCode1').value.replace(/\s/g, ''); if (!/^\d{6}$/.test(code)) throw new Error('The code is 6 digits.');
-  const r = await Player.emailVerify(SI.email, code); emailDone(r);
-});
-$('siOther').onclick = () => { SI.email = ''; $('siCode1').value = ''; siPane('siEmail'); };
-$('siSaveName').onclick = e => siRun(e.currentTarget, 'siNMsg', async () => {
-  const r = await Player.emailSession(SI.access, $('siName1').value.trim()); if (r.needName) throw new Error(r.error || 'Pick another name.'); emailDone(r);
-});
-function emailDone(r) {
-  if (r.needName) { SI.access = r.access; $('siNMsg').textContent = r.error || ''; siPane('siName'); return; }
-  SI.email = ''; SI.access = null; closeSignIn(true); toast(`Signed in as ${Player.me.player.name}`, 'You stay signed in on this device.', 3);
-}
-document.querySelectorAll('#siTabs button').forEach(b => b.onclick = () => siTab(b.dataset.t));
-$('siClose').onclick = () => closeSignIn(false);
-for (const [inp, btn] of [['siPPin', 'siLogin'], ['siEmail1', 'siSend'], ['siCode1', 'siVerify'], ['siName1', 'siSaveName']]) $(inp).addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); $(btn).click(); } });
-// back from a magic link: finish the sign-in, asking for a player name the first time
-if (Player.linkAccess || Player.linkError) {
-  const access = Player.linkAccess, err = Player.linkError; Player.clearLink();
-  openSignIn(); siTab('email');
-  if (err) $('siEMsg').textContent = `The sign-in link didn't work (${err}). Send a new one.`;
-  else Player.emailSession(access).then(r => emailDone({ ...r, access })).catch(e => { $('siEMsg').textContent = e.message; });
+  if (!Player.available) { toast('Sign-in works on the game page', 'Open deloy4.github.io/pine-palm-golf to sign in.', 3.4); return; }
+  Player.signIn(note).then(ok => { if (ok) { toast(`Signed in as ${Player.me.player.name}`, 'You stay signed in on this device, in every game.', 3); if (then) then(); } });
 }
 
 // ----- profile: achievements, personal bests, stats, courses -----
@@ -4601,7 +4509,11 @@ function openProfile() {
 }
 $('pfClose').onclick = () => { $('profile').hidden = true; };
 $('pfIn').onclick = () => { $('profile').hidden = true; openSignIn('', openProfile); };
-$('pfOut').onclick = e => siRun(e.currentTarget, 'pfMsg', async () => { await Player.signOut(); $('profile').hidden = true; toast('Signed out', '', 2); });
+$('pfOut').onclick = async e => {
+  const b = e.currentTarget; b.disabled = true; $('pfMsg').textContent = '';
+  try { await Player.signOut(); $('profile').hidden = true; toast('Signed out', 'Signed out of every game on this device.', 2.6); }
+  catch (err) { $('pfMsg').textContent = err.message; } finally { b.disabled = false; }
+};
 function showWho() {
   const w = $('who'), me = Player.me;
   w.innerHTML = Player.signedIn() && me ? `<span>Playing as <b>${esc(me.player.name)}</b></span><button id="whoP">Profile and stats ›</button>`
@@ -4609,7 +4521,6 @@ function showWho() {
   $('whoP').onclick = openProfile; if ($('whoS')) $('whoS').onclick = () => openSignIn();
 }
 Player.on(() => { if (!$('title').hidden) showWho(); });
-Player.refresh(); Player.push();
 
 showHome();
 
@@ -4784,7 +4695,13 @@ function shapeFromStroke(m, c) {
   const path = clamp(dz(pathDeg, 1) * (1 + 0.4 * over), -16, 16);
   const face = clamp(0.5 * dz(curvDeg, 1) + gauss() * (0.25 + 2.2 * over) * c.cf, -12, 12);
   const start = face + (c.head === 'driver' || c.head === 'wood' ? 0.15 : 0.25) * (path - face);
-  return { start, tilt: clamp(c.curveK * (face - path), -55, 55), path, face };
+  // A face closed to the path (a draw) meets the ball with less loft than the path: it launches lower, spins less and comes off
+  // a little faster, so a gentle draw carries a touch farther and runs out. A face open to the path (a fade) launches higher
+  // with more spin, carrying about the same off the tee and stopping sooner. Past 3° the shot just curves harder, and the
+  // sideways tilt of its spin costs height and distance, so hooks and slices come up short.
+  const k = clamp(face - path, -3, 3);
+  const fx = k < 0 ? { s: 1 + 0.03 * k, la: 0.3 * k, v: 1 - 0.005 * k } : { s: 1 + 0.015 * k, la: 0.4 * k, v: 1 - 0.001 * k };
+  return { start, tilt: clamp(c.curveK * (face - path), -55, 55), path, face, ...fx };
 }
 function launchShot(m) {
   const c = CLUBS[G.club], b = G.ball; $('bDrop').hidden = true;
@@ -4806,7 +4723,7 @@ function launchShot(m) {
   } else {
     const lm = lieMul(c, G.lie);
     const sp = spinAt(m.spinX ?? 0), lf = loftFx(c, G.loft);
-    b.w = launchVel(c, power * lm.v, lm.s * sp.s * lf.s * lo.spin, dir, b.v, sp.la + lf.la, sp.v * lf.v); b.rel = lf.rel; b.tilt = shape.tilt * DEG; b.mode = 'fly'; G.lastPutt = false;
+    b.w = launchVel(c, power * lm.v, lm.s * sp.s * lf.s * lo.spin * shape.s, dir, b.v, sp.la + lf.la + shape.la, sp.v * lf.v * shape.v); b.rel = lf.rel; b.tilt = shape.tilt * DEG; b.mode = 'fly'; G.lastPutt = false;
     b.p.y += 0.002;
   }
   G.shot = { club: c, lieNote: lo ? lo.note : '', lieQ: G.lieQ, shape, power, tempo, accelF, m, loft: c.loft + G.loft, spinX: m.spinX ?? 0, spinNote: m.spinNote, start: b.p.clone(), camPos: camPos.clone(), dir: aimVec(dir), landed: false, u: 0,
@@ -5139,7 +5056,7 @@ function frame(now) { const dt = Math.min(0.05, (now - last) / 1000); last = now
 
 // keys
 addEventListener('keydown', e => {
-  if (!$('signin').hidden || !$('profile').hidden) { if (e.key === 'Escape') { if (!$('profile').hidden) $('profile').hidden = true; else closeSignIn(false); } return; }
+  if (!$('profile').hidden) { if (e.key === 'Escape') $('profile').hidden = true; return; }
   if (!$('confirm').hidden) { if (e.key === 'Escape') $('confirm').hidden = true; return; }
   if (e.key === ' ' && G.mode === 'flight' && G.flightT > 0.4) { e.preventDefault(); G.ff = true; return; }
   if ((e.key === 'x' || e.key === 'X') && canDrop()) { dropClear(); return; }
