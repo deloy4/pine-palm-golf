@@ -349,7 +349,7 @@ const COURSES = [
     water: [{ t: 'lake', s0: 240, s1: 310, d0: -75, d1: -19 }], elev: [[0,4],[250,0],[455,8]] },
   { par: 4, yds: 330, path: [[0,0],[-10,190],[-40,330]], fw: [150,312,28], green: { rx: 11, ry: 13, rot: -20 }, pin: [-5, 3],
     bunkers: [[215,19,10,5,0],[322,16,6,4,0],[338,18,5,4,0]], waste: [],
-    water: [{ t: 'strip', side: -1, s0: 170, s1: 350, d0: 16, d1: 70 }], elev: [[0,2],[330,0]] },
+    water: [{ t: 'strip', side: -1, s0: 170, s1: 350, d0: 16, d1: 70 }], tilt: [[170,300,-4]], elev: [[0,4],[330,3]] },
   { par: 4, yds: 470, path: [[0,0],[8,270],[0,470]], fw: [190,455,32], green: { rx: 15, ry: 13, rot: 4 }, raise: 1.0, pin: [-2, -4],
     bunkers: [[255,-20,11,5,0],[278,20,10,5,0],[395,0,5,13,0],[462,-17,7,4,0],[470,19,6,4,0]], waste: [[160,-36,60,10,0]], water: [], elev: [[0,0],[250,10],[470,30]] },
   { par: 3, yds: 225, path: [[0,0],[10,225]], fw: [170,205,26], green: { rx: 15, ry: 14, rot: 10 }, pin: [4, 3],
@@ -371,10 +371,10 @@ const COURSES = [
     bunkers: [[146,-8,6,8,0],[149,12,5,6,0],[176,-17,4,4,0]], waste: [], water: [], elev: [[0,0],[165,14]] },
   { par: 4, yds: 480, path: [[0,0],[-15,280],[10,480]], fw: [200,465,32], green: { rx: 14, ry: 13, rot: 6 }, raise: 1.2, pin: [-2, 3],
     bunkers: [[275,20,11,5,0],[470,-16,7,4,0],[486,18,6,4,0]], waste: [[400,30,40,9,0]],
-    water: [{ t: 'strip', side: -1, s0: 230, s1: 330, d0: 18, d1: 60 }], elev: [[0,32],[260,4],[480,18]] },
+    water: [{ t: 'strip', side: -1, s0: 230, s1: 330, d0: 18, d1: 60 }], tilt: [[220,330,-4]], elev: [[0,32],[260,5],[480,18]] },
   { par: 4, yds: 425, path: [[0,0],[0,200],[-15,240],[-105,410]], fw: [180,410,30], green: { rx: 14, ry: 12, rot: -12 }, pin: [-4, 2],
     bunkers: [[250,21,12,5,0],[418,17,7,4,0],[444,-4,3,7,0]], waste: [],
-    water: [{ t: 'strip', side: -1, s0: 120, s1: 440, d0: 17, d1: 80 }], elev: [[0,4],[425,0]] },
+    water: [{ t: 'strip', side: -1, s0: 120, s1: 440, d0: 17, d1: 80 }], tilt: [[180,400,-4]], elev: [[0,5],[425,4]] },
   { par: 5, yds: 535, path: [[0,0],[5,280],[-20,535]], fw: [200,445,32], green: { rx: 12, ry: 14, rot: -5 }, pin: [-3, 2],
     bunkers: [[270,-20,11,5,0],[300,20,10,5,0],[528,-19,6,4,0],[545,18,5,4,0]], waste: [], oaks: [[380,30]],
     water: [{ t: 'lake', s0: 455, s1: 512, d0: -50, d1: 40 }], elev: [[0,6],[535,0]] },
@@ -383,7 +383,7 @@ const COURSES = [
     water: [{ t: 'lake', s0: 40, s1: 158, d0: -30, d1: 34 }, { t: 'strip', side: 1, s0: 140, s1: 200, d0: 15, d1: 60 }], elev: [[0,14],[175,0]] },
   { par: 4, yds: 470, path: [[0,0],[0,235],[12,268],[120,450]], fw: [185,455,30], green: { rx: 14, ry: 13, rot: 6 }, raise: 1.0, pin: [3, -3],
     bunkers: [[262,-20,11,5,0],[462,17,7,4,0],[478,-17,5,4,0]], waste: [], stand: [[230,34,18]],
-    water: [{ t: 'strip', side: -1, s0: 300, s1: 490, d0: 18, d1: 70 }], elev: [[0,5],[260,4],[470,22]] },
+    water: [{ t: 'strip', side: -1, s0: 300, s1: 490, d0: 18, d1: 70 }], tilt: [[320,440,-3]], elev: [[0,5],[260,4],[470,22]] },
 ] },
 { id: 'coquina-ridge', name: 'Coquina Ridge', place: 'Central Florida', sub: 'Ridge Course', seed: 2, mix: [0.5, 0.45], sig: 3, holes: [
   { par: 4, yds: 395, path: [[0,0],[0,240],[40,395]], fw: [175,380,34], green: { rx: 14, ry: 12, rot: 10 }, pin: [2, 3],
@@ -1612,6 +1612,7 @@ function buildHole(idx) {
   const islandR = spec.island ? spec.island * YD : 0;
   const fw = spec.fw ? { s0: spec.fw[0] * YD, s1: spec.fw[1] * YD, h: spec.fw[2] * YD / 2 } : null;
   const cor = (spec.cor || 40) * YD;
+  const tilts = (spec.tilt || []).map(([a, b, ft]) => [a * YD, b * YD, ft * FT]);
   const opens = (spec.open || []).map(([ss, sd, sr]) => [...pointAt(ss * YD, sd * YD), sr * YD]);
   const stands = (spec.stand || []).map(([ss, sd, sr]) => [...pointAt(ss * YD, sd * YD), sr * YD]);
   // Ocean: each sea entry [s0, d0, s1, d1, beach] is a straight shoreline through two points given in hole coordinates
@@ -1687,7 +1688,7 @@ function buildHole(idx) {
   }
   let islandC = null;
   function evalPoint(x, y, s, d, o) {
-    const ad = Math.abs(d); o.s = s; o.ad = ad;
+    const ad = Math.abs(d); o.s = s; o.d = d; o.ad = ad;
     o.tD = Math.max(Math.abs(s) - 5.5, ad - 4.5);
     o.gD = ellDist(green, x, y, o); o.gu = o.du; o.gv = o.dv;
     let b = 60; for (const e of bunkers) { const v = ellDist(e, x, y, null); if (v < b) b = v; } o.bD = b;
@@ -1764,6 +1765,9 @@ function buildHole(idx) {
     h += 0.5 * smooth(2, 14, o.fF) * smooth(4, -6, o.fC) * (0.5 + 0.5 * tn(x * 1.8 + 90, y * 1.8 + 40));
     // on the coast the land keeps its height right out to the cliffs; inland a raised hole sits on a rise
     h += elevAt(o.s) * (coast || mtn ? 1 : 1 - 0.65 * smooth(cor + 12, cor + 80, o.ad));
+    // side slopes: between s0 and s1 the ground falls ft feet across 30 yards (+ falls to the right), so a ball landing on
+    // the low side kicks and runs toward whatever is down there
+    for (const t of tilts) h -= t[2] * clamp(o.d / (30 * YD), -1.5, 1.5) * smooth(t[0] - 25, t[0], o.s) * smooth(t[1] + 25, t[1], o.s);
     // in the mountains the ground beyond the corridor is the hillside itself, lumpy forest floor
     if (mtn) h = lerp(h, mtnH(x, y) + 1.4 * tn(x * 0.13 + 7, y * 0.13 + 3) + 0.6 * tn(x * 0.5, y * 0.5), smooth(6, 60, o.fC));
     // the sea (and, on cliff courses, its coves) gets a shore; lagoons and creeks keep grass banks
@@ -4177,7 +4181,7 @@ if (TEST) {
     setClub, setAim(a) { G.aim = a; placeGolfer(); updateAimVisuals(); },
     pose(p, phase = 'back') { G.freezePose = true; SWING.p = p; SWING.phase = phase; SWING.pTop = -1; poseGolfer(); },
     cam(px, py, pz, lx, ly, lz) { G.freezeCam = true; camPos.set(px, py, pz); camLook.set(lx, ly, lz); camera.position.copy(camPos); camera.lookAt(camLook); renderer.render(scene, camera); },
-    render() { renderer.render(scene, camera); }, simFlat, SPIN, setLoft, loftFx, LK, powerForCarry, lieMul, lieModel, lieOutcome, rollLie, setupShot, ballXY, T: { T_ROUGH, T_SAND, T_STRAW, T_FAIR, T_CUT, T_WASTE }, finishFollow, SW, camera, golfer, scene, renderer, HUMAN, clubG,
+    render() { renderer.render(scene, camera); }, simFlat, SPIN, setLoft, loftFx, LK, powerForCarry, lieMul, lieModel, lieOutcome, rollLie, setupShot, sampleField, get WL() { return WL; }, ballXY, T: { T_ROUGH, T_SAND, T_STRAW, T_FAIR, T_CUT, T_WASTE }, finishFollow, SW, camera, golfer, scene, renderer, HUMAN, clubG,
   };
 }
 </script>
