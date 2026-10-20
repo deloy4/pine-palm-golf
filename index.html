@@ -5361,10 +5361,10 @@ function shapeFromStroke(m, c) {
   if (c.putter) { const faceDeg = (m.fwd - m.back) / DEG; return { start: clamp(dz(pathDeg * 0.3 + faceDeg * 0.12, 0.6), -8, 8), tilt: 0, path: 0, face: 0 }; }
   const over = clamp(4 * Math.max(0, m.b - 1) + 5 * Math.max(0, (m.speedF ?? 1) - 1), 0, 1);
   const path = clamp(dz(pathDeg, 1) * (1 + 0.4 * over), -16, 16);
-  // An overdone swing twists the face a little at random, never more than 1.1° (driver; less with the shorter clubs): with a
-  // straight stroke a driver then finishes at most about 15 yards off line, half the width of an average fairway (30.9 yards
-  // across these courses). A crooked stroke still adds its own curve on top.
-  const face = clamp(0.5 * dz(curvDeg, 1) + clamp(gauss() * (0.25 + 0.6 * over), -1.1, 1.1) * c.cf, -12, 12);
+  // An overdone swing twists the face a little at random, never more than 0.85° (driver; less with the shorter clubs): with a
+  // straight stroke even a 112% driver then finishes at most about 15 yards off line, half the width of an average fairway
+  // (30.9 yards across these courses). A crooked stroke still adds its own curve on top.
+  const face = clamp(0.5 * dz(curvDeg, 1) + clamp(gauss() * (0.25 + 0.5 * over), -0.85, 0.85) * c.cf, -12, 12);
   const start = face + (c.head === 'driver' || c.head === 'wood' ? 0.15 : 0.25) * (path - face);
   // A face closed to the path (a draw) meets the ball with less loft than the path: it launches lower, spins less and comes off
   // faster, so it carries farther and runs out (DRAW: the full effect at 3° closed). A face open to the path (a fade) launches
