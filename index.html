@@ -166,6 +166,15 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 .holes span { font-size: 10px; color: var(--dim); }
 .holes button.sig { border-color: rgba(232,195,90,.55); }
 
+.tab.locked:not(.on) { color: var(--dim); }
+.lk { width: .62em; height: .72em; margin-right: .35em; vertical-align: -.02em; }
+.tag { font-family: var(--body); font-style: normal; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; vertical-align: .45em; margin-left: 10px; padding: 3px 7px 2px; border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; }
+.tag.gold { color: var(--gold); } .tag.silver { color: #cfd6db; } .tag.bronze { color: #d29a66; } .tag.bird { color: #8fd19e; } .tag.lock { color: var(--dim); }
+.crs.locked:not(.on) .crsHead b { color: var(--dim); }
+.crs .mine { font-size: 13px; color: var(--dim); line-height: 1.45; margin-top: -4px; }
+.crs .mine b { color: var(--ink); }
+.crs .mine small { font-size: 12px; opacity: .8; }
+.crs .lockMsg { font-size: 14px; line-height: 1.45; padding: 10px 12px; border: 1px dashed var(--line); border-radius: 8px; }
 #who { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; font-size: 14px; color: var(--dim); margin-top: -6px; }
 #who b { color: var(--ink); letter-spacing: .03em; }
 #who button { background: none; border: 0; padding: 0; color: var(--gold); font-size: 14px; font-weight: 600; letter-spacing: .03em; }
@@ -179,6 +188,16 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 .ach b { font-family: var(--display); font-size: 18px; text-transform: uppercase; letter-spacing: .03em; line-height: 1.1; }
 .ach span { font-size: 12px; color: var(--dim); line-height: 1.35; }
 .ach .n { color: var(--gold); font-weight: 600; }
+.pf-top { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.pf-top > div > div { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; background: rgba(255,255,255,.03); min-height: 92px; }
+.pf-big { font-family: var(--display); font-size: 40px; font-weight: 800; line-height: 1; }
+.pf-big small { font-size: 16px; font-weight: 600; color: var(--dim); letter-spacing: .04em; margin-left: 6px; }
+.pf-bar { height: 8px; border-radius: 4px; background: rgba(255,255,255,.1); margin: 8px 0 6px; overflow: hidden; }
+.pf-bar i { display: block; height: 100%; background: var(--gold); }
+.pf-top p { margin: 0; font-size: 12.5px; color: var(--dim); line-height: 1.45; }
+.hcr div.cnt b { color: var(--gold); }
+.pf-rows .tag { vertical-align: 1px; margin-left: 8px; font-size: 10px; padding: 2px 6px 1px; }
+@media (max-width: 560px) { .pf-top { grid-template-columns: 1fr; } }
 .pf-rows { display: grid; }
 .pf-rows div { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 5px 8px; border-radius: 6px; font-size: 14px; }
 .pf-rows div:nth-child(odd) { background: rgba(255,255,255,.035); }
@@ -409,10 +428,12 @@ html.touch #help { display: none; }
   <div class="sheet pf">
     <h2 class="sc-title" id="pfName"></h2>
     <div class="sc-sub" id="pfSub"></div>
+    <div class="pf-top"><div><h3>Level</h3><div id="pfLvl"></div></div><div><h3>Handicap</h3><div id="pfHc"></div></div></div>
     <h3>Achievements</h3><div class="ach" id="pfAch"></div>
     <h3>Personal bests</h3><div class="pf-rows" id="pfBests"></div>
     <h3>Stats</h3><div class="pf-rows" id="pfStats"></div>
     <h3>Courses</h3><div class="pf-rows" id="pfCourses"></div>
+    <h3>Handicap rounds</h3><div class="sc-sub" id="pfHcNote"></div><div class="pf-rows hcr" id="pfHcRows"></div>
     <div class="sc-actions"><span class="sc-note msg" id="pfMsg"></span><button class="btn" id="pfIn">Sign in</button><button class="btn" id="pfOut">Sign out</button><button class="btn gold" id="pfClose">Close</button></div>
   </div>
 </div>
@@ -4338,6 +4359,7 @@ TERRAINS.forEach(t => { t.cis = t.ids.map(id => COURSES.findIndex(c => c.id === 
 const terrainOf = ci => Math.max(0, TERRAINS.findIndex(t => t.cis.includes(ci)));
 let TI = terrainOf(CI), practiceOpen = false;
 const RECS = {};   // course records from the shared board, fetched once per visit to the home screen
+const LOCK = '<svg class="lk" viewBox="0 0 12 14" aria-hidden="true"><path d="M3 6V4a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="1" y="6" width="10" height="8" rx="1.5" fill="currentColor"/></svg>';
 const mkEl = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
 function courseRec(ci, out) {
   const C = COURSES[ci], par = C.holes.reduce((a, h) => a + h.par, 0), show = r => { out.textContent = r ? `Course record ${r.score} (${toParStr(r.score - par)}) · ${r.name}` : 'No course record yet'; };
@@ -4355,21 +4377,33 @@ function showTerrain(i) {
 }
 function showHome() {
   showWho();
-  const t = TERRAINS[TI], T = $('tabs'), L = $('courseList');
+  const t = TERRAINS[TI], T = $('tabs'), L = $('courseList'), cs = courseSums(), un = unlockState(cs);
   T.innerHTML = '';
-  TERRAINS.forEach((x, i) => { const b = mkEl('button', 'tab' + (i === TI ? ' on' : ''), x.name); b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', i === TI); b.onclick = () => { b.blur(); if (i !== TI) showTerrain(i); }; T.appendChild(b); });
+  TERRAINS.forEach((x, i) => { const b = mkEl('button', 'tab' + (i === TI ? ' on' : '') + (un.terr[i] ? '' : ' locked'), (un.terr[i] ? '' : LOCK) + x.name); b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', i === TI); if (!un.terr[i]) b.title = 'Locked'; b.onclick = () => { b.blur(); if (i !== TI) showTerrain(i); }; T.appendChild(b); });
   $('tBlurb').textContent = t.blurb;
   L.innerHTML = '';
   for (const ci of t.cis) {
     const C = COURSES[ci], on = ci === CI, par = C.holes.reduce((a, h) => a + h.par, 0), yds = C.holes.reduce((a, h) => a + h.yds, 0);
-    const card = mkEl('div', 'crs' + (on ? ' on' : ''));
-    const head = mkEl('button', 'crsHead', `<b>${C.name}</b><span>${C.place} · ${on ? C.sub + ' · ' : ''}Par ${par} · ${yds.toLocaleString()} yards</span>`);
+    const o = cs[C.id], tr = trophyOf(o), open = un.open(ci), nb = birdied(o, ci);
+    const tag = !open ? `<i class="tag lock">${LOCK}Locked</i>` : tr ? `<i class="tag ${tr.toLowerCase()}">${tr}</i>` : '';
+    const card = mkEl('div', 'crs' + (on ? ' on' : '') + (open ? '' : ' locked'));
+    const head = mkEl('button', 'crsHead', `<b>${C.name}${tag}${nb === 18 ? '<i class="tag bird" title="Birdie or better on all 18 holes">All 18 birdied</i>' : ''}</b><span>${C.place} · ${on ? C.sub + ' · ' : ''}Par ${par} · ${yds.toLocaleString()} yards</span>`);
     head.setAttribute('aria-expanded', on);
     head.onclick = () => { if (!on) selectCourse(ci); };
     card.appendChild(head);
     if (on) {
       const body = mkEl('div', 'crsBody'), rec = mkEl('div', 'rec');
       body.appendChild(rec); courseRec(ci, rec);
+      const rt = RATINGS[C.id], next = TROPHY.filter(([k]) => !o || o.best - o.par > k).pop();
+      const goal = o ? (next ? `${next[1]} trophy at ${par + next[0]}` : 'Gold trophy') : 'Trophies: ' + TROPHY.slice().reverse().map(([k, n]) => `${n.toLowerCase()} ${par + k}`).join(', ');
+      body.appendChild(mkEl('div', 'mine', (o ? `Your best <b>${o.best} (${toParStr(o.best - o.par)})</b> · ${goal} · Birdied ${nb} of 18 holes` : `No score round here yet · ${goal}`)
+        + `<br>Course rating ${rt ? (+rt.rating).toFixed(1) : par} <small>${rt ? `from ${rt.rounds} player round${rt.rounds > 1 ? 's' : ''}` : '(par until players finish rounds here)'}</small>`));
+      if (!open) {
+        body.appendChild(mkEl('div', 'lockMsg', LOCK + esc(un.why(ci))));
+        const lb = mkEl('button', 'lb', 'Leaderboard ›');
+        lb.onclick = e => { e.currentTarget.blur(); Leaderboard.open({ game: courseGame(), title: `${COURSE.name} Leaderboard`, format: fmtRound, closeLabel: 'Close' }); };
+        body.appendChild(lb); card.appendChild(body); L.appendChild(card); continue;
+      }
       const modes = mkEl('div', 'modes');
       const bS = mkEl('button', 'mode gold', '<b>Play for a score</b><span>All 18 from the 1st tee, for the leaderboard</span>');
       const bP = mkEl('button', 'mode' + (practiceOpen ? ' on' : ''), '<b>Practice</b><span>Any hole, as often as you like</span>');
@@ -4411,6 +4445,77 @@ const BESTS = [
   ['hole_sand', 'Longest holed from a bunker', 'yds', ''],
   ['hole_other', 'Longest holed from anywhere else', 'yds', 'straw, waste, desert, beach or rocks'],
 ];
+// XP comes straight from the score-round counts, so it needs no storage of its own and a guest's XP moves with the counts.
+const XP = [['holes', 10, 'each hole'], ['fw_hit', 5, 'a fairway'], ['gir', 5, 'a green in regulation'], ['par', 5, 'a par'], ['birdie', 25, 'a birdie'], ['eagle', 60, 'an eagle'],
+  ['albatross', 150, 'an albatross'], ['ace', 200, 'a hole in one'], ['chipin', 20, 'a chip-in'], ['rounds', 50, 'a finished round'], ['under_par_rounds', 100, 'a round under par']];
+const xpOf = c => XP.reduce((a, [k, n]) => a + (c[k] || 0) * n, 0);
+const lvlStart = L => 150 * (L - 1) + 25 * (L - 1) ** 2;
+function levelOf(xp) { let L = 1; while (L < 99 && xp >= lvlStart(L + 1)) L++; return { L, xp, from: lvlStart(L), to: L < 99 ? lvlStart(L + 1) : null }; }
+
+// Per course: rounds, best total, average and the best score on each hole, from the account plus rounds not yet sent.
+function courseSums() {
+  const me = Player.me, cs = {};
+  for (const r of me ? me.courses : []) cs[r.course] = { n: +r.rounds, best: +r.best, sum: +r.avg * r.rounds, par: +r.par, hb: (r.holebest || []).map(Number) };
+  for (const r of Player.unsentRounds()) {
+    const t = r.holes.reduce((a, b) => a + b, 0), o = cs[r.course] || (cs[r.course] = { n: 0, best: Infinity, sum: 0, par: r.par, hb: [] });
+    o.n++; o.best = Math.min(o.best, t); o.sum += t; o.hb = r.holes.map((h, i) => Math.min(h, o.hb[i] ?? Infinity));
+  }
+  return cs;
+}
+// Course trophies go by the best score round: bronze +10 or better, silver +5, gold par. The birdie badge needs a
+// birdie or better on every hole, in any of the course's rounds.
+const TROPHY = [[0, 'Gold'], [5, 'Silver'], [10, 'Bronze']];
+const trophyOf = o => { if (!o || !isFinite(o.best)) return null; const t = TROPHY.find(([k]) => o.best - o.par <= k); return t ? t[1] : null; };
+const tRank = t => t ? 3 - TROPHY.findIndex(x => x[1] === t) : 0;
+const birdied = (o, ci) => o && o.hb.length === 18 ? COURSES[ci].holes.filter((h, i) => o.hb[i] < h.par).length : 0;
+
+// Unlocks: Florida is open; each next terrain opens once two courses on the one before have a score round at +5 or
+// better; Verdin Springs also needs a round under par anywhere. A locked course can't be practised either.
+const UNLOCK_AT = 5, LATE = 'verdin-springs';
+function unlockState(cs = courseSums()) {
+  const all = TEST && !window.__golfLocks;
+  const good = t => t.ids.filter(id => cs[id] && cs[id].best - cs[id].par <= UNLOCK_AT).length;
+  const terr = []; TERRAINS.forEach((t, i) => terr.push(all || i === 0 || (terr[i - 1] && good(TERRAINS[i - 1]) >= 2)));
+  const underPar = Object.values(cs).some(o => o.best < o.par);
+  const open = ci => terr[terrainOf(ci)] && (all || COURSES[ci].id !== LATE || underPar);
+  const why = ci => {
+    const ti = terrainOf(ci), prev = TERRAINS[ti - 1];
+    if (!terr[ti]) return terr[ti - 1] ? `Opens when two ${prev.name} courses each have a score round at +${UNLOCK_AT} or better (${good(prev)} of 2 so far).` : `Unlock the ${prev.name} courses first.`;
+    return open(ci) ? '' : `${COURSES[ci].name} opens after any 18-hole score round under par.`;
+  };
+  return { terr, open, why };
+}
+
+// Course ratings come from everyone's finished rounds (golf_ratings); a course nobody has finished rates at par.
+let RATINGS = (() => { try { return JSON.parse(localStorage.getItem('golf-ratings')) || {}; } catch (e) { return {}; } })();
+function fetchRatings() {
+  if (!window.Arcade) return;
+  window.Arcade.rpc('golf_ratings').then(r => {
+    if (!r || typeof r !== 'object') return;
+    RATINGS = r; try { localStorage.setItem('golf-ratings', JSON.stringify(r)); } catch (e) { /* private window */ }
+    if (!$('title').hidden) showHome();
+  }).catch(() => {});
+}
+const ratingOf = (id, par) => RATINGS[id] ? +RATINGS[id].rating : par;
+// Handicap the way the real system works it out, from the last 20 finished score rounds: each round's differential is
+// its score minus the course rating, and the index is the average of the best 8. Until there are 20 rounds it uses
+// fewer (with the real system's small adjustments), and it shows from the third round.
+const HC_USE = { 3: [1, -2], 4: [1, -1], 5: [1, 0], 6: [2, -1], 7: [2, 0], 8: [2, 0], 9: [3, 0], 10: [3, 0], 11: [3, 0], 12: [4, 0], 13: [4, 0], 14: [4, 0], 15: [5, 0], 16: [5, 0], 17: [6, 0], 18: [6, 0], 19: [7, 0], 20: [8, 0] };
+function recentRounds() {
+  const me = Player.me, seen = new Set(), out = [];
+  for (const r of Player.unsentRounds()) { seen.add(r.id); out.push({ id: r.id, course: r.course, total: r.holes.reduce((a, b) => a + b, 0), par: r.par, at: r.at }); }
+  for (const r of me && me.recent ? me.recent : []) if (!seen.has(r.id)) out.push({ id: r.id, course: r.course, total: +r.total, par: +r.par, at: r.played_at });
+  return out.sort((a, b) => new Date(b.at) - new Date(a.at)).slice(0, 20);
+}
+function handicap() {
+  const rs = recentRounds().map(r => { const rating = ratingOf(r.course, r.par); return { ...r, rating, diff: Math.round((r.total - rating) * 10) / 10 }; });
+  const use = HC_USE[rs.length]; if (!use) return { rs, idx: null };
+  const best = [...rs].sort((a, b) => a.diff - b.diff).slice(0, use[0]); best.forEach(r => { r.counts = true; });
+  const v = best.reduce((a, r) => a + r.diff, 0) / use[0] + use[1];
+  return { rs, idx: Math.min(54, Math.sign(v) * Math.round(Math.abs(v) * 10) / 10), used: use[0], adj: use[1] };
+}
+const fmtHc = v => v == null ? '–' : v < 0 ? '+' + (-v).toFixed(1) : v.toFixed(1);
+
 const scoring = () => !!G.round && G.round.type === '18' && (!TEST || window.__golfTrack);
 const courseNameOf = id => (COURSES.find(c => c.id === id) || {}).name || id;
 function newsFor(view, d, kind, key, val, where) {
@@ -4458,13 +4563,26 @@ function trackHole(sc, holed) {
     }
   }
   for (const k of Object.keys(c)) if (!c[k]) delete c[k];
-  if (roundComplete()) {
+  const done = roundComplete(), was = done && { cs: courseSums(), un: unlockState(), hc: handicap().idx };
+  if (done) {
     const tot = G.round.scores.reduce((a, v) => a + v, 0);
     c.rounds = 1; newsFor(view, d, 'ach', 'first_round', 0, here);
     if (tot < PAR_TOTAL) { c.under_par_rounds = 1; newsFor(view, d, 'ach', 'first_under_par', 0, here); }
     d.rounds.push({ id: G.round.id, course: COURSE.id, holes: G.round.scores.slice(), par: PAR_TOTAL, at: here.at });
   }
-  Player.add(d); Player.push();
+  const xp0 = xpOf(view.counts), xp = xpOf(c), L0 = levelOf(xp0).L, L1 = levelOf(xp0 + xp).L;
+  G.news.unshift(`+${xp} XP`); if (L1 > L0) G.news.push(`Level ${L1} reached`);
+  Player.add(d);
+  if (done) {
+    const cs = courseSums(), un = unlockState(cs), o0 = was.cs[COURSE.id], o1 = cs[COURSE.id], t1 = trophyOf(o1), hc = handicap().idx;
+    if (tRank(t1) > tRank(trophyOf(o0))) G.news.push(`${t1} trophy: ${COURSE.name}`);
+    if (birdied(o1, CI) === 18 && birdied(o0, CI) < 18) G.news.push(`Birdie or better on all 18: ${COURSE.name}`);
+    TERRAINS.forEach((t, i) => { if (un.terr[i] && !was.un.terr[i]) G.news.push(`${t.name} courses unlocked`); });
+    const late = COURSES.findIndex(x => x.id === LATE);
+    if (late >= 0 && un.open(late) && !was.un.open(late) && was.un.terr[terrainOf(late)]) G.news.push(`${COURSES[late].name} unlocked`);
+    if (hc != null && hc !== was.hc) G.news.push(was.hc == null ? `First handicap: ${fmtHc(hc)}` : `Handicap ${fmtHc(hc)} (was ${fmtHc(was.hc)})`);
+  }
+  Player.push();
 }
 
 // ----- sign-in: the arcade's shared sheet -----
@@ -4499,11 +4617,20 @@ function openProfile() {
     ['Chip-ins from off the green', c.chipin || 0], ['Holed from a bunker', c.chipin_sand || 0],
   ];
   $('pfStats').innerHTML = rows.map(([a, b]) => `<div><span>${a}</span><b>${b}</b></div>`).join('');
+  const lv = levelOf(xpOf(c));
+  $('pfLvl').innerHTML = `<div class="pf-big">${lv.L}<small>${lv.xp.toLocaleString()} XP</small></div><div class="pf-bar"><i style="width:${lv.to ? Math.round(100 * (lv.xp - lv.from) / (lv.to - lv.from)) : 100}%"></i></div>`
+    + `<p>${lv.to ? `${(lv.to - lv.xp).toLocaleString()} XP to level ${lv.L + 1}. ` : ''}Score rounds earn XP: ${XP.map(([, n, what]) => `${n} for ${what}`).join(', ')}.</p>`;
+  const hc = handicap(), nr = hc.rs.length;
+  $('pfHc').innerHTML = `<div class="pf-big">${fmtHc(hc.idx)}</div>`
+    + `<p>${hc.idx == null ? `Shows after 3 finished score rounds (${nr} so far).` : `${hc.used > 1 ? `Average of your best ${hc.used}` : 'Your best'} of the last ${nr} score rounds${hc.adj ? `, less ${-hc.adj} while you have only a few rounds` : ''}. With 20 rounds it averages the best 8.`} Each round counts as its score minus the course rating, and course ratings come from every player's scores.</p>`;
   // course summaries from the server, plus finished rounds still on this device
-  const cs = {}; for (const r of (signed && me ? me.courses : [])) cs[r.course] = { n: +r.rounds, best: +r.best, sum: +r.avg * r.rounds, par: +r.par };
-  for (const r of Player.unsentRounds()) { const t = r.holes.reduce((a, b) => a + b, 0), o = cs[r.course] || (cs[r.course] = { n: 0, best: Infinity, sum: 0, par: r.par }); o.n++; o.best = Math.min(o.best, t); o.sum += t; }
+  const cs = courseSums();
   const cl = Object.entries(cs).sort((a, b) => courseNameOf(a[0]).localeCompare(courseNameOf(b[0])));
-  $('pfCourses').innerHTML = cl.length ? cl.map(([id, o]) => `<div><span>${esc(courseNameOf(id))} <small>${o.n} round${o.n > 1 ? 's' : ''}</small></span><span>Best <b>${o.best} (${toParStr(o.best - o.par)})</b> <small>avg ${(o.sum / o.n).toFixed(1)}</small></span></div>`).join('')
+  $('pfCourses').innerHTML = cl.length ? cl.map(([id, o]) => { const ci = COURSES.findIndex(x => x.id === id), tr = trophyOf(o), nb = ci >= 0 ? birdied(o, ci) : 0;
+    return `<div><span>${esc(courseNameOf(id))} <small>${o.n} round${o.n > 1 ? 's' : ''} · birdied ${nb} of 18 holes</small>${tr ? `<i class="tag ${tr.toLowerCase()}">${tr}</i>` : ''}${nb === 18 ? '<i class="tag bird">All 18 birdied</i>' : ''}</span><span>Best <b>${o.best} (${toParStr(o.best - o.par)})</b> <small>avg ${(o.sum / o.n).toFixed(1)}</small></span></div>`; }).join('')
+    : '<div><small>No finished score rounds yet.</small></div>';
+  $('pfHcNote').textContent = nr ? 'Your last 20 score rounds. The ones counting toward your handicap are in gold.' : '';
+  $('pfHcRows').innerHTML = nr ? hc.rs.map(r => `<div class="${r.counts ? 'cnt' : ''}"><span>${esc(courseNameOf(r.course))} <small>${fmtDate(r.at)} · rating ${r.rating.toFixed(1)}</small></span><span>${r.total} <small>(${toParStr(r.total - r.par)})</small> · <b>${r.diff > 0 ? '+' : ''}${r.diff.toFixed(1)}</b></span></div>`).join('')
     : '<div><small>No finished score rounds yet.</small></div>';
   $('profile').hidden = false; $('profile').querySelector('.sheet').scrollTop = 0; $('pfClose').focus({ preventScroll: true });
 }
@@ -4515,14 +4642,15 @@ $('pfOut').onclick = async e => {
   catch (err) { $('pfMsg').textContent = err.message; } finally { b.disabled = false; }
 };
 function showWho() {
-  const w = $('who'), me = Player.me;
-  w.innerHTML = Player.signedIn() && me ? `<span>Playing as <b>${esc(me.player.name)}</b></span><button id="whoP">Profile and stats ›</button>`
-    : `<span>Playing as a guest</span><button id="whoS">Sign in</button><button id="whoP">Stats ›</button>`;
+  const w = $('who'), me = Player.me, lv = levelOf(xpOf(Player.view().counts)), hc = handicap().idx;
+  const extra = `<span>Level <b>${lv.L}</b></span>${hc != null ? `<span>Handicap <b>${fmtHc(hc)}</b></span>` : ''}`;
+  w.innerHTML = Player.signedIn() && me ? `<span>Playing as <b>${esc(me.player.name)}</b></span>${extra}<button id="whoP">Profile and stats ›</button>`
+    : `<span>Playing as a guest</span>${extra}<button id="whoS">Sign in</button><button id="whoP">Stats ›</button>`;
   $('whoP').onclick = openProfile; if ($('whoS')) $('whoS').onclick = () => openSignIn();
 }
-Player.on(() => { if (!$('title').hidden) showWho(); });
+Player.on(() => { if (!$('title').hidden) showHome(); });
 
-showHome();
+showHome(); fetchRatings();
 
 // ---------------------------------------------------------------------------
 // Flow
@@ -4537,11 +4665,13 @@ $('cfYes').onclick = () => { $('confirm').hidden = true; G.round = null; toMenu(
 function toMenu() {
   $('holeDone').hidden = true; $('scorecard').hidden = true; $('hud').hidden = true; $('title').hidden = false; $('confirm').hidden = true;
   for (const k in RECS) delete RECS[k];
+  fetchRatings();
   TI = terrainOf(CI); practiceOpen = false; showHome();
   G.mode = 'title'; ring.visible = ringDot.visible = aimLine.visible = pdotMesh.visible = projG.visible = false;
   if (!HOLE || HOLE.idx !== COURSE.sig || HOLE.ci !== CI) loadHole(COURSE.sig, true);
 }
 function startRound(type, idx) {
+  if (!unlockState().open(CI)) return;
   G.round = { type, scores: Array(18).fill(null), id: Player.uuid() };
   for (const id of ['bPrevH', 'bRestart', 'bNextH']) $(id).hidden = type !== 'single';
   $('title').hidden = true; loadHole(idx);
@@ -5103,7 +5233,7 @@ requestAnimationFrame(frame);
 
 if (TEST) {
   window.__golf = {
-    G, CLUBS, CARRY, get HOLES() { return HOLES; }, COURSES, useCourse, buildHole, get CI() { return CI; }, get HOLE() { return HOLE; }, SURF, surfAt, hW, startRound, loadHole, skipIntro,
+    G, CLUBS, CARRY, get HOLES() { return HOLES; }, COURSES, useCourse, buildHole, get CI() { return CI; }, get HOLE() { return HOLE; }, SURF, surfAt, hW, startRound, loadHole, skipIntro, trackHole, showHoleDone, unlockState, handicap, courseSums,
     run(secs, fps = 60) { for (let i = 0; i < secs * fps; i++) update(1 / fps); renderer.render(scene, camera); },
     shot(b, back = 0, fwd = 0, curv = 0, dur = 250) { if (G.mode === 'intro') skipIntro(); if (G.mode !== 'aim') return 'not ready: ' + G.mode; launchShot({ b, back, fwd, curv, dur }); return 'ok'; },
     setClub, setAim(a) { G.aim = a; placeGolfer(); updateAimVisuals(); },
