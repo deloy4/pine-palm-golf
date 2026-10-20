@@ -397,7 +397,7 @@ html.touch #help { display: none; }
 <div id="confirm" class="overlay" hidden>
   <div class="sheet narrow">
     <h2 class="sc-title">End this round?</h2>
-    <p class="cf-body">You are playing for a score. If you leave now the round ends and nothing goes on the leaderboard.</p>
+    <p class="cf-body">You are playing for a score. If you leave now the round ends, nothing goes on the leaderboard, and none of its holes count toward your stats, XP or achievements.</p>
     <div class="sc-actions"><button class="btn" id="cfNo">Keep playing</button><button class="btn gold" id="cfYes">End round</button></div>
   </div>
 </div>
@@ -4308,6 +4308,7 @@ const Player = (() => {
     view: () => merge(merge(merge(empty(), state && state.progress), outbox && outbox.d), pending),
     unsentRounds: () => [...(outbox ? outbox.d.rounds : []), ...pending.rounds],
     add(d) { pending = merge(pending, d); save(); emit(); },
+    merge, empty,
     push, refresh,
     signIn: note => (AR ? AR.signIn({ note }) : Promise.resolve(false)),
     signOut: () => AR.signOut(),
@@ -4519,15 +4520,20 @@ const fmtHc = v => v == null ? '–' : v < 0 ? '+' + (-v).toFixed(1) : v.toFixed
 const scoring = () => !!G.round && G.round.type === '18' && (!TEST || window.__golfTrack);
 const courseNameOf = id => (COURSES.find(c => c.id === id) || {}).name || id;
 function newsFor(view, d, kind, key, val, where) {
+  const R = G.round;
   if (kind === 'ach') {
     if (view.ach[key] || d.ach[key]) return;
-    d.ach[key] = where; const a = ACH.find(x => x[0] === key); G.news.push(`Achievement: ${a[1]}`);
+    d.ach[key] = where; const a = ACH.find(x => x[0] === key); R.news.push(`Achievement: ${a[1]}`);
   } else {
     const b = BESTS.find(x => x[0] === key), v = Math.round(val);
     if (v <= 0 || (view.recs[key] && view.recs[key].v >= v) || (d.recs[key] && d.recs[key].v >= v)) return;
-    d.recs[key] = { v, ...where }; G.news = G.news.filter(n => !n.startsWith(b[1])); G.news.push(`${b[1]}: ${v} ${b[2]} · personal best`);
+    d.recs[key] = { v, ...where }; R.news = R.news.filter(n => !n.startsWith(b[1])); R.news.push(`${b[1]}: ${v} ${b[2]} · personal best`);
   }
 }
+// A score round keeps what it records with the round as it is played, and it goes into the player's progress only when
+// the 18th is holed; a round ended early leaves nothing behind. Its news (achievements, bests) waits for the end too.
+const roundView = () => Player.merge(Player.view(), G.round.d);
+const roundAdd = d => { G.round.d = Player.merge(G.round.d, d); };
 const hereNow = () => ({ course: COURSE.id, hole: G.hole + 1, at: new Date().toISOString() });
 function trackRest(lie) {
   if (!scoring() || !G.shot) return;
@@ -4537,14 +4543,14 @@ function trackRest(lie) {
     if (G.hs.fw == null) G.hs.fw = lie === T_FAIR;
     if (lie === T_FAIR || lie === T_CUT) {
       const d = { counts: {}, recs: {}, ach: {}, rounds: [] }, b = G.ball.p;
-      newsFor(Player.view(), d, 'rec', 'drive', Math.hypot(b.x - s.start.x, b.z - s.start.z) / YD, { ...hereNow(), club: s.club.id });
-      if (Object.keys(d.recs).length) Player.add(d);
+      newsFor(roundView(), d, 'rec', 'drive', Math.hypot(b.x - s.start.x, b.z - s.start.z) / YD, { ...hereNow(), club: s.club.id });
+      if (Object.keys(d.recs).length) roundAdd(d);
     }
   }
 }
 function trackHole(sc, holed) {
   if (!scoring()) return;
-  const par = HOLES[G.hole].par, diff = sc - par, s = G.shot, view = Player.view(), here = hereNow();
+  const par = HOLES[G.hole].par, diff = sc - par, s = G.shot, view = roundView(), here = hereNow();
   const d = { counts: { holes: 1, strokes: sc, par_sum: par }, recs: {}, ach: {}, rounds: [] }, c = d.counts;
   const res = sc === 1 ? 'ace' : diff <= -3 ? 'albatross' : diff === -2 ? 'eagle' : diff === -1 ? 'birdie' : diff === 0 ? 'par' : diff === 1 ? 'bogey' : 'double';
   c[res] = 1; if (sc === 1 && diff === -2) c.eagle = 1; if (sc === 1 && diff <= -3) c.albatross = 1;
@@ -4563,17 +4569,20 @@ function trackHole(sc, holed) {
     }
   }
   for (const k of Object.keys(c)) if (!c[k]) delete c[k];
-  const done = roundComplete(), was = done && { cs: courseSums(), un: unlockState(), hc: handicap().idx };
+  const done = roundComplete();
   if (done) {
     const tot = G.round.scores.reduce((a, v) => a + v, 0);
     c.rounds = 1; newsFor(view, d, 'ach', 'first_round', 0, here);
     if (tot < PAR_TOTAL) { c.under_par_rounds = 1; newsFor(view, d, 'ach', 'first_under_par', 0, here); }
     d.rounds.push({ id: G.round.id, course: COURSE.id, holes: G.round.scores.slice(), par: PAR_TOTAL, at: here.at });
   }
-  const xp0 = xpOf(view.counts), xp = xpOf(c), L0 = levelOf(xp0).L, L1 = levelOf(xp0 + xp).L;
-  G.news.unshift(`+${xp} XP`); if (L1 > L0) G.news.push(`Level ${L1} reached`);
-  Player.add(d);
+  roundAdd(d);
   if (done) {
+    // the round goes into the player's progress now, and everything it earned is listed on the last hole's card
+    const was = { cs: courseSums(), un: unlockState(), hc: handicap().idx }, r = G.round.d;
+    const xp0 = xpOf(Player.view().counts), xp = xpOf(r.counts), L0 = levelOf(xp0).L, L1 = levelOf(xp0 + xp).L;
+    Player.add(r);
+    G.news = [`+${xp} XP for the round`, ...G.round.news]; if (L1 > L0) G.news.push(`Level ${L1} reached`);
     const cs = courseSums(), un = unlockState(cs), o0 = was.cs[COURSE.id], o1 = cs[COURSE.id], t1 = trophyOf(o1), hc = handicap().idx;
     if (tRank(t1) > tRank(trophyOf(o0))) G.news.push(`${t1} trophy: ${COURSE.name}`);
     if (birdied(o1, CI) === 18 && birdied(o0, CI) < 18) G.news.push(`Birdie or better on all 18: ${COURSE.name}`);
@@ -4581,8 +4590,8 @@ function trackHole(sc, holed) {
     const late = COURSES.findIndex(x => x.id === LATE);
     if (late >= 0 && un.open(late) && !was.un.open(late) && was.un.terr[terrainOf(late)]) G.news.push(`${COURSES[late].name} unlocked`);
     if (hc != null && hc !== was.hc) G.news.push(was.hc == null ? `First handicap: ${fmtHc(hc)}` : `Handicap ${fmtHc(hc)} (was ${fmtHc(was.hc)})`);
+    Player.push();
   }
-  Player.push();
 }
 
 // ----- sign-in: the arcade's shared sheet -----
@@ -4598,8 +4607,8 @@ const whereTxt = w => w && w.course ? `${courseNameOf(w.course)}, hole ${w.hole}
 function openProfile() {
   const v = Player.view(), c = v.counts, me = Player.me, signed = Player.signedIn();
   $('pfName').textContent = signed && me ? me.player.name : 'Guest';
-  $('pfSub').textContent = signed && me ? `Signed in ${me.player.method === 'email' ? 'by email' : 'with a PIN'} on this device. Only score rounds count; practice is never recorded.`
-    : 'Progress from score rounds is kept on this device until you sign in, then it moves to your account. Practice is never recorded.';
+  $('pfSub').textContent = signed && me ? `Signed in ${me.player.method === 'email' ? 'by email' : 'with a PIN'} on this device. Only finished score rounds count: a round ended early and practice are never recorded.`
+    : 'Progress from finished score rounds is kept on this device until you sign in, then it moves to your account. A round ended early and practice are never recorded.';
   $('pfIn').hidden = signed; $('pfOut').hidden = !signed; $('pfMsg').textContent = '';
   $('pfAch').innerHTML = ACH.map(([k, t, desc, ck, cl]) => { const a = v.ach[k], n = c[ck] || 0;
     return `<div class="${a ? 'got' : ''}"><b>${t}</b><span>${desc}</span><span class="n">${a ? `${fmtDate(a.at)} · ${esc(whereTxt(a))}` : 'Not yet'}</span>${n ? `<span class="n">${cl}: ${n}</span>` : ''}</div>`; }).join('');
@@ -4672,7 +4681,7 @@ function toMenu() {
 }
 function startRound(type, idx) {
   if (!unlockState().open(CI)) return;
-  G.round = { type, scores: Array(18).fill(null), id: Player.uuid() };
+  G.round = { type, scores: Array(18).fill(null), id: Player.uuid(), d: Player.empty(), news: [] };
   for (const id of ['bPrevH', 'bRestart', 'bNextH']) $(id).hidden = type !== 'single';
   $('title').hidden = true; loadHole(idx);
 }

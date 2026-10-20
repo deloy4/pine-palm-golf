@@ -93,12 +93,14 @@ and PIN, or email, for every game on deloy4.github.io, and signing in on the BFG
 here too. Without that file (the page opened somewhere it can't load it) the game plays as a guest. Only signed-in
 players can post to the golf boards; the database refuses golf scores sent the old way.
 
-Score rounds record, hole by hole: the result (hole in one, albatross, eagle, birdie, par, bogey, double or worse),
+Only finished score rounds count. A score round keeps what it records with the round while it is played and adds it
+to the player's progress when the 18th is holed; a round ended early, or a closed tab, leaves nothing behind, and practice
+never records anything. Score rounds record, hole by hole: the result (hole in one, albatross, eagle, birdie, par, bogey, double or worse),
 fairways hit on par 4s and 5s, greens in regulation, putts, and shots holed from off the green and from bunkers. Shots
 record personal bests: the longest drive ending in the fairway or first cut, the longest putt holed, and the longest shot
 holed from the fringe, fairway, rough, a bunker and anywhere else. Achievements mark the first birdie, eagle, albatross,
-hole in one, chip-in, hole-out from the sand, finished round and round under par, with a count of each. New ones show on
-the card at the end of the hole; everything shows on the profile page (Profile and stats on the home screen), with a
+hole in one, chip-in, hole-out from the sand, finished round and round under par, with a count of each. New ones, with
+the round's XP, trophies, unlocks and handicap change, show on the card after the 18th; everything shows on the profile page (Profile and stats on the home screen), with a
 summary of each course played. Practice records nothing.
 
 A guest's progress is kept on the device and moves to the account at sign-in; unsent holes are kept per player, so
@@ -106,6 +108,28 @@ signing out never hands them to the next player. Progress goes to the database a
 personal bests keep the larger and achievements keep the first, so two devices can't undo each other. Golf's tables
 (`golf_progress`, `golf_rounds`, `golf_pushes`) sit beside the shared `players` and `sessions` in the arcade-scores
 Supabase project and are only reached through the `golf_*` functions.
+
+## Levels, handicap, trophies and unlocks
+
+XP comes from the score-round counts (10 a hole, more for fairways, greens in regulation, pars, birdies and better,
+chip-ins, finished rounds and rounds under par) and sets a level from 1 to 99. The handicap follows the real system: the
+best 8 differentials of the last 20 finished score rounds, fewer with the official adjustments until there are 20, shown
+from the third round. A differential is the score minus the course rating, and `golf_ratings` works each course's rating
+out from every player's rounds (each round against that player's own average, pulled toward par until a course has a good
+number of rounds). Each course gives a bronze, silver or gold trophy for the best round (+10, +5, par) and a badge for a
+birdie or better on all 18 holes across its rounds. Florida is open; each next terrain opens once two courses on the one
+before have a round at +5 or better, and Verdin Springs also needs a round under par. Locked courses can't be practised.
+
+## Next build: achievement pop-ups
+
+Achievements should be seen when they happen, not only on the last hole's card. Plan: when a shot earns an achievement
+(or a personal best), a small pop-up slides in at the top of the screen with the achievement's name and one line under
+it, holds about three seconds with a short sound, and queues behind any other pop-up. Because only finished score rounds
+count, the pop-up says it counts when the round is finished; the card after the 18th still lists everything that was
+saved, and a round ended early saves none of it. The news is already collected per round (`G.round.news` through
+`newsFor`), so the pop-up hooks in there. Still to decide with Chris: whether other players should see achievements too
+(for example a recent-achievements list on the home screen or the BFG portal), and whether personal bests pop up or only
+achievements.
 
 ## The golfer
 
