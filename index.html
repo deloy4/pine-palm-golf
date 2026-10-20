@@ -196,6 +196,8 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 .pf-bar i { display: block; height: 100%; background: var(--gold); }
 .pf-top p { margin: 0; font-size: 12.5px; color: var(--dim); line-height: 1.45; }
 .hcr div.cnt b { color: var(--gold); }
+.pfPost { margin-left: 8px; background: var(--gold); color: var(--gold-ink); border: 0; border-radius: 6px; padding: 2px 9px; font-size: 12px; font-weight: 700; }
+.pfPost:disabled { opacity: .5; }
 .pf-rows .tag { vertical-align: 1px; margin-left: 8px; font-size: 10px; padding: 2px 6px 1px; }
 @media (max-width: 560px) { .pf-top { grid-template-columns: 1fr; } }
 /* coins, shop, challenges, hot streak */
@@ -4380,7 +4382,7 @@ const Player = (() => {
   // what waits to be sent is kept per player ('guest' before sign-in), so signing out never hands it to the next player
   const owner = () => (AR && AR.signedIn() && AR.player ? AR.player.id : 'guest');
   let who = null, state = null, pending = empty(), outbox = null, pushing = null;
-  const subs = [], emit = () => subs.forEach(f => f());
+  const subs = [], emit = () => subs.forEach(f => { try { f(); } catch (e) { console.error(e); } });
   const save = () => { ls.set('pending-' + who, isEmpty(pending) ? null : pending); ls.set('outbox-' + who, outbox); if (who !== 'guest') ls.set('state-' + who, state); };
   function load() {
     const was = who; who = owner();
@@ -4400,18 +4402,20 @@ const Player = (() => {
   function push() {
     if (who === 'guest') return Promise.resolve(false);
     if (pushing) return pushing;
-    pushing = (async () => {
-      try {
-        const me = who;
-        while (who === me) {
-          if (!outbox) { if (isEmpty(pending)) return true; outbox = { id: uuid(), d: pending }; pending = empty(); save(); }
-          try { const st = await AR.rpc('golf_push', { p_push_id: outbox.id, p_delta: outbox.d }); if (who !== me) return false; state = st; outbox = null; save(); emit(); }
-          catch (e) { return false; }
-        }
-        return false;
-      } finally { pushing = null; }
+    const run = (async () => {
+      const me = who;
+      while (who === me) {
+        if (!outbox) { if (isEmpty(pending)) return true; outbox = { id: uuid(), d: pending }; pending = empty(); save(); }
+        try { const st = await AR.rpc('golf_push', { p_push_id: outbox.id, p_delta: outbox.d }); if (who !== me) return false; state = st; outbox = null; save(); }
+        catch (e) { return false; }
+        emit();
+      }
+      return false;
     })();
-    return pushing;
+    // cleared once it settles: with nothing to send the run finishes before this line, and a finally inside it would
+    // have cleared it too early, leaving every later push answering "nothing unsent" without sending
+    pushing = run; run.finally(() => { if (pushing === run) pushing = null; });
+    return run;
   }
   function refresh() {
     if (who === 'guest') return Promise.resolve();
@@ -5008,7 +5012,7 @@ const HC_USE = { 3: [1, -2], 4: [1, -1], 5: [1, 0], 6: [2, -1], 7: [2, 0], 8: [2
 function recentRounds() {
   const me = Player.me, seen = new Set(), out = [];
   for (const r of Player.unsentRounds()) { seen.add(r.id); out.push({ id: r.id, course: r.course, total: r.holes.reduce((a, b) => a + b, 0), par: r.par, at: r.at }); }
-  for (const r of me && me.recent ? me.recent : []) if (!seen.has(r.id)) out.push({ id: r.id, course: r.course, total: +r.total, par: +r.par, at: r.played_at });
+  for (const r of me && me.recent ? me.recent : []) if (!seen.has(r.id)) out.push({ id: r.id, course: r.course, total: +r.total, par: +r.par, at: r.played_at, posted: !!r.posted });
   return out.sort((a, b) => new Date(b.at) - new Date(a.at)).slice(0, 20);
 }
 function handicap() {
@@ -5155,8 +5159,17 @@ function openProfile() {
     return `<div><span>${esc(courseNameOf(id))} <small>${o.n} round${o.n > 1 ? 's' : ''} · birdied ${nb} of 18 holes</small>${tr ? `<i class="tag ${tr.toLowerCase()}">${tr}</i>` : ''}${nb === 18 ? '<i class="tag bird">All 18 birdied</i>' : ''}</span><span>Best <b>${o.best} (${toParStr(o.best - o.par)})</b> <small>avg ${(o.sum / o.n).toFixed(1)}</small></span></div>`; }).join('')
     : '<div><small>No finished score rounds yet.</small></div>';
   $('pfHcNote').textContent = nr ? 'Your last 20 score rounds. The ones counting toward your handicap are in gold.' : '';
-  $('pfHcRows').innerHTML = nr ? hc.rs.map(r => `<div class="${r.counts ? 'cnt' : ''}"><span>${esc(courseNameOf(r.course))} <small>${fmtDate(r.at)} · rating ${r.rating.toFixed(1)}</small></span><span>${r.total} <small>(${toParStr(r.total - r.par)})</small> · <b>${r.diff > 0 ? '+' : ''}${r.diff.toFixed(1)}</b></span></div>`).join('')
+  $('pfHcRows').innerHTML = nr ? hc.rs.map(r => `<div class="${r.counts ? 'cnt' : ''}"><span>${esc(courseNameOf(r.course))} <small>${fmtDate(r.at)} · rating ${r.rating.toFixed(1)}</small></span><span>${r.total} <small>(${toParStr(r.total - r.par)})</small> · <b>${r.diff > 0 ? '+' : ''}${r.diff.toFixed(1)}</b>${signed && !r.posted ? ` <button class="pfPost" data-post="${r.id}" data-course="${esc(r.course)}" data-par="${r.par}">Post</button>` : ''}</span></div>`).join('')
     : '<div><small>No finished score rounds yet.</small></div>';
+  // a finished round that never went on its course board can be posted from here
+  $('pfHcRows').querySelectorAll('[data-post]').forEach(b => { b.onclick = () => {
+    b.disabled = true; $('pfMsg').textContent = 'Posting…';
+    const id = b.dataset.post, course = b.dataset.course, par = +b.dataset.par;
+    Player.postRound(id).then(row => {
+      $('pfMsg').textContent = ''; $('profile').hidden = true; Player.refresh();
+      Leaderboard.open({ game: 'golf-' + course, title: `${courseNameOf(course)} Leaderboard`, format: v => `${v} (${toParStr(v - par)})`, closeLabel: 'Done', mine: row, onClose: () => openProfile() });
+    }).catch(err => { b.disabled = false; $('pfMsg').textContent = `The round didn't post. ${err.message}`; });
+  }; });
   $('profile').hidden = false; $('profile').querySelector('.sheet').scrollTop = 0; $('pfClose').focus({ preventScroll: true });
 }
 $('pfClose').onclick = () => { $('profile').hidden = true; };
