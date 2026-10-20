@@ -120,16 +120,23 @@ number of rounds). Each course gives a bronze, silver or gold trophy for the bes
 birdie or better on all 18 holes across its rounds. Florida is open; each next terrain opens once two courses on the one
 before have a round at +5 or better, and Verdin Springs also needs a round under par. Locked courses can't be practised.
 
-## Next build: achievement pop-ups
+## Next build: achievement pop-ups and player leaderboards
 
-Achievements should be seen when they happen, not only on the last hole's card. Plan: when a shot earns an achievement
-(or a personal best), a small pop-up slides in at the top of the screen with the achievement's name and one line under
-it, holds about three seconds with a short sound, and queues behind any other pop-up. Because only finished score rounds
-count, the pop-up says it counts when the round is finished; the card after the 18th still lists everything that was
-saved, and a round ended early saves none of it. The news is already collected per round (`G.round.news` through
-`newsFor`), so the pop-up hooks in there. Still to decide with Chris: whether other players should see achievements too
-(for example a recent-achievements list on the home screen or the BFG portal), and whether personal bests pop up or only
-achievements.
+Achievement pop-ups are for the player, mid-round, so they know the moment they've earned one. When a shot earns an
+achievement, a small pop-up slides in at the top of the screen with its name and one line under it, holds about three
+seconds with a short sound, and queues behind any other pop-up. Because only finished score rounds count, it says the
+achievement counts when the round is finished; the card after the 18th still lists everything saved, and a round ended
+early saves none of it. Only achievements pop up; personal bests stay on the last card. Other players don't see anyone's
+achievements. The news is already collected per round (`G.round.news` through `newsFor`), so the pop-up hooks in there.
+
+Player leaderboards: one board with tabs, one tab per stat, signed-in players only. Tabs: most XP (with level), lowest
+handicap (players with at least 3 finished rounds), longest drive, longest putt holed, and the longest holed from the
+fringe, fairway, rough, a bunker and anywhere else (the BESTS list). Each row shows the player and the value, and the
+best-distance tabs also show the course, hole and date. It opens from the home screen beside the player's name and from
+the profile. XP and handicap should be worked out in the database from golf_progress and golf_rounds (the same XP table
+and handicap rules as the game, with golf_ratings), so every player is ranked the same way; the distances come from
+golf_progress.recs. One new `golf_board(p_stat)` function returning the top rows plus the signed-in player's own place
+would cover every tab.
 
 ## The golfer
 
