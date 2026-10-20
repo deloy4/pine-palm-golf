@@ -16,12 +16,19 @@ gets grabbed and comes out shorter and much less predictable, and it can be caug
 come out as a flier, long and with no spin. The projected flight and the carry always show the clean-lie shot, as if from
 the fairway, so the player has to work out how much the lie will take off.
 
+Elevation works the same way. The projected flight, the carry readout and the club numbers show the carry over level
+ground, and the panel shows how far the pin sits above or below the ball. The ball itself flies the real hill: in this
+ball flight a 6 iron carries about 10 yards farther to a green 30 feet below and about 11 yards shorter to one 30 feet
+above, close to the usual rule of a yard for every 3 feet, so the player has to pick the club for the drop or the climb.
+
 ## The courses
 
-All sixteen courses are made up. The first four are in a Florida style with pines, oaks, palms, waste areas and
+All twenty courses are made up. The first four are in a Florida style with pines, oaks, palms, waste areas and
 water; the next four are on the ocean, with cliffs, beaches, coves and surf; the next four are in mountain
-forest, with big elevation changes, hillsides, creeks and ranges on the horizon; the last four are on tropical
-islands, with lava or coral shores, palms, flowering shrubs and mountains inland. Each is par 72, about 7,250 to 7,450
+forest, with big elevation changes, hillsides, creeks and ranges on the horizon; the next four are on tropical
+islands, with lava or coral shores, palms, flowering shrubs and mountains inland; the last four are in the desert,
+with saguaros, junipers, dry washes and red rock, where a ball that misses the fairway and its thin band of rough lies in
+the desert, on hardpan or in the rocks. Each is par 72, about 7,250 to 7,450
 yards, with sharp doglegs whose corners can be carried, holes that bend around water, a drivable par 4, par 5s reachable in
 two only over trouble, and fairways that tilt toward hazards.
 
@@ -43,6 +50,10 @@ two only over trouble, and fairways that tilt toward hazards.
 | Tern Reef, Beach Course | White sand beaches and lagoons, capes over lagoons at 4 and 17, a drivable 6th, a short carry to a green by the beach at 11 | 7,260 |
 | Petrel Cliffs, Cliffs Course | Clifftop holes above the sea with jungle corners to cut, bays to carry at 2 and 17, a drivable 5th, a cove par 3 at 12 | 7,285 |
 | Tropicbird Bay, Reef Course | Holes along the low coral shore with fairways tilting to the sea, bays to carry at 9 and 12, a drivable 6th, a par 3 to a point at 11 | 7,280 |
+| Roadrunner Wash, Desert Course | Saguaro foothills with dry washes on most holes, sharp doglegs at 3, 7 and 12, a drivable 6th over a pond, a par 3 at 8 that drops 70 feet over a deep wash, a par 5 at 17 reachable over water | 7,340 |
+| Condor Canyon, Canyon Course | Red rock canyon holes with tees on the rim dropping up to 207 feet, approaches climbing up to 115 feet onto the mesa, deep washes in the canyon floor, sharp doglegs at 4, 7 and 13, a 232-yard par 3 at 3 that drops 186 feet | 7,408 |
+| Piñon Mesa, Mesa Course | High desert under snowy peaks, doglegs at 4, 10 and 15 with desert corners to cut, a lake to carry at 11, a drivable downhill 5th, par 5s at 2 and 13 reachable over a pond and a deep arroyo, a par 3 at 7 that drops 120 feet off the mesa | 7,292 |
+| Verdin Springs, Oasis Course | Lakes on most holes, sharp doglegs at 4, 8, 11 and 15, an island fairway at 14, a peninsula green at 12, par 5s at 2 and 13 reachable over water, a finish climbing into the mountains | 7,340 |
 
 Courses are data in the `COURSES` table near the top of the script. Each hole lists its par and yardage, a
 centreline, the green, bunkers, waste areas, water, elevation along the hole and any corner trees. `open` cuts
@@ -53,6 +64,11 @@ add `sea`, a list of straight shorelines given by two points along and across th
 width; the course settings choose the trees, the scrub colour and the wind. Mountain holes add `side`, how many
 feet the hillside climbs about 100 yards off the line of play (plus for the right, minus for the left), and `wl`,
 the water level in feet for a creek or pond up in the hills; the course's `range` sets the mountains around it.
+Desert courses are mountain courses with `desert: true`: `pal.floor` is `sonoran`, `redrock` or `highdesert`, `flora`
+can list `saguaro`, `ocotillo`, `joshua`, `juniper`, `paloverde`, `hardwood` and `palm`, `edgeMix` weighs the plants along
+the edge of the rough (`shrub`, `barrel`, `ocotillo`), `lakeC` colours the lakes and `range.mesa` steps the far range into
+flat benches and cliffs. A water entry `{ t: 'wash', s0, s1, d0, d1, dep }` is a dry wash, a sandy channel `dep` feet
+deep (4 by default) that plays as a waste area.
 Island courses are ocean courses with a `range` as well, which puts mountains (and an optional volcano, `cone`)
 inland behind the far land; `pal.cliff` and `pal.sand` colour the shore rock and the beach.
 
