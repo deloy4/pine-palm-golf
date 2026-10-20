@@ -120,6 +120,38 @@ number of rounds). Each course gives a bronze, silver or gold trophy for the bes
 birdie or better on all 18 holes across its rounds. Florida is open; each next terrain opens once two courses on the one
 before have a round at +5 or better, and Verdin Springs also needs a round under par. Locked courses can't be practised.
 
+## Coins, the shop, hot streaks and challenges
+
+Coins come from the score-round counts the same way XP does, so rounds played before coins existed count too: 2 a hole,
+3 a par, 10 a birdie, 25 an eagle, 60 an albatross, 100 a hole in one, 10 a chip-in, 20 a finished round and 40 a round
+under par. Bonuses go into the `coin_bonus` count and spending into `coins_spent`. Coins buy looks only, and nothing in
+the shop changes a shot: ball colours, tracer colours (fire and rainbow colour the line along its length), outfits,
+flags and celebrations. Each group's first item is free. Outfits recolour the Mixamo golfer's texture: its navy pixels
+(shirt and cap) and khaki pixels (trousers) take the new colours and keep their own light and shade. Celebrations play
+at the cup when the ball drops for par or better, in any mode. Progress carries `own` (bought, the first purchase
+stands), `eq` (worn, the latest choice wins) and `done` (tasks and weekly bonuses already paid, dropped after 60 days),
+and `golf_push` merges them like the rest.
+
+A hot streak is a birdie or better on three holes in a row in a score round. It lights the badge beside the hole card,
+pays 30 coins, then 40, 50 and so on for each hole it runs on, and counts toward the Hot streak achievement and the
+longest-streak best. Like everything else it is paid only when the round is finished.
+
+Three daily tasks (one easy at 25 coins, one middling at 40, one hard at 70) come from the date, the same for everyone,
+and each is done inside one finished score round. Days and weeks run on Mountain time, and weeks start Sunday.
+
+The challenges screen (Challenges on the home screen) has four boards, all picked in the database from the date
+(`golf_pick`) so everyone plays the same holes. The daily hole is any hole on any course; the first try of the day
+counts from its first shot, so leaving partway ends it with no score, and it pays 5 to 80 coins by the score. The
+course of the week counts each player's best finished score round there that week; the first one finished pays 50
+coins, and that course can be played for a score that week even where it is still locked. Closest to the pin (a par 3,
+must finish on the green) and the long drive (a par 5, must finish in the fairway or first cut) are one tee shot a
+try, as many tries as you like, best one counts, 20 coins for the first entry each week. The top three win 50, 30 and
+20 coins on each daily hole and 150, 100 and 60 on each weekly board, paid the next time they open the game
+(`golf_claim_prizes`, inside `golf_challenges`). Challenges can be played on locked courses; entering the boards needs
+sign-in. Tables: `golf_courses` (ids and pars, copied from the game for the picks), `golf_entries`, `golf_claims`;
+functions `golf_challenges(p_token)` and `golf_entry(p_token, kind, course, hole, value)`. If a course's holes or pars
+change in the game, update `golf_courses` too.
+
 ## Next build: achievement pop-ups and player leaderboards
 
 Achievement pop-ups are for the player, mid-round, so they know the moment they've earned one. When a shot earns an
