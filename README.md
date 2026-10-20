@@ -21,31 +21,34 @@ the fairway, so the player has to work out how much the lie will take off.
 All sixteen courses are made up. The first four are in a Florida style with pines, oaks, palms, waste areas and
 water; the next four are on the ocean, with cliffs, beaches, coves and surf; the next four are in mountain
 forest, with big elevation changes, hillsides, creeks and ranges on the horizon; the last four are on tropical
-islands, with lava or coral shores, palms, flowering shrubs and mountains inland. Each is par 72.
+islands, with lava or coral shores, palms, flowering shrubs and mountains inland. Each is par 72, about 7,250 to 7,450
+yards, with sharp doglegs whose corners can be carried, holes that bend around water, a drivable par 4, par 5s reachable in
+two only over trouble, and fairways that tilt toward hazards.
 
 | Course | Style | Yards |
 | --- | --- | --- |
 | Heronwood, Heron Course | Sharp doglegs with corners to cut, a drivable 5th, a par 5 at 16 reachable over water, a forced-carry par 3 at 17 | 7,300 |
-| Coquina Ridge, Ridge Course | Hills, elevated tees, up to about 30 feet of drop | 7,035 |
-| Palmetto Run, Lakes Course | Water on most holes, reachable par 5s, drivable par 4s | 7,040 |
-| Blackwater Bend, Oak Course | Tight oak corridors, creeks, small greens | 7,030 |
-| Cormorant Head, Cliffs Course | Clifftop holes with cypress, carries over sea coves at 3, 6, 8 and 16 | 7,030 |
-| Gullhaven Dunes, Dunes Course | Wide beaches, big dunes and sand blowouts, few trees, the windiest | 6,960 |
-| Driftwood Shoals, Ocean Course | Beach holes and lagoons, live oaks and palms | 7,050 |
-| Kestrel Bluffs, Canyon Course | Bluffs about 90 feet above the sea, sandy canyons across the holes | 7,055 |
-| Talus Ridge, Summit Course | Colorado spruce and gold aspens, snow peaks, a par 3 at 7 that drops 140 feet | 7,235 |
-| Osprey Creek, River Course | A Montana valley with a creek on most holes, lodgepole pines and a far range | 7,085 |
-| Kettle Lake, Lake Course | Tight Cascade firs, lakes, a snow-capped volcano on the horizon | 7,120 |
-| Sourwood Gap, Gap Course | Blue Ridge hardwoods in fall colour, rolling holes, a par 3 at 13 that drops about 115 feet | 7,050 |
-| Frigate Point, Lava Course | Black lava fields and cliffs, coves to carry at 3 and 16, a volcano inland | 7,120 |
-| Tern Reef, Beach Course | White sand beaches, palms and bougainvillea, lagoons, green ridges inland | 6,995 |
-| Petrel Cliffs, Cliffs Course | Red cliffs about 100 feet above the sea, jungle, sharp green ridges close by | 7,120 |
-| Tropicbird Bay, Reef Course | Low coral rock along the sea for whole holes, a par 3 to a point at 11 | 7,015 |
+| Coquina Ridge, Ridge Course | Hills and elevated tees, sharp doglegs at 3, 9 and 17, capes over lakes at 6 and 13, a drivable downhill 11th, par 5s at 2 and 8 reachable over water | 7,275 |
+| Palmetto Run, Lakes Course | Water on almost every hole, sharp doglegs at 3, 6 and 12, drivable 5th and 15th, par 5s at 2 and 16 reachable over water, a cape finish along the lake | 7,250 |
+| Blackwater Bend, Oak Course | Tight oak corridors, sharp doglegs at 3, 10 and 15, a drivable 6th, creeks in front of the greens at 2, 11 and 13, a cape finish over water | 7,330 |
+| Cormorant Head, Cliffs Course | Clifftop holes, doglegs around sea coves at 3, 6 and 8, a drivable 14 on the cliff edge, par 5s at 2 and 18 reachable over a cove, a long cove carry at 16 | 7,290 |
+| Gullhaven Dunes, Dunes Course | Wide beaches and sand blowouts, sharp doglegs at 2, 9, 13 and 17, a drivable 8th, par 5s at 4 and 11 reachable over water, fairways tilting toward the beach | 7,270 |
+| Driftwood Shoals, Ocean Course | Beach holes and lagoons, sharp doglegs at 3, 9 and 15, a drivable 6th by the beach, par 5s at 2, 13 and 16 reachable over water | 7,310 |
+| Kestrel Bluffs, Canyon Course | Bluffs 90 to 130 feet above the sea, sandy canyons across 3, 4, 9 and 16, cove carries at 2, 10, 12 and 17, a drivable 5th, par 5s at 8 and 13 reachable over a cove | 7,352 |
+| Talus Ridge, Summit Course | Big drops from high tees, sharp doglegs at 4, 10 and 14, a lake cape at 11, a drivable 5th, a par 3 at 7 that drops 140 feet | 7,430 |
+| Osprey Creek, River Course | A creek on most holes, capes over the water at 2 and 14, a drivable 5th across the creek, par 5s at 9 and 13 reachable over water | 7,255 |
+| Kettle Lake, Lake Course | Tight firs and kettle lakes, sharp doglegs at 2, 6 and 13, lakes to bite off at 5 and 15, a drivable 11th, a par 3 at 16 that drops 100 feet over a lake | 7,430 |
+| Sourwood Gap, Gap Course | Fall hardwoods and creek hollows, sharp doglegs at 2, 8 and 14, a drivable 6th, par 5s at 9 and 16 reachable over a creek, a par 3 at 13 that drops about 115 feet | 7,350 |
+| Frigate Point, Lava Course | Lava fields and cliffs, a cape 9th across a sea cove, coves to carry at 3, 11 and 16, a drivable 5th, par 5s at 8 and 18 reachable over coves | 7,315 |
+| Tern Reef, Beach Course | White sand beaches and lagoons, capes over lagoons at 4 and 17, a drivable 6th, a short carry to a green by the beach at 11 | 7,260 |
+| Petrel Cliffs, Cliffs Course | Clifftop holes above the sea with jungle corners to cut, bays to carry at 2 and 17, a drivable 5th, a cove par 3 at 12 | 7,285 |
+| Tropicbird Bay, Reef Course | Holes along the low coral shore with fairways tilting to the sea, bays to carry at 9 and 12, a drivable 6th, a par 3 to a point at 11 | 7,280 |
 
 Courses are data in the `COURSES` table near the top of the script. Each hole lists its par and yardage, a
 centreline, the green, bunkers, waste areas, water, elevation along the hole and any corner trees. `open` cuts
 clearings into the woods ([yards along, yards across, radius]) so the inside of a dogleg can be carried, and `stand` leaves a
-clump of trees inside the corridor. Greenside bunkers are dug deeper than fairway bunkers, with a higher lip. Ocean holes
+clump of trees inside the corridor. `tilt` ([from, to, feet]) tips the ground across the fairway so a ball landing on the
+low side runs toward the hazard there (feet fallen across 30 yards, plus to the right). Greenside bunkers are dug deeper than fairway bunkers, with a higher lip. Ocean holes
 add `sea`, a list of straight shorelines given by two points along and across the hole, with an optional beach
 width; the course settings choose the trees, the scrub colour and the wind. Mountain holes add `side`, how many
 feet the hillside climbs about 100 yards off the line of play (plus for the right, minus for the left), and `wl`,
