@@ -5,10 +5,12 @@ There is no build step: `index.html` runs as it is, and GitHub Pages serves the 
 `main` updates the site.
 
 You swing with the mouse. Hold the left button, pull the mouse straight back to set the distance, then push it
-forward through where you started. Slant the push to draw or fade the ball and scroll to add or take off loft.
+forward through where you started. Slant the push to draw or fade the ball and scroll to add or take off loft. On a phone the swing is the same with a
+finger, and buttons at the bottom left change the club and loft and turn the aim (hold to turn, tap to nudge); the panels
+shrink to the edges of the screen upright or on its side.
 Backspin comes from the follow-through: stop short just past where you started for more, keep pushing through
 for less. The ball plays back at twice real speed (putts at two and a half times), and Space speeds it up more. When the
-ball is in or at the edge of the trees, Drop (or the D key) moves it to the nearest clear spot with an open shot, no nearer
+ball is in or at the edge of the trees, Drop (or the X key) moves it to the nearest clear spot with an open shot, no nearer
 the hole, for a one-stroke penalty.
 
 Off the short grass the lie matters. Rough, pine straw, waste areas, beaches, rocks and bunkers each roll a lie when the

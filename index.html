@@ -188,16 +188,84 @@ table.sc .cur { background: rgba(232,195,90,.14); }
 #doneTerm { font-family: var(--display); font-weight: 800; font-size: 64px; line-height: .9; text-transform: uppercase; text-align: center; }
 #doneSub { text-align: center; color: var(--dim); margin: 8px 0 18px; font-size: 15px; }
 
-@media (max-width: 760px) {
+/* Touch controls: aim and loft buttons, shown once the device is known to be a touch screen */
+#touchPad { position: absolute; left: calc(12px + env(safe-area-inset-left, 0px)); bottom: calc(76px + env(safe-area-inset-bottom, 0px)); display: none; grid-template-columns: 1fr 1fr; gap: 6px; pointer-events: auto; }
+html.touch #touchPad { display: grid; }
+#touchPad button { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; color: var(--ink); touch-action: none; -webkit-tap-highlight-color: transparent; }
+#touchPad .aim { width: 58px; height: 52px; font-size: 24px; line-height: 1; }
+#touchPad .aim:active, #touchPad .aim.on { background: var(--gold); color: var(--gold-ink); }
+#touchPad .lf { height: 32px; font-size: 12px; font-weight: 700; padding: 0 4px; }
+button, .btn { touch-action: manipulation; }
+html.touch #help { display: none; }
+
+/* Phones and other small screens: smaller panels kept to the edges, the map and buttons down the right side */
+@media (max-width: 760px), (max-height: 520px) {
+  #card .hn { font-size: 30px; min-width: 42px; padding: 4px 8px; }
+  #card .meta { padding: 5px 10px 5px 9px; gap: 1px; }
+  #card .row1 { font-size: 15px; }
+  #card .row2 { font-size: 11px; gap: 10px; }
+  #card { top: calc(8px + env(safe-area-inset-top, 0px)); left: calc(8px + env(safe-area-inset-left, 0px)); }
+  #info { top: calc(60px + env(safe-area-inset-top, 0px)); left: calc(8px + env(safe-area-inset-left, 0px)); bottom: auto; padding: 6px 9px; gap: 2px; min-width: 0; width: 128px; }
+  #info .k { display: none; }
+  #info .big { font-size: 22px; }
+  #info .big small { font-size: 12px; }
+  #info .line { font-size: 11px; gap: 6px; }
+  #info .dimtxt { display: none; }
+  #windBox { padding-top: 4px; gap: 6px; }
+  #windArrow { width: 20px; height: 20px; }
+  #windTxt { font-size: 11px; }
   #shotDash { display: none; }
-  #map { width: 120px; height: 200px; }
-  #info { top: auto; bottom: calc(150px + env(safe-area-inset-bottom, 0px)); }
   #help { display: none; }
-  #spinMeter { top: calc(84px + env(safe-area-inset-top, 0px)); }
-  #toast { max-width: calc(100vw - 32px); top: calc(156px + env(safe-area-inset-top, 0px)); }
+  #mapWrap { top: calc(8px + env(safe-area-inset-top, 0px)); right: calc(8px + env(safe-area-inset-right, 0px)); padding: 3px; }
+  #map { width: 84px; height: 140px; }
+  #mapWrap .cap { display: none; }
+  #btns { top: calc(160px + env(safe-area-inset-top, 0px)); bottom: auto; right: calc(8px + env(safe-area-inset-right, 0px)); flex-direction: column; align-items: stretch; gap: 4px; width: 84px; }
+  #btns .btn { padding: 6px 4px; font-size: 12px; }
+  #meter, #speed { transform: scale(.6); transform-origin: bottom right; }
+  #meter { right: calc(16px + env(safe-area-inset-right, 0px)); bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
+  #speed { right: calc(36px + env(safe-area-inset-right, 0px)); bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
+  #clubs { bottom: calc(6px + env(safe-area-inset-bottom, 0px)); padding: 3px; gap: 2px; max-width: calc(100vw - 16px); }
+  #clubs button { min-width: 33px; padding: 4px 3px 3px; }
+  #clubs button .c { font-size: 14px; }
+  #clubs button .y { font-size: 9px; }
+  #spinMeter { width: 210px; padding: 5px 10px 7px; gap: 4px; top: calc(8px + env(safe-area-inset-top, 0px)); }
+  #spinMeter .sm-top { font-size: 9px; }
+  #smVal { font-size: 12px; }
+  #spinMeter .sm-bar { height: 7px; }
+  #toast { max-width: calc(100vw - 240px); top: calc(58px + env(safe-area-inset-top, 0px)); padding: 6px 12px; }
+  #toast .t1 { font-size: 18px; }
+  #toast .t2 { font-size: 12px; }
   #holePick { grid-template-columns: repeat(6, 1fr); }
   .modes { grid-template-columns: 1fr; }
-  #title { background: rgba(4,12,8,.8); }
+  #title { background: rgba(4,12,8,.8); padding-left: 16px; }
+  #title h1 { font-size: clamp(44px, 13vw, 80px); }
+  #title h1.mid { font-size: clamp(36px, 10vw, 60px); }
+  .pick { padding: 9px 12px 10px; }
+  .pick b { font-size: 22px; }
+}
+/* phone upright: the spin meter sits above the clubs, out of the way of the hole card and map */
+@media (max-width: 760px) and (min-height: 521px) {
+  /* every club on show in two rows, the touch buttons and swing meters above them, the spin meter above those */
+  #clubs { flex-wrap: wrap; justify-content: center; width: min(374px, calc(100vw - 16px)); overflow: visible; }
+  #clubs button { flex: 0 0 calc((100% - 12px) / 7); min-width: 0; }
+  #touchPad { bottom: calc(92px + env(safe-area-inset-bottom, 0px)); }
+  #touchPad .aim { width: 54px; height: 48px; }
+  #meter, #speed { bottom: calc(92px + env(safe-area-inset-bottom, 0px)); }
+  #spinMeter { top: auto; bottom: calc(232px + env(safe-area-inset-bottom, 0px)); }
+  #toast { max-width: calc(100vw - 32px); top: auto; bottom: calc(286px + env(safe-area-inset-bottom, 0px)); }
+}
+/* phone on its side: little height, so the swing meters move in beside the button column */
+@media (max-height: 520px) {
+  #meter { right: calc(104px + env(safe-area-inset-right, 0px)); bottom: calc(62px + env(safe-area-inset-bottom, 0px)); }
+  #speed { right: calc(124px + env(safe-area-inset-right, 0px)); bottom: calc(62px + env(safe-area-inset-bottom, 0px)); }
+  #touchPad { bottom: calc(10px + env(safe-area-inset-bottom, 0px)); }
+  #touchPad .aim { width: 52px; height: 46px; }
+  #touchPad .lf { height: 28px; }
+  #map { width: 78px; height: 128px; }
+  #btns { top: calc(146px + env(safe-area-inset-top, 0px)); width: 78px; }
+  #btns .btn { padding: 5px 4px; }
+  #title .inner { gap: 12px; }
+  #title .step { gap: 10px; }
 }
 @media (prefers-reduced-motion: reduce) { #toast, #banner, #fade { transition: none; } }
 </style>
@@ -248,9 +316,10 @@ table.sc .cur { background: rgba(232,195,90,.14); }
     <div class="sm-bar"><i class="sm-mid"></i><i id="smNeedle"></i></div>
   </div>
   <div id="toast" class="panel"><div class="t1" id="toast1"></div><div class="t2" id="toast2"></div></div>
-  <div id="help">Hold the left mouse button, pull back (sets distance), push forward smoothly and straight · <kbd>←</kbd><kbd>→</kbd> aim · <kbd>↑</kbd><kbd>↓</kbd> club · stop short past the ball for backspin · scroll loft · <kbd>V</kbd> overview · <kbd>Space</kbd> or click to speed up the ball · <kbd>D</kbd> drop out of the trees (+1) · <kbd>Tab</kbd> scorecard</div>
+  <div id="help">Hold the left mouse button, pull back (sets distance), push forward smoothly and straight · <kbd>←</kbd><kbd>→</kbd> aim · <kbd>↑</kbd><kbd>↓</kbd> club · stop short past the ball for backspin · scroll loft · <kbd>V</kbd> overview · <kbd>Space</kbd> or click to speed up the ball · <kbd>X</kbd> drop out of the trees (+1) · <kbd>Tab</kbd> scorecard</div>
   <div id="clubs" class="panel"></div>
-  <div id="btns"><button class="btn prac" id="bPrevH" hidden title="Previous hole">‹ Hole</button><button class="btn prac" id="bRestart" hidden title="Start this hole again">Restart</button><button class="btn prac" id="bNextH" hidden title="Next hole">Hole ›</button><button class="btn" id="bDrop" hidden title="Drop the ball clear of the trees for a one-stroke penalty (D)">Drop +1</button><button class="btn" id="bView">Overview</button><button class="btn" id="bCard">Scorecard</button><button class="btn" id="bMenu">Menu</button></div>
+  <div id="touchPad"><button class="lf" id="tClubUp" aria-label="Longer club">‹ Club</button><button class="lf" id="tClubDn" aria-label="Shorter club">Club ›</button><button class="lf" id="tLoftDn" aria-label="Less loft">Loft −</button><button class="lf" id="tLoftUp" aria-label="More loft">Loft +</button><button class="aim" id="tAimL" aria-label="Aim left">◀</button><button class="aim" id="tAimR" aria-label="Aim right">▶</button></div>
+  <div id="btns"><button class="btn prac" id="bPrevH" hidden title="Previous hole">‹ Hole</button><button class="btn prac" id="bRestart" hidden title="Start this hole again">Restart</button><button class="btn prac" id="bNextH" hidden title="Next hole">Hole ›</button><button class="btn" id="bDrop" hidden title="Drop the ball clear of the trees for a one-stroke penalty (X)">Drop +1</button><button class="btn" id="bView">Overview</button><button class="btn" id="bCard">Scorecard</button><button class="btn" id="bMenu">Menu</button></div>
 </div>
 
 <div id="banner"><div class="b1" id="ban1"></div><div class="b2" id="ban2"></div></div>
@@ -261,7 +330,7 @@ table.sc .cur { background: rgba(232,195,90,.14); }
       <div class="eyebrow">Pine &amp; Palm Golf</div>
       <h1 class="mid">Pick your terrain</h1>
       <div id="typeList" class="pickList"></div>
-      <details class="how"><summary>How to play</summary><p>Hold the left mouse button, pull the mouse straight back toward you, then push it straight forward through where you started. How far back you pull sets the distance: with a normal push forward, half a backswing carries about half as far (the blue dot on the Backswing meter shows about how far back for the pin). A slow push loses distance; pulling back past full adds power you can't control. Push up and a little to the right for a draw, up and a little to the left for a fade; the more you slant it, the more it bends, until it hooks or slices. Backspin comes from your follow-through: stop short and sharp just past where you started for more backspin, or keep pushing through for a long follow-through and the ball comes off with less spin and runs. The scroll wheel adds or takes off loft. Arrow keys aim and change clubs.</p></details>
+      <details class="how"><summary>How to play</summary><p>Hold the left mouse button, pull the mouse straight back toward you, then push it straight forward through where you started. How far back you pull sets the distance: with a normal push forward, half a backswing carries about half as far (the blue dot on the Backswing meter shows about how far back for the pin). A slow push loses distance; pulling back past full adds power you can't control. Push up and a little to the right for a draw, up and a little to the left for a fade; the more you slant it, the more it bends, until it hooks or slices. Backspin comes from your follow-through: stop short and sharp just past where you started for more backspin, or keep pushing through for a long follow-through and the ball comes off with less spin and runs. The scroll wheel adds or takes off loft. Arrow keys aim and change clubs. On a phone, swing with your finger the same way: touch, pull down, push up through where you started. The buttons at the bottom left change the club and loft, and hold ◀ or ▶ to aim (a tap nudges it).</p></details>
     </section>
     <section id="stCourse" class="step" hidden>
       <button class="back" id="bkType">‹ All terrains</button>
@@ -4209,7 +4278,7 @@ function loadHole(idx, titleOnly = false) {
     buildMapBase();
     $('loading').hidden = true;
     if (titleOnly) { setupShot(); G.mode = 'title'; ring.visible = ringDot.visible = aimLine.visible = pdotMesh.visible = projG.visible = false; return; }
-    $('hud').hidden = false;
+    $('hud').hidden = false; buildMapBase();   // (again, now the map has its on-screen size)
     setupShot();
     startIntro();
   }, 40);
@@ -4611,6 +4680,8 @@ function update(dt) {
   if (G.mode === 'aim') {
     let da = 0; const fast = G.keys.has('Shift') ? 0.25 : 1;
     if (G.keys.has('ArrowLeft') || G.keys.has('a')) da -= 1; if (G.keys.has('ArrowRight') || G.keys.has('d')) da += 1;
+    // touch aim buttons: slow for the first half second (a tap nudges the aim), then full speed while held
+    if (G.touchAim) { G.touchAimT += dt; da += G.touchAim * (G.touchAimT < 0.5 ? 0.25 : 1); }
     if (da) { G.aim += da * dt * 0.21 * fast * (CLUBS[G.club].putter ? 0.35 : 1); placeGolfer(); updateAimVisuals(); updateHud(); }
   }
   // swing animation
@@ -4691,7 +4762,7 @@ function frame(now) { const dt = Math.min(0.05, (now - last) / 1000); last = now
 addEventListener('keydown', e => {
   if (!$('confirm').hidden) { if (e.key === 'Escape') $('confirm').hidden = true; return; }
   if (e.key === ' ' && G.mode === 'flight' && G.flightT > 0.4) { e.preventDefault(); G.ff = true; return; }
-  if ((e.key === 'd' || e.key === 'D') && canDrop()) { dropClear(); return; }
+  if ((e.key === 'x' || e.key === 'X') && canDrop()) { dropClear(); return; }
   if (e.key === 'Tab') { e.preventDefault(); if ($('scorecard').hidden) openScorecard(); else $('scorecard').hidden = true; return; }
   if (e.key === 'Escape') { if (!$('scorecard').hidden) { $('scorecard').hidden = true; return; } if (SW.active) cancelSwing('Swing stopped', ''); if (G.overview) G.overview = false; return; }
   if (G.mode === 'intro' && (e.key === ' ' || e.key === 'Enter')) { skipIntro(); return; }
@@ -4704,6 +4775,20 @@ addEventListener('keydown', e => {
 });
 addEventListener('keyup', e => { const k = e.key.length === 1 ? e.key.toLowerCase() : e.key; G.keys.delete(k); if (!e.shiftKey) G.keys.delete('Shift'); });
 addEventListener('blur', () => G.keys.clear());
+// Touch screens: on-screen aim and loft buttons (no keys or scroll wheel on a phone).
+{ const touchOn = () => document.documentElement.classList.add('touch');
+  if (matchMedia('(pointer: coarse)').matches) touchOn(); addEventListener('touchstart', touchOn, { once: true, passive: true }); }
+G.touchAim = 0; G.touchAimT = 0;
+for (const [id, dir] of [['tAimL', -1], ['tAimR', 1]]) {
+  const el = $(id), stop = () => { if (G.touchAim === dir) G.touchAim = 0; el.classList.remove('on'); };
+  el.addEventListener('pointerdown', e => { e.preventDefault(); ensureAudio(); G.touchAim = dir; G.touchAimT = 0; el.classList.add('on'); try { el.setPointerCapture(e.pointerId); } catch (_) {} });
+  for (const ev of ['pointerup', 'pointercancel', 'lostpointercapture']) el.addEventListener(ev, stop);
+  el.addEventListener('contextmenu', e => e.preventDefault());
+}
+$('tClubUp').onclick = e => { e.currentTarget.blur(); setClub(G.club - 1); };
+$('tClubDn').onclick = e => { e.currentTarget.blur(); setClub(G.club + 1); };
+$('tLoftUp').onclick = e => { e.currentTarget.blur(); if (G.mode === 'aim') setLoft(G.loft + 1, true); };
+$('tLoftDn').onclick = e => { e.currentTarget.blur(); if (G.mode === 'aim') setLoft(G.loft - 1, true); };
 // Scroll wheel sets loft: up adds loft, down takes it off, one degree per notch.
 let wheelAcc = 0;
 canvas.addEventListener('wheel', e => {
@@ -4711,7 +4796,7 @@ canvas.addEventListener('wheel', e => {
   if (CLUBS[G.club].putter) return;
   wheelAcc += e.deltaY; if (Math.abs(wheelAcc) >= 50) { setLoft(G.loft + (wheelAcc < 0 ? 1 : -1), true); wheelAcc = 0; }
 }, { passive: false });
-addEventListener('resize', () => { renderer.setSize(innerWidth, innerHeight); camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); sizeTrace(); trMat.resolution.set(innerWidth, innerHeight); projAirMat.resolution.set(innerWidth, innerHeight); projRollMat.resolution.set(innerWidth, innerHeight); projShadowMat.resolution.set(innerWidth, innerHeight); if (HOLE) { buildMapBase(); drawMap(); } });
+addEventListener('resize', () => { if (HOLE && !$('hud').hidden) { buildMapBase(); drawMap(); } renderer.setSize(innerWidth, innerHeight); camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); sizeTrace(); trMat.resolution.set(innerWidth, innerHeight); projAirMat.resolution.set(innerWidth, innerHeight); projRollMat.resolution.set(innerWidth, innerHeight); projShadowMat.resolution.set(innerWidth, innerHeight); if (HOLE) { buildMapBase(); drawMap(); } });
 
 // boot: hole 17 behind the title screen
 setupGolferClub(CLUBS[0]);
