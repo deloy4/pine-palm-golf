@@ -78,10 +78,10 @@ inland behind the far land; `pal.cliff` and `pal.sand` colour the shore rock and
 
 ## Scores
 
-The home screen asks for a terrain (Florida, Ocean, Mountain, Island or Desert), then one of its four courses, then how to
-play. Play for a score starts at the 1st tee and plays all 18 holes once; finishing the 18th opens the scorecard with
+The home screen is one screen: tabs for the terrains (Florida, Ocean, Mountain, Island and Desert) above that terrain's four
+courses, and clicking a course opens it in place with its course record, Play for a score, Practice and its leaderboard. Play for a score starts at the 1st tee and plays all 18 holes once; finishing the 18th opens the scorecard with
 Record score, which puts the round on the course's board. Leaving a score round early (Menu, after a check) ends it with
-no score. Practice lets the player pick any hole, replay it, and move between holes with the Hole and Restart buttons;
+no score. Practice opens the 18 holes under the course; the player picks any hole, replay it, and move between holes with the Hole and Restart buttons;
 nothing is recorded. Each course has its own board on the shared arcade scoreboard (game `golf-<course id>`), and golf
 boards rank the lowest round first.
 
