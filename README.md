@@ -174,4 +174,15 @@ would cover every tab.
 
 The golfer is a Mixamo character with Mixamo's drive, chip and putt animations, converted to `golfer.glb`.
 Mixamo content may be used in games but not handed out as standalone files, so don't reuse `golfer.glb`
-outside this game.
+or the files in `characters/` outside this game.
+
+The shop's Golfers tab sells 13 more Mixamo characters at 2,500, 3,500 and 5,000 coins, priced so one takes several
+hours of play (a quick player earns about 500 to 700 coins an hour with bonuses). Each is `characters/<name>.glb` plus a
+shop picture `characters/<name>.png`, loaded the first time it is worn and kept for the session. They were converted
+from the Mixamo FBX downloads in headless Chrome: extra copies of the skeleton that some exports nest inside it were
+merged into one, textures shrunk to 1024 or 2048, and the classic golfer's drive, chip and putt clips retargeted onto
+each skeleton (each bone turns by the same world-space amount from its T-pose, and hip travel scales with hip height).
+Heights are kept between 1.5 and 1.95 m. Characters without finger bones get knuckle markers named like the bones,
+so the club and the right-hand grip work the same. Outfits recolour the classic golfer only. The claude.ai artifact
+loads each as base64 text (`.glb.txt`, gitignored), like `golfer.glb.txt`. The `golf_push` function accepts
+`golfer` as a worn slot (migration `golf_push_golfer_slot`).

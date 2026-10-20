@@ -222,6 +222,7 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 .shop .it .btn { justify-self: stretch; }
 .shop .it .btn:disabled { opacity: .55; cursor: default; }
 .sw { display: block; height: 46px; width: 100%; border-radius: 8px; background: rgba(255,255,255,.06); }
+.sw.pic { height: 150px; object-fit: contain; background: radial-gradient(ellipse at 50% 85%, rgba(232,195,90,.14), rgba(255,255,255,.04) 70%); }
 .sw.ball { width: 40px; height: 40px; border-radius: 50%; margin: 3px 0; }
 .sw.tr { height: 8px; border-radius: 4px; margin: 19px 0; }
 .sw.fit { width: 40px; height: 46px; border-radius: 12px 12px 6px 6px; }
@@ -3534,7 +3535,7 @@ function placeGolfer() {
 // Mixamo golfer (golfer.glb: one skinned character plus 'drive', 'chip' (wedges) and 'putt' clips, in cm, facing -X with the target at +Z).
 // The clip is scrubbed by the swing: backswing plays address -> top, the downswing plays into impact, the follow-through
 // plays impact -> finish. The club rides the left hand with an offset fixed at address so the head soles behind the ball.
-const HUMAN = { ready: false, root: null, mixer: null, act: {}, act2: {}, bone: {}, off: new THREE.Matrix4(), fix: new THREE.Quaternion(), q0: new THREE.Quaternion(), v0: new V3(), clip: 'drive',
+const HUMAN = { ready: false, root: null, mixer: null, act: {}, act2: {}, bone: {}, file: null, want: undefined, cache: {}, off: new THREE.Matrix4(), fix: new THREE.Quaternion(), q0: new THREE.Quaternion(), v0: new V3(), clip: 'drive',
   T: { drive: { a: 0, top: 0.87, imp: 1.14, fin: 2.6 }, chip: { a: 0, top: 0.7, imp: 0.98, fin: 1.5 }, putt: { a: 0.1, top: 0.65, imp: 0.97, fin: 1.5 } } };
 const _hm = new THREE.Matrix4(), _hi = new THREE.Matrix4(), _hq = new THREE.Quaternion(), _hv = new V3(), _hw = new V3();
 function humanSample(t, t2 = 0, w = 0) {
@@ -3613,27 +3614,42 @@ function rightHandOnGrip() {
   W.getWorldPosition(_rw); turnBone(E, _hv.subVectors(_rw, _rn), _hw.subVectors(_rt, _rn));
   W.parent.getWorldQuaternion(_rpq); W.quaternion.copy(_rpq.invert().multiply(_rh)); W.updateMatrixWorld(true);
 }
-function loadHuman() {
-  // golfer.glb on the website; the claude.ai copy ships it as base64 text (golfer.glb.txt) because artifacts don't serve .glb
-  const onLoad = gltf => {
-    const root = gltf.scene; root.scale.setScalar(0.01); root.rotation.y = Math.PI / 2;
-    root.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; o.frustumCulled = false; } if (o.isBone) HUMAN.bone[o.name] = o; });
-    golfer.add(root); HUMAN.root = root; HUMAN.mixer = new THREE.AnimationMixer(root);
-    for (const clip of gltf.animations) { HUMAN.act[clip.name] = HUMAN.mixer.clipAction(clip); HUMAN.act2[clip.name] = HUMAN.mixer.clipAction(clip.clone()); }
-    for (const k in HUMAN.act) { HUMAN.act[k].play(); HUMAN.act2[k].play(); }
-    // the drawn golfer steps aside; the club and its head stay
-    for (const o of golfer.children) if (o !== clubG && o !== root) o.visible = false;
-    handL.visible = handR.visible = false;
-    HUMAN.ready = true; if (LOOK.outfit) lookOutfit(SHOP_ITEM[LOOK.outfit]);
-    if (GS.club) { setupGolferClub(GS.club); if (G.ball) placeGolfer(); poseGolfer(); }
-  };
-  const fromText = () => fetch('golfer.glb.txt').then(r => { if (!r.ok) throw new Error(r.status); return r.text(); }).then(t => {
+// Golfers: null is the classic golfer (golfer.glb); shop golfers are characters/<file>.glb, each with the same three clips
+// retargeted onto its own skeleton. Each loads the first time it is worn and is kept, so switching back is instant.
+function loadHuman(file = null) {
+  HUMAN.want = file;
+  const have = HUMAN.cache[file];
+  if (have) { if (have !== 'loading') useHuman(have, file); return; }
+  HUMAN.cache[file] = 'loading';
+  // the claude.ai copy ships each file as base64 text (.glb.txt) because artifacts don't serve .glb
+  const url = file ? `characters/${file}.glb` : 'golfer.glb';
+  const fromText = () => fetch(url + '.txt').then(r => { if (!r.ok) throw new Error(r.status); return r.text(); }).then(t => {
     const bin = atob(t.trim()), u8 = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
     return u8.buffer;
   });
-  fetch('golfer.glb').then(r => { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); }).catch(fromText)
-    .then(buf => new GLTFLoader().parse(buf, '', onLoad, e => console.warn('golfer.glb', e)))
-    .catch(e => console.warn('golfer.glb', e));   // the drawn golfer stays if the file can't load
+  fetch(url).then(r => { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); }).catch(fromText)
+    .then(buf => new GLTFLoader().parseAsync(buf, ''))
+    .then(gltf => { const h = humanFrom(gltf); HUMAN.cache[file] = h; if (HUMAN.want === file) useHuman(h, file); })
+    .catch(e => { delete HUMAN.cache[file]; console.warn(url, e); });   // whoever is on the tee (or the drawn golfer) stays
+}
+function humanFrom(gltf) {
+  const root = gltf.scene; root.scale.setScalar(0.01); root.rotation.y = Math.PI / 2;
+  const h = { root, mixer: new THREE.AnimationMixer(root), act: {}, act2: {}, bone: {} };
+  // characters without finger bones carry plain knuckle markers named like the bones
+  root.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; o.frustumCulled = false; } if (o.isBone || /^mixamorig/.test(o.name)) h.bone[o.name] = o; });
+  for (const clip of gltf.animations) { h.act[clip.name] = h.mixer.clipAction(clip); h.act2[clip.name] = h.mixer.clipAction(clip.clone()); }
+  for (const k in h.act) { h.act[k].play(); h.act2[k].play(); }
+  return h;
+}
+function useHuman(h, file) {
+  if (HUMAN.root === h.root) return;
+  if (HUMAN.root) golfer.remove(HUMAN.root);
+  golfer.add(h.root); Object.assign(HUMAN, { root: h.root, mixer: h.mixer, act: h.act, act2: h.act2, bone: h.bone, file });
+  // the drawn golfer steps aside; the club and its head stay
+  for (const o of golfer.children) if (o !== clubG && o !== h.root) o.visible = false;
+  handL.visible = handR.visible = false;
+  HUMAN.ready = true; if (LOOK.outfit) lookOutfit(SHOP_ITEM[LOOK.outfit]);
+  if (GS.club) { setupGolferClub(GS.club); if (G.ball) placeGolfer(); poseGolfer(); }
 }
 
 // ---------------------------------------------------------------------------
@@ -4616,6 +4632,16 @@ const coinBalance = (c = Player.view().counts) => Math.max(0, coinsOf(c) + (c.co
 const COIN = '<svg class="coin" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="#e8c35a"/><circle cx="8" cy="8" r="4.6" fill="none" stroke="#9a7a22" stroke-width="1.3"/></svg>';
 // the first item in each group is free and worn until something else is chosen
 const SHOP = [
+  { slot: 'golfer', name: 'Golfers', note: 'Every golfer swings the same and hits the same; outfits dress the classic golfer only.', items: [
+    ['golfer_classic', 'Classic', 0, {}],
+    ['golfer_ty', 'Ty', 2500, { file: 'ty' }], ['golfer_peasant', 'Peasant Man', 2500, { file: 'peasant-man' }],
+    ['golfer_joggers', 'Yellow Joggers', 2500, { file: 'ch03' }], ['golfer_tracksuit', 'Grey Tracksuit', 2500, { file: 'ch08' }],
+    ['golfer_hoodie', 'Black Hoodie', 2500, { file: 'ch06' }],
+    ['golfer_master', 'Old Master', 3500, { file: 'ch39' }], ['golfer_erika', 'Erika Archer', 3500, { file: 'erika-archer' }],
+    ['golfer_elf', 'Forest Elf', 3500, { file: 'ch34' }], ['golfer_vegas', 'Big Vegas', 3500, { file: 'big-vegas' }],
+    ['golfer_shadow', 'Shadow', 3500, { file: 'ch45' }],
+    ['golfer_gremlin', 'Blue Gremlin', 5000, { file: 'ch19' }], ['golfer_ears', 'Big Ears', 5000, { file: 'ch14' }],
+    ['golfer_warrok', 'Warrok', 5000, { file: 'warrok' }]] },
   { slot: 'ball', name: 'Balls', items: [
     ['ball_white', 'White', 0, { c: 0xffffff }], ['ball_yellow', 'Yellow', 60, { c: 0xffdd33 }], ['ball_orange', 'Orange', 60, { c: 0xff8a1f }],
     ['ball_pink', 'Pink', 80, { c: 0xff6fb5 }], ['ball_lime', 'Lime', 80, { c: 0x9dff3a }], ['ball_sky', 'Sky blue', 80, { c: 0x5cc4ff }],
@@ -4624,7 +4650,7 @@ const SHOP = [
     ['tracer_red', 'Red', 0, { c: 0xc8102e }], ['tracer_white', 'White', 50, { c: 0xffffff }], ['tracer_gold', 'Gold', 80, { c: 0xffc93c }],
     ['tracer_blue', 'Blue', 80, { c: 0x2f7bff }], ['tracer_green', 'Green', 80, { c: 0x2fd16b }], ['tracer_purple', 'Purple', 100, { c: 0x9b4dff }],
     ['tracer_orange', 'Orange', 100, { c: 0xff7a1a }], ['tracer_fire', 'Fire', 250, { fx: 'fire' }], ['tracer_rainbow', 'Rainbow', 300, { fx: 'rainbow' }]] },
-  { slot: 'outfit', name: 'Outfits', items: [
+  { slot: 'outfit', name: 'Outfits', note: 'Outfits dress the classic golfer.', items: [
     ['outfit_classic', 'Navy and khaki', 0, { s: 0x22305e, p: 0xd9c9a0, keep: 1 }], ['outfit_green', 'Green and khaki', 200, { s: 0x1f7a45, p: 0xd9c9a0 }],
     ['outfit_white', 'White and navy', 200, { s: 0xf0f0ec, p: 0x26305a }], ['outfit_black', 'Black and grey', 250, { s: 0x202024, p: 0x8e9196 }],
     ['outfit_pink', 'Pink and white', 250, { s: 0xf27fb0, p: 0xf0f0ec }], ['outfit_sky', 'Sky blue and white', 250, { s: 0x6cbfe8, p: 0xf0f0ec }],
@@ -4648,7 +4674,7 @@ const hex = n => '#' + n.toString(16).padStart(6, '0');
 const LOOK = {};
 function applyLooks() {
   const w = worn();
-  for (const slot in w) if (LOOK[slot] !== w[slot]) { LOOK[slot] = w[slot]; ({ ball: lookBall, tracer: lookTracer, outfit: lookOutfit, flag: lookFlag, celeb: () => {} })[slot](SHOP_ITEM[w[slot]]); }
+  for (const slot in w) if (LOOK[slot] !== w[slot]) { LOOK[slot] = w[slot]; ({ golfer: it => loadHuman(it.file || null), ball: lookBall, tracer: lookTracer, outfit: lookOutfit, flag: lookFlag, celeb: () => {} })[slot](SHOP_ITEM[w[slot]]); }
 }
 function lookBall(it) {
   const m = MAT.ball, c = new THREE.Color(it.c);
@@ -4713,7 +4739,7 @@ function outfitPrep() {
 }
 function lookOutfit(it) {
   for (const k in MAT0) MAT[k].color.copy(it.keep ? MAT0[k] : new THREE.Color(k.startsWith('pants') ? it.p : it.s));
-  if (!HUMAN.ready) return;
+  if (!HUMAN.ready || HUMAN.file) return;
   const O = OUTFIT || (OUTFIT = outfitPrep()); if (!O) return;
   if (it.keep) { O.mat.map = O.map0; O.mat.needsUpdate = true; return; }
   const out = new ImageData(new Uint8ClampedArray(O.src.data), O.W, O.H), d = out.data, col = [null, it.s, it.p].map(n => n == null ? null : [n >> 16 & 255, n >> 8 & 255, n & 255]);
@@ -4924,9 +4950,10 @@ function showStreak() {
 }
 
 // ----- shop -----
-let shopTab = 'ball';
+let shopTab = 'golfer';
 function openShop() { $('shop').hidden = false; $('shMsg').textContent = ''; renderShop(); $('shop').querySelector('.sheet').scrollTop = 0; $('shClose').focus({ preventScroll: true }); }
 function swatch(it) {
+  if (it.slot === 'golfer') return `<img class="sw pic" src="characters/${it.file || 'classic'}.png" alt="" loading="lazy">`;
   if (it.slot === 'ball') { const c = new THREE.Color(it.c); return `<i class="sw ball" style="background:radial-gradient(circle at 35% 30%, #fff 0, ${hex(it.c)} 48%, #${c.clone().multiplyScalar(0.55).getHexString()} 100%)${it.glow ? `;box-shadow:0 0 12px ${hex(it.c)}` : ''}"></i>`; }
   if (it.slot === 'tracer') return `<i class="sw tr" style="background:${it.fx === 'rainbow' ? 'linear-gradient(90deg,#ff3b3b,#ff9f1a,#ffe14d,#3ddc84,#3fa7ff,#9b4dff)' : it.fx === 'fire' ? 'linear-gradient(90deg,#7a0a00,#e02a00,#ff9a00,#ffe066)' : hex(it.c)}"></i>`;
   if (it.slot === 'outfit') return `<i class="sw fit" style="background:linear-gradient(${hex(it.s)} 0 52%, ${hex(it.p)} 52% 100%)"></i>`;
@@ -4947,13 +4974,13 @@ function renderShop() {
     const it = SHOP_ITEM[id], own = owns(v, id), on = w[g.slot] === id;
     const act = on ? '<button class="btn" disabled>Wearing</button>' : own ? `<button class="btn" data-wear="${id}">${g.slot === 'celeb' ? 'Use' : 'Wear'}</button>`
       : `<button class="btn gold" data-buy="${id}"${bal < it.price ? ' disabled' : ''}>Buy</button>`;
-    return `<div class="it${on ? ' on' : ''}">${swatch(it)}<b>${esc(it.name)}</b><span>${!it.price ? 'Free' : own ? 'Owned' : `${COIN}${it.price}${bal && bal < it.price ? ` <small>${it.price - bal} more</small>` : ''}`}</span>${act}</div>`;
+    return `<div class="it${on ? ' on' : ''}">${swatch(it)}<b>${esc(it.name)}</b><span>${!it.price ? 'Free' : own ? 'Owned' : `${COIN}${it.price.toLocaleString()}${bal && bal < it.price ? ` <small>${(it.price - bal).toLocaleString()} more</small>` : ''}`}</span>${act}</div>`;
   }).join('');
   $('shItems').querySelectorAll('[data-wear]').forEach(b => { b.onclick = () => { Player.add({ eq: { [g.slot]: b.dataset.wear } }); Player.push(); }; });
   $('shItems').querySelectorAll('[data-buy]').forEach(b => { b.onclick = () => {
     const it = SHOP_ITEM[b.dataset.buy]; if (coinBalance() < it.price || owns(Player.view(), it.id)) return;
     Player.add({ counts: { coins_spent: it.price }, own: { [it.id]: { at: new Date().toISOString() } }, eq: { [it.slot]: it.id } }); Player.push();
-    $('shMsg').textContent = `Bought ${it.name.toLowerCase()} for ${it.price} coins.`;
+    $('shMsg').textContent = `Bought ${it.slot === 'golfer' ? it.name : it.name.toLowerCase()} for ${it.price.toLocaleString()} coins.`;
   }; });
 }
 $('shClose').onclick = () => { $('shop').hidden = true; };
@@ -6232,7 +6259,7 @@ addEventListener('resize', () => { if (HOLE && !$('hud').hidden) { buildMapBase(
 // boot: hole 17 behind the title screen
 setupGolferClub(CLUBS[0]);
 loadHole(COURSE.sig, true);
-loadHuman();
+if (HUMAN.want === undefined) loadHuman();
 requestAnimationFrame(frame);
 
 if (TEST) {
