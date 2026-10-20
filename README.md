@@ -76,9 +76,12 @@ inland behind the far land; `pal.cliff` and `pal.sand` colour the shore rock and
 
 ## Scores
 
-Finish a "Play 18 holes" round and the scorecard offers Record score. In an 18-hole round each hole is played
-once; Replay hole is only offered when playing a single hole. Each course has its own board on the
-shared arcade scoreboard (game `golf-<course id>`), and golf boards rank the lowest round first.
+The home screen asks for a terrain (Florida, Ocean, Mountain, Island or Desert), then one of its four courses, then how to
+play. Play for a score starts at the 1st tee and plays all 18 holes once; finishing the 18th opens the scorecard with
+Record score, which puts the round on the course's board. Leaving a score round early (Menu, after a check) ends it with
+no score. Practice lets the player pick any hole, replay it, and move between holes with the Hole and Restart buttons;
+nothing is recorded. Each course has its own board on the shared arcade scoreboard (game `golf-<course id>`), and golf
+boards rank the lowest round first.
 
 ## The golfer
 

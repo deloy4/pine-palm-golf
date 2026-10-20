@@ -121,12 +121,33 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 #title .eyebrow { font-size: 13px; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); font-weight: 600; }
 #title h1 { margin: 0; font-family: var(--display); font-weight: 800; font-size: clamp(64px, 11vw, 132px); line-height: .82; letter-spacing: -.01em; text-transform: uppercase; }
 #title .sub { font-family: var(--display); font-size: 22px; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); font-weight: 600; }
-#title .how { font-size: 15px; line-height: 1.55; color: var(--ink); max-width: 46ch; }
+#title .how p { font-size: 15px; line-height: 1.55; color: var(--ink); max-width: 46ch; margin: 10px 0 0; }
+#title .how summary { cursor: pointer; color: var(--gold); font-size: 14px; font-weight: 600; letter-spacing: .04em; }
+#title { overflow-y: auto; align-items: safe center; }
+#title .step { display: grid; gap: 16px; }
+#title h1.mid { font-size: clamp(44px, 6vw, 76px); }
+.pickList { display: grid; gap: 8px; width: min(480px, calc(100vw - 32px)); }
+.pick { text-align: left; background: rgba(8,20,14,.72); border: 1px solid var(--line); border-radius: 10px; padding: 11px 16px 12px; display: grid; gap: 4px; }
+.pick:hover, .pick.on { border-color: var(--gold); }
+.pick.on { background: rgba(232,195,90,.1); }
+.pick b { font-family: var(--display); font-size: 27px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; line-height: 1; }
+.pick span { font-size: 14px; color: var(--dim); line-height: 1.35; }
+.pick .names { font-size: 12.5px; color: var(--ink); opacity: .8; }
+.pick .rec { color: var(--gold); font-size: 12.5px; min-height: 1.2em; }
+.back { background: none; border: 0; color: var(--dim); font-size: 14px; font-weight: 600; padding: 0; justify-self: start; letter-spacing: .04em; }
+.back:hover { color: var(--gold); }
+.modes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 520px; }
+.mode { text-align: left; border-radius: 10px; padding: 14px 16px 15px; border: 1px solid var(--line); background: rgba(8,20,14,.72); display: grid; gap: 6px; align-content: start; }
+.mode:hover { border-color: var(--gold); }
+.mode b { font-family: var(--display); font-size: 25px; font-weight: 800; text-transform: uppercase; letter-spacing: .02em; line-height: 1; }
+.mode span { font-size: 13.5px; line-height: 1.4; color: var(--dim); }
+.mode.gold { background: var(--gold); color: var(--gold-ink); border-color: var(--gold); }
+.mode.gold span { color: rgba(29,22,4,.8); }
+.sheet.narrow { max-width: 440px; }
+.cf-body { color: var(--dim); font-size: 15px; line-height: 1.5; margin: 6px 0 0; }
 #title .actions { display: flex; gap: 10px; flex-wrap: wrap; }
 #title .actions .btn { font-size: 16px; padding: 12px 20px; }
 .courseRec { color: var(--gold); font-size: 14px; letter-spacing: .04em; min-height: 1.2em; margin-top: -8px; }
-.coursePick { display: flex; align-items: center; gap: 10px; color: var(--dim); font-size: 14px; letter-spacing: .06em; }
-.coursePick .btn { padding: 4px 14px; font-size: 18px; line-height: 1; }
 #title h1.long { font-size: clamp(48px, 7.5vw, 96px); }
 #holePick { display: grid; grid-template-columns: repeat(9, 1fr); gap: 5px; max-width: 470px; }
 #holePick button { background: rgba(255,255,255,.05); border: 1px solid var(--line); border-radius: 6px; padding: 6px 0 5px; display: grid; gap: 1px; }
@@ -175,6 +196,8 @@ table.sc .cur { background: rgba(232,195,90,.14); }
   #spinMeter { top: calc(84px + env(safe-area-inset-top, 0px)); }
   #toast { max-width: calc(100vw - 32px); top: calc(156px + env(safe-area-inset-top, 0px)); }
   #holePick { grid-template-columns: repeat(6, 1fr); }
+  .modes { grid-template-columns: 1fr; }
+  #title { background: rgba(4,12,8,.8); }
 }
 @media (prefers-reduced-motion: reduce) { #toast, #banner, #fade { transition: none; } }
 </style>
@@ -227,24 +250,51 @@ table.sc .cur { background: rgba(232,195,90,.14); }
   <div id="toast" class="panel"><div class="t1" id="toast1"></div><div class="t2" id="toast2"></div></div>
   <div id="help">Hold the left mouse button, pull back (sets distance), push forward smoothly and straight · <kbd>←</kbd><kbd>→</kbd> aim · <kbd>↑</kbd><kbd>↓</kbd> club · stop short past the ball for backspin · scroll loft · <kbd>V</kbd> overview · <kbd>Space</kbd> or click to speed up the ball · <kbd>D</kbd> drop out of the trees (+1) · <kbd>Tab</kbd> scorecard</div>
   <div id="clubs" class="panel"></div>
-  <div id="btns"><button class="btn" id="bDrop" hidden title="Drop the ball clear of the trees for a one-stroke penalty (D)">Drop +1</button><button class="btn" id="bView">Overview</button><button class="btn" id="bCard">Scorecard</button><button class="btn" id="bMenu">Menu</button></div>
+  <div id="btns"><button class="btn prac" id="bPrevH" hidden title="Previous hole">‹ Hole</button><button class="btn prac" id="bRestart" hidden title="Start this hole again">Restart</button><button class="btn prac" id="bNextH" hidden title="Next hole">Hole ›</button><button class="btn" id="bDrop" hidden title="Drop the ball clear of the trees for a one-stroke penalty (D)">Drop +1</button><button class="btn" id="bView">Overview</button><button class="btn" id="bCard">Scorecard</button><button class="btn" id="bMenu">Menu</button></div>
 </div>
 
 <div id="banner"><div class="b1" id="ban1"></div><div class="b2" id="ban2"></div></div>
 
 <div id="title" class="overlay">
   <div class="inner">
-    <div class="eyebrow" id="coursePlace"></div>
-    <h1 id="courseName"></h1>
-    <div class="sub" id="courseSub"></div>
-    <div class="courseRec" id="cRecord"></div>
-    <div class="coursePick"><button class="btn" id="cPrev" aria-label="Previous course">‹</button><span id="cCount"></span><button class="btn" id="cNext" aria-label="Next course">›</button></div>
-    <p class="how">Hold the left mouse button, pull the mouse straight back toward you, then push it straight forward through where you started. How far back you pull sets the distance: with a normal push forward, half a backswing carries about half as far (the blue dot on the Backswing meter shows about how far back for the pin). A slow push loses distance; pulling back past full adds power you can't control. Push up and a little to the right for a draw, up and a little to the left for a fade; the more you slant it, the more it bends, until it hooks or slices. Backspin comes from your follow-through: stop short and sharp just past where you started for more backspin, or keep pushing through for a long follow-through and the ball comes off with less spin and runs. The scroll wheel adds or takes off loft. Arrow keys aim and change clubs.</p>
-    <div class="actions"><button class="btn gold" id="bPlay18">Play 18 holes</button><button class="btn" id="bBoard">Leaderboard</button></div>
-    <div>
-      <div class="eyebrow" style="color:var(--dim);margin-bottom:8px">Or play one hole</div>
+    <section id="stType" class="step">
+      <div class="eyebrow">Pine &amp; Palm Golf</div>
+      <h1 class="mid">Pick your terrain</h1>
+      <div id="typeList" class="pickList"></div>
+      <details class="how"><summary>How to play</summary><p>Hold the left mouse button, pull the mouse straight back toward you, then push it straight forward through where you started. How far back you pull sets the distance: with a normal push forward, half a backswing carries about half as far (the blue dot on the Backswing meter shows about how far back for the pin). A slow push loses distance; pulling back past full adds power you can't control. Push up and a little to the right for a draw, up and a little to the left for a fade; the more you slant it, the more it bends, until it hooks or slices. Backspin comes from your follow-through: stop short and sharp just past where you started for more backspin, or keep pushing through for a long follow-through and the ball comes off with less spin and runs. The scroll wheel adds or takes off loft. Arrow keys aim and change clubs.</p></details>
+    </section>
+    <section id="stCourse" class="step" hidden>
+      <button class="back" id="bkType">‹ All terrains</button>
+      <div class="eyebrow" id="typeName"></div>
+      <h1 class="mid">Pick a course</h1>
+      <div id="courseList" class="pickList"></div>
+    </section>
+    <section id="stMode" class="step" hidden>
+      <button class="back" id="bkCourse">‹ <span id="bkCourseTxt">Courses</span></button>
+      <div class="eyebrow" id="coursePlace"></div>
+      <h1 id="courseName"></h1>
+      <div class="sub" id="courseSub"></div>
+      <div class="courseRec" id="cRecord"></div>
+      <div class="modes">
+        <button class="mode gold" id="bScore"><b>Play for a score</b><span>All 18 holes from the 1st tee. Finish the round to put your score on the leaderboard. Leaving early ends the round with no score.</span></button>
+        <button class="mode" id="bPractice"><b>Practice</b><span>Play any hole, replay it as often as you like and move between holes. Nothing is scored.</span></button>
+      </div>
+      <div class="actions"><button class="btn" id="bBoard">Leaderboard</button></div>
+    </section>
+    <section id="stHole" class="step" hidden>
+      <button class="back" id="bkMode">‹ <span id="bkModeTxt">Course</span></button>
+      <div class="eyebrow">Practice</div>
+      <h1 class="mid">Pick a hole</h1>
       <div id="holePick"></div>
-    </div>
+    </section>
+  </div>
+</div>
+
+<div id="confirm" class="overlay" hidden>
+  <div class="sheet narrow">
+    <h2 class="sc-title">End this round?</h2>
+    <p class="cf-body">You are playing for a score. If you leave now the round ends and nothing goes on the leaderboard.</p>
+    <div class="sc-actions"><button class="btn" id="cfNo">Keep playing</button><button class="btn gold" id="cfYes">End round</button></div>
   </div>
 </div>
 
@@ -3795,7 +3845,7 @@ function openScorecard() {
   $('scTotal').innerHTML = played ? `<span>Total<b>${tot}</b></span><span>To par<b class="${tp < 0 ? 'under' : tp > 0 ? 'over' : ''}">${toParStr(tp)}</b></span><span>Thru<b>${played}</b></span>` : '';
   const full = roundComplete();
   $('scRecord').hidden = !full || G.round.recorded;
-  $('scNote').textContent = G.round.recorded ? 'Score recorded.' : full ? '' : G.round.type === '18' ? 'Finish all 18 holes to record your score.' : 'Scores go on the board from a full 18-hole round (Play 18 holes).';
+  $('scNote').textContent = G.round.recorded ? 'Score recorded.' : full ? '' : G.round.type === '18' ? 'Finish all 18 holes to record your score.' : 'Practice: nothing is recorded. Choose Play for a score on the course screen to post a round.';
   $('scorecard').hidden = false;
 }
 // Shared high score board (copied from the arcade games' leaderboard.js). Scores live in the arcade-scores Supabase
@@ -4056,36 +4106,88 @@ $('scClose').onclick = () => { $('scorecard').hidden = true; };
 $('bCard').onclick = e => { e.currentTarget.blur(); openScorecard(); };
 $('bView').onclick = e => { e.currentTarget.blur(); toggleOverview(); };
 $('bDrop').onclick = e => { e.currentTarget.blur(); dropClear(); };
-$('bMenu').onclick = e => { e.currentTarget.blur(); toMenu(); };
+$('bMenu').onclick = e => { e.currentTarget.blur(); leaveRound(); };
+// practice: move between holes and start a hole again at any time
+const practiceGo = idx => { if (!G.round || G.round.type !== 'single' || G.mode === 'loading' || G.mode === 'transition' || SW.active) return; $('holeDone').hidden = true; G.round.scores[idx] = null; loadHole(idx); };
+$('bPrevH').onclick = e => { e.currentTarget.blur(); practiceGo((G.hole + 17) % 18); };
+$('bNextH').onclick = e => { e.currentTarget.blur(); practiceGo((G.hole + 1) % 18); };
+$('bRestart').onclick = e => { e.currentTarget.blur(); practiceGo(G.hole); };
 
-// title
+// Home screen: pick a terrain, then one of its four courses, then play for a score (all 18 from the 1st, recorded only
+// when finished) or practice (any hole, replays, moving between holes, nothing recorded).
+const TERRAINS = [
+  { name: 'Florida', blurb: 'Pines, live oaks and palms, sandy waste areas and water on most holes', ids: ['heronwood', 'coquina-ridge', 'palmetto-run', 'blackwater-bend'] },
+  { name: 'Ocean', blurb: 'Clifftop and beach holes with coves to carry and wind off the sea', ids: ['cormorant-head', 'gullhaven-dunes', 'driftwood-shoals', 'kestrel-bluffs'] },
+  { name: 'Mountain', blurb: 'Big drops from high tees, forested hillsides, creeks and lakes', ids: ['talus-ridge', 'osprey-creek', 'kettle-lake', 'sourwood-gap'] },
+  { name: 'Island', blurb: 'Hawaii and the Caribbean: lava and coral shores, palms and bays to carry', ids: ['frigate-point', 'tern-reef', 'petrel-cliffs', 'tropicbird-bay'] },
+  { name: 'Desert', blurb: 'Target golf over the desert, dry washes, red rock canyons and an oasis', ids: ['roadrunner-wash', 'condor-canyon', 'pinon-mesa', 'verdin-springs'] },
+];
+TERRAINS.forEach(t => { t.cis = t.ids.map(id => COURSES.findIndex(c => c.id === id)).filter(i => i >= 0); });
+const terrainOf = ci => Math.max(0, TERRAINS.findIndex(t => t.cis.includes(ci)));
+let TI = terrainOf(CI);
 const pick = $('holePick');
+function showStep(id) { for (const k of ['stType', 'stCourse', 'stMode', 'stHole']) $(k).hidden = k !== id; const f = $(id).querySelector('.pick.on, .mode, .pick, button'); if (f && document.activeElement !== document.body) f.focus({ preventScroll: true }); }
+const pickBtn = (html, on, fn) => { const b = document.createElement('button'); b.className = 'pick' + (on ? ' on' : ''); b.innerHTML = html; b.onclick = () => { b.blur(); fn(); }; return b; };
+function showTypes() {
+  const L = $('typeList'); L.innerHTML = '';
+  TERRAINS.forEach((t, i) => L.appendChild(pickBtn(`<b>${t.name}</b><span>${t.blurb}</span><span class="names">${t.cis.map(c => COURSES[c].name).join(' · ')}</span>`, i === TI, () => {
+    // behind the course list, show a course from this terrain
+    TI = i; if (!t.cis.includes(CI)) { useCourse(t.cis[0]); showCourse(); loadHole(COURSE.sig, true); }
+    showCourses();
+  })));
+  showStep('stType');
+}
+function showCourses() {
+  const t = TERRAINS[TI], L = $('courseList'); $('typeName').textContent = `${t.name} courses`; L.innerHTML = '';
+  for (const ci of t.cis) {
+    const C = COURSES[ci], par = C.holes.reduce((a, h) => a + h.par, 0), yds = C.holes.reduce((a, h) => a + h.yds, 0);
+    const b = pickBtn(`<b>${C.name}</b><span>${C.place} · ${C.sub} · Par ${par} · ${yds.toLocaleString()} yards</span><span class="rec"></span>`, ci === CI, () => chooseCourse(ci));
+    L.appendChild(b);
+    const game = 'golf-' + C.id;
+    Leaderboard.best(game).then(r => { b.querySelector('.rec').textContent = r ? `Course record ${r.score} (${toParStr(r.score - par)}) · ${r.name}` : 'No course record yet'; }).catch(() => {});
+  }
+  showStep('stCourse');
+}
+function chooseCourse(ci) {
+  if (ci !== CI) { useCourse(ci); loadHole(COURSE.sig, true); }
+  showCourse(); showStep('stMode');
+}
 function showCourse() {
   $('coursePlace').textContent = COURSE.place; $('courseName').textContent = COURSE.name; $('courseName').classList.toggle('long', COURSE.name.length > 10);
   $('courseSub').textContent = `${COURSE.sub} · Par ${PAR_TOTAL} · ${YDS_TOTAL.toLocaleString()} yards`;
-  $('cCount').textContent = `Course ${CI + 1} of ${COURSES.length}`;
+  $('bkCourseTxt').textContent = `${TERRAINS[terrainOf(CI)].name} courses`; $('bkModeTxt').textContent = COURSE.name;
   // course record from the shared board (blank when the board can't be reached)
   const want = CI; $('cRecord').textContent = '';
   Leaderboard.best(courseGame()).then(b => { if (want === CI) $('cRecord').textContent = b ? `Course record ${fmtRound(b.score)} · ${b.name}` : 'No course record yet'; }).catch(() => {});
   pick.innerHTML = '';
   HOLES.forEach((h, i) => { const b = document.createElement('button'); if (i === COURSE.sig) b.classList.add('sig'); b.innerHTML = `<b>${i + 1}</b><span>Par ${h.par}</span><span class="num">${h.yds}</span>`; b.title = `Hole ${i + 1}, par ${h.par}, ${h.yds} yards`; b.onclick = () => { ensureAudio(); startRound('single', i); }; pick.appendChild(b); });
 }
-function stepCourse(d) { useCourse((CI + d + COURSES.length) % COURSES.length); showCourse(); loadHole(COURSE.sig, true); }
-$('cPrev').onclick = e => { e.currentTarget.blur(); stepCourse(-1); };
-$('cNext').onclick = e => { e.currentTarget.blur(); stepCourse(1); };
-showCourse();
-$('bPlay18').onclick = () => { ensureAudio(); startRound('18', 0); };
+$('bkType').onclick = () => showTypes();
+$('bkCourse').onclick = () => { TI = terrainOf(CI); showCourses(); };
+$('bkMode').onclick = () => showStep('stMode');
+$('bScore').onclick = () => { ensureAudio(); startRound('18', 0); };
+$('bPractice').onclick = () => showStep('stHole');
+showCourse(); showTypes();
 
 // ---------------------------------------------------------------------------
 // Flow
 // ---------------------------------------------------------------------------
+// Leaving a score round before the 18th is finished ends it with no score, after the player confirms.
+function leaveRound() {
+  if (G.round && G.round.type === '18' && !roundComplete() && !G.round.recorded) { $('confirm').hidden = false; $('cfNo').focus(); return; }
+  toMenu();
+}
+$('cfNo').onclick = () => { $('confirm').hidden = true; };
+$('cfYes').onclick = () => { $('confirm').hidden = true; G.round = null; toMenu(); };
 function toMenu() {
-  $('holeDone').hidden = true; $('scorecard').hidden = true; $('hud').hidden = true; $('title').hidden = false;
+  $('holeDone').hidden = true; $('scorecard').hidden = true; $('hud').hidden = true; $('title').hidden = false; $('confirm').hidden = true;
+  showCourse(); showStep('stMode');
   G.mode = 'title'; ring.visible = ringDot.visible = aimLine.visible = pdotMesh.visible = projG.visible = false;
   if (!HOLE || HOLE.idx !== COURSE.sig || HOLE.ci !== CI) loadHole(COURSE.sig, true);
 }
 function startRound(type, idx) {
   G.round = { type, scores: Array(18).fill(null) };
+  for (const id of ['bPrevH', 'bRestart', 'bNextH']) $(id).hidden = type !== 'single';
   $('title').hidden = true; loadHole(idx);
 }
 function loadHole(idx, titleOnly = false) {
@@ -4373,7 +4475,7 @@ $('doneNext').onclick = () => {
 let toMenuAfterCard = false;
 $('scClose').addEventListener('click', () => { if (toMenuAfterCard) { toMenuAfterCard = false; toMenu(); } });
 $('doneReplay').onclick = () => { if (G.round.type === '18') return; $('holeDone').hidden = true; G.round.scores[G.hole] = null; loadHole(G.hole); };
-$('doneMenu').onclick = () => toMenu();
+$('doneMenu').onclick = () => leaveRound();
 
 function afterShotSetup() {
   // pick up after par + 6
@@ -4587,6 +4689,7 @@ function frame(now) { const dt = Math.min(0.05, (now - last) / 1000); last = now
 
 // keys
 addEventListener('keydown', e => {
+  if (!$('confirm').hidden) { if (e.key === 'Escape') $('confirm').hidden = true; return; }
   if (e.key === ' ' && G.mode === 'flight' && G.flightT > 0.4) { e.preventDefault(); G.ff = true; return; }
   if ((e.key === 'd' || e.key === 'D') && canDrop()) { dropClear(); return; }
   if (e.key === 'Tab') { e.preventDefault(); if ($('scorecard').hidden) openScorecard(); else $('scorecard').hidden = true; return; }
