@@ -3890,9 +3890,49 @@ const AIM_N = 60, aimGeo = new THREE.BufferGeometry(); aimGeo.setAttribute('posi
 const PDOTS = 140, pdotMesh = new THREE.InstancedMesh(new THREE.CircleGeometry(0.028, 12).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.95, depthWrite: false, toneMapped: false, polygonOffset: true, polygonOffsetFactor: -4, polygonOffsetUnits: -4 }), PDOTS);
 pdotMesh.renderOrder = 5; pdotMesh.frustumCulled = false; pdotMesh.visible = false; scene.add(pdotMesh);
 const aimLine = new THREE.Line(aimGeo, new THREE.LineDashedMaterial({ color: 0xffffff, dashSize: 0.6, gapSize: 0.45, transparent: true, opacity: 0.75 })); scene.add(aimLine);
-// Shot tracer: a screen-width line (pixels, not meters) so it stays readable far down the fairway.
-const trMat = new LineMaterial({ color: 0xc8102e, linewidth: 5, worldUnits: false, transparent: true, opacity: 0.95, depthWrite: false });
+// TV-style tracer and camera (2026-10-20). TV.on = false puts back the old tracer and camera exactly; the old numbers
+// are in TV.old (?classic in the address turns it off for one visit). The whole pre-change file is also saved as
+// index.pre-tv-camera.html.
+const TV = {
+  on: !/[?&]classic\b/.test(location.search),
+  // address camera: metres behind the ball, height above it, height of the aim point 45 m out
+  back: 5.4, up: 1.9, lookY: -1.0,
+  // tracer width in pixels: wNear within nearD metres of the camera, thinning toward wFar with distance
+  wNear: 8, wFar: 1.6, nearD: 5, fall: 0.65,
+  // the camera stays at the tee until the ball has climbed chaseAt of the way to its apex, then blends to the follow
+  // camera over blend seconds
+  chaseAt: 0.5, blend: 1.3,
+  // follow camera: share of the old sideways swing as the ball comes down (the old one swung up to 18 m out to the
+  // side), and how far below the middle of the screen the ball sits (1/3 of the half-height = the bottom-third line)
+  side: 0.4, lowBall: 1 / 3,
+  // the ball keeps its on-the-tee size (about 10 px) out to ballD metres from the camera, so it looks the same rolling
+  // under the follow camera, and shrinks past that (power ballFall), never under ballMin pixels. The old ball stayed
+  // about 10 px however far away it was.
+  ballD: 20, ballFall: 0.65, ballMin: 2.5,
+  old: { back: 3.7, up: 1.55, lookY: 1.2, width: 5, holdT: 0.9 },
+};
+// Shot tracer: a screen-width line (pixels, not meters) so it stays readable far down the fairway. Each segment end
+// carries its own width (instanceWidth), so the line can be thick near the camera and thin far away.
+const trMat = new LineMaterial({ color: 0xc8102e, linewidth: 1, worldUnits: false, transparent: true, opacity: 0.95, depthWrite: false });
+trMat.onBeforeCompile = sh => {
+  sh.vertexShader = sh.vertexShader.replace('attribute vec3 instanceStart;', 'attribute vec2 instanceWidth;\n\t\tattribute vec3 instanceStart;')
+    .replace('offset *= linewidth;', 'offset *= linewidth * ( position.y < 0.5 ? instanceWidth.x : instanceWidth.y );');
+};
+trMat.customProgramCacheKey = () => 'taper';
 trMat.resolution.set(innerWidth, innerHeight);
+// how much larger than life the ball is drawn, cd metres from the camera
+function ballScale(cd) {
+  const s0 = Math.max(BALL_VIS, cd * 0.24);
+  if (!TV.on || G.lastPutt || (G.mode !== 'flight' && G.mode !== 'transition')) return s0;
+  const wpp = 2 * cd * Math.tan(camera.fov * DEG / 2) / innerHeight, min = TV.ballMin * wpp / (2 * BR);
+  return clamp(s0 * Math.pow(TV.ballD / Math.max(cd, TV.ballD), TV.ballFall), Math.max(BALL_VIS, min), s0);
+}
+const trWidth = (x, y, z) => {
+  if (G.lastPutt) return 4;
+  if (!TV.on) return TV.old.width;
+  const d = Math.hypot(x - camera.position.x, y - camera.position.y, z - camera.position.z);
+  return clamp(TV.wNear * Math.pow(TV.nearD / Math.max(d, TV.nearD), TV.fall), TV.wFar, TV.wNear);
+};
 const trPts = []; let tracer = null, trDirty = false;
 function resetTrace() { trPts.length = 0; trDirty = false; if (tracer) { scene.remove(tracer); tracer.geometry.dispose(); tracer = null; } }
 function addTrace(p) { const n = trPts.length, gap = G.lastPutt ? 0.08 : G.ball.bounces > 0 ? 0.25 : 0.5; if (n >= 3 && Math.hypot(p.x - trPts[n - 3], p.y - trPts[n - 2], p.z - trPts[n - 1]) < gap) return; trPts.push(p.x, p.y, p.z); trDirty = true; }
@@ -3903,8 +3943,7 @@ const trA = new V3(), trB = new V3(), trC = new V3(), trP = new V3();
 function rebuildTrace() {
   if (trPts.length < 6) return;
   const moving = G.mode === 'flight'; if (!trDirty && !moving) return; trDirty = false;
-  const lw = G.lastPutt ? 4 : 5; trMat.linewidth = lw;
-  const bp = G.ball.p, cd = camera.position.distanceTo(bp), sc = Math.max(BALL_VIS, cd * 0.24), wpp = 2 * cd * Math.tan(camera.fov * DEG / 2) / innerHeight;
+  const bp = G.ball.p, lw = trWidth(bp.x, bp.y, bp.z), cd = camera.position.distanceTo(bp), sc = ballScale(cd), wpp = 2 * cd * Math.tan(camera.fov * DEG / 2) / innerHeight;
   const gapPx = BR * sc / wpp + lw / 2 + 3;
   trB.copy(bp); trB.y += BR * (sc - 1);   // (the ball is drawn larger than life and lifted to sit on the ground)
   trP.copy(trB).project(camera); const bx = trP.x * innerWidth / 2, by = trP.y * innerHeight / 2;
@@ -3918,6 +3957,10 @@ function rebuildTrace() {
   if (pts.length < 6) { if (tracer) tracer.visible = false; return; }
   if (tracer) tracer.visible = true;
   const g = new LineGeometry(); g.setPositions(pts); if (trMat.vertexColors) g.setColors(traceColors(pts));
+  const np = pts.length / 3, wp = new Float32Array(np), ws = new Float32Array((np - 1) * 2);
+  for (let i = 0; i < np; i++) wp[i] = trWidth(pts[i * 3], pts[i * 3 + 1], pts[i * 3 + 2]);
+  for (let i = 0; i < np - 1; i++) { ws[i * 2] = wp[i]; ws[i * 2 + 1] = wp[i + 1]; }
+  g.setAttribute('instanceWidth', new THREE.InstancedBufferAttribute(ws, 2));
   if (tracer) { tracer.geometry.dispose(); tracer.geometry = g; } else { tracer = new Line2(g, trMat); tracer.frustumCulled = false; tracer.renderOrder = 4; scene.add(tracer); }
 }
 const splashParts = []; const splashMat = new THREE.MeshBasicMaterial({ color: 0xeaf6ff, transparent: true, opacity: 0.85 }); const splashGeo = new THREE.SphereGeometry(0.06, 6, 4);
@@ -6062,11 +6105,12 @@ $('ssClear').onclick = () => { RS.shots.length = 0; RS.pts = 0; openSession(); i
 // ---------------------------------------------------------------------------
 let camSnap = true, camState = 'address';
 const camPos = new V3(), camLook = new V3(), wantPos = new V3(), wantLook = new V3();
-function addressCam(outPos, outLook) {
-  const a = aimVec(), r = new V3(-a.z, 0, a.x), bp = G.ball.p, c = CLUBS[G.club];
+function addressCam(outPos, outLook, bp = G.ball.p) {
+  const a = aimVec(), r = new V3(-a.z, 0, a.x), c = CLUBS[G.club];
   if (c.putter) { const d = Math.min(distToPin(), 12); outPos.copy(bp).addScaledVector(a, -2.9).addScaledVector(r, 0.35); outPos.y = bp.y + 1.5 + d * 0.06; outLook.copy(bp).addScaledVector(a, Math.max(2, d * 0.6)); outLook.y = bp.y; }
   else {
-    outPos.copy(bp).addScaledVector(a, -3.7).addScaledVector(r, 0.3); outPos.y = bp.y + 1.55; outLook.copy(bp).addScaledVector(a, 45); outLook.y = bp.y + 1.2;
+    const A = TV.on ? TV : TV.old;   // TV.on pulls the camera back and up and tilts it down, so the whole golfer clears the club bar
+    outPos.copy(bp).addScaledVector(a, -A.back).addScaledVector(r, 0.3); outPos.y = bp.y + A.up; outLook.copy(bp).addScaledVector(a, 45); outLook.y = bp.y + A.lookY;
     // when the landing area sits well below the ball (a downhill tee shot in the mountains), rise and tilt down so the
     // edge of the tee does not hide it
     const cr = Math.max(45, expectedCarry(G.club)), lx = bp.x + a.x * cr, lz = bp.z + a.z * cr, drop = Math.min(0, hW(lx, lz) - bp.y + 4), lift = Math.min(2.4, -drop * 0.08);
@@ -6074,7 +6118,29 @@ function addressCam(outPos, outLook) {
   }
   outPos.y = Math.max(outPos.y, hW(outPos.x, outPos.z) + 0.9);
 }
+// TV tee camera: stays where it stood at address and turns only as far as it must to keep the climbing ball in frame,
+// so the tracer draws out from the golfer the way a broadcast tee shot does
+function teeCam(b, outPos, outLook) {
+  addressCam(outPos, outLook, G.shot.start);
+  const lx = outLook.x - outPos.x, ly = outLook.y - outPos.y, lz = outLook.z - outPos.z, bx = b.p.x - outPos.x, by = b.p.y - outPos.y, bz = b.p.z - outPos.z;
+  const yaw0 = Math.atan2(lx, lz), pit0 = Math.atan2(ly, Math.hypot(lx, lz)), yawB = Math.atan2(bx, bz), pitB = Math.atan2(by, Math.hypot(bx, bz));
+  const vh = camera.fov * DEG / 2, hh = Math.atan(Math.tan(vh) * camera.aspect), pit = Math.max(pit0, pitB - vh * 0.6);
+  let dy = yawB - yaw0; dy = Math.atan2(Math.sin(dy), Math.cos(dy)); const yaw = yaw0 + Math.sign(dy) * Math.max(0, Math.abs(dy) - hh * 0.6);
+  outLook.set(outPos.x + Math.sin(yaw) * Math.cos(pit) * 50, outPos.y + Math.sin(pit) * 50, outPos.z + Math.cos(yaw) * Math.cos(pit) * 50);
+}
 function toggleOverview() { if (G.mode !== 'aim') return; G.overview = !G.overview; ring.visible = ringDot.visible = !CLUBS[G.club].putter; HOLE.slopes.visible = G.overview || CLUBS[G.club].putter; }
+// true while the TV tee camera holds: the ball is still climbing, has not hit anything and is below TV.chaseAt of its
+// apex height. The apex comes from flying a copy of the ball on the first frame (flat ground, no trees).
+function tvHold(b) {
+  const S = G.shot; if (S.tvDone) return false;
+  if (S.apexH == null) {
+    const gy = S.start.y - BR, pe = { ...env, h: () => gy, normal: LEVEL_N, trees: false, cup: null, oob: null }, c = { ...b, p: b.p.clone(), v: b.v.clone(), hit: new Set() };
+    let top = c.p.y; for (let i = 0; i < 240 * 15 && c.v.y > 0 && c.mode === 'fly'; i++) { stepBall(c, 1 / 240, pe); top = Math.max(top, c.p.y); }
+    S.apexH = top - S.start.y;
+  }
+  if (b.mode === 'fly' && b.bounces === 0 && b.v.y > 0 && b.p.y - S.start.y < S.apexH * TV.chaseAt) return true;
+  S.tvDone = true; S.tvT = 0; S.tvPos = camPos.clone(); S.tvLook = camLook.clone(); return false;
+}
 function updateCamera(dt) {
   if (G.freezeCam) return;
   const b = G.ball; let k = 3;
@@ -6102,17 +6168,29 @@ function updateCamera(dt) {
     G.flightT = (G.flightT || 0) + dt;
     const hv = new V3(b.v.x, 0, b.v.z), sp = hv.length(); if (sp > 0.5) hv.divideScalar(sp); else hv.copy(aimVec());
     if (G.lastPutt) { const sp0 = G.shot.camPos, a = aimVec(), along = (b.p.x - G.shot.start.x) * a.x + (b.p.z - G.shot.start.z) * a.z; wantPos.copy(sp0).addScaledVector(a, Math.max(0, along - 5)); wantLook.copy(b.p); k = 3; }
-    else if (G.flightT < 0.9 && b.mode === 'fly') { addressCam(wantPos, _a); wantLook.copy(b.p); k = 4; }
+    else if (TV.on && tvHold(b)) { teeCam(b, wantPos, wantLook); k = 5; }
+    else if (!TV.on && G.flightT < TV.old.holdT && b.mode === 'fly') { addressCam(wantPos, _a); wantLook.copy(b.p); k = 4; }
     else {
       // as the ball comes down the camera swings out to one side, so the tracer is seen as an arc instead of edge-on
       const S = G.shot; if (b.mode === 'fly' && b.bounces === 0) S.dir.copy(hv); else if (!S.landed) { S.landed = true; S.dir.copy(hv); }
-      S.u = Math.max(S.u, smooth(1, -10, b.v.y)); const u = S.u, d = S.dir, rx = -d.z * S.side, rz = d.x * S.side;
+      S.u = Math.max(S.u, smooth(1, -10, b.v.y)); const u = S.u, d = S.dir, sm = TV.on ? TV.side : 1, rx = -d.z * S.side * sm, rz = d.x * S.side * sm;
       if (b.mode === 'fly' && b.bounces === 0) {
         wantPos.copy(b.p).addScaledVector(d, -(16 - 5 * u)); wantPos.x += rx * S.sideD * u; wantPos.z += rz * S.sideD * u;
         wantPos.y = Math.max(b.p.y + 4 - u, hW(wantPos.x, wantPos.z) + 3); wantLook.copy(b.p).addScaledVector(d, 6 * (1 - u)); k = 1.6;
       } else {
         wantPos.copy(b.p).addScaledVector(d, -9); wantPos.x += rx * S.sideD * 0.75; wantPos.z += rz * S.sideD * 0.75;
         wantPos.y = Math.max(b.p.y + 3.5, hW(wantPos.x, wantPos.z) + 2.5); wantLook.copy(b.p); k = 1.8;
+      }
+      // leaving the tee camera: ease from where the camera was to the follow camera instead of chasing it
+      if (S.tvT != null && S.tvT < TV.blend) { S.tvT += dt; const w = smooth(0, 1, S.tvT / TV.blend); wantPos.lerpVectors(S.tvPos, wantPos, w); wantLook.lerpVectors(S.tvLook, wantLook, w); k = 40; }
+      if (TV.on) {
+        // the smoothed look trails a moving ball by (playback speed x velocity / k), which left the landing at the
+        // very bottom of the screen: aim that far ahead of the ball, then a little above it so the ball sits on the
+        // bottom-third line
+        // (both fade in over the blend, so the camera does not jump as it leaves the tee view)
+        const ff = (G.ff ? 8 : 1) * 2, lead = Math.min(1, 30 / (b.v.length() * ff / k + 1e-6)), w = S.tvT != null ? smooth(0, 1, S.tvT / TV.blend) : 1;
+        wantLook.addScaledVector(b.v, ff / k * lead * w);
+        wantLook.y += camPos.distanceTo(b.p) * Math.tan(camera.fov * DEG / 2) * TV.lowBall * w;
       }
     }
   }
@@ -6186,7 +6264,7 @@ function update(dt) {
   if (HOLE.surf) surfMat.uniforms.time.value += dt;
   updateCamera(dt);
   // the ball is drawn larger than life so it stays visible in the air and across the green
-  { ballMesh.position.copy(G.ball.p); const s = Math.max(BALL_VIS, camera.position.distanceTo(G.ball.p) * 0.24); ballMesh.scale.setScalar(s); ballMesh.position.y += BR * (s - 1); }
+  { ballMesh.position.copy(G.ball.p); const s = ballScale(camera.position.distanceTo(G.ball.p)); ballMesh.scale.setScalar(s); ballMesh.position.y += BR * (s - 1); }
   // shadow camera follows the action
   const focus = (G.mode === 'flight' || G.mode === 'penalty') ? b.p : G.mode === 'title' ? HOLE.cupW : G.ball.p;
   sun.target.position.set(Math.round(focus.x / 2) * 2, focus.y, Math.round(focus.z / 2) * 2); sun.position.copy(sun.target.position).addScaledVector(G.lightDir || sunDir, 350);
