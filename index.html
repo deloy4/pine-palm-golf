@@ -225,9 +225,9 @@ table.sc .cur { background: rgba(232,195,90,.14); }
     <div class="sm-bar"><i class="sm-mid"></i><i id="smNeedle"></i></div>
   </div>
   <div id="toast" class="panel"><div class="t1" id="toast1"></div><div class="t2" id="toast2"></div></div>
-  <div id="help">Hold the left mouse button, pull back (sets distance), push forward smoothly and straight · <kbd>←</kbd><kbd>→</kbd> aim · <kbd>↑</kbd><kbd>↓</kbd> club · stop short past the ball for backspin · scroll loft · <kbd>V</kbd> overview · <kbd>Space</kbd> or click to speed up the ball · <kbd>Tab</kbd> scorecard</div>
+  <div id="help">Hold the left mouse button, pull back (sets distance), push forward smoothly and straight · <kbd>←</kbd><kbd>→</kbd> aim · <kbd>↑</kbd><kbd>↓</kbd> club · stop short past the ball for backspin · scroll loft · <kbd>V</kbd> overview · <kbd>Space</kbd> or click to speed up the ball · <kbd>D</kbd> drop out of the trees (+1) · <kbd>Tab</kbd> scorecard</div>
   <div id="clubs" class="panel"></div>
-  <div id="btns"><button class="btn" id="bView">Overview</button><button class="btn" id="bCard">Scorecard</button><button class="btn" id="bMenu">Menu</button></div>
+  <div id="btns"><button class="btn" id="bDrop" hidden title="Drop the ball clear of the trees for a one-stroke penalty (D)">Drop +1</button><button class="btn" id="bView">Overview</button><button class="btn" id="bCard">Scorecard</button><button class="btn" id="bMenu">Menu</button></div>
 </div>
 
 <div id="banner"><div class="b1" id="ban1"></div><div class="b2" id="ban2"></div></div>
@@ -3574,9 +3574,28 @@ trMat.resolution.set(innerWidth, innerHeight);
 const trPts = []; let tracer = null, trDirty = false;
 function resetTrace() { trPts.length = 0; trDirty = false; if (tracer) { scene.remove(tracer); tracer.geometry.dispose(); tracer = null; } }
 function addTrace(p) { const n = trPts.length, gap = G.lastPutt ? 0.08 : G.ball.bounces > 0 ? 0.25 : 0.5; if (n >= 3 && Math.hypot(p.x - trPts[n - 3], p.y - trPts[n - 2], p.z - trPts[n - 1]) < gap) return; trPts.push(p.x, p.y, p.z); trDirty = true; }
+// The tracer stops just short of the ball, so it reads as a trail behind it rather than a line stuck to it. The gap is
+// measured on screen (the trail often runs straight away from the camera): the drawn ball's radius, half the line's width
+// and 3 pixels more.
+const trA = new V3(), trB = new V3(), trC = new V3(), trP = new V3();
 function rebuildTrace() {
-  if (!trDirty || trPts.length < 6) return; trDirty = false; trMat.linewidth = G.lastPutt ? 4 : 5;
-  const g = new LineGeometry(); g.setPositions(trPts);
+  if (trPts.length < 6) return;
+  const moving = G.mode === 'flight'; if (!trDirty && !moving) return; trDirty = false;
+  const lw = G.lastPutt ? 4 : 5; trMat.linewidth = lw;
+  const bp = G.ball.p, cd = camera.position.distanceTo(bp), sc = Math.max(BALL_VIS, cd * 0.24), wpp = 2 * cd * Math.tan(camera.fov * DEG / 2) / innerHeight;
+  const gapPx = BR * sc / wpp + lw / 2 + 3;
+  trB.copy(bp); trB.y += BR * (sc - 1);   // (the ball is drawn larger than life and lifted to sit on the ground)
+  trP.copy(trB).project(camera); const bx = trP.x * innerWidth / 2, by = trP.y * innerHeight / 2;
+  const px = v => { trP.copy(v).project(camera); return trP.z > 1 ? 1e9 : Math.hypot(trP.x * innerWidth / 2 - bx, trP.y * innerHeight / 2 - by); };
+  // drop the points inside the gap, then end the line on the gap's edge, on the way toward the ball
+  let n = trPts.length / 3; const at = (k, v) => v.set(trPts[k * 3 - 3], trPts[k * 3 - 2], trPts[k * 3 - 1]);
+  while (n > 1 && px(at(n, trA)) < gapPx) n--;
+  at(n, trA); if (n < trPts.length / 3) at(n + 1, trC); else trC.copy(trB);
+  const pts = trPts.slice(0, n * 3);
+  if (px(trA) > gapPx) { let lo = 0, hi = 1; for (let k = 0; k < 14; k++) { const m = (lo + hi) / 2; if (px(trP.lerpVectors(trA, trC, m)) > gapPx) lo = m; else hi = m; } trP.lerpVectors(trA, trC, lo); pts.push(trP.x, trP.y, trP.z); }
+  if (pts.length < 6) { if (tracer) tracer.visible = false; return; }
+  if (tracer) tracer.visible = true;
+  const g = new LineGeometry(); g.setPositions(pts);
   if (tracer) { tracer.geometry.dispose(); tracer.geometry = g; } else { tracer = new Line2(g, trMat); tracer.frustumCulled = false; tracer.renderOrder = 4; scene.add(tracer); }
 }
 const splashParts = []; const splashMat = new THREE.MeshBasicMaterial({ color: 0xeaf6ff, transparent: true, opacity: 0.85 }); const splashGeo = new THREE.SphereGeometry(0.06, 6, 4);
@@ -3659,6 +3678,7 @@ function updateHud() {
   const putting = CLUBS[G.club].putter; $('readLine').hidden = !putting; $('loftLine').hidden = putting; if (putting) $('readTxt').textContent = greenRead();
   const dh = (HOLE.cupW.y - (G.ball.p.y - BR)) / FT;
   $('elev').textContent = Math.abs(dh) < 1.5 ? 'level' : `${dh > 0 ? 'up' : 'down'} ${Math.abs(dh).toFixed(0)} ft`;
+  $('bDrop').hidden = !canDrop();
   const rel = (G.windFrom - G.aim) / DEG + 180; $('windArrow').style.transform = `rotate(${rel}deg)`;
   $('windTxt').textContent = G.windMph < 1 ? 'Calm' : `${G.windMph.toFixed(0)} mph`;
 }
@@ -4035,6 +4055,7 @@ $('bBoard').onclick = e => { e.currentTarget.blur(); Leaderboard.open({ game: co
 $('scClose').onclick = () => { $('scorecard').hidden = true; };
 $('bCard').onclick = e => { e.currentTarget.blur(); openScorecard(); };
 $('bView').onclick = e => { e.currentTarget.blur(); toggleOverview(); };
+$('bDrop').onclick = e => { e.currentTarget.blur(); dropClear(); };
 $('bMenu').onclick = e => { e.currentTarget.blur(); toMenu(); };
 
 // title
@@ -4219,7 +4240,7 @@ function shapeFromStroke(m, c) {
   return { start, tilt: clamp(c.curveK * (face - path), -55, 55), path, face };
 }
 function launchShot(m) {
-  const c = CLUBS[G.club], b = G.ball;
+  const c = CLUBS[G.club], b = G.ball; $('bDrop').hidden = true;
   // Full shots: the backswing sets the distance. With a normal push (speed judged against what that backswing length allows),
   // a 50% backswing carries about half the club's full carry; a slow push, or easing off into the ball, loses some.
   const vRef = speedRef(c, m.b), speedF = clamp((m.vImp ?? vRef) / vRef, 0.3, 1.1);
@@ -4283,6 +4304,32 @@ function onBallEvent(r) {
     b.mode = 'ob'; G.strokes++; toast('Out of bounds', 'Stroke and distance. Replay from where you hit.', 3.2);
     G.pending = { t: 1.6, fn: () => { G.ball.p.copy(G.prev); afterShotSetup(); } }; G.mode = 'penalty';
   }
+}
+// Drop: when the ball is in or at the edge of the trees, the player can take a one-stroke penalty
+// and drop at the nearest spot that is clear of the trees, out of water and sand, no nearer the hole, and has an open line
+// toward the pin or down the hole.
+const canDrop = () => G.mode === 'aim' && !SW.active && G.strokes > 0 && ![T_TEE, T_FAIR, T_FRINGE, T_GREEN].includes(G.lie) && sampleField(HOLE.F.c, ...ballXY()) > -6;
+function dropSpot() {
+  const F = HOLE.F, [bx, by] = ballXY(), cx = HOLE.cupW.x, cy = -HOLE.cupW.z, d0 = Math.hypot(cx - bx, cy - by);
+  const clear = (x, y) => sampleField(F.c, x, y) < -6 && sampleField(F.wat, x, y) < -3 && sampleField(F.b, x, y) > 1.5 && sampleField(F.ws, x, y) > 1 &&
+    sampleField(F.dz, x, y) <= 0 && sampleField(F.t, x, y) > 2 && sampleField(F.g, x, y) > 4 && inBounds(x, -y);
+  const open = (x, y, tx, ty) => { const L = Math.hypot(tx - x, ty - y), m = Math.min(L, 50); for (let t = 4; t <= m; t += 3) { const u = t / L; if (sampleField(F.c, x + (tx - x) * u, y + (ty - y) * u) > -2) return false; } return true; };
+  let best = null;
+  for (let r = 3; r <= 80 && !best; r += 2) for (let k = 0; k < 36; k++) {
+    const a = k / 36 * Math.PI * 2, x = bx + Math.cos(a) * r, y = by + Math.sin(a) * r;
+    if (Math.hypot(cx - x, cy - y) < d0 - 1 || !clear(x, y)) continue;
+    const [s] = HOLE.project(x, y), ahead = HOLE.pointAt(Math.min(HOLE.L, s + 60), 0);
+    if (!open(x, y, cx, cy) && !open(x, y, ahead[0], ahead[1])) continue;
+    const dp = Math.hypot(cx - x, cy - y); if (!best || dp < best[2]) best = [x, y, dp];
+  }
+  return best;
+}
+function dropClear() {
+  if (!canDrop()) return;
+  const p = dropSpot(); if (!p) { toast('No clear drop', 'There is nowhere clear of the trees close by. Play it as it lies.', 3); return; }
+  G.strokes++; resetTrace(); $('shotDash').hidden = true;
+  toast('Drop', 'One-stroke penalty. Dropped clear of the trees.', 3);
+  G.ball.p.set(p[0], hW(p[0], -p[1]) + BR, -p[1]); afterShotSetup();
 }
 function dropFromWater(entry) {
   const spec = HOLES[G.hole], b = G.ball;
@@ -4479,7 +4526,8 @@ function update(dt) {
   // ball
   const b = G.ball;
   if (G.mode === 'flight') {
-    const ff = G.ff ? 8 : 1; G.acc += dt * ff; let n = 0;
+    // the ball plays back faster than real time (twice as fast in the air and running out, 2.5x on a putt); Space speeds it up more
+    const ff = (G.ff ? 8 : 1) * (G.lastPutt ? 2.5 : 2); G.acc += dt * ff; let n = 0;
     while (G.acc >= STEP && n < 40 * ff) {
       G.acc -= STEP; n++;
       const r = stepBall(b, STEP, env);
@@ -4540,6 +4588,7 @@ function frame(now) { const dt = Math.min(0.05, (now - last) / 1000); last = now
 // keys
 addEventListener('keydown', e => {
   if (e.key === ' ' && G.mode === 'flight' && G.flightT > 0.4) { e.preventDefault(); G.ff = true; return; }
+  if ((e.key === 'd' || e.key === 'D') && canDrop()) { dropClear(); return; }
   if (e.key === 'Tab') { e.preventDefault(); if ($('scorecard').hidden) openScorecard(); else $('scorecard').hidden = true; return; }
   if (e.key === 'Escape') { if (!$('scorecard').hidden) { $('scorecard').hidden = true; return; } if (SW.active) cancelSwing('Swing stopped', ''); if (G.overview) G.overview = false; return; }
   if (G.mode === 'intro' && (e.key === ' ' || e.key === 'Enter')) { skipIntro(); return; }
