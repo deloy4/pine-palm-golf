@@ -79,11 +79,33 @@ inland behind the far land; `pal.cliff` and `pal.sand` colour the shore rock and
 ## Scores
 
 The home screen is one screen: tabs for the terrains (Florida, Ocean, Mountain, Island and Desert) above that terrain's four
-courses, and clicking a course opens it in place with its course record, Play for a score, Practice and its leaderboard. Play for a score starts at the 1st tee and plays all 18 holes once; finishing the 18th opens the scorecard with
-Record score, which puts the round on the course's board. Leaving a score round early (Menu, after a check) ends it with
-no score. Practice opens the 18 holes under the course; the player picks any hole, replay it, and move between holes with the Hole and Restart buttons;
-nothing is recorded. Each course has its own board on the shared arcade scoreboard (game `golf-<course id>`), and golf
-boards rank the lowest round first.
+courses, and clicking a course opens it in place with its course record, Play for a score, Practice and its leaderboard.
+Play for a score starts at the 1st tee and plays all 18 holes once; finishing the 18th opens the scorecard with Post to
+leaderboard. Leaving a score round early (Menu, after a check) ends it with no score. Practice opens the 18 holes under
+the course; the player picks any hole, replays it, and moves between holes with the Hole and Restart buttons; nothing is
+recorded. Each course has its own board on the shared arcade scoreboard (game `golf-<course id>`), and golf boards rank the
+lowest round first.
+
+## Players and progress
+
+Players sign in with a name and a 4-digit PIN, or by email (a 6-digit code or a link, through Supabase Auth). The device
+keeps a session token, so a player stays signed in there until they sign out. Five wrong PINs in a row lock a name for 15
+minutes, doubling each time after that, up to a day. Only signed-in players can post to the golf boards; the database
+refuses golf scores sent the old way.
+
+Score rounds record, hole by hole: the result (hole in one, albatross, eagle, birdie, par, bogey, double or worse),
+fairways hit on par 4s and 5s, greens in regulation, putts, and shots holed from off the green and from bunkers. Shots
+record personal bests: the longest drive ending in the fairway or first cut, the longest putt holed, and the longest shot
+holed from the fringe, fairway, rough, a bunker and anywhere else. Achievements mark the first birdie, eagle, albatross,
+hole in one, chip-in, hole-out from the sand, finished round and round under par, with a count of each. New ones show on
+the card at the end of the hole; everything shows on the profile page (Profile and stats on the home screen), with a
+summary of each course played. Practice records nothing.
+
+A guest's progress is kept on the device and moves to the account at sign-in. Progress goes to the database as deltas
+(`golf_push`): counts add, personal bests keep the larger and achievements keep the first, so two devices can't undo each
+other. The tables (`golf_players`, `golf_sessions`, `golf_rounds`, `golf_pushes`) are only reached through the `golf_*`
+functions in the arcade-scores Supabase project. Email sign-in needs the game's address as the Site URL and a redirect URL
+in Supabase Auth, and `{{ .Token }}` in the Magic Link and Confirm signup email templates for the code.
 
 ## The golfer
 

@@ -166,6 +166,39 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 .holes span { font-size: 10px; color: var(--dim); }
 .holes button.sig { border-color: rgba(232,195,90,.55); }
 
+#who { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; font-size: 14px; color: var(--dim); margin-top: -6px; }
+#who b { color: var(--ink); letter-spacing: .03em; }
+#who button { background: none; border: 0; padding: 0; color: var(--gold); font-size: 14px; font-weight: 600; letter-spacing: .03em; }
+#who button:hover { text-decoration: underline; }
+.si input { box-sizing: border-box; width: 100%; padding: 10px 12px; font: 600 17px var(--body); color: var(--ink); background: rgba(0,0,0,.35); border: 2px solid rgba(226,236,218,.22); border-radius: 8px; outline: none; }
+.si input:focus { border-color: var(--gold); }
+.si label { display: block; font-size: 13px; color: var(--dim); margin: 12px 0 5px; }
+.si .note { font-size: 13px; color: var(--dim); line-height: 1.45; margin: 8px 0 0; }
+.si .msg, .pf .msg { min-height: 1.2em; font-size: 13.5px; color: #f0a593; margin: 8px 0 0; }
+.si .msg:empty { display: none; }
+.si-row { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+.si-row .btn { font-size: 14px; padding: 10px 16px; }
+.si-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; margin-top: 12px; background: rgba(0,0,0,.35); border-radius: 9px; }
+.si-tabs[hidden] { display: none; }
+.si-tabs button { padding: 8px; color: var(--dim); background: transparent; border: 0; border-radius: 6px; font-weight: 600; font-size: 14px; }
+.si-tabs button[aria-selected="true"] { color: var(--ink); background: rgba(226,236,218,.16); }
+.pf { width: min(760px, calc(100vw - 32px)); }
+.pf h3 { font-family: var(--display); font-size: 20px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; margin: 18px 0 8px; }
+.ach { display: grid; grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 8px; }
+.ach div { border: 1px solid var(--line); border-radius: 8px; padding: 9px 11px; background: rgba(255,255,255,.03); display: grid; gap: 2px; align-content: start; opacity: .6; }
+.ach div.got { opacity: 1; border-color: rgba(232,195,90,.6); background: rgba(232,195,90,.08); }
+.ach b { font-family: var(--display); font-size: 18px; text-transform: uppercase; letter-spacing: .03em; line-height: 1.1; }
+.ach span { font-size: 12px; color: var(--dim); line-height: 1.35; }
+.ach .n { color: var(--gold); font-weight: 600; }
+.pf-rows { display: grid; }
+.pf-rows div { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 5px 8px; border-radius: 6px; font-size: 14px; }
+.pf-rows div:nth-child(odd) { background: rgba(255,255,255,.035); }
+.pf-rows b { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pf-rows span:last-child { text-align: right; }
+.pf-rows small { color: var(--dim); font-size: 12px; }
+#doneNews { display: grid; gap: 4px; text-align: center; margin: -8px 0 16px; }
+#doneNews[hidden] { display: none; }
+#doneNews div { color: var(--gold); font-weight: 600; font-size: 15px; }
 #loading { place-items: center; background: rgba(3,9,6,.72); }
 #loading .l1 { font-family: var(--display); font-size: 26px; letter-spacing: .12em; text-transform: uppercase; }
 #fade { position: fixed; inset: 0; background: #000; opacity: 0; pointer-events: none; transition: opacity .35s; }
@@ -344,6 +377,7 @@ html.touch #help { display: none; }
   <div class="inner">
     <section id="home" class="step">
       <h1 class="mid">Pine &amp; Palm Golf</h1>
+      <div id="who"></div>
       <div id="tabs" role="tablist" aria-label="Terrain"></div>
       <div class="tblurb" id="tBlurb"></div>
       <div id="courseList" class="pickList"></div>
@@ -368,7 +402,7 @@ html.touch #help { display: none; }
     <div class="sc-sub" id="scSub"></div>
     <div class="sc-wrap"><table class="sc" id="scTable"></table></div>
     <div class="sc-total" id="scTotal"></div>
-    <div class="sc-actions"><span class="sc-note" id="scNote"></span><button class="btn" id="scBoard">Leaderboard</button><button class="btn gold" id="scRecord">Record score</button><button class="btn" id="scClose">Close</button></div>
+    <div class="sc-actions"><span class="sc-note" id="scNote"></span><button class="btn" id="scBoard">Leaderboard</button><button class="btn gold" id="scRecord">Post to leaderboard</button><button class="btn" id="scClose">Close</button></div>
   </div>
 </div>
 
@@ -376,8 +410,56 @@ html.touch #help { display: none; }
   <div class="sheet">
     <div id="doneTerm">Par</div>
     <div id="doneSub"></div>
+    <div id="doneNews" hidden></div>
     <div class="sc-wrap"><table class="sc" id="doneTable"></table></div>
     <div class="sc-actions"><button class="btn" id="doneReplay">Replay hole</button><button class="btn" id="doneMenu">Menu</button><button class="btn gold" id="doneNext">Next hole</button></div>
+  </div>
+</div>
+
+<div id="signin" class="overlay" hidden>
+  <div class="sheet narrow si">
+    <h2 class="sc-title">Sign in</h2>
+    <p class="note" id="siNote"></p>
+    <div class="si-tabs" id="siTabs" role="tablist"><button type="button" role="tab" data-t="pin">Name and PIN</button><button type="button" role="tab" data-t="email">Email</button></div>
+    <div class="si-pane" id="siPin">
+      <label for="siPName">Player name</label><input id="siPName" maxlength="12" autocomplete="username" autocapitalize="words" spellcheck="false">
+      <label for="siPPin">4-digit PIN</label><input id="siPPin" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="current-password">
+      <div class="si-row"><button class="btn gold" id="siLogin">Sign in</button><button class="btn" id="siCreate">New player</button></div>
+      <p class="msg" id="siPMsg" role="status"></p>
+      <p class="note">New player makes a name with this PIN. Five wrong PINs in a row lock the name for a while.</p>
+    </div>
+    <div class="si-pane" id="siEmail" hidden>
+      <label for="siEmail1">Email</label><input id="siEmail1" type="email" autocomplete="email" spellcheck="false">
+      <div class="si-row"><button class="btn gold" id="siSend">Send sign-in email</button></div>
+      <p class="msg" id="siEMsg" role="status"></p>
+      <p class="note">No password. We email you a code and a link; the first time, you pick a player name.</p>
+    </div>
+    <div class="si-pane" id="siCode" hidden>
+      <p class="note" id="siSent"></p>
+      <label for="siCode1">Code</label><input id="siCode1" inputmode="numeric" pattern="[0-9]*" maxlength="8" autocomplete="one-time-code">
+      <div class="si-row"><button class="btn gold" id="siVerify">Sign in</button><button class="btn" id="siOther">Use another email</button></div>
+      <p class="msg" id="siCMsg" role="status"></p>
+    </div>
+    <div class="si-pane" id="siName" hidden>
+      <p class="note">You're in. Pick the player name that shows on the leaderboards.</p>
+      <label for="siName1">Player name</label><input id="siName1" maxlength="12" autocapitalize="words" spellcheck="false">
+      <div class="si-row"><button class="btn gold" id="siSaveName">Save name</button></div>
+      <p class="msg" id="siNMsg" role="status"></p>
+    </div>
+    <p class="note">You stay signed in on this device until you sign out.</p>
+    <div class="sc-actions"><button class="btn" id="siClose">Close</button></div>
+  </div>
+</div>
+
+<div id="profile" class="overlay" hidden>
+  <div class="sheet pf">
+    <h2 class="sc-title" id="pfName"></h2>
+    <div class="sc-sub" id="pfSub"></div>
+    <h3>Achievements</h3><div class="ach" id="pfAch"></div>
+    <h3>Personal bests</h3><div class="pf-rows" id="pfBests"></div>
+    <h3>Stats</h3><div class="pf-rows" id="pfStats"></div>
+    <h3>Courses</h3><div class="pf-rows" id="pfCourses"></div>
+    <div class="sc-actions"><span class="sc-note msg" id="pfMsg"></span><button class="btn" id="pfIn">Sign in</button><button class="btn" id="pfOut">Sign out</button><button class="btn gold" id="pfClose">Close</button></div>
   </div>
 </div>
 
@@ -3481,7 +3563,7 @@ const SND = {
 // ---------------------------------------------------------------------------
 // Game state
 // ---------------------------------------------------------------------------
-const G = { loft: 0, mode: 'title', round: null, hole: 0, strokes: 0, club: 0, aim: 0, lie: T_TEE, wind: new V3(), windMph: 0, windFrom: 0, ball: newBall(), prev: new V3(), t: 0, restT: 0, overview: false, shot: null, trails: [], pending: null, keys: new Set(), acc: 0, intro: null, lastPutt: false };
+const G = { loft: 0, mode: 'title', round: null, hole: 0, strokes: 0, club: 0, aim: 0, lie: T_TEE, wind: new V3(), windMph: 0, windFrom: 0, ball: newBall(), prev: new V3(), t: 0, restT: 0, overview: false, shot: null, trails: [], pending: null, keys: new Set(), acc: 0, intro: null, lastPutt: false, hs: { green: null, fw: null, putts: 0 }, news: [] };
 const env = { h: hW, normal: surfaceNormal, surf: (X, Z) => surfAt(X, -Z), wind: G.wind, trees: true, cup: null, oob: inBounds };
 
 const ballXY = () => [G.ball.p.x, -G.ball.p.z];
@@ -3907,7 +3989,7 @@ function openScorecard() {
   $('scTotal').innerHTML = played ? `<span>Total<b>${tot}</b></span><span>To par<b class="${tp < 0 ? 'under' : tp > 0 ? 'over' : ''}">${toParStr(tp)}</b></span><span>Thru<b>${played}</b></span>` : '';
   const full = roundComplete();
   $('scRecord').hidden = !full || G.round.recorded;
-  $('scNote').textContent = G.round.recorded ? 'Score recorded.' : full ? '' : G.round.type === '18' ? 'Finish all 18 holes to record your score.' : 'Practice: nothing is recorded. Choose Play for a score on the course screen to post a round.';
+  $('scNote').textContent = G.round.recorded ? 'Posted to the leaderboard.' : full ? (Player.signedIn() ? '' : 'Sign in to post this round.') : G.round.type === '18' ? 'Finish all 18 holes to record your score.' : 'Practice: nothing is recorded. Choose Play for a score on the course screen to post a round.';
   $('scorecard').hidden = false;
 }
 // Shared high score board (copied from the arcade games' leaderboard.js). Scores live in the arcade-scores Supabase
@@ -4122,14 +4204,14 @@ const Leaderboard = (() => {
   }
 
   return {
-    open({ game, title = 'High Scores', format = null, scoreLabel = 'Your score', onSaved: saved = null, score = 0, cheated = false, onClose: then = null, closeLabel = 'Play again' } = {}) {
+    open({ game, title = 'High Scores', format = null, scoreLabel = 'Your score', onSaved: saved = null, score = 0, cheated = false, onClose: then = null, closeLabel = 'Play again', mine: posted = null } = {}) {
       if (!root) build();
       GAME = game; fmt = format || ((v) => String(v)); onSaved = saved;
       root.querySelector('#lb-title').textContent = title;
       root.querySelector('.lb-final').firstChild.textContent = scoreLabel + ' ';
       open = true;
       onClose = then;
-      mine = null;
+      mine = posted;
       note = score > 0 && cheated ? "Scores from a game with cheats on don't go on the board." : '';
       period = 'all';
       el.score = score;
@@ -4153,14 +4235,137 @@ const Leaderboard = (() => {
   };
 })();
 
+
+// Players: sign in with a name and 4-digit PIN, or with an emailed code or link (Supabase Auth). The device keeps a golf
+// session token, so a player stays signed in until they sign out. Progress (counts, personal bests, achievements and
+// finished score rounds) is gathered as a delta: signed in, it goes to the database after each hole; a guest's delta waits
+// on the device and moves to the account at sign-in. The database merges deltas (counts add, bests keep the larger,
+// achievements keep the first), so two devices can't undo each other.
+const Player = (() => {
+  const BASE = 'https://ffkwudvifwapjcunzbce.supabase.co', KEY = 'sb_publishable_IMzJKKRNE3fzLC4a7-WmgQ_Euc5pSFr';
+  const ls = {
+    get(k) { try { return JSON.parse(localStorage.getItem('golf-' + k)); } catch (e) { return null; } },
+    set(k, v) { try { if (v == null) localStorage.removeItem('golf-' + k); else localStorage.setItem('golf-' + k, JSON.stringify(v)); } catch (e) { /* private window */ } },
+  };
+  const empty = () => ({ counts: {}, recs: {}, ach: {}, rounds: [] });
+  const isEmpty = d => !d || (!Object.keys(d.counts).length && !Object.keys(d.recs).length && !Object.keys(d.ach).length && !d.rounds.length);
+  let token = ls.get('token'), me = ls.get('me'), pending = ls.get('pending') || empty(), outbox = ls.get('outbox'), pushing = null;
+  const subs = [];
+  const emit = () => subs.forEach(f => f());
+  const save = () => { ls.set('token', token); ls.set('me', me); ls.set('pending', pending); ls.set('outbox', outbox); };
+  const uuid = () => crypto.randomUUID ? crypto.randomUUID() : ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16));
+
+  // a + b: counts add, bests keep the larger, achievements keep the one already there, rounds join
+  function merge(a, b) {
+    const o = { counts: { ...a.counts }, recs: { ...a.recs }, ach: { ...a.ach }, rounds: [...(a.rounds || [])] };
+    if (!b) return o;
+    for (const [k, v] of Object.entries(b.counts || {})) o.counts[k] = (o.counts[k] || 0) + v;
+    for (const [k, v] of Object.entries(b.recs || {})) if (!o.recs[k] || v.v > o.recs[k].v) o.recs[k] = v;
+    for (const [k, v] of Object.entries(b.ach || {})) if (!o.ach[k]) o.ach[k] = v;
+    for (const r of b.rounds || []) if (!o.rounds.some(x => x.id === r.id)) o.rounds.push(r);
+    return o;
+  }
+
+  async function req(path, body, auth) {
+    const ctl = new AbortController(), timer = setTimeout(() => ctl.abort(), 10000);
+    try {
+      const res = await fetch(BASE + path, {
+        method: 'POST', signal: ctl.signal, body: JSON.stringify(body),
+        headers: { apikey: KEY, 'Content-Type': 'application/json', ...(auth ? { Authorization: 'Bearer ' + auth } : {}) },
+      });
+      const data = await res.json().catch(() => null);
+      if (!res.ok) throw new Error((data && (data.message || data.msg || data.error_description)) || 'The game server said no.');
+      return data;
+    } catch (e) {
+      if (e.name === 'AbortError' || e instanceof TypeError) throw new Error('Could not reach the game server. Check your connection.');
+      throw e;
+    } finally { clearTimeout(timer); }
+  }
+  const rpc = (fn, body, auth) => req('/rest/v1/rpc/' + fn, body, auth);
+
+  function dropSession() { token = null; me = null; if (outbox) { pending = merge(outbox.d, pending); outbox = null; } save(); emit(); }
+  function setSession(res) { token = res.token; me = res.me; save(); emit(); push(); }
+
+  // sends what is waiting; resolves when the device has nothing unsent or a send failed
+  function push() {
+    if (!token) return Promise.resolve(false);
+    if (pushing) return pushing;
+    pushing = (async () => {
+      try {
+        while (token) {
+          if (!outbox) { if (isEmpty(pending)) return true; outbox = { id: uuid(), d: pending }; pending = empty(); save(); }
+          try { me = await rpc('golf_push', { p_token: token, p_push_id: outbox.id, p_delta: outbox.d }); outbox = null; save(); emit(); }
+          catch (e) { if (/signed out/.test(e.message)) dropSession(); return false; }
+        }
+        return false;
+      } finally { pushing = null; }
+    })();
+    return pushing;
+  }
+
+  // a magic link comes back to the page with the auth session in the hash
+  let linkAccess = null, linkError = '';
+  if (/access_token=/.test(location.hash) || /error_description=/.test(location.hash)) {
+    const h = new URLSearchParams(location.hash.slice(1));
+    linkAccess = h.get('access_token'); linkError = h.get('error_description') || '';
+    history.replaceState(null, '', location.pathname + location.search);
+  }
+
+  async function emailSession(access, name = null) {
+    const res = await rpc('golf_email_session', { p_name: name }, access);
+    if (res.need_name) return { needName: true, error: res.error || '' };
+    if (res.error) throw new Error(res.error);
+    setSession(res); return { ok: true };
+  }
+  async function pinCall(fn, name, pin) {
+    const res = await rpc(fn, { p_name: name, p_pin: pin });
+    if (res.error) throw new Error(res.error);
+    setSession(res);
+  }
+
+  return {
+    on: f => subs.push(f),
+    signedIn: () => !!token,
+    get me() { return me; },
+    get linkAccess() { return linkAccess; }, get linkError() { return linkError; }, clearLink() { linkAccess = null; linkError = ''; },
+    // everything this device knows: the account's progress plus whatever hasn't been sent yet
+    view: () => merge(merge(merge(empty(), me && me.progress), outbox && outbox.d), pending),
+    unsentRounds: () => [...(outbox ? outbox.d.rounds : []), ...pending.rounds],
+    add(d) { pending = merge(pending, d); save(); emit(); },
+    push,
+    refresh() { if (!token) return Promise.resolve(); return rpc('golf_me', { p_token: token }).then(r => { me = r; save(); emit(); }).catch(e => { if (/signed out/.test(e.message)) dropSession(); }); },
+    pinLogin: (name, pin) => pinCall('golf_pin_login', name, pin),
+    pinCreate: (name, pin) => pinCall('golf_pin_create', name, pin),
+    emailSend: email => req('/auth/v1/otp' + (/^https?:/.test(location.protocol) ? '?redirect_to=' + encodeURIComponent(location.origin + location.pathname) : ''), { email, create_user: true }),
+    async emailVerify(email, code) { const s = await req('/auth/v1/verify', { type: 'email', email, token: code }); return { access: s.access_token, ...(await emailSession(s.access_token)) }; },
+    emailSession,
+    async signOut() {
+      if (await push() === false && (outbox || !isEmpty(pending))) throw new Error("Your last holes haven't been saved yet. Check your connection and try again.");
+      const t = token; token = null; me = null; pending = empty(); outbox = null; save(); emit();
+      rpc('golf_signout', { p_token: t }).catch(() => {});
+    },
+    async postRound(id) {
+      await push();
+      if (Player.unsentRounds().some(r => r.id === id)) throw new Error("The round hasn't reached the server yet. Check your connection and try again.");
+      return rpc('golf_post_round', { p_token: token, p_round: id });
+    },
+    uuid,
+  };
+})();
+
 function roundComplete() { return !!G.round && G.round.type === '18' && G.round.scores.every(v => v != null); }
 const courseGame = () => 'golf-' + (COURSE.id || COURSE.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''));
 const fmtRound = v => `${v} (${toParStr(v - PAR_TOTAL)})`;
+// the finished round is already saved with the player's progress; posting puts it on the course board under their name
 $('scRecord').onclick = e => {
   e.currentTarget.blur(); if (!roundComplete() || G.round.recorded) return;
-  const round = G.round, tot = round.scores.reduce((a, v) => a + v, 0);
-  Leaderboard.open({ game: courseGame(), title: `${COURSE.name} Leaderboard`, score: tot, format: fmtRound, scoreLabel: 'Your round', closeLabel: 'Done',
-    onSaved: () => { round.recorded = true; }, onClose: () => openScorecard() });
+  const round = G.round, btn = $('scRecord');
+  if (!Player.signedIn()) { $('scorecard').hidden = true; openSignIn('Sign in to put this round on the leaderboard. The round is saved on this device and goes to your account.', () => { openScorecard(); btn.click(); }); return; }
+  btn.disabled = true; $('scNote').textContent = 'Posting…';
+  Player.postRound(round.id).then(row => {
+    round.recorded = true; $('scorecard').hidden = true;
+    Leaderboard.open({ game: courseGame(), title: `${COURSE.name} Leaderboard`, format: fmtRound, closeLabel: 'Done', mine: row, onClose: () => openScorecard() });
+  }).catch(err => { $('scNote').textContent = `The round didn't post. ${err.message}`; }).finally(() => { btn.disabled = false; });
 };
 $('scBoard').onclick = e => { e.currentTarget.blur(); Leaderboard.open({ game: courseGame(), title: `${COURSE.name} Leaderboard`, format: fmtRound, closeLabel: 'Close' }); };
 $('scClose').onclick = () => { $('scorecard').hidden = true; };
@@ -4203,6 +4408,7 @@ function showTerrain(i) {
   if (!t.cis.includes(CI)) selectCourse(t.cis[0]); else showHome();
 }
 function showHome() {
+  showWho();
   const t = TERRAINS[TI], T = $('tabs'), L = $('courseList');
   T.innerHTML = '';
   TERRAINS.forEach((x, i) => { const b = mkEl('button', 'tab' + (i === TI ? ' on' : ''), x.name); b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', i === TI); b.onclick = () => { b.blur(); if (i !== TI) showTerrain(i); }; T.appendChild(b); });
@@ -4237,6 +4443,174 @@ function showHome() {
     L.appendChild(card);
   }
 }
+// What a score round records. Each hole adds its result, fairway and green hit, putts and any shot holed from off the
+// green; shots add the longest drive and the longest holed putt or chip. Practice records nothing. New achievements and
+// personal bests are listed on the hole-done card.
+const ACH = [
+  ['first_birdie', 'First birdie', 'One under par on a hole', 'birdie', 'Birdies'],
+  ['first_eagle', 'First eagle', 'Two under par on a hole', 'eagle', 'Eagles'],
+  ['first_albatross', 'Albatross', 'Three under par on a hole', 'albatross', 'Albatrosses'],
+  ['first_ace', 'Hole in one', 'Hole your tee shot', 'ace', 'Holes in one'],
+  ['first_chipin', 'First chip-in', 'Hole a shot from off the green', 'chipin', 'Chip-ins'],
+  ['first_chipin_sand', 'Holed from the sand', 'Hole a shot from a bunker', 'chipin_sand', 'From the sand'],
+  ['first_round', 'Round finished', 'Play all 18 holes for a score', 'rounds', 'Rounds'],
+  ['first_under_par', 'Under par', 'Finish 18 holes under par', 'under_par_rounds', 'Under par'],
+];
+const BESTS = [
+  ['drive', 'Longest drive', 'yds', 'ending in the fairway or first cut'],
+  ['putt', 'Longest putt holed', 'ft', ''],
+  ['hole_fringe', 'Longest chip-in from the fringe', 'ft', ''],
+  ['hole_fairway', 'Longest holed from the fairway', 'yds', ''],
+  ['hole_rough', 'Longest holed from the rough', 'yds', ''],
+  ['hole_sand', 'Longest holed from a bunker', 'yds', ''],
+  ['hole_other', 'Longest holed from anywhere else', 'yds', 'straw, waste, desert, beach or rocks'],
+];
+const scoring = () => !!G.round && G.round.type === '18' && (!TEST || window.__golfTrack);
+const courseNameOf = id => (COURSES.find(c => c.id === id) || {}).name || id;
+function newsFor(view, d, kind, key, val, where) {
+  if (kind === 'ach') {
+    if (view.ach[key] || d.ach[key]) return;
+    d.ach[key] = where; const a = ACH.find(x => x[0] === key); G.news.push(`Achievement: ${a[1]}`);
+  } else {
+    const b = BESTS.find(x => x[0] === key), v = Math.round(val);
+    if (v <= 0 || (view.recs[key] && view.recs[key].v >= v) || (d.recs[key] && d.recs[key].v >= v)) return;
+    d.recs[key] = { v, ...where }; G.news = G.news.filter(n => !n.startsWith(b[1])); G.news.push(`${b[1]}: ${v} ${b[2]} · personal best`);
+  }
+}
+const hereNow = () => ({ course: COURSE.id, hole: G.hole + 1, at: new Date().toISOString() });
+function trackRest(lie) {
+  if (!scoring() || !G.shot) return;
+  const s = G.shot, par = HOLES[G.hole].par;
+  if (lie === T_GREEN && G.hs.green == null) G.hs.green = G.strokes;
+  if (s.fromLie === T_TEE && !s.club.putter && par >= 4) {
+    if (G.hs.fw == null) G.hs.fw = lie === T_FAIR;
+    if (lie === T_FAIR || lie === T_CUT) {
+      const d = { counts: {}, recs: {}, ach: {}, rounds: [] }, b = G.ball.p;
+      newsFor(Player.view(), d, 'rec', 'drive', Math.hypot(b.x - s.start.x, b.z - s.start.z) / YD, { ...hereNow(), club: s.club.id });
+      if (Object.keys(d.recs).length) Player.add(d);
+    }
+  }
+}
+function trackHole(sc, holed) {
+  if (!scoring()) return;
+  const par = HOLES[G.hole].par, diff = sc - par, s = G.shot, view = Player.view(), here = hereNow();
+  const d = { counts: { holes: 1, strokes: sc, par_sum: par }, recs: {}, ach: {}, rounds: [] }, c = d.counts;
+  const res = sc === 1 ? 'ace' : diff <= -3 ? 'albatross' : diff === -2 ? 'eagle' : diff === -1 ? 'birdie' : diff === 0 ? 'par' : diff === 1 ? 'bogey' : 'double';
+  c[res] = 1; if (sc === 1 && diff === -2) c.eagle = 1; if (sc === 1 && diff <= -3) c.albatross = 1;
+  for (const [k, n] of [['ace', 'first_ace'], ['albatross', 'first_albatross'], ['eagle', 'first_eagle'], ['birdie', 'first_birdie']]) if (c[k]) newsFor(view, d, 'ach', n, 0, here);
+  if (par >= 4) { c.fw_chances = 1; if (G.hs.fw) c.fw_hit = 1; }
+  const onIn = G.hs.green ?? (holed ? sc : null); if (onIn != null && onIn <= par - 2) c.gir = 1;
+  c.putts = G.hs.putts;
+  if (holed && s && sc > 1) {
+    const L = s.fromLie;
+    if (L === T_GREEN) newsFor(view, d, 'rec', 'putt', s.fromD / FT, { ...here, club: s.club.id });
+    else {
+      c.chipin = 1; newsFor(view, d, 'ach', 'first_chipin', 0, here);
+      if (L === T_SAND) { c.chipin_sand = 1; newsFor(view, d, 'ach', 'first_chipin_sand', 0, here); }
+      const key = L === T_FRINGE ? 'hole_fringe' : L === T_FAIR || L === T_CUT ? 'hole_fairway' : L === T_ROUGH ? 'hole_rough' : L === T_SAND ? 'hole_sand' : 'hole_other';
+      newsFor(view, d, 'rec', key, s.fromD / (key === 'hole_fringe' ? FT : YD), { ...here, club: s.club.id });
+    }
+  }
+  for (const k of Object.keys(c)) if (!c[k]) delete c[k];
+  if (roundComplete()) {
+    const tot = G.round.scores.reduce((a, v) => a + v, 0);
+    c.rounds = 1; newsFor(view, d, 'ach', 'first_round', 0, here);
+    if (tot < PAR_TOTAL) { c.under_par_rounds = 1; newsFor(view, d, 'ach', 'first_under_par', 0, here); }
+    d.rounds.push({ id: G.round.id, course: COURSE.id, holes: G.round.scores.slice(), par: PAR_TOTAL, at: here.at });
+  }
+  Player.add(d); Player.push();
+}
+
+// ----- sign-in sheet -----
+const esc = s => String(s ?? '').replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]);
+const SI = { then: null, email: '', access: null };
+function siPane(id) { for (const p of document.querySelectorAll('#signin .si-pane')) p.hidden = p.id !== id; $('siTabs').hidden = id === 'siName'; const f = $(id).querySelector('input'); if (f) setTimeout(() => f.focus(), 30); }
+function siTab(which) { document.querySelectorAll('#siTabs button').forEach(b => b.setAttribute('aria-selected', String(b.dataset.t === which))); siPane(which === 'pin' ? 'siPin' : SI.email ? 'siCode' : 'siEmail'); }
+function openSignIn(note = '', then = null) {
+  SI.then = then; $('siNote').textContent = note || 'Sign in to save your achievements, personal bests and rounds, and to post scores on the leaderboards.';
+  for (const m of document.querySelectorAll('#signin .msg')) m.textContent = '';
+  $('signin').hidden = false; siTab('pin');
+}
+function closeSignIn(done) { $('signin').hidden = true; const f = SI.then; SI.then = null; if (done && f) f(); }
+async function siRun(btn, msg, fn) {
+  const m = $(msg); m.textContent = ''; btn.disabled = true;
+  try { await fn(); } catch (e) { m.textContent = e.message; } finally { btn.disabled = false; }
+}
+const pinVals = () => [$('siPName').value.trim(), $('siPPin').value.trim()];
+$('siLogin').onclick = e => siRun(e.currentTarget, 'siPMsg', async () => { const [n, p] = pinVals(); if (!n || !/^\d{4}$/.test(p)) throw new Error('Type your player name and 4-digit PIN.'); await Player.pinLogin(n, p); closeSignIn(true); toast(`Signed in as ${Player.me.player.name}`, '', 2.4); });
+$('siCreate').onclick = e => siRun(e.currentTarget, 'siPMsg', async () => { const [n, p] = pinVals(); if (!n || !/^\d{4}$/.test(p)) throw new Error('Pick a player name and a 4-digit PIN.'); await Player.pinCreate(n, p); closeSignIn(true); toast(`Welcome, ${Player.me.player.name}`, 'You stay signed in on this device.', 3); });
+$('siSend').onclick = e => siRun(e.currentTarget, 'siEMsg', async () => {
+  const em = $('siEmail1').value.trim(); if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) throw new Error('Type your email address.');
+  await Player.emailSend(em); SI.email = em; $('siSent').textContent = `We sent a sign-in email to ${em}. Type the 6-digit code from it here, or tap the link in it on this device.`; siPane('siCode');
+});
+$('siVerify').onclick = e => siRun(e.currentTarget, 'siCMsg', async () => {
+  const code = $('siCode1').value.replace(/\s/g, ''); if (!/^\d{6}$/.test(code)) throw new Error('The code is 6 digits.');
+  const r = await Player.emailVerify(SI.email, code); emailDone(r);
+});
+$('siOther').onclick = () => { SI.email = ''; $('siCode1').value = ''; siPane('siEmail'); };
+$('siSaveName').onclick = e => siRun(e.currentTarget, 'siNMsg', async () => {
+  const r = await Player.emailSession(SI.access, $('siName1').value.trim()); if (r.needName) throw new Error(r.error || 'Pick another name.'); emailDone(r);
+});
+function emailDone(r) {
+  if (r.needName) { SI.access = r.access; $('siNMsg').textContent = r.error || ''; siPane('siName'); return; }
+  SI.email = ''; SI.access = null; closeSignIn(true); toast(`Signed in as ${Player.me.player.name}`, 'You stay signed in on this device.', 3);
+}
+document.querySelectorAll('#siTabs button').forEach(b => b.onclick = () => siTab(b.dataset.t));
+$('siClose').onclick = () => closeSignIn(false);
+for (const [inp, btn] of [['siPPin', 'siLogin'], ['siEmail1', 'siSend'], ['siCode1', 'siVerify'], ['siName1', 'siSaveName']]) $(inp).addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); $(btn).click(); } });
+// back from a magic link: finish the sign-in, asking for a player name the first time
+if (Player.linkAccess || Player.linkError) {
+  const access = Player.linkAccess, err = Player.linkError; Player.clearLink();
+  openSignIn(); siTab('email');
+  if (err) $('siEMsg').textContent = `The sign-in link didn't work (${err}). Send a new one.`;
+  else Player.emailSession(access).then(r => emailDone({ ...r, access })).catch(e => { $('siEMsg').textContent = e.message; });
+}
+
+// ----- profile: achievements, personal bests, stats, courses -----
+const fmtDate = t => t ? new Date(t).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }) : '';
+const whereTxt = w => w && w.course ? `${courseNameOf(w.course)}, hole ${w.hole}` : '';
+function openProfile() {
+  const v = Player.view(), c = v.counts, me = Player.me, signed = Player.signedIn();
+  $('pfName').textContent = signed && me ? me.player.name : 'Guest';
+  $('pfSub').textContent = signed && me ? `Signed in ${me.player.method === 'email' ? 'by email' : 'with a PIN'} on this device. Only score rounds count; practice is never recorded.`
+    : 'Progress from score rounds is kept on this device until you sign in, then it moves to your account. Practice is never recorded.';
+  $('pfIn').hidden = signed; $('pfOut').hidden = !signed; $('pfMsg').textContent = '';
+  $('pfAch').innerHTML = ACH.map(([k, t, desc, ck, cl]) => { const a = v.ach[k], n = c[ck] || 0;
+    return `<div class="${a ? 'got' : ''}"><b>${t}</b><span>${desc}</span><span class="n">${a ? `${fmtDate(a.at)} · ${esc(whereTxt(a))}` : 'Not yet'}</span>${n ? `<span class="n">${cl}: ${n}</span>` : ''}</div>`; }).join('');
+  $('pfBests').innerHTML = BESTS.map(([k, t, u, note]) => { const r = v.recs[k];
+    return `<div><span>${t}${note ? ` <small>(${note})</small>` : ''}</span><span>${r ? `<b>${r.v} ${u}</b> <small>${esc(whereTxt(r))} · ${fmtDate(r.at)}</small>` : '<small>None yet</small>'}</span></div>`; }).join('');
+  const pct = (a, b) => b ? `${Math.round(100 * a / b)}%` : '–', per = (a, b, dp = 1) => b ? (a / b).toFixed(dp) : '–';
+  const toParHole = c.holes ? (c.strokes - c.par_sum) / c.holes : null;
+  const rows = [
+    ['Rounds finished', c.rounds || 0], ['Holes played', c.holes || 0],
+    ['Average to par per hole', toParHole == null ? '–' : (toParHole > 0 ? '+' : '') + toParHole.toFixed(2)],
+    ['Fairways hit', `${pct(c.fw_hit || 0, c.fw_chances)} <small>(${c.fw_hit || 0} of ${c.fw_chances || 0})</small>`],
+    ['Greens in regulation', `${pct(c.gir || 0, c.holes)} <small>(${c.gir || 0} of ${c.holes || 0})</small>`],
+    ['Putts per hole', per(c.putts || 0, c.holes, 2)],
+    ['Holes in one', c.ace || 0], ['Albatrosses', c.albatross || 0], ['Eagles', c.eagle || 0], ['Birdies', c.birdie || 0], ['Pars', c.par || 0], ['Bogeys', c.bogey || 0], ['Double bogey or worse', c.double || 0],
+    ['Chip-ins from off the green', c.chipin || 0], ['Holed from a bunker', c.chipin_sand || 0],
+  ];
+  $('pfStats').innerHTML = rows.map(([a, b]) => `<div><span>${a}</span><b>${b}</b></div>`).join('');
+  // course summaries from the server, plus finished rounds still on this device
+  const cs = {}; for (const r of (signed && me ? me.courses : [])) cs[r.course] = { n: +r.rounds, best: +r.best, sum: +r.avg * r.rounds, par: +r.par };
+  for (const r of Player.unsentRounds()) { const t = r.holes.reduce((a, b) => a + b, 0), o = cs[r.course] || (cs[r.course] = { n: 0, best: Infinity, sum: 0, par: r.par }); o.n++; o.best = Math.min(o.best, t); o.sum += t; }
+  const cl = Object.entries(cs).sort((a, b) => courseNameOf(a[0]).localeCompare(courseNameOf(b[0])));
+  $('pfCourses').innerHTML = cl.length ? cl.map(([id, o]) => `<div><span>${esc(courseNameOf(id))} <small>${o.n} round${o.n > 1 ? 's' : ''}</small></span><span>Best <b>${o.best} (${toParStr(o.best - o.par)})</b> <small>avg ${(o.sum / o.n).toFixed(1)}</small></span></div>`).join('')
+    : '<div><small>No finished score rounds yet.</small></div>';
+  $('profile').hidden = false; $('profile').querySelector('.sheet').scrollTop = 0; $('pfClose').focus({ preventScroll: true });
+}
+$('pfClose').onclick = () => { $('profile').hidden = true; };
+$('pfIn').onclick = () => { $('profile').hidden = true; openSignIn('', openProfile); };
+$('pfOut').onclick = e => siRun(e.currentTarget, 'pfMsg', async () => { await Player.signOut(); $('profile').hidden = true; toast('Signed out', '', 2); });
+function showWho() {
+  const w = $('who'), me = Player.me;
+  w.innerHTML = Player.signedIn() && me ? `<span>Playing as <b>${esc(me.player.name)}</b></span><button id="whoP">Profile and stats ›</button>`
+    : `<span>Playing as a guest</span><button id="whoS">Sign in</button><button id="whoP">Stats ›</button>`;
+  $('whoP').onclick = openProfile; if ($('whoS')) $('whoS').onclick = () => openSignIn();
+}
+Player.on(() => { if (!$('title').hidden) showWho(); });
+Player.refresh(); Player.push();
+
 showHome();
 
 // ---------------------------------------------------------------------------
@@ -4257,7 +4631,7 @@ function toMenu() {
   if (!HOLE || HOLE.idx !== COURSE.sig || HOLE.ci !== CI) loadHole(COURSE.sig, true);
 }
 function startRound(type, idx) {
-  G.round = { type, scores: Array(18).fill(null) };
+  G.round = { type, scores: Array(18).fill(null), id: Player.uuid() };
   for (const id of ['bPrevH', 'bRestart', 'bNextH']) $(id).hidden = type !== 'single';
   $('title').hidden = true; loadHole(idx);
 }
@@ -4271,7 +4645,7 @@ function loadHole(idx, titleOnly = false) {
     buildHole(idx);
     if (HOLE.water) HOLE.water.material.uniforms.sunDirection.value.copy(sunDir);
     env.cup = HOLE.cupW;
-    G.hole = idx; G.strokes = 0; G.trails = []; G.pending = null; resetTrace(); $('shotDash').hidden = true;
+    G.hole = idx; G.strokes = 0; G.hs = { green: null, fw: null, putts: 0 }; G.news = []; G.trails = []; G.pending = null; resetTrace(); $('shotDash').hidden = true;
     // ocean courses blow harder: wind is a range per course
     const [w0, w1] = COURSE.wind || [2, 14]; G.windMph = titleOnly ? 3 : r() < (COURSE.wind ? 0.05 : 0.15) ? 0 : w0 + r() * (w1 - w0); G.windFrom = r() * Math.PI * 2;
     const ws = G.windMph * 0.447; G.wind.set(-Math.sin(G.windFrom) * ws, 0, Math.cos(G.windFrom) * ws);
@@ -4437,6 +4811,8 @@ function launchShot(m) {
   }
   G.shot = { club: c, lieNote: lo ? lo.note : '', lieQ: G.lieQ, shape, power, tempo, accelF, m, loft: c.loft + G.loft, spinX: m.spinX ?? 0, spinNote: m.spinNote, start: b.p.clone(), camPos: camPos.clone(), dir: aimVec(dir), landed: false, u: 0,
     side: shape.tilt > 2 ? -1 : 1, sideD: c.putter ? 0 : clamp(expectedCarry(G.club, G.lie) * 0.07, 7, 18) };
+  G.shot.fromLie = G.lie; G.shot.fromD = Math.hypot(G.shot.start.x - HOLE.cupW.x, G.shot.start.z - HOLE.cupW.z);
+  if (c.putter && G.lie === T_GREEN) G.hs.putts++;
   G.shot.rpm = b.w * 60 / (2 * Math.PI); updateSpinMeter(); dashStart();
   G.trails.push([ballXY()]);
   resetTrace(); addTrace(c.putter ? _e.copy(b.p).setY(b.p.y + 0.03) : b.p);
@@ -4518,7 +4894,7 @@ function finishShot(kind) {
   const b = G.ball;
   if (kind === 'holed') {
     const sc = G.strokes, par = HOLES[G.hole].par;
-    G.round.scores[G.hole] = sc; G.mode = 'holed';
+    G.round.scores[G.hole] = sc; G.mode = 'holed'; trackHole(sc, true);
     const words = sc === 1 ? 'Hole in one' : ({ '-3': 'Albatross', '-2': 'Eagle', '-1': 'Birdie', '0': 'Par', '1': 'Bogey', '2': 'Double bogey', '3': 'Triple bogey' })[sc - par] || `${sc - par > 0 ? '+' : ''}${sc - par}`;
     if (sc - par <= -1) SND.cheer(sc - par <= -2 || sc === 1); else if (sc - par === 0) SND.cheer(false);
     banner(words, `${sc} stroke${sc > 1 ? 's' : ''}`, 2.4);
@@ -4531,6 +4907,7 @@ function showHoleDone(words) {
   $('doneTerm').textContent = words;
   const played = G.round.scores.filter(v => v != null).length;
   $('doneSub').textContent = `Hole ${G.hole + 1} · ${sc} stroke${sc > 1 ? 's' : ''} on a par ${par}` + (G.round.type === '18' ? ` · Round ${toParStr(roundToPar())} through ${played}` : '');
+  $('doneNews').hidden = !G.news.length; $('doneNews').innerHTML = G.news.map(n => `<div>${esc(n)}</div>`).join('');
   scoreTable($('doneTable'));
   const last = G.round.type === '18' && G.hole === 17;
   $('doneNext').textContent = G.round.type === 'single' ? (G.hole < 17 ? `Play hole ${G.hole + 2}` : 'Play hole 1') : last ? 'Finish round' : `Hole ${G.hole + 2}`;
@@ -4550,7 +4927,7 @@ $('doneMenu').onclick = () => leaveRound();
 
 function afterShotSetup() {
   // pick up after par + 6
-  if (G.strokes >= HOLES[G.hole].par + 6) { G.round.scores[G.hole] = G.strokes; G.mode = 'holed'; banner('Pick up', `${G.strokes} strokes`, 2); setTimeout(() => showHoleDone('Picked up'), 2000); return; }
+  if (G.strokes >= HOLES[G.hole].par + 6) { G.round.scores[G.hole] = G.strokes; G.mode = 'holed'; trackHole(G.strokes, false); banner('Pick up', `${G.strokes} strokes`, 2); setTimeout(() => showHoleDone('Picked up'), 2000); return; }
   fadeThen(() => { ballMesh.position.copy(G.ball.p); setupShot(); });
 }
 function fadeThen(fn) { const f = $('fade'); f.classList.add('on'); G.mode = 'transition'; later(() => { fn(); camSnap = true; f.classList.remove('on'); }, 380); }
@@ -4595,7 +4972,7 @@ function dashFinal(curve, carry, tot) {
 function onRest() {
   const b = G.ball, [bx, by] = ballXY(), c = G.shot.club;
   const tot = b.p.distanceTo(G.shot.start), carry = b.landP ? new V3(b.landP.x - G.shot.start.x, 0, b.landP.z - G.shot.start.z).length() : 0;
-  const lie = surfAt(bx, by);
+  const lie = surfAt(bx, by); trackRest(lie);
   if (c.putter) { const d = distToPin(); toast(d < 0.6 ? 'Tap-in left' : `${(d / FT).toFixed(0)} ft left`, shotWords(), 2.6); }
   else {
     // curve = how far the landing spot sits off the line the ball started on
@@ -4762,6 +5139,7 @@ function frame(now) { const dt = Math.min(0.05, (now - last) / 1000); last = now
 
 // keys
 addEventListener('keydown', e => {
+  if (!$('signin').hidden || !$('profile').hidden) { if (e.key === 'Escape') { if (!$('profile').hidden) $('profile').hidden = true; else closeSignIn(false); } return; }
   if (!$('confirm').hidden) { if (e.key === 'Escape') $('confirm').hidden = true; return; }
   if (e.key === ' ' && G.mode === 'flight' && G.flightT > 0.4) { e.preventDefault(); G.ff = true; return; }
   if ((e.key === 'x' || e.key === 'X') && canDrop()) { dropClear(); return; }
