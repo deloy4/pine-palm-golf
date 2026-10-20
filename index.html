@@ -136,6 +136,8 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 .mode.gold { background: var(--gold); color: var(--gold-ink); border-color: var(--gold); }
 .mode.gold span { color: rgba(29,22,4,.8); }
 .sheet.narrow { max-width: 440px; }
+/* the end-round question can open from the hole card or the scorecard, so it sits above them */
+#confirm { z-index: 10; }
 .cf-body { color: var(--dim); font-size: 15px; line-height: 1.5; margin: 6px 0 0; }
 #tabs { display: flex; flex-wrap: wrap; gap: 6px; width: min(480px, calc(100vw - 32px)); }
 .tab { background: rgba(8,20,14,.72); border: 1px solid var(--line); border-radius: 999px; padding: 7px 15px 6px; font-family: var(--display); font-size: 18px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--ink); }
