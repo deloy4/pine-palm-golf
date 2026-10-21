@@ -487,10 +487,10 @@ html.touch #help { display: none; }
     <div class="sm-bar"><i class="sm-mid"></i><i id="smNeedle"></i></div>
   </div>
   <div id="toast" class="panel"><div class="t1" id="toast1"></div><div class="t2" id="toast2"></div></div>
-  <div id="help">Hold the left mouse button, pull back (sets distance), push forward smoothly and straight · <kbd>←</kbd><kbd>→</kbd> aim · <kbd>↑</kbd><kbd>↓</kbd> club · stop short past the ball for backspin · scroll loft · <kbd>V</kbd> overview · <kbd>Space</kbd> or click to speed up the ball · <kbd>X</kbd> drop out of the trees (+1) · <kbd>Tab</kbd> scorecard</div>
+  <div id="help">Hold the left mouse button, pull back (sets distance), push forward smoothly and straight · <kbd>←</kbd><kbd>→</kbd> aim · <kbd>↑</kbd><kbd>↓</kbd> club · stop short past the ball for backspin · scroll loft · <kbd>V</kbd> overview · <kbd>G</kbd> see green · tap <kbd>Space</kbd> or click to fly the camera to the ball, hold to speed it up · <kbd>X</kbd> drop out of the trees (+1) · <kbd>Tab</kbd> scorecard</div>
   <div id="clubs" class="panel"></div>
   <div id="touchPad"><button class="lf" id="tClubUp" aria-label="Longer club">‹ Club</button><button class="lf" id="tClubDn" aria-label="Shorter club">Club ›</button><button class="lf" id="tLoftDn" aria-label="Less loft">Loft −</button><button class="lf" id="tLoftUp" aria-label="More loft">Loft +</button><button class="aim" id="tAimL" aria-label="Aim left">◀</button><button class="aim" id="tAimR" aria-label="Aim right">▶</button></div>
-  <div id="btns"><button class="btn prac" id="bPrevH" hidden title="Previous hole">‹ Hole</button><button class="btn prac" id="bRestart" hidden title="Start this hole again">Restart</button><button class="btn prac" id="bNextH" hidden title="Next hole">Hole ›</button><button class="btn" id="bDrop" hidden title="Drop the ball clear of the trees for a one-stroke penalty (X)">Drop +1</button><button class="btn" id="bSetup">Setup</button><button class="btn" id="bView">Overview</button><button class="btn" id="bCard">Scorecard</button><button class="btn" id="bMenu">Menu</button></div>
+  <div id="btns"><button class="btn prac" id="bPrevH" hidden title="Previous hole">‹ Hole</button><button class="btn prac" id="bRestart" hidden title="Start this hole again">Restart</button><button class="btn prac" id="bNextH" hidden title="Next hole">Hole ›</button><button class="btn" id="bDrop" hidden title="Drop the ball clear of the trees for a one-stroke penalty (X)">Drop +1</button><button class="btn" id="bSetup">Setup</button><button class="btn" id="bView">Overview</button><button class="btn" id="bGreen" hidden title="Look down on the green, its slopes and where the shot lands (G)">See green</button><button class="btn" id="bCard">Scorecard</button><button class="btn" id="bMenu">Menu</button></div>
 </div>
 
 <div id="banner"><div class="b1" id="ban1"></div><div class="b2" id="ban2"></div></div>
@@ -3973,7 +3973,7 @@ const SND = {
 // ---------------------------------------------------------------------------
 // Game state
 // ---------------------------------------------------------------------------
-const G = { loft: 0, mode: 'title', round: null, hole: 0, strokes: 0, club: 0, aim: 0, lie: T_TEE, wind: new V3(), windMph: 0, windFrom: 0, ball: newBall(), prev: new V3(), t: 0, restT: 0, overview: false, shot: null, trails: [], pending: null, keys: new Set(), acc: 0, intro: null, lastPutt: false, hs: { green: null, fw: null, putts: 0 }, news: [] };
+const G = { loft: 0, mode: 'title', round: null, hole: 0, strokes: 0, club: 0, aim: 0, lie: T_TEE, wind: new V3(), windMph: 0, windFrom: 0, ball: newBall(), prev: new V3(), t: 0, restT: 0, overview: false, shot: null, trails: [], pending: null, keys: new Set(), acc: 0, intro: null, lastPutt: false, hs: { green: null, fw: null, putts: 0 }, news: [], trClock: 0, press: null };
 const env = { h: hW, normal: surfaceNormal, surf: (X, Z) => surfAt(X, -Z), wind: G.wind, trees: true, cup: null, oob: inBounds };
 
 const ballXY = () => [G.ball.p.x, -G.ball.p.z];
@@ -4168,6 +4168,8 @@ function showProjection() {
 const ring = new THREE.Mesh(new THREE.RingGeometry(0.82, 1, 48), new THREE.MeshBasicMaterial({ color: 0xffe07a, transparent: true, opacity: 0.85, depthWrite: false }));
 ring.rotation.x = -Math.PI / 2; ring.renderOrder = 5; scene.add(ring);
 const ringDot = new THREE.Mesh(new THREE.CircleGeometry(0.18, 20), new THREE.MeshBasicMaterial({ color: 0xffe07a, transparent: true, opacity: 0.9, depthWrite: false })); ringDot.rotation.x = -Math.PI / 2; scene.add(ringDot);
+const pinMark = new THREE.Mesh(new THREE.RingGeometry(0.75, 1.05, 40).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0xff2a2a, transparent: true, opacity: 0.9, depthWrite: false, toneMapped: false }));
+pinMark.renderOrder = 6; pinMark.visible = false; scene.add(pinMark);
 const AIM_N = 60, aimGeo = new THREE.BufferGeometry(); aimGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(AIM_N * 3), 3));
 // Putting line: white dots on the green straight along where the putter is aimed, running a little past the hole.
 const PDOTS = 140, pdotMesh = new THREE.InstancedMesh(new THREE.CircleGeometry(0.028, 12).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.95, depthWrite: false, toneMapped: false, polygonOffset: true, polygonOffsetFactor: -4, polygonOffsetUnits: -4 }), PDOTS);
@@ -4194,14 +4196,26 @@ const TV = {
   ballD: 20, ballFall: 0.65, ballMin: 2.5,
   old: { back: 3.7, up: 1.55, lookY: 1.2, dropTilt: 0.6, liftBack: 0, width: 5, holdT: 0.9 },
 };
+// Smoke trail and jump camera (2026-10-21; ?nofly in the address puts back the TV tracer and follow camera for one visit).
+// The tracer is a short trail behind the ball, strongest at the ball and fading out toward where it came from, trail metres
+// long (trailPutt on a putt), and each bit of it also fades over life seconds of ball time. The camera stays at the tee and
+// turns to keep the ball in view; a tap (click or Space, shorter than holdT seconds) flies the camera up behind the ball over
+// zoom seconds, back metres behind it, up metres above and side metres off to one side (so the flight is seen as an arc,
+// not end-on), then it stops there and the ball flies away from it. Holding the button or Space fast-forwards.
+const FLY = {
+  on: () => !!HOLE && !/[?&]nofly\b/.test(location.search),
+  trail: 40 * YD, trailPutt: 3 * YD, life: 2.5, lifePutt: 1.6, gap: 0.3, holdT: 0.22, back: 5, up: 2, side: 9, zoom: 0.9,
+};
 // Shot tracer: a screen-width line (pixels, not meters) so it stays readable far down the fairway. Each segment end
 // carries its own width (instanceWidth), so the line can be thick near the camera and thin far away.
 const trMat = new LineMaterial({ color: 0xc8102e, linewidth: 1, worldUnits: false, transparent: true, opacity: 0.95, depthWrite: false });
 trMat.onBeforeCompile = sh => {
-  sh.vertexShader = sh.vertexShader.replace('attribute vec3 instanceStart;', 'attribute vec2 instanceWidth;\n\t\tattribute vec3 instanceStart;')
-    .replace('offset *= linewidth;', 'offset *= linewidth * ( position.y < 0.5 ? instanceWidth.x : instanceWidth.y );');
+  // (instanceAlpha fades the smoke trail along its length; the old tracer sets it to 1 everywhere)
+  sh.vertexShader = sh.vertexShader.replace('attribute vec3 instanceStart;', 'attribute vec2 instanceWidth;\n\t\tattribute vec2 instanceAlpha;\n\t\tvarying float vTrA;\n\t\tattribute vec3 instanceStart;')
+    .replace('offset *= linewidth;', 'offset *= linewidth * ( position.y < 0.5 ? instanceWidth.x : instanceWidth.y );\n\t\t\t\tvTrA = position.y < 0.5 ? instanceAlpha.x : instanceAlpha.y;');
+  sh.fragmentShader = 'varying float vTrA;\n' + sh.fragmentShader.replace('float alpha = opacity;', 'float alpha = opacity * vTrA;');
 };
-trMat.customProgramCacheKey = () => 'taper';
+trMat.customProgramCacheKey = () => 'taper-fade';
 trMat.resolution.set(innerWidth, innerHeight);
 // how much larger than life the ball is drawn, cd metres from the camera
 function ballScale(cd) {
@@ -4216,34 +4230,52 @@ const trWidth = (x, y, z) => {
   const d = Math.hypot(x - camera.position.x, y - camera.position.y, z - camera.position.z);
   return clamp(TV.wNear * Math.pow(TV.nearD / Math.max(d, TV.nearD), TV.fall), TV.wFar, TV.wNear);
 };
-const trPts = []; let tracer = null, trDirty = false;
-function resetTrace() { trPts.length = 0; trDirty = false; if (tracer) { scene.remove(tracer); tracer.geometry.dispose(); tracer = null; } }
-function addTrace(p) { const n = trPts.length, gap = G.lastPutt ? 0.08 : G.ball.bounces > 0 ? 0.25 : 0.5; if (n >= 3 && Math.hypot(p.x - trPts[n - 3], p.y - trPts[n - 2], p.z - trPts[n - 1]) < gap) return; trPts.push(p.x, p.y, p.z); trDirty = true; }
+const trPts = [], trT = []; let tracer = null, trDirty = false, trLive = false;
+function resetTrace() { trPts.length = trT.length = 0; trDirty = trLive = false; if (tracer) { scene.remove(tracer); tracer.geometry.dispose(); tracer = null; } }
+function addTrace(p) { const n = trPts.length, gap = G.lastPutt ? 0.08 : FLY.on() ? FLY.gap : G.ball.bounces > 0 ? 0.25 : 0.5; if (n >= 3 && Math.hypot(p.x - trPts[n - 3], p.y - trPts[n - 2], p.z - trPts[n - 1]) < gap) return; trPts.push(p.x, p.y, p.z); trT.push(G.trClock); trDirty = true; }
+// The smoke trail: the last FLY.trail metres of the path behind the ball (cut exactly at that length), each point with its
+// strength: 1 at the ball, falling to 0 at the far end, and fading with age.
+function smokeSrc() {
+  const n = trPts.length / 3, putt = G.shot && G.shot.club.putter, len = putt ? FLY.trailPutt : FLY.trail, life = putt ? FLY.lifePutt : FLY.life, bp = G.ball.p;
+  const P = [], A = []; let s = 0, px = bp.x, py = bp.y, pz = bp.z;
+  for (let i = n - 1; i >= 0; i--) {
+    const x = trPts[i * 3], y = trPts[i * 3 + 1], z = trPts[i * 3 + 2], d = Math.hypot(x - px, y - py, z - pz);
+    if (s + d > len) { const u = (len - s) / (d || 1); P.push(px + (x - px) * u, py + (y - py) * u, pz + (z - pz) * u); A.push(0); break; }
+    s += d; px = x; py = y; pz = z;
+    P.push(x, y, z); A.push(Math.pow(1 - s / len, 1.3) * clamp(1 - (G.trClock - trT[i]) / life, 0, 1));
+  }
+  const m = A.length, pts = new Array(m * 3), al = new Array(m);
+  for (let i = 0; i < m; i++) { const j = m - 1 - i; pts[i * 3] = P[j * 3]; pts[i * 3 + 1] = P[j * 3 + 1]; pts[i * 3 + 2] = P[j * 3 + 2]; al[i] = A[j]; }
+  return { pts, al };
+}
 // The tracer stops just short of the ball, so it reads as a trail behind it rather than a line stuck to it. The gap is
 // measured on screen (the trail often runs straight away from the camera): the drawn ball's radius, half the line's width
 // and 3 pixels more.
 const trA = new V3(), trB = new V3(), trC = new V3(), trP = new V3();
 function rebuildTrace() {
   if (trPts.length < 6) return;
-  const moving = G.mode === 'flight'; if (!trDirty && !moving) return; trDirty = false;
+  const smoke = FLY.on() && !!G.shot, moving = G.mode === 'flight' || (smoke && trLive); if (!trDirty && !moving) return; trDirty = false;
+  let src = trPts, sal = null;
+  if (smoke) { const S = smokeSrc(); src = S.pts; sal = S.al; trLive = sal.some(a => a > 0.01); if (!trLive || src.length < 6) { if (tracer) tracer.visible = false; return; } }
   const bp = G.ball.p, lw = trWidth(bp.x, bp.y, bp.z), cd = camera.position.distanceTo(bp), sc = ballScale(cd), wpp = 2 * cd * Math.tan(camera.fov * DEG / 2) / innerHeight;
-  const gapPx = BR * sc / wpp + lw / 2 + 3;
+  const gapPx = BR * sc / wpp + (smoke ? 1 : lw / 2 + 3);   // (the smoke trail runs right up to the ball)
   trB.copy(bp); trB.y += BR * (sc - 1);   // (the ball is drawn larger than life and lifted to sit on the ground)
   trP.copy(trB).project(camera); const bx = trP.x * innerWidth / 2, by = trP.y * innerHeight / 2;
   const px = v => { trP.copy(v).project(camera); return trP.z > 1 ? 1e9 : Math.hypot(trP.x * innerWidth / 2 - bx, trP.y * innerHeight / 2 - by); };
   // drop the points inside the gap, then end the line on the gap's edge, on the way toward the ball
-  let n = trPts.length / 3; const at = (k, v) => v.set(trPts[k * 3 - 3], trPts[k * 3 - 2], trPts[k * 3 - 1]);
+  let n = src.length / 3; const at = (k, v) => v.set(src[k * 3 - 3], src[k * 3 - 2], src[k * 3 - 1]);
   while (n > 1 && px(at(n, trA)) < gapPx) n--;
-  at(n, trA); if (n < trPts.length / 3) at(n + 1, trC); else trC.copy(trB);
-  const pts = trPts.slice(0, n * 3);
-  if (px(trA) > gapPx) { let lo = 0, hi = 1; for (let k = 0; k < 14; k++) { const m = (lo + hi) / 2; if (px(trP.lerpVectors(trA, trC, m)) > gapPx) lo = m; else hi = m; } trP.lerpVectors(trA, trC, lo); pts.push(trP.x, trP.y, trP.z); }
+  at(n, trA); if (n < src.length / 3) at(n + 1, trC); else trC.copy(trB);
+  const pts = src.slice(0, n * 3), pa = sal ? sal.slice(0, n) : null;
+  if (px(trA) > gapPx) { let lo = 0, hi = 1; for (let k = 0; k < 14; k++) { const m = (lo + hi) / 2; if (px(trP.lerpVectors(trA, trC, m)) > gapPx) lo = m; else hi = m; } trP.lerpVectors(trA, trC, lo); pts.push(trP.x, trP.y, trP.z); if (pa) pa.push(lerp(sal[n - 1], n < sal.length ? sal[n] : 1, lo)); }
   if (pts.length < 6) { if (tracer) tracer.visible = false; return; }
   if (tracer) tracer.visible = true;
   const g = new LineGeometry(); g.setPositions(pts); if (trMat.vertexColors) g.setColors(traceColors(pts));
-  const np = pts.length / 3, wp = new Float32Array(np), ws = new Float32Array((np - 1) * 2);
+  const np = pts.length / 3, wp = new Float32Array(np), ws = new Float32Array((np - 1) * 2), as = new Float32Array((np - 1) * 2);
   for (let i = 0; i < np; i++) wp[i] = trWidth(pts[i * 3], pts[i * 3 + 1], pts[i * 3 + 2]);
-  for (let i = 0; i < np - 1; i++) { ws[i * 2] = wp[i]; ws[i * 2 + 1] = wp[i + 1]; }
+  for (let i = 0; i < np - 1; i++) { ws[i * 2] = wp[i]; ws[i * 2 + 1] = wp[i + 1]; as[i * 2] = pa ? pa[i] : 1; as[i * 2 + 1] = pa ? pa[i + 1] : 1; }
   g.setAttribute('instanceWidth', new THREE.InstancedBufferAttribute(ws, 2));
+  g.setAttribute('instanceAlpha', new THREE.InstancedBufferAttribute(as, 2));
   if (tracer) { tracer.geometry.dispose(); tracer.geometry = g; } else { tracer = new Line2(g, trMat); tracer.frustumCulled = false; tracer.renderOrder = 4; scene.add(tracer); }
 }
 const splashParts = []; const splashMat = new THREE.MeshBasicMaterial({ color: 0xeaf6ff, transparent: true, opacity: 0.85 }); const splashGeo = new THREE.SphereGeometry(0.06, 6, 4);
@@ -4824,6 +4856,7 @@ $('scBoard').onclick = e => { e.currentTarget.blur(); Leaderboard.open({ game: c
 $('scClose').onclick = () => { $('scorecard').hidden = true; };
 $('bCard').onclick = e => { e.currentTarget.blur(); if (HOLE && HOLE.isRange) openSession(); else openScorecard(); };
 $('bView').onclick = e => { e.currentTarget.blur(); toggleOverview(); };
+$('bGreen').onclick = e => { e.currentTarget.blur(); toggleGreen(); };
 $('bDrop').onclick = e => { e.currentTarget.blur(); dropClear(); };
 $('bMenu').onclick = e => { e.currentTarget.blur(); leaveRound(); };
 // practice: move between holes and start a hole again at any time
@@ -5662,7 +5695,7 @@ function sizeTrace() { const d = Math.min(2, devicePixelRatio); traceCv.width = 
 sizeTrace();
 canvas.addEventListener('pointerdown', e => {
   if (e.button !== 0) return; ensureAudio();
-  if (G.mode === 'flight' && G.flightT > 0.4) { G.ff = true; return; }   // click to hurry the ball along
+  if (G.mode === 'flight' && G.flightT > 0.4) { if (FLY.on()) flyPress(); else G.ff = true; return; }   // click to hurry the ball along (FLY: tap to jump, hold to hurry)
   if (G.mode === 'intro') { skipIntro(); return; }
   if (G.mode === 'aim' && G.overview) { toggleOverview(); return; }   // a click on the course leaves the overview
   if (G.mode !== 'aim') return;
@@ -5676,7 +5709,7 @@ canvas.addEventListener('pointermove', e => {
   if (!SW.active) return;
   for (const ev of (evs.length ? evs : [e])) { swingSample(ev.clientX, ev.clientY, ev.timeStamp); if (!SW.active) break; }
 });
-canvas.addEventListener('pointerup', () => { if (SW.follow) finishFollow(); if (SW.active) cancelSwing('Swing stopped', 'Push the mouse forward past where you started to hit the ball.'); });
+canvas.addEventListener('pointerup', () => { if (G.press) flyRelease(); if (SW.follow) finishFollow(); if (SW.active) cancelSwing('Swing stopped', 'Push the mouse forward past where you started to hit the ball.'); });
 canvas.addEventListener('pointercancel', () => { if (SW.active) cancelSwing('Swing stopped', ''); });
 function swingSample(x, y, t) {
   SW.samples.push([x, y, t]);
@@ -5799,7 +5832,7 @@ function launchShot(m) {
   SWING.phase = 'follow'; SWING.p = 0; SWING.finish = clamp(0.35 + m.b, 0.4, 1); SWING.followT = 0;
   if (c.putter) SWING.finish = clamp(m.b, 0.2, 1);
   SND.hit(c, power);
-  G.mode = 'flight'; G.restT = 0; G.flightT = 0; G.ff = false; camState = 'launch';
+  G.mode = 'flight'; G.restT = 0; G.flightT = 0; G.ff = false; G.press = null; camState = 'launch';
   ring.visible = ringDot.visible = aimLine.visible = pdotMesh.visible = projG.visible = false; $('meterFill').style.height = `${clamp(power, 0, 1.12) * 200}px`;
 }
 function shotWords(curve = 0, carry = 0) {
@@ -6422,6 +6455,29 @@ function teeCam(b, outPos, outLook) {
   let dy = yawB - yaw0; dy = Math.atan2(Math.sin(dy), Math.cos(dy)); const yaw = yaw0 + Math.sign(dy) * Math.max(0, Math.abs(dy) - hh * 0.6);
   outLook.set(outPos.x + Math.sin(yaw) * Math.cos(pit) * 50, outPos.y + Math.sin(pit) * 50, outPos.z + Math.cos(yaw) * Math.cos(pit) * 50);
 }
+// Jump camera (FLY): a quick press during the flight moves the camera to the ball, just behind and above it, and it stays
+// there watching the ball fly away; a press held past FLY.holdT fast-forwards until it is let go.
+function flyPress() { if (!G.press) G.press = { t: 0, held: false }; }
+function flyRelease(quiet) { const P = G.press; G.press = null; if (!P) return; if (P.held) G.ff = false; else if (!quiet && G.mode === 'flight') jumpCam(); }
+function jumpCam() {
+  const S = G.shot; if (!S || S.club.putter || G.ball.mode === 'rest') return;
+  S.zoom = { t: 0, from: camPos.clone() };
+}
+// the spot just behind and above the ball the camera flies to
+function flyChase(b, out) {
+  const hv = flyV.set(b.v.x, 0, b.v.z), sp = hv.length(); if (sp > 0.5) hv.divideScalar(sp); else hv.copy(G.shot.dir);
+  // (off to the side the shot curves away from, as the old follow camera swung out)
+  out.copy(b.p).addScaledVector(hv, -FLY.back); out.x += -hv.z * G.shot.side * FLY.side; out.z += hv.x * G.shot.side * FLY.side; out.y = Math.max(b.p.y + FLY.up, hW(out.x, out.z) + 1.4); return out;
+}
+const flyV = new V3(), flyP = new V3();
+// See green framing: the centre point and camera distance. With the landing spot within 70 m of the cup the view takes in both.
+function greenFocus(L) {
+  const cw = HOLE.cupW, f = new V3(cw.x, 0, cw.z); let r = 14;
+  if (L && Math.hypot(L.x - cw.x, L.z - cw.z) < 70) { f.set((cw.x + L.x) / 2, 0, (cw.z + L.z) / 2); r = Math.hypot(L.x - cw.x, L.z - cw.z) / 2 + 12; }
+  f.y = hW(f.x, f.z); f.D = Math.max(24, r / Math.tan(camera.fov * DEG / 2) * 1.05); return f;
+}
+// See green from anywhere while aiming: it opens the overview in the green view; pressed again it goes back to the shot
+function toggleGreen() { if (G.mode !== 'aim') return; if (G.greenView) { toggleOverview(); return; } if (!G.overview) toggleOverview(); G.greenView = true; }
 function toggleOverview() { if (G.mode !== 'aim') return; G.overview = !G.overview; ring.visible = ringDot.visible = !CLUBS[G.club].putter; HOLE.slopes.visible = G.overview || CLUBS[G.club].putter; }
 // true while the TV tee camera holds: the ball is still climbing, has not hit anything and is below TV.chaseAt of its
 // apex height. The apex comes from flying a copy of the ball on the first frame (flat ground, no trees).
@@ -6454,7 +6510,16 @@ function updateCamera(dt) {
     if (HOLE.mtn) camPos.y = Math.max(c.y + 38, hW(camPos.x, camPos.z) + 34);
     if (COURSE.treeTop) camPos.y = Math.max(camPos.y, hW(camPos.x, camPos.z) + COURSE.treeTop + 12);
   } else if (G.mode === 'aim' || G.mode === 'swing' || G.mode === 'transition' || G.mode === 'loading') {
-    if (G.overview) {
+    if (G.overview && G.greenView) {
+      // See green: about 45 degrees above the green, looking on from the side the ball is on, framing the landing spot too
+      // when it is near the green
+      // (from far out it looks along the line of play into the green, 80 m back down the centreline, since a straight line
+      // from the ball on a dogleg would put the camera in the woods)
+      const L = G.proj && !CLUBS[G.club].putter ? G.proj.land : null, f = greenFocus(L);
+      let fx = b.p.x, fz = b.p.z; if (distToPin() > 140 && HOLE.pointAt) { const q = HOLE.pointAt(Math.max(0, HOLE.L - 80)); fx = q[0]; fz = -q[1]; }
+      const dx = f.x - fx, dz = f.z - fz, dl = Math.hypot(dx, dz) || 1, D = f.D;
+      wantPos.set(f.x - dx / dl * D * 0.7071, f.y + D * 0.7071, f.z - dz / dl * D * 0.7071); wantLook.copy(f); k = 2.5;
+    } else if (G.overview) {
       const a = aimVec(), cw = HOLE.cupW, d = distToPin(), mid = new V3().lerpVectors(b.p, cw, 0.5);
       wantPos.copy(b.p).addScaledVector(a, -Math.max(30, d * 0.35)); wantPos.y = b.p.y + Math.max(40, d * 0.6); wantLook.copy(mid); k = 2.5;
     } else { addressCam(wantPos, wantLook); k = 6; }
@@ -6463,6 +6528,17 @@ function updateCamera(dt) {
     G.flightT = (G.flightT || 0) + dt;
     const hv = new V3(b.v.x, 0, b.v.z), sp = hv.length(); if (sp > 0.5) hv.divideScalar(sp); else hv.copy(aimVec());
     if (G.lastPutt) { const sp0 = G.shot.camPos, a = aimVec(), along = (b.p.x - G.shot.start.x) * a.x + (b.p.z - G.shot.start.z) * a.z; wantPos.copy(sp0).addScaledVector(a, Math.max(0, along - 5)); wantLook.copy(b.p); k = 3; }
+    else if (FLY.on()) {
+      // stay at the tee (or where the last jump left the camera) and turn to watch the ball; after a jump the camera looks
+      // straight at the ball with no smoothing, or it would lag behind a ball moving this fast
+      // (during a zoom the camera eases from where it was toward the moving ball, then stops where the zoom ended)
+      const S = G.shot;
+      if (S.zoom) {
+        S.zoom.t += dt; const w = smooth(0, 1, S.zoom.t / FLY.zoom);
+        wantPos.lerpVectors(S.zoom.from, flyChase(b, flyP), w); wantLook.copy(b.p); k = 1e4;
+        if (S.zoom.t >= FLY.zoom) { S.jump = wantPos.clone(); S.zoom = null; }
+      } else if (S.jump) { wantPos.copy(S.jump); wantLook.copy(b.p); k = 1e4; } else { teeCam(b, wantPos, wantLook); k = 5; }
+    }
     else if (TV.on && tvHold(b)) { teeCam(b, wantPos, wantLook); k = 5; }
     else if (!TV.on && G.flightT < TV.old.holdT && b.mode === 'fly') { addressCam(wantPos, _a); wantLook.copy(b.p); k = 4; }
     else {
@@ -6529,17 +6605,21 @@ function update(dt) {
   const b = G.ball;
   if (G.mode === 'flight') {
     // the ball plays back faster than real time (twice as fast in the air and running out, 2.5x on a putt); Space speeds it up more
-    const ff = (G.ff ? 8 : 1) * (G.lastPutt ? 2.5 : 2); G.acc += dt * ff; let n = 0;
+    const ff = (G.ff ? 8 : 1) * (G.lastPutt ? 2.5 : 2), fly = FLY.on(); G.acc += dt * ff; let n = 0;
     while (G.acc >= STEP && n < 40 * ff) {
-      G.acc -= STEP; n++;
+      G.acc -= STEP; n++; G.trClock += STEP;
       const r = stepBall(b, STEP, env);
       if (r) { onBallEvent(r); if (G.mode !== 'flight') break; }
       if (b.mode === 'rest') break;
+      // the smoke trail fades along its length, so it takes a point every step rather than one a frame
+      if (fly && (b.mode === 'fly' || b.mode === 'roll')) addTrace(G.lastPutt || b.bounces > 0 ? _e.copy(b.p).setY(b.p.y + 0.04) : b.p);
     }
     if (b.mode === 'fly' || b.mode === 'roll') { addTrace(G.lastPutt || b.bounces > 0 ? _e.copy(b.p).setY(b.p.y + 0.04) : b.p); const tr = G.trails[G.trails.length - 1]; if (tr && (tr.length < 2 || Math.hypot(tr[tr.length - 1][0] - b.p.x, tr[tr.length - 1][1] + b.p.z) > 4)) tr.push([b.p.x, -b.p.z]); }
     if (b.mode === 'rest' && G.mode === 'flight') { G.restT += dt; if (G.restT > (G.ff ? 0.4 : G.lastPutt ? 0.8 : HOLE.isRange ? 1.6 : 1.1)) { G.mode = 'transition'; onRest(); } }
     if ((G.t * 20 | 0) !== ((G.t - dt) * 20 | 0)) drawMap();
-  } else G.acc = 0;
+  } else { G.acc = 0; G.trClock += dt; }
+  // a press during the flight: let go quickly and the camera jumps to the ball; hold it and the ball speeds up
+  if (G.press && !G.press.held && (G.press.t += dt) > FLY.holdT) { G.press.held = true; G.ff = true; }
   if (G.pending) { G.pending.t -= dt; if (G.pending.t <= 0) { const f = G.pending.fn; G.pending = null; f(); } }
   if (SW.follow && performance.now() > SW.follow.until + 40) finishFollow();
   if (G.mode === 'flight' && (G.t * 20 | 0) !== ((G.t - dt) * 20 | 0)) dashTick();
@@ -6557,7 +6637,16 @@ function update(dt) {
   }
   if (HOLE.water) HOLE.water.material.uniforms.time.value += dt * 0.35;
   if (HOLE.surf) surfMat.uniforms.time.value += dt;
+  if (!G.overview || G.mode !== 'aim') G.greenView = false;
+  { const gb = $('bGreen'), want = G.mode !== 'aim'; if (gb.hidden !== want) gb.hidden = want; if (gb.dataset.on !== String(!!G.greenView)) { gb.dataset.on = !!G.greenView; gb.textContent = G.greenView ? 'Back to shot' : 'See green'; } }
   updateCamera(dt);
+  // in See green the flag and the landing ring are drawn bigger so they read from up there
+  // (the flag also turns to face the camera, and a red ring marks the cup)
+  { const gs = G.greenView ? clamp(camera.position.distanceTo(HOLE.cupW) / 14, 1, 3.5) : 1;
+    if (HOLE.flagG && HOLE.flagG.scale.x !== gs) HOLE.flagG.scale.setScalar(gs);
+    if (HOLE.flagG && G.greenView) HOLE.flagG.rotation.y = Math.atan2(camera.position.x - HOLE.cupW.x, camera.position.z - HOLE.cupW.z);
+    pinMark.visible = !!G.greenView; if (pinMark.visible) { pinMark.position.set(HOLE.cupW.x, hW(HOLE.cupW.x, HOLE.cupW.z) + 0.06, HOLE.cupW.z); pinMark.scale.setScalar(gs); }
+    const rs = G.greenView ? clamp(camera.position.distanceTo(ring.position) / 18, 1, 3) : 1; if (ring.scale.x !== rs) { ring.scale.setScalar(rs); ringDot.scale.setScalar(rs); } }
   // the ball is drawn larger than life so it stays visible in the air and across the green
   { ballMesh.position.copy(G.ball.p); const s = ballScale(camera.position.distanceTo(G.ball.p)); ballMesh.scale.setScalar(s); ballMesh.position.y += BR * (s - 1); }
   // shadow camera follows the action
@@ -6594,7 +6683,7 @@ addEventListener('keydown', e => {
   if (!$('confirm').hidden) { if (e.key === 'Escape') $('confirm').hidden = true; return; }
   if (!$('session').hidden) { if (e.key === 'Escape' || e.key === 'Tab') { e.preventDefault(); $('session').hidden = true; } return; }
   if (e.key === 'Tab' && HOLE && HOLE.isRange && !$('hud').hidden) { e.preventDefault(); openSession(); return; }
-  if (e.key === ' ' && G.mode === 'flight' && G.flightT > 0.4) { e.preventDefault(); G.ff = true; return; }
+  if (e.key === ' ' && G.mode === 'flight' && G.flightT > 0.4) { e.preventDefault(); if (!FLY.on()) G.ff = true; else if (!e.repeat) flyPress(); return; }
   if ((e.key === 'x' || e.key === 'X') && canDrop()) { dropClear(); return; }
   if (e.key === 'Tab') { e.preventDefault(); if ($('scorecard').hidden) openScorecard(); else $('scorecard').hidden = true; return; }
   if (e.key === 'Escape') { if (!$('scorecard').hidden) { $('scorecard').hidden = true; return; } if (SW.active) cancelSwing('Swing stopped', ''); if (G.overview) G.overview = false; return; }
@@ -6603,11 +6692,12 @@ addEventListener('keydown', e => {
   if (k === 'ArrowUp' || k === 'w') { e.preventDefault(); setClub(G.club - 1); return; }
   if (k === 'ArrowDown' || k === 's') { e.preventDefault(); setClub(G.club + 1); return; }
   if (k === 'v') { toggleOverview(); return; }
+  if (k === 'g') { toggleGreen(); return; }
   if (k === 'ArrowLeft' || k === 'ArrowRight') e.preventDefault();
   G.keys.add(k); if (e.shiftKey) G.keys.add('Shift');
 });
-addEventListener('keyup', e => { const k = e.key.length === 1 ? e.key.toLowerCase() : e.key; G.keys.delete(k); if (!e.shiftKey) G.keys.delete('Shift'); });
-addEventListener('blur', () => G.keys.clear());
+addEventListener('keyup', e => { if (e.key === ' ' && G.press) flyRelease(); const k = e.key.length === 1 ? e.key.toLowerCase() : e.key; G.keys.delete(k); if (!e.shiftKey) G.keys.delete('Shift'); });
+addEventListener('blur', () => { G.keys.clear(); if (G.press) flyRelease(true); });
 // Touch screens: on-screen aim and loft buttons (no keys or scroll wheel on a phone).
 { const touchOn = () => document.documentElement.classList.add('touch');
   if (matchMedia('(pointer: coarse)').matches) touchOn(); addEventListener('touchstart', touchOn, { once: true, passive: true }); }

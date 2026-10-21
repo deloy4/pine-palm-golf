@@ -9,7 +9,13 @@ forward through where you started. Slant the push to draw or fade the ball and s
 finger, and buttons at the bottom left change the club and loft and turn the aim (hold to turn, tap to nudge); the panels
 shrink to the edges of the screen upright or on its side.
 Backspin comes from the follow-through: stop short just past where you started for more, keep pushing through
-for less. The ball plays back at twice real speed (putts at two and a half times), and Space speeds it up more. When the
+for less. The ball plays back at twice real speed (putts at two and a half times). The camera stays at the tee and
+turns to watch the ball; a tap on Space or the mouse flies the camera up beside the ball, where it stops and watches the
+ball fly away (tap again to catch up again), and holding Space or the button speeds the ball up while it is held. The
+tracer is a smoke trail about 40 yards long behind the ball (3 yards on a putt) that fades toward its tail and is gone
+once the ball stops; `?nofly` in the address brings back the older full-length tracer and follow camera. While lining
+up a shot, See green (or G) looks down on the green from about 45 degrees with the slope arrows, the flag and a red ring
+round the cup drawn larger, and the planned landing spot when it is near the green. When the
 ball is in or at the edge of the trees, Drop (or the X key) moves it to the nearest clear spot with an open shot, no nearer
 the hole, for a one-stroke penalty.
 
@@ -73,6 +79,8 @@ blind tee shots, with wind of 6 to 22 mph that holds for the whole hole.
 | Kiji Valley, Cedar Course | Japanese cedars and red maples, doglegs at 1, 3, 4, 7, 9, 10, 12, 14, 16 and 18, a draw-then-fade 3rd and a fade-then-draw 16th, creek ravines on 2 and 12 and creeks short of the greens on 7 and 18, a gap to a landing pad on 8, a chute on 13 to the green 272 yards away, tiered greens and pot bunkers throughout | 7,175 |
 | Ptarmigan Pass, Alpine Course | Swiss Alps with 30 to 150 feet of elevation change on every hole, cliffs above a lake on 4 and 13, a 130-foot drop to a perched green on 3, a 100-foot drop over a tarn on 12, perched greens with runoff banks on 3, 6, 8, 16 and 18, a chute on 7 to the green 285 yards away, a gap to a landing pad on 11 | 7,315 |
 | Verdin Springs, Oasis Course | Lakes on most holes, sharp doglegs at 4, 8, 11 and 15, an island fairway at 14, a peninsula green at 12, par 5s at 2 and 13 reachable over water, a finish climbing into the mountains | 7,340 |
+
+Before designing a new course, read `COURSE-DESIGN.md`: the risk and reward rules every course follows.
 
 Courses are data in the `COURSES` table near the top of the script. Each hole lists its par and yardage, a
 centreline, the green, bunkers, waste areas, water, elevation along the hole and any corner trees. `open` cuts
