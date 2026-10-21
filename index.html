@@ -1628,6 +1628,68 @@ const COURSES = [
   { par: 4, yds: 460, path: [[0,0],[-4,250],[-20,460]], fw: [190,445,30], cor: 28, green: { rx: 14, ry: 13, rot: -4 }, raise: 1.4, pin: [-2, 3],
     bunkers: [[275,20,12,6,0],[300,-21,11,6,0],[452,17,7,4,0],[470,-16,6,4,0]], waste: [], water: [{ t: 'lake', s0: 50, s1: 160, d0: -60, d1: 40 }, { t: 'wash', s0: 392, s1: 408, d0: -60, d1: 60, dep: 5 }], wl: 40, side: 50, elev: [[0,48],[160,46],[300,64],[460,115]] },
 ] },
+// ----- Old Growth courses (the hard set). Giant trees (GIANT species, 45-70 m) that can't be carried, tight fairways
+// and doglegs that turn well inside a drive's carry, so the tee shot has to be shaped. Extra hole fields: alt (split
+// fairways, chutes and landing pads), runoff (shaved banks round a perched green, metres), green.ff (false front),
+// green.tier (two-level green), and a 6th bunker value of 1 for a pot bunker. Course fields: treeTop (metres, keeps the
+// title and intro cameras above the trees). On the doglegs the oaks are two big spruces standing on the straight line from
+// the tee to the far side of the corner: a straight drive can't get past them, a draw or fade (or a bigger hook or slice)
+// bends round them, and a wood or iron laid up short of the corner is the safe play.
+{ id: 'murrelet-grove', name: 'Murrelet Grove', place: 'Northern California coast', sub: 'Redwood Course', seed: 21, mix: [0, 0], sig: 1,
+  mtn: true, flora: { redwood: 0.7, dfir: 0.3 }, treeK: 0.8, treeTop: 72, corner: 'bigSpruce', wind: [6, 22], fog: 0.00042, fogC: 0xc2cacd,
+  range: { h: 650, d: 3000, near: 450, hills: 60, az: 0.5, tree: 900, snow: 5000, round: true }, farPal: { forest: [26, 42, 28], forest2: [36, 52, 32], rock: [110, 104, 96] },
+  leaf: { shrub: [[0.2, 0.34, 0.12, 2], [0.26, 0.38, 0.14, 1]] }, pal: { rough: [62, 90, 42], floor: 'conifer', straw: 'Redwood duff' }, palmetto: 0, edgeMix: { shrub: 1 }, holes: [
+  { par: 4, yds: 405, path: [[0,0],[0,215],[109,371]], fw: [175,390,24], cor: 24, oaks: [[124,17],[170,21]], green: { rx: 12, ry: 11, rot: 8 }, pin: [2, 3],
+    bunkers: [[250,-15,10,5,0],[398,-13,5,4,0],[410,13,4,4,0,1]], waste: [], water: [], side: 30, elev: [[0,40],[220,30],[405,36]] },
+  // the gap in the trees: a drive through the narrow cut on the inside of the corner finds a landing pad 258 yards out,
+  // leaving about 205 to the green; anything off line is in the redwoods
+  { par: 5, yds: 555, path: [[0,0],[0,245],[-30,272],[-290,300]], fw: [180,540,24], cor: 24, green: { rx: 13, ry: 11, rot: -5, tier: [2, 1.5] }, pin: [-2, -4],
+    alt: [[40,-15,345,-38,0,16],[345,-38,345,-38,28,36]],
+    bunkers: [[268,18,10,6,0],[440,12,9,5,0],[548,-14,5,4,0,1],[560,14,5,4,0,1]], waste: [], water: [], side: -25, elev: [[0,50],[245,44],[555,30]] },
+  { par: 3, yds: 175, path: [[0,0],[4,175]], fw: null, cor: 26, green: { rx: 11, ry: 12, rot: 6 }, raise: 3.0, runoff: 9, pin: [2, 2],
+    bunkers: [[153,-11,4,4,0,1],[151,12,4,4,0,1],[197,-3,4,3,0,1]], waste: [], water: [], elev: [[0,60],[175,48]] },
+  // blind: the fairway climbs to a crest 190 yards out, then falls away round the corner to the left
+  { par: 4, yds: 440, path: [[0,0],[0,225],[-123,401]], fw: [185,425,23], cor: 24, oaks: [[112,-12],[158,-19]], green: { rx: 12, ry: 11, rot: -8 }, pin: [-2, 2],
+    bunkers: [[252,16,10,5,0],[432,14,6,4,0],[445,-12,4,4,0,1]], waste: [], water: [], side: 20, elev: [[0,30],[190,52],[260,38],[440,34]] },
+  // split by a stand of redwoods in the landing area: left leaves the open line in, right has to come over two pot bunkers
+  { par: 4, yds: 375, path: [[0,0],[0,230],[10,375]], fw: [175,360,38], cor: 30, stand: [[255,-1,8]], green: { rx: 12, ry: 11, rot: -12 }, pin: [-2, 2],
+    bunkers: [[368,13,5,4,0,1],[358,16,4,4,0,1],[384,-10,4,4,0]], waste: [], water: [], elev: [[0,48],[375,44]] },
+  // draw off the tee round the first corner, then a fade round the second
+  { par: 5, yds: 590, path: [[0,0],[0,225],[-86,348],[-49,560]], fw: [180,575,24], cor: 24, oaks: [[112,-11],[158,-18]], green: { rx: 12, ry: 11, rot: 10, ff: [4, 1.5] }, pin: [2, 3],
+    bunkers: [[250,15,10,5,0],[470,-16,10,5,0],[583,-13,5,4,0,1],[596,12,4,4,0,1]], waste: [], water: [], side: -20, elev: [[0,36],[225,30],[450,50],[590,58]] },
+  // all carry over the creek ravine to a two-level green
+  { par: 3, yds: 210, path: [[0,0],[-4,210]], fw: null, cor: 28, green: { rx: 12, ry: 13, rot: -4, tier: [0, 1.6] }, pin: [-2, 5],
+    bunkers: [[204,15,5,4,0],[200,-16,4,4,0,1]], waste: [], water: [{ t: 'lake', s0: 105, s1: 135, d0: -80, d1: 80 }], wl: 25, elev: [[0,62],[60,60],[95,22],[145,22],[178,58],[210,58]] },
+  { par: 4, yds: 455, path: [[0,0],[0,215],[138,412]], fw: [175,440,24], cor: 25, oaks: [[124,18],[170,21]], green: { rx: 13, ry: 11, rot: 8 }, pin: [2, -2],
+    bunkers: [[262,-16,10,5,0],[448,-13,5,4,0],[462,12,4,4,0,1]], waste: [], water: [], side: 25, elev: [[0,40],[215,34],[455,44]] },
+  { par: 4, yds: 420, path: [[0,0],[0,220],[-115,384]], fw: [180,405,23], cor: 24, oaks: [[111,-13],[158,-20]], green: { rx: 12, ry: 12, rot: -6, ff: [4, 1.6] }, pin: [-1, 3],
+    bunkers: [[250,15,10,5,0],[414,14,5,4,0],[426,-12,4,4,0,1]], waste: [], water: [], side: -30, elev: [[0,44],[225,40],[420,50]] },
+  // dead straight and the narrowest fairway on the course, with pot bunkers down the landing area
+  { par: 4, yds: 395, path: [[0,0],[-3,200],[3,395]], fw: [170,380,19], cor: 21, green: { rx: 13, ry: 11, rot: 0, tier: [-1, -1.6] }, pin: [1, 5],
+    bunkers: [[240,-9,3.5,3.5,0,1],[262,8,3.5,3.5,0,1],[285,-6,3.5,3.5,0,1],[388,-12,4,4,0,1],[390,12,4,4,0,1]], waste: [], water: [], side: 20, elev: [[0,50],[395,40]] },
+  // the second shot carries the creek ravine
+  { par: 5, yds: 545, path: [[0,0],[0,230],[157,503]], fw: [180,530,24], cor: 24, oaks: [[112,11],[157,17]], green: { rx: 12, ry: 11, rot: 6 }, pin: [2, 2],
+    bunkers: [[255,-16,10,5,0],[538,-13,5,4,0,1],[552,12,5,4,0]], waste: [], water: [{ t: 'lake', s0: 335, s1: 365, d0: -80, d1: 80 }], wl: 13,
+    side: -25, elev: [[0,46],[300,40],[330,10],[370,10],[400,40],[545,48]] },
+  { par: 3, yds: 160, path: [[0,0],[6,160]], fw: null, cor: 26, green: { rx: 11, ry: 11, rot: 10, ff: [4, 1.5] }, pin: [1, 3],
+    bunkers: [[150,-12,4,4,0,1],[156,13,4,4,0,1],[172,0,4,3,0,1]], waste: [], water: [], elev: [[0,80],[160,46]] },
+  { par: 4, yds: 470, path: [[0,0],[0,225],[-141,426]], fw: [185,455,24], cor: 25, oaks: [[122,-16],[170,-20]], green: { rx: 13, ry: 12, rot: -6 }, pin: [-2, -2],
+    bunkers: [[262,17,10,5,0],[462,13,5,4,0],[478,-11,4,4,0,1]], waste: [], water: [], side: 30, elev: [[0,52],[230,44],[470,40]] },
+  // hard right at 200; the brave line is the ten-yard chute cut straight through the corner to the green, 281 yards away
+  { par: 4, yds: 345, path: [[0,0],[0,200],[30,230],[150,250]], fw: [150,335,24], cor: 24, green: { rx: 11, ry: 12, rot: 15 }, pin: [1, 2],
+    alt: [[20,12,48,29,10,16],[48,29,336,11,10,16]],
+    bunkers: [[215,-15,9,5,0],[340,-12,4,4,0,1],[350,13,4,4,0,1]], waste: [], water: [], elev: [[0,40],[345,36]] },
+  { par: 5, yds: 575, path: [[0,0],[0,235],[-170,529]], fw: [185,545,24], cor: 25, oaks: [[123,-13],[170,-17]], green: { rx: 12, ry: 12, rot: -4 }, raise: 3.0, runoff: 10, pin: [-2, 2],
+    bunkers: [[265,16,10,5,0],[420,-14,9,5,0],[549,-11,4,4,0,1],[548,12,4,4,0,1]], waste: [], water: [], side: -20, elev: [[0,30],[240,36],[575,60]] },
+  { par: 3, yds: 195, path: [[0,0],[3,195]], fw: null, cor: 26, green: { rx: 12, ry: 13, rot: -8, tier: [1, 1.5, 30] }, pin: [-3, -4],
+    bunkers: [[188,15,5,4,0],[206,-6,4,3,0,1]], waste: [], water: [], tilt: [[120,195,-6]], elev: [[0,56],[195,52]] },
+  // blind again over a crest, then right, with pot bunkers waiting on the inside of the corner
+  { par: 4, yds: 430, path: [[0,0],[0,220],[120,392]], fw: [180,415,23], cor: 24, oaks: [[111,13],[158,20]], green: { rx: 12, ry: 11, rot: 10, ff: [3.5, 1.4] }, pin: [2, 3],
+    bunkers: [[248,-9,3.5,3.5,0,1],[262,-15,3.5,3.5,0,1],[422,-12,4,4,0,1],[436,12,4,4,0,1]], waste: [], water: [], side: 25, elev: [[0,40],[180,60],[240,48],[430,44]] },
+  // a draw round the first corner, then a fade into a green tucked behind redwoods on the right
+  { par: 4, yds: 460, path: [[0,0],[0,220],[-69,318],[-28,431]], fw: [180,445,23], cor: 24, stand: [[395,18,9]], oaks: [[112,-12],[158,-19]], green: { rx: 13, ry: 11, rot: 18 }, pin: [2, 2],
+    bunkers: [[248,15,10,5,0],[452,-13,5,4,0,1],[466,12,4,4,0]], waste: [], water: [], side: -20, elev: [[0,36],[225,32],[460,46]] },
+] },
 ];
 let CI = 0, COURSE = COURSES[0], HOLES = COURSE.holes, PAR_TOTAL = 0, YDS_TOTAL = 0;
 function useCourse(i) {
@@ -1989,6 +2051,30 @@ function buildFir(seed, big = 1, lite = false) {
   parts.push(...clump(0, H + 0.2 * big, 0, 1.4 * big, 3, UV.pine, WHITE, r, 0.6));
   return mergeGeometries(parts);
 }
+// Giant conifers for the old-growth courses, far taller than a ball flies (a drive peaks near 30 m), so the woods can't be
+// carried. G: H height, R crown radius at its base, c0 where the crown starts (share of H), tr trunk radius at the foot,
+// bark colour. The collision size comes from the same numbers (GIANT_DIM).
+const GIANT = {
+  redwood: { H: 58, R: 5.6, c0: 0.42, tr: 1.5, bark: [176, 104, 80] },
+  dfir: { H: 52, R: 5.8, c0: 0.34, tr: 1.05, bark: [150, 132, 118] },
+  spruce: { H: 46, R: 5.2, c0: 0.1, tr: 0.75, bark: [140, 120, 104] },
+  cedar: { H: 48, R: 4.0, c0: 0.28, tr: 0.95, bark: [168, 112, 88] },
+};
+function buildGiant(seed, G, big = 1, lite = false) {
+  const r = mulberry(seed), H = G.H * (0.94 + r() * 0.12), R = G.R * big, c0 = G.c0, tiers = lite ? 6 : 9, nc = lite ? 2 : 3, ns = lite ? 3 : 4;
+  const parts = [trunk(G.tr * big, 0.12, H, UV.bark, srgb(...G.bark), (r() - 0.5) * 0.8, lite ? 6 : 10, lite ? 2 : 8)];
+  for (let k = 0; k < tiers; k++) {
+    const t = k / (tiers - 1), y = H * (c0 + (0.97 - c0) * t), len = R * Math.pow(1 - t, 0.9) + 0.6;
+    for (let j = 0; j < nc; j++) { const a = (j + r() * 0.5) / nc * 6.283 + k, rr = len * 0.5; parts.push(...clump(Math.cos(a) * rr, y - len * 0.12, Math.sin(a) * rr, (len * 1.05 + 1.2) * (lite ? 1.35 : 1), lite ? 2 : 3, UV.pine, WHITE, r, 0.4)); }
+    for (let j = 0; j < ns; j++) parts.push(frond(len * 1.15, len * 0.55 + 0.8, -0.3 - r() * 0.25, (j + r() * 0.6) / ns * 6.283 + k * 0.9, new V3(0, y, 0), 0.22 + r() * 0.12, UV.fir, lite ? 1 : 2));
+  }
+  // a few dead snags low on the bare trunk
+  if (!lite) for (let k = 0; k < 5; k++) { const y = H * c0 * (0.35 + r() * 0.6), a = r() * 6.28, l = 1.5 + r() * 2.5, b = new THREE.CylinderGeometry(0.03, 0.12, l, 4); b.translate(0, l / 2, 0); b.rotateZ(-1.2 - r() * 0.3); b.rotateY(a); b.translate(0, y, 0); remapUV(b, UV.bark); parts.push(paint(b, srgb(120, 100, 86))); }
+  parts.push(...clump(0, H + 0.6, 0, 2.6, 3, UV.pine, WHITE, r, 0.6));
+  return mergeGeometries(parts);
+}
+const GIANT_TYPES = new Set(Object.keys(GIANT).flatMap(k => [k, 'big' + k[0].toUpperCase() + k.slice(1)]));
+const GIANT_DIM = (G, big = 1) => ({ tr: G.tr * big * 0.85, top: G.H, cy: G.H * (G.c0 + 1) / 2, cr: G.R * big * 0.8, ch: G.H * (1 - G.c0) / 2 });
 // Trees whose leaves change colour come in two parts, wood and leaves, so each tree's leaves take their own tint.
 function buildAspen(seed, lite = false) {
   const r = mulberry(seed), H = 10 + r() * 3, wood = [trunk(0.2, 0.07, H, UV.aspenBark, srgb(240, 238, 232), (r() - 0.5) * 0.4, lite ? 5 : 8, lite ? 2 : 6)], leaf = [];
@@ -2089,9 +2175,11 @@ const TREE_GEO = { pine: [buildPine(1), buildPine(2), buildPine(3)], oak: [build
   cypress: [buildCypress(21), buildCypress(22), buildCypress(23)], bigCypress: buildCypress(24, 1.5),
   fir: [buildFir(41), buildFir(42), buildFir(43)], bigFir: buildFir(44, 1.4), aspen: [buildAspen(45), buildAspen(46)], hardwood: [buildHardwood(47), buildHardwood(48)], bigHardwood: buildHardwood(49, 1.5), shrub: [buildShrub(50), buildShrub(51)],
   paloverde: [buildHardwood(73, 1, false, true), buildHardwood(74, 1, false, true)], saguaro: [buildSaguaro(61), buildSaguaro(62), buildSaguaro(63)], ocotillo: [buildOcotillo(64), buildOcotillo(65)], barrel: buildBarrel(66), joshua: [buildJoshua(67), buildJoshua(68)],
-  juniper: [buildJuniper(69), buildJuniper(70), buildJuniper(71)], bigJuniper: buildJuniper(72, 1.5) };
+  juniper: [buildJuniper(69), buildJuniper(70), buildJuniper(71)], bigJuniper: buildJuniper(72, 1.5),
+  // giants (old-growth courses): three of each, plus a broader one for the trees that guard dogleg corners
+  ...Object.fromEntries(Object.entries(GIANT).flatMap(([k, G], i) => [[k, [buildGiant(81 + i * 4, G), buildGiant(82 + i * 4, G), buildGiant(83 + i * 4, G)]], ['big' + k[0].toUpperCase() + k.slice(1), buildGiant(84 + i * 4, G, 1.3)]])) };
 // low-detail stand-ins for the forest beyond the hole
-const TREE_GEO_FAR = { pine: [buildPine(1, true), buildPine(2, true), buildPine(3, true)], fir: [buildFir(41, 1, true), buildFir(42, 1, true), buildFir(43, 1, true)], aspen: [buildAspen(45, true), buildAspen(46, true)], hardwood: [buildHardwood(47, 1, true), buildHardwood(48, 1, true)] };
+const TREE_GEO_FAR = { ...Object.fromEntries(Object.entries(GIANT).map(([k, G], i) => [k, [buildGiant(81 + i * 4, G, 1, true), buildGiant(82 + i * 4, G, 1, true), buildGiant(83 + i * 4, G, 1, true)]])), pine: [buildPine(1, true), buildPine(2, true), buildPine(3, true)], fir: [buildFir(41, 1, true), buildFir(42, 1, true), buildFir(43, 1, true)], aspen: [buildAspen(45, true), buildAspen(46, true)], hardwood: [buildHardwood(47, 1, true), buildHardwood(48, 1, true)] };
 const TWO_PART = new Set(Object.keys(TREE_GEO).filter(k => (Array.isArray(TREE_GEO[k]) ? TREE_GEO[k][0] : TREE_GEO[k]).wood));
 const ROCK_GEO = [buildRock(31), buildRock(32), buildRock(33)];
 const rockMat = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.95, metalness: 0, flatShading: true });
@@ -2106,7 +2194,8 @@ const TREE_DIM = { pine: { tr: 0.3, top: 14, cy: 12.2, cr: 3.0, ch: 2.8 }, oak: 
   fir: { tr: 0.34, top: 18, cy: 8, cr: 3.0, ch: 7.5 }, bigFir: { tr: 0.48, top: 25, cy: 11.2, cr: 4.2, ch: 10.5 }, aspen: { tr: 0.2, top: 12, cy: 9, cr: 2.2, ch: 3.5 },
   hardwood: { tr: 0.45, top: 8, cy: 10, cr: 5.0, ch: 3.5 }, bigHardwood: { tr: 0.68, top: 12, cy: 15, cr: 7.5, ch: 5.2 }, shrub: { tr: 0.5, top: 1.6, cy: 1.2, cr: 1.6, ch: 0.9 },
   paloverde: { tr: 0.3, top: 4.4, cy: 6.4, cr: 5.0, ch: 2.8 }, saguaro: { tr: 0.38, top: 9, cy: 5.5, cr: 1.2, ch: 1.8 }, ocotillo: { tr: 0.15, top: 4, cy: 2.4, cr: 1.4, ch: 1.6 }, barrel: { tr: 0.35, top: 0.8, cy: -1e3, cr: 1e-3, ch: 1e-3 },
-  joshua: { tr: 0.3, top: 3, cy: 4, cr: 2.2, ch: 1.4 }, juniper: { tr: 0.25, top: 1.5, cy: 2.6, cr: 2.4, ch: 1.6 }, bigJuniper: { tr: 0.38, top: 2.2, cy: 3.9, cr: 3.6, ch: 2.4 } };
+  joshua: { tr: 0.3, top: 3, cy: 4, cr: 2.2, ch: 1.4 }, juniper: { tr: 0.25, top: 1.5, cy: 2.6, cr: 2.4, ch: 1.6 }, bigJuniper: { tr: 0.38, top: 2.2, cy: 3.9, cr: 3.6, ch: 2.4 },
+  ...Object.fromEntries(Object.entries(GIANT).flatMap(([k, G]) => [[k, GIANT_DIM(G)], ['big' + k[0].toUpperCase() + k.slice(1), GIANT_DIM(G, 1.3)]])) };
 
 // Distant ground and treeline, always present.
 const FAR_COLOR = srgb(66, 70, 40);
@@ -2278,6 +2367,11 @@ function buildHole(idx) {
   const tilts = (spec.tilt || []).map(([a, b, ft]) => [a * YD, b * YD, ft * FT]);
   const opens = (spec.open || []).map(([ss, sd, sr]) => [...pointAt(ss * YD, sd * YD), sr * YD]);
   const stands = (spec.stand || []).map(([ss, sd, sr]) => [...pointAt(ss * YD, sd * YD), sr * YD]);
+  // extra strips cut through the woods, alt: [[s0, d0, s1, d1, fairway width, cleared width], ...] (yards, hole coordinates):
+  // a second fairway for a split hole, a very narrow chute, or (s0 = s1, d0 = d1) a round landing pad. Fairway width 0 leaves
+  // the strip as rough, a gap in the trees to play through; the cleared width defaults to the fairway width plus 8 yards.
+  const alts = (spec.alt || []).map(([s0, d0, s1, d1, fwY, clY]) => { const a = pointAt(s0 * YD, d0 * YD), b = pointAt(s1 * YD, d1 * YD); return { ax: a[0], ay: a[1], bx: b[0], by: b[1], fw: fwY * YD / 2, cl: (clY ?? fwY + 8) * YD / 2 }; });
+  const altDist = (a, x, y) => { const vx = a.bx - a.ax, vy = a.by - a.ay, l2 = vx * vx + vy * vy, t = l2 ? clamp(((x - a.ax) * vx + (y - a.ay) * vy) / l2, 0, 1) : 0; return Math.hypot(x - a.ax - vx * t, y - a.ay - vy * t); };
   // Ocean: each sea entry [s0, d0, s1, d1, beach] is a straight shoreline through two points given in hole coordinates
   // (yards along and across the hole); the sea is the side away from the tee. In the hole the line wanders into coves and
   // points; out past the hole's ground it stays straight so the far land can be cut along it. beach = sand width in yards.
@@ -2357,7 +2451,7 @@ function buildHole(idx) {
     const ad = Math.abs(d); o.s = s; o.d = d; o.ad = ad;
     o.tD = Math.max(Math.abs(s) - 5.5, ad - 4.5);
     o.gD = ellDist(green, x, y, o); o.gu = o.du; o.gv = o.dv;
-    let b = 60; for (const e of bunkers) { const v = ellDist(e, x, y, null); if (v < b) b = v; } o.bD = b;
+    let b = 60; o.bP = 0; for (let i = 0; i < bunkers.length; i++) { const v = ellDist(bunkers[i], x, y, null); if (v < b) { b = v; o.bP = spec.bunkers[i][5] || 0; } } o.bD = b;
     let w = 60; for (const e of wastes) { const v = ellDist(e, x, y, null); if (v < w) w = v; } o.wsD = w;
     let wat = -60; o.B = 0; o.lk = true;
     if (waterF.length || seaL.length) {
@@ -2405,6 +2499,14 @@ function buildHole(idx) {
     // left inside the corridor (a tree to play around)
     for (const st of opens) { const v = Math.hypot(x - st[0], y - st[1]) - st[2] + 3 * tn(x * 0.4 + st[1], y * 0.4); if (v < o.fC) o.fC = v; }
     for (const st of stands) { const v = st[2] - Math.hypot(x - st[0], y - st[1]) + 3 * tn(x * 0.4 + st[0], y * 0.4); if (v > o.fC) o.fC = v; }
+    // runoff: the bank round a perched green is shaved to fairway height out to spec.runoff metres, so a miss runs down it
+    if (spec.runoff && o.gD < spec.runoff) { const v = o.gD - spec.runoff + 0.8 * tn(x * 0.7 + 3, y * 0.7 + 1); if (v < o.fF) o.fF = v; }
+    o.al = 60;
+    for (const a of alts) {
+      const q = altDist(a, x, y);
+      if (a.fw > 0) { const v = q - a.fw * (1 + 0.06 * tn(x * 0.6 + 70, y * 0.6 + 20)) + 0.6 * tn(x * 2 + 5, y * 2 + 9); if (v < o.fF) o.fF = v; }
+      const v = q - a.cl + 1.2 * tn(x * 0.5 + 40, y * 0.5 + 8); if (v < o.fC) o.fC = v; if (v < o.al) o.al = v;
+    }
     // desert courses: the ground between the tee and the start of the fairway (on a par 3, up to the apron round the green)
     // is desert, so a tee shot that fails the carry finishes in it. It is kept apart from the corridor, so nothing grows there
     // and the aim still reads it as open ground.
@@ -2435,7 +2537,18 @@ function buildHole(idx) {
     for (let y = gc[1] - green.R; y <= gc[1] + green.R; y++) for (let x = gc[0] - green.R; x <= gc[0] + green.R; x++) if (ellDist(green, x, y, oo) < -1.5) pts.push([x, y]);
     const p95 = k => { const sl = pts.map(([x, y]) => Math.hypot(f(x + 0.3, y, k) - f(x - 0.3, y, k), f(x, y + 0.3, k) - f(x, y - 0.3, k)) / 0.6).sort((a, b) => a - b); return sl[Math.floor(sl.length * 0.95)] || 0; };
     while (gK > 0.3 && p95(gK) > 0.033) gK -= 0.1; }
-  const greenSurf = (x, y, o) => greenH + o.gu * gsU + o.gv * gsV + gK * gCont(x, y);
+  // Shaped greens (hard courses): green.ff [yards, feet] is a false front, the front yards of the green falling that many
+  // feet (and the approach below it), so a ball that stops short of it rolls back off; green.tier [yards back of centre,
+  // feet, turn°] is a ridge across the green between two levels (+ feet: the back level is higher). Neither is scaled by gK,
+  // so keep the cup 4 m or more clear of them.
+  const gFF = spec.green.ff ? [spec.green.ff[0] * YD, spec.green.ff[1] * FT] : null, gT = spec.green.tier ? [spec.green.tier[0] * YD, spec.green.tier[1] * FT, (spec.green.tier[2] || 0) * DEG] : null;
+  const gShape = o => {
+    let h = 0;
+    if (gFF) { const e = -green.a * Math.sqrt(Math.max(0, 1 - (o.gv / green.b) ** 2)); h -= gFF[1] * smooth(gFF[0], 0, o.gu - e) * smooth(0.25, 0.7, -o.gu / green.a); }
+    if (gT) h += gT[1] * smooth(-2, 2, o.gu * Math.cos(gT[2]) + o.gv * Math.sin(gT[2]) - gT[0]);
+    return h;
+  };
+  const greenSurf = (x, y, o) => greenH + o.gu * gsU + o.gv * gsV + gK * gCont(x, y) + gShape(o);
   function heightAt(x, y, o) {
     const small = 0.32 * tn(x * 2.1 + 50, y * 2.1 + 80);
     let h = 1.3 * tn(x * 0.5, y * 0.5) + small * (1 - 0.75 * smooth(4, -4, o.fF));
@@ -2465,7 +2578,9 @@ function buildHole(idx) {
     const gm = smooth(6, -0.6, o.gD);
     if (gm > 0) h = lerp(h, greenSurf(x, y, o), gm);
     // greenside bunkers are deeper with a higher lip, so a low club from near the face can catch it; no lip on the putting surface
-    if (o.bD < 3.5) { const gs = smooth(18, 7, o.gD); h += (0.25 + 0.4 * gs) * Math.exp(-(((o.bD - 0.9) / 0.8) ** 2)) * smooth(-2, 0.3, o.gD) - (0.85 + 0.75 * gs) * smooth(0.15, -2.6 - 0.4 * gs, o.bD); }
+    // pot bunkers (bunker entry [..., 1]) are small and deep with a near-vertical face: 2 m down, reached 1.6 m in
+    if (o.bP && o.bD < 2.5) h += 0.4 * Math.exp(-(((o.bD - 0.5) / 0.5) ** 2)) * smooth(-2, 0.3, o.gD) - 1.8 * smooth(0.1, -1.6, o.bD);
+    else if (o.bD < 3.5) { const gs = smooth(18, 7, o.gD); h += (0.25 + 0.4 * gs) * Math.exp(-(((o.bD - 0.9) / 0.8) ** 2)) * smooth(-2, 0.3, o.gD) - (0.85 + 0.75 * gs) * smooth(0.15, -2.6 - 0.4 * gs, o.bD); }
     if (o.wsD < 2) h -= 0.12 * smooth(1.5, -2, o.wsD);
     if (shore) return o.wat >= 0 ? h : Math.max(h, WL + 0.15);
     // (in the mountains the bank slopes into the water over a couple of metres instead of a bulkhead drop)
@@ -2481,7 +2596,7 @@ function buildHole(idx) {
   minX = Math.floor(minX - 115); maxX = Math.ceil(maxX + 115); minY = Math.floor(minY - 80); maxY = Math.ceil(maxY + 80);
   const nx = maxX - minX + 1, ny = maxY - minY + 1, N = nx * ny;
   const F = { t: new Float32Array(N), g: new Float32Array(N), b: new Float32Array(N), ws: new Float32Array(N), wat: new Float32Array(N), f: new Float32Array(N), c: new Float32Array(N), s: new Float32Array(N), d: new Float32Array(N), h: new Float32Array(N),
-    rk: new Float32Array(N), bch: new Float32Array(N), cz: new Float32Array(N), lg: new Uint8Array(N), wsh: new Float32Array(N), dz: new Float32Array(N) };
+    rk: new Float32Array(N), bch: new Float32Array(N), cz: new Float32Array(N), lg: new Uint8Array(N), wsh: new Float32Array(N), dz: new Float32Array(N), al: new Float32Array(N) };
   const o = {};
   for (let j = 0; j < ny; j++) {
     const y = minY + j;
@@ -2489,7 +2604,7 @@ function buildHole(idx) {
       const x = minX + i, k = j * nx + i, [s, d] = project(x, y);
       evalPoint(x, y, s, d, o);
       F.t[k] = o.tD; F.g[k] = o.gD; F.b[k] = o.bD; F.ws[k] = o.wsD; F.wat[k] = o.wat; F.f[k] = o.fF; F.c[k] = o.fC; F.s[k] = s; F.d[k] = d;
-      F.h[k] = heightAt(x, y, o); F.wsh[k] = o.wsh; F.dz[k] = o.dz; F.rk[k] = o.rk; F.bch[k] = o.bch; F.cz[k] = o.cz; F.lg[k] = o.lk && !COURSE.coves ? 1 : 0;
+      F.h[k] = heightAt(x, y, o); F.wsh[k] = o.wsh; F.dz[k] = o.dz; F.rk[k] = o.rk; F.bch[k] = o.bch; F.cz[k] = o.cz; F.lg[k] = o.lk && !COURSE.coves ? 1 : 0; F.al[k] = o.al;
     }
   }
   // the edges of the hole's ground ease down to the far land around it (on the coast, to the land's own height, or under the sea)
@@ -2600,7 +2715,7 @@ function buildHole(idx) {
       (v === null ? L2[type] : L2[type][v]).push([m, c, TWO_PART.has(type) ? leafCol(type) : c]);
       if (TREE_DIM[type] && x > minX && x < maxX && y > minY && y < maxY) {
         const D = TREE_DIM[type], lo = cyp ? (type === 'bigCypress' ? 2.7 : 1.8) * sc : 0;
-        const t = { id: HOLE.trees.length, x, z: -y, y0: h, tr: D.tr * sc, top: h + D.top * sc, cy: h + D.cy * sc, cr: D.cr * sc, ch: D.ch * sc, type, ox: Math.cos(yaw) * lo, oz: -Math.sin(yaw) * lo };
+        const t = { id: HOLE.trees.length, x, z: -y, y0: h, tr: D.tr * sc, top: h + D.top * sc, cy: h + D.cy * sc, cr: D.cr * sc, ch: D.ch * sc, type, ox: Math.cos(yaw) * lo, oz: -Math.sin(yaw) * lo, giant: GIANT_TYPES.has(type) };
         HOLE.trees.push(t);
         const rr = t.cr + Math.hypot(t.ox, t.oz); for (let gx = Math.floor((x - rr) / 10); gx <= Math.floor((x + rr) / 10); gx++) for (let gz = Math.floor((-y - rr) / 10); gz <= Math.floor((-y + rr) / 10); gz++) {
           const key = gx * 100000 + gz; if (!HOLE.treeGrid.has(key)) HOLE.treeGrid.set(key, []); HOLE.treeGrid.get(key).push(t);
@@ -2624,7 +2739,7 @@ function buildHole(idx) {
       if (wat > -4 || t < 14 || g < 14 || (coast && fieldAt(F.cz, x, y) > -5)) continue;
       const fwy = fieldAt(F.f, x, y), bun = fieldAt(F.b, x, y), ws = fieldAt(F.ws, x, y);
       if (bun < 3 || ws < 2) continue;
-      const pf = c > 3 ? 0.55 * smooth(3, 16, c) + 0.06 : (c > -12 && fwy > 12 && fieldAt(F.s, x, y) > 110 ? 0.012 : 0);   // (no stray trees in front of the tee)
+      const pf = c > 3 ? 0.55 * smooth(3, 16, c) + 0.06 : (c > -12 && fwy > 12 && fieldAt(F.s, x, y) > 110 && fieldAt(F.al, x, y) > 4 ? 0.012 : 0);   // (no stray trees in front of the tee or in a cut strip)
       if (r() > pf * dens) continue;
       const type = pick(wat > -18);
       add(type, nVar(type), x, y, sampleField(F.h, x, y) - 0.05, 0.8 + r() * 0.45);
@@ -3104,7 +3219,8 @@ function treeCheck(b) {
     const ex = (dx - (t.ox || 0)) / t.cr, ey = (b.p.y - t.cy) / t.ch, ez = (dz - (t.oz || 0)) / t.cr;
     if (ex * ex + ey * ey + ez * ez < 1) {
       b.hit.add(t.id);
-      if (Math.random() < 0.72) {
+      // (a giant's crown is too deep to fly through, so it always takes the ball)
+      if (t.giant || Math.random() < 0.72) {
         const keep = 0.18 + Math.random() * 0.25, a = (Math.random() - 0.5) * 1.6, c = Math.cos(a), s = Math.sin(a);
         const vx = b.v.x * keep, vz = b.v.z * keep; b.v.x = vx * c - vz * s; b.v.z = vx * s + vz * c; b.v.y = Math.min(b.v.y * keep, 1.5); b.w *= 0.3; b.tilt = 0;
         return { ev: 'leaves' };
@@ -4557,6 +4673,7 @@ const TERRAINS = [
   { name: 'Mountain', blurb: 'Big drops from high tees, forested hillsides, creeks and lakes', ids: ['talus-ridge', 'osprey-creek', 'kettle-lake', 'sourwood-gap'] },
   { name: 'Island', blurb: 'Hawaii and the Caribbean: lava and coral shores, palms and bays to carry', ids: ['frigate-point', 'tern-reef', 'petrel-cliffs', 'tropicbird-bay'] },
   { name: 'Desert', blurb: 'Target golf over the desert, dry washes, red rock canyons and an oasis', ids: ['roadrunner-wash', 'condor-canyon', 'pinon-mesa', 'verdin-springs'] },
+  { name: 'Old Growth', blurb: 'The hardest set: giant trees, tight doglegs that need a draw or a fade, pot bunkers and false fronts', ids: ['murrelet-grove'], hard: true },
   { name: 'Range', blurb: 'A floodlit driving range with seven target greens, open to everyone', ids: [], isRange: true },
 ];
 const RANGE_TI = TERRAINS.findIndex(t => t.isRange);
@@ -5050,16 +5167,19 @@ const tRank = t => t ? 3 - TROPHY.findIndex(x => x[1] === t) : 0;
 const birdied = (o, ci) => o && o.hb.length === 18 ? COURSES[ci].holes.filter((h, i) => o.hb[i] < h.par).length : 0;
 
 // Unlocks: Florida is open; each next terrain opens once two courses on the one before have a score round at +5 or
-// better; Verdin Springs also needs a round under par anywhere. A locked course can't be practised either.
-const UNLOCK_AT = 5, LATE = 'verdin-springs';
+// better; Verdin Springs also needs a round under par anywhere; the hard set (Old Growth) opens after rounds under par on
+// HARD_AT different courses. A locked course can't be practised either.
+const UNLOCK_AT = 5, LATE = 'verdin-springs', HARD_AT = 3;
 function unlockState(cs = courseSums()) {
   const all = TEST && !window.__golfLocks;
   const good = t => t.ids.filter(id => cs[id] && cs[id].best - cs[id].par <= UNLOCK_AT).length;
-  const terr = []; TERRAINS.forEach((t, i) => terr.push(all || i === 0 || t.isRange || (terr[i - 1] && good(TERRAINS[i - 1]) >= 2)));
-  const underPar = Object.values(cs).some(o => o.best < o.par);
+  // the hard set (Old Growth) skips the chain: it opens after score rounds under par on three different courses
+  const underN = Object.values(cs).filter(o => o.best < o.par).length, underPar = underN > 0;
+  const terr = []; TERRAINS.forEach((t, i) => terr.push(all || i === 0 || t.isRange || (t.hard ? underN >= HARD_AT : terr[i - 1] && good(TERRAINS[i - 1]) >= 2)));
   const open = ci => terr[terrainOf(ci)] && (all || COURSES[ci].id !== LATE || underPar);
   const why = ci => {
     const ti = terrainOf(ci), prev = TERRAINS[ti - 1];
+    if (!terr[ti] && TERRAINS[ti].hard) return `Opens after score rounds under par on ${HARD_AT} different courses (${underN} of ${HARD_AT} so far).`;
     if (!terr[ti]) return terr[ti - 1] ? `Opens when two ${prev.name} courses each have a score round at +${UNLOCK_AT} or better (${good(prev)} of 2 so far).` : `Unlock the ${prev.name} courses first.`;
     return open(ci) ? '' : `${COURSES[ci].name} opens after any 18-hole score round under par.`;
   };
@@ -5350,9 +5470,11 @@ function startIntro() {
   if (reduce) { G.mode = 'aim'; return; }
   const cupW = HOLE.cupW, gd = HOLE.dirAt(HOLE.L), mid = HOLE.pointAt(HOLE.L * 0.5, 0), tee = HOLE.pointAt(0, 0);
   const pts = [
-    new V3(cupW.x + gd[0] * 40, cupW.y + 32, cupW.z - gd[1] * 40),
-    new V3(mid[0] + 20, hW(mid[0], -mid[1]) + 55, -mid[1]),
-    new V3(tee[0] - Math.sin(G.aim) * 25, hW(tee[0], -tee[1]) + 18, -tee[1] + Math.cos(G.aim) * 25),
+    // (old-growth courses, COURSE.treeTop: start above the giants behind the green and come down just behind the tee,
+    // inside the clearing, instead of through the trees)
+    new V3(cupW.x + gd[0] * 40, cupW.y + Math.max(32, (COURSE.treeTop || 0) + 10), cupW.z - gd[1] * 40),
+    new V3(mid[0] + 20, hW(mid[0], -mid[1]) + Math.max(55, (COURSE.treeTop || 0) * 0.8), -mid[1]),
+    new V3(tee[0] - Math.sin(G.aim) * (COURSE.treeTop ? 12 : 25), hW(tee[0], -tee[1]) + (COURSE.treeTop ? 10 : 18), -tee[1] + Math.cos(G.aim) * (COURSE.treeTop ? 12 : 25)),
   ];
   const looks = [new V3(cupW.x, cupW.y, cupW.z), new V3(mid[0], hW(mid[0], -mid[1]), -mid[1]), G.ball.p.clone()];
   G.intro = { t: 0, dur: spec.par === 3 ? 4.2 : 5.5, pos: new THREE.CatmullRomCurve3(pts), look: new THREE.CatmullRomCurve3(looks) };
@@ -6158,6 +6280,7 @@ function updateCamera(dt) {
     camPos.set(c.x + Math.cos(t) * R, c.y + 24, c.z + Math.sin(t) * R); camLook.set(c.x, c.y + 2, c.z);
     // mountain forests are tall and the ground climbs around the green, so the orbit rides above the treetops there
     if (HOLE.mtn) camPos.y = Math.max(c.y + 38, hW(camPos.x, camPos.z) + 34);
+    if (COURSE.treeTop) camPos.y = Math.max(camPos.y, hW(camPos.x, camPos.z) + COURSE.treeTop + 12);
   } else if (G.mode === 'aim' || G.mode === 'swing' || G.mode === 'transition' || G.mode === 'loading') {
     if (G.overview) {
       const a = aimVec(), cw = HOLE.cupW, d = distToPin(), mid = new V3().lerpVectors(b.p, cw, 0.5);
@@ -6346,6 +6469,8 @@ if (TEST) {
   window.__golf = {
     G, CLUBS, CARRY, get HOLES() { return HOLES; }, COURSES, useCourse, buildHole, get CI() { return CI; }, get HOLE() { return HOLE; }, SURF, surfAt, hW, startRound, loadHole, skipIntro, trackHole, showHoleDone, unlockState, handicap, courseSums,
     run(secs, fps = 60) { for (let i = 0; i < secs * fps; i++) update(1 / fps); renderer.render(scene, camera); },
+    tick(secs, fps = 60) { for (let i = 0; i < secs * fps; i++) update(1 / fps); },   // (same without drawing, for long test loops)
+    get env() { return env; },
     shot(b, back = 0, fwd = 0, curv = 0, dur = 250) { if (G.mode === 'intro') skipIntro(); if (G.mode !== 'aim') return 'not ready: ' + G.mode; launchShot({ b, back, fwd, curv, dur }); return 'ok'; },
     setClub, setAim(a) { G.aim = a; placeGolfer(); updateAimVisuals(); },
     pose(p, phase = 'back') { G.freezePose = true; SWING.p = p; SWING.phase = phase; SWING.pTop = -1; poseGolfer(); },

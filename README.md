@@ -27,7 +27,7 @@ above, close to the usual rule of a yard for every 3 feet, so the player has to 
 
 ## The courses
 
-All twenty courses are made up. The first four are in a Florida style with pines, oaks, palms, waste areas and
+All the courses are made up. The first four are in a Florida style with pines, oaks, palms, waste areas and
 water; the next four are on the ocean, with cliffs, beaches, coves and surf; the next four are in mountain
 forest, with big elevation changes, hillsides, creeks and ranges on the horizon; the next four are on tropical
 islands, with lava or coral shores, palms, flowering shrubs and mountains inland; the last four are in the desert,
@@ -35,6 +35,16 @@ with saguaros, junipers, dry washes and red rock, where a ball that misses the f
 the desert, on hardpan or in the rocks. Each is par 72, about 7,250 to 7,450
 yards, with sharp doglegs whose corners can be carried, holes that bend around water, a drivable par 4, par 5s reachable in
 two only over trouble, and fairways that tilt toward hazards.
+
+The Old Growth set is the hard one, built one course at a time (Murrelet Grove first). Its trees are giants, 45 to
+70 metres tall, so the woods can't be carried: a drive peaks near 30 metres, and a ball that flies into a giant's crown
+always drops. Fairways are about 20 to 24 yards wide and the doglegs turn at 215 to 235 yards, well inside a drive. On
+each dogleg two big spruces stand on the straight line from the tee to the far side of the corner, so a straight drive
+can't make the turn: a draw or a fade (or a bigger hook or slice) bends round them, or a wood or iron lays up short of
+the corner. A curving drive only bows about 7 yards off a straight line (12 for a big hook), which is why the trees sit
+on the line rather than relying on the corner alone. The set also has gaps and chutes cut through the woods, split
+fairways, false fronts, tiered greens, pot bunkers, raised greens with shaved runoff banks, creek ravines to carry and
+blind tee shots, with wind of 6 to 22 mph that holds for the whole hole.
 
 | Course | Style | Yards |
 | --- | --- | --- |
@@ -57,6 +67,7 @@ two only over trouble, and fairways that tilt toward hazards.
 | Roadrunner Wash, Desert Course | Saguaro foothills with dry washes on most holes, sharp doglegs at 3, 7 and 12, a drivable 6th over a pond, a par 3 at 8 that drops 70 feet over a deep wash, a par 5 at 17 reachable over water | 7,340 |
 | Condor Canyon, Canyon Course | Red rock canyon holes with tees on the rim dropping up to 207 feet, approaches climbing up to 115 feet onto the mesa, deep washes in the canyon floor, sharp doglegs at 4, 7 and 13, a 232-yard par 3 at 3 that drops 186 feet | 7,408 |
 | Piñon Mesa, Mesa Course | High desert under snowy peaks, doglegs at 4, 10 and 15 with desert corners to cut, a lake to carry at 11, a drivable downhill 5th, par 5s at 2 and 13 reachable over a pond and a deep arroyo, a par 3 at 7 that drops 120 feet off the mesa | 7,292 |
+| Murrelet Grove, Redwood Course | Giant redwoods, doglegs at 1, 4, 6, 8, 9, 11, 13, 15, 17 and 18 that need a draw or fade past two spruces on the line, a gap in the trees on 2 to a landing pad 258 yards out (a 3 wood) that leaves about 205 to the green, a ten-yard chute on 14 straight to the green 281 yards away, creek ravines on 7 and 11, a stand of redwoods splitting the 5th, raised greens with runoff banks on 3 and 15 | 7,200 |
 | Verdin Springs, Oasis Course | Lakes on most holes, sharp doglegs at 4, 8, 11 and 15, an island fairway at 14, a peninsula green at 12, par 5s at 2 and 13 reachable over water, a finish climbing into the mountains | 7,340 |
 
 Courses are data in the `COURSES` table near the top of the script. Each hole lists its par and yardage, a
@@ -68,6 +79,14 @@ add `sea`, a list of straight shorelines given by two points along and across th
 width; the course settings choose the trees, the scrub colour and the wind. Mountain holes add `side`, how many
 feet the hillside climbs about 100 yards off the line of play (plus for the right, minus for the left), and `wl`,
 the water level in feet for a creek or pond up in the hills; the course's `range` sets the mountains around it.
+Old Growth holes add `alt` ([[yards along, yards across, to yards along, yards across, fairway width, cleared width], ...]),
+extra strips cut through the woods: a second fairway, a narrow chute, a round landing pad (both ends the same point), or
+with fairway width 0 a gap of rough to play through; `runoff`, metres of bank round a raised green shaved to fairway height;
+`green.ff` ([yards, feet]), a false front; `green.tier` ([yards back of centre, feet, turn°]), a ridge between two levels;
+and a 6th bunker value of 1 for a deep pot bunker (a lob or sand wedge gets out, a gap wedge doesn't). Keep pot bunkers off
+the bank of a raised green, where the face toward the green gets too tall to clear. Their `flora` lists the giants
+(`redwood`, `dfir`, `spruce`, `cedar`, each with a `big` version for corners), and `treeTop` keeps the title and intro cameras
+above the trees.
 Desert courses are mountain courses with `desert: true`: `pal.floor` is `sonoran`, `redrock` or `highdesert`, `flora`
 can list `saguaro`, `ocotillo`, `joshua`, `juniper`, `paloverde`, `hardwood` and `palm`, `edgeMix` weighs the plants along
 the edge of the rough (`shrub`, `barrel`, `ocotillo`), `lakeC` colours the lakes and `range.mesa` steps the far range into
@@ -78,7 +97,7 @@ inland behind the far land; `pal.cliff` and `pal.sand` colour the shore rock and
 
 ## Scores
 
-The home screen is one screen: tabs for the terrains (Florida, Ocean, Mountain, Island and Desert) above that terrain's four
+The home screen is one screen: tabs for the terrains (Florida, Ocean, Mountain, Island, Desert and Old Growth) above that terrain's four
 courses, and clicking a course opens it in place with its course record, Play for a score, Practice and its leaderboard.
 Play for a score starts at the 1st tee and plays all 18 holes once; finishing the 18th opens the scorecard with Post to
 leaderboard. Leaving a score round early (Menu, after a check) ends it with no score. Practice opens the 18 holes under
@@ -118,7 +137,8 @@ from the third round. A differential is the score minus the course rating, and `
 out from every player's rounds (each round against that player's own average, pulled toward par until a course has a good
 number of rounds). Each course gives a bronze, silver or gold trophy for the best round (+10, +5, par) and a badge for a
 birdie or better on all 18 holes across its rounds. Florida is open; each next terrain opens once two courses on the one
-before have a round at +5 or better, and Verdin Springs also needs a round under par. Locked courses can't be practised.
+before have a round at +5 or better, and Verdin Springs also needs a round under par. Old Growth skips the chain: it opens
+after score rounds under par on three different courses. Locked courses can't be practised.
 
 ## Coins, the shop, hot streaks and challenges
 
