@@ -36,7 +36,8 @@ the desert, on hardpan or in the rocks. Each is par 72, about 7,250 to 7,450
 yards, with sharp doglegs whose corners can be carried, holes that bend around water, a drivable par 4, par 5s reachable in
 two only over trouble, and fairways that tilt toward hazards.
 
-The Old Growth set is the hard one, built one course at a time (Murrelet Grove first). Its trees are giants, 45 to
+The Old Growth set is the hard one: Murrelet Grove (California redwoods), Capercaillie Wood (Black Forest spruce), Kiji
+Valley (Japanese cedar and maple) and Ptarmigan Pass (the Swiss Alps, 30 to 150 feet of climb or drop on every hole). Its trees are giants, 45 to
 70 metres tall, so the woods can't be carried: a drive peaks near 30 metres, and a ball that flies into a giant's crown
 always drops. Fairways are about 20 to 24 yards wide and the doglegs turn at 215 to 235 yards, well inside a drive. On
 each dogleg two big spruces stand on the straight line from the tee to the far side of the corner, so a straight drive
@@ -68,6 +69,9 @@ blind tee shots, with wind of 6 to 22 mph that holds for the whole hole.
 | Condor Canyon, Canyon Course | Red rock canyon holes with tees on the rim dropping up to 207 feet, approaches climbing up to 115 feet onto the mesa, deep washes in the canyon floor, sharp doglegs at 4, 7 and 13, a 232-yard par 3 at 3 that drops 186 feet | 7,408 |
 | Piñon Mesa, Mesa Course | High desert under snowy peaks, doglegs at 4, 10 and 15 with desert corners to cut, a lake to carry at 11, a drivable downhill 5th, par 5s at 2 and 13 reachable over a pond and a deep arroyo, a par 3 at 7 that drops 120 feet off the mesa | 7,292 |
 | Murrelet Grove, Redwood Course | Giant redwoods, doglegs at 1, 4, 6, 8, 9, 11, 13, 15, 17 and 18 that need a draw or fade past two spruces on the line, a gap in the trees on 2 to a landing pad 258 yards out (a 3 wood) that leaves about 205 to the green, a ten-yard chute on 14 straight to the green 281 yards away, creek ravines on 7 and 11, a stand of redwoods splitting the 5th, raised greens with runoff banks on 3 and 15 | 7,200 |
+| Capercaillie Wood, Spruce Course | Black Forest spruce, doglegs at 1, 4, 5, 7, 9, 11, 14, 17 and 18 guarded by spruces on the line, blind crests on 1, 4 and 9, split fairways on 2 and 10, a chute on 6 straight to the green 268 yards away, a gap to a landing pad on 13, creek ravines on 7 and 16, a pond carry on 3 | 7,180 |
+| Kiji Valley, Cedar Course | Japanese cedars and red maples, doglegs at 1, 3, 4, 7, 9, 10, 12, 14, 16 and 18, a draw-then-fade 3rd and a fade-then-draw 16th, creek ravines on 2 and 12 and creeks short of the greens on 7 and 18, a gap to a landing pad on 8, a chute on 13 to the green 272 yards away, tiered greens and pot bunkers throughout | 7,175 |
+| Ptarmigan Pass, Alpine Course | Swiss Alps with 30 to 150 feet of elevation change on every hole, cliffs above a lake on 4 and 13, a 130-foot drop to a perched green on 3, a 100-foot drop over a tarn on 12, perched greens with runoff banks on 3, 6, 8, 16 and 18, a chute on 7 to the green 285 yards away, a gap to a landing pad on 11 | 7,315 |
 | Verdin Springs, Oasis Course | Lakes on most holes, sharp doglegs at 4, 8, 11 and 15, an island fairway at 14, a peninsula green at 12, par 5s at 2 and 13 reachable over water, a finish climbing into the mountains | 7,340 |
 
 Courses are data in the `COURSES` table near the top of the script. Each hole lists its par and yardage, a
@@ -170,7 +174,9 @@ try, as many tries as you like, best one counts, 20 coins for the first entry ea
 (`golf_claim_prizes`, inside `golf_challenges`). Challenges can be played on locked courses; entering the boards needs
 sign-in. Tables: `golf_courses` (ids and pars, copied from the game for the picks), `golf_entries`, `golf_claims`;
 functions `golf_challenges(p_token)` and `golf_entry(p_token, kind, course, hole, value)`. If a course's holes or pars
-change in the game, update `golf_courses` too.
+change in the game, update `golf_courses` too. Its `since` column keeps a course out of the picks for any day or week
+before that date, so new courses (the Old Growth four, since 2026-10-25) join at the start of a week without changing a
+pick that is already being played.
 
 ## Next build: achievement pop-ups and player leaderboards
 

@@ -1690,6 +1690,159 @@ const COURSES = [
   { par: 4, yds: 460, path: [[0,0],[0,220],[-69,318],[-28,431]], fw: [180,445,23], cor: 24, stand: [[395,18,9]], oaks: [[112,-12],[158,-19]], green: { rx: 13, ry: 11, rot: 18 }, pin: [2, 2],
     bunkers: [[248,15,10,5,0],[452,-13,5,4,0,1],[466,12,4,4,0]], waste: [], water: [], side: -20, elev: [[0,36],[225,32],[460,46]] },
 ] },
+{ id: 'capercaillie-wood', name: 'Capercaillie Wood', place: 'Black Forest, Germany', sub: 'Spruce Course', seed: 22, mix: [0, 0], sig: 12,
+  mtn: true, flora: { spruce: 0.75, dfir: 0.25 }, treeK: 0.8, treeTop: 62, corner: 'bigSpruce', wind: [6, 22], fog: 0.0005, fogC: 0xb4bec4,
+  range: { h: 450, d: 2600, near: 500, hills: 90, az: -0.4, tree: 2000, snow: 9000, round: true }, farPal: { forest: [22, 38, 26], forest2: [32, 48, 30], rock: [104, 100, 94] },
+  leaf: { shrub: [[0.22, 0.36, 0.14, 2], [0.3, 0.3, 0.16, 1]] }, pal: { rough: [60, 88, 42], floor: 'conifer', straw: 'Spruce needles' }, palmetto: 0, edgeMix: { shrub: 1 }, holes: [
+  // blind: over a crest 175 yards out, then right
+  { par: 4, yds: 410, path: [[0,0],[0,215],[103,380]], fw: [175,395,23], cor: 24, oaks: [[123,15],[169,19]], green: { rx: 12, ry: 11, rot: 8 }, pin: [2, 3],
+    bunkers: [[245,-15,10,5,0],[402,-13,5,4,0],[414,12,4,4,0,1]], waste: [], water: [], side: 30, elev: [[0,40],[175,58],[240,46],[410,44]] },
+  // split by a stand of spruces: right leaves the open line into a green that opens to the right
+  { par: 4, yds: 385, path: [[0,0],[0,230],[-12,385]], fw: [170,370,40], cor: 30, stand: [[250,1,8]], green: { rx: 12, ry: 11, rot: 12 }, pin: [2, 2],
+    bunkers: [[378,-13,5,4,0,1],[368,-16,4,4,0,1],[394,10,4,4,0]], waste: [], water: [], elev: [[0,44],[385,52]] },
+  { par: 3, yds: 185, path: [[0,0],[-4,185]], fw: null, cor: 26, green: { rx: 12, ry: 13, rot: -6, tier: [0, 1.5] }, pin: [-2, -5],
+    bunkers: [[180,15,5,4,0],[196,-8,4,3,0,1]], waste: [], water: [{ t: 'lake', s0: 70, s1: 150, d0: -50, d1: 40 }], wl: 53, elev: [[0,52],[185,50]] },
+  // the second shot climbs blind over a crest at 380
+  { par: 5, yds: 560, path: [[0,0],[0,230],[-175,510]], fw: [180,545,24], cor: 25, oaks: [[135,-16],[176,-19]], green: { rx: 12, ry: 11, rot: -6, ff: [4, 1.5] }, pin: [-1, 3],
+    bunkers: [[260,16,10,5,0],[470,-14,9,5,0],[552,13,5,4,0,1],[566,-12,4,4,0,1]], waste: [], water: [], side: -25, elev: [[0,40],[230,36],[380,62],[460,48],[560,44]] },
+  { par: 4, yds: 445, path: [[0,0],[0,220],[-129,404]], fw: [180,430,23], cor: 24, oaks: [[111,-13],[158,-20]], green: { rx: 13, ry: 11, rot: -8 }, pin: [-2, 2],
+    bunkers: [[250,16,10,5,0],[438,14,5,4,0],[452,-12,4,4,0,1]], waste: [], water: [], side: 25, elev: [[0,44],[220,38],[445,46]] },
+  // hard left at 195; the chute cut through the corner runs straight to the green
+  { par: 4, yds: 330, path: [[0,0],[0,195],[-30,225],[-150,245]], fw: [140,320,24], cor: 24, green: { rx: 11, ry: 12, rot: -15 }, pin: [-1, 2],
+    alt: [[16,-10,46,-28,10,16],[46,-28,321,-10,10,16]], bunkers: [[210,15,9,5,0],[326,12,4,4,0,1],[336,-13,4,4,0,1]], waste: [], water: [], elev: [[0,46],[330,40]] },
+  // the second shot carries the creek ravine
+  { par: 5, yds: 575, path: [[0,0],[0,225],[175,528]], fw: [180,560,24], cor: 24, oaks: [[122,15],[159,19],[194,18]], green: { rx: 12, ry: 11, rot: 6 }, pin: [2, 2],
+    bunkers: [[255,-16,10,5,0],[566,-13,5,4,0,1],[580,12,5,4,0]], waste: [], water: [{ t: 'lake', s0: 385, s1: 415, d0: -80, d1: 80 }], wl: 15,
+    side: -25, elev: [[0,48],[350,42],[380,12],[420,12],[450,42],[575,50]] },
+  { par: 3, yds: 215, path: [[0,0],[5,215]], fw: null, cor: 26, green: { rx: 12, ry: 12, rot: 6 }, raise: 2.8, runoff: 9, pin: [2, 2],
+    bunkers: [[190,-11,4,4,0,1],[188,12,4,4,0,1],[240,-3,4,3,0,1]], waste: [], water: [], elev: [[0,96],[215,46]] },
+  { par: 4, yds: 455, path: [[0,0],[0,220],[135,413]], fw: [180,440,23], cor: 24, oaks: [[122,16],[170,20]], green: { rx: 13, ry: 11, rot: 8 }, pin: [2, -2],
+    bunkers: [[250,-15,10,5,0],[448,-13,5,4,0],[462,12,4,4,0,1]], waste: [], water: [], side: 20, elev: [[0,40],[185,60],[250,48],[455,46]] },
+  // two fairways: the wide one on the right, a narrow one on the left behind a line of spruces with the better angle in
+  { par: 4, yds: 400, path: [[0,0],[0,240],[8,400]], fw: [175,385,24], cor: 40, stand: [[215,-18,6],[245,-19,6],[275,-19,6]], alt: [[190,-32,300,-30,16,20]],
+    green: { rx: 12, ry: 12, rot: -14 }, pin: [-2, 2], bunkers: [[392,12,5,4,0,1],[382,15,4,4,0,1]], waste: [], water: [], elev: [[0,50],[400,46]] },
+  { par: 4, yds: 430, path: [[0,0],[0,215],[-123,391]], fw: [175,415,23], cor: 24, oaks: [[111,-14],[159,-21]], green: { rx: 12, ry: 11, rot: -8, tier: [-2, 1.4] }, pin: [-2, 4],
+    bunkers: [[245,15,10,5,0],[423,13,5,4,0],[436,-12,4,4,0,1]], waste: [], water: [], side: -20, elev: [[0,46],[215,40],[430,44]] },
+  { par: 3, yds: 165, path: [[0,0],[3,165]], fw: null, cor: 26, green: { rx: 11, ry: 13, rot: 8, tier: [1, 1.5, 25] }, pin: [-2, -4],
+    bunkers: [[158,-13,4,4,0,1],[160,14,4,4,0,1],[178,4,4,3,0,1]], waste: [], water: [], elev: [[0,60],[165,48]] },
+  // the gap: a 3 wood through the cut on the inside of the corner finds a landing pad, leaving about 200 to the green
+  { par: 5, yds: 545, path: [[0,0],[0,240],[30,268],[285,295]], fw: [180,530,24], cor: 24, green: { rx: 13, ry: 11, rot: 5 }, pin: [2, -3],
+    alt: [[40,15,340,38,0,16],[340,38,340,38,28,36]],
+    bunkers: [[263,-18,10,6,0],[435,-12,9,5,0],[538,14,5,4,0,1],[550,-14,5,4,0,1]], waste: [], water: [], side: 25, elev: [[0,52],[240,46],[545,36]] },
+  { par: 4, yds: 465, path: [[0,0],[0,225],[127,429]], fw: [180,450,24], cor: 25, oaks: [[111,11],[158,18]], green: { rx: 13, ry: 12, rot: 6 }, pin: [2, -2],
+    bunkers: [[255,-16,10,5,0],[458,-13,5,4,0],[472,12,4,4,0,1]], waste: [], water: [], side: 30, elev: [[0,40],[225,36],[465,48]] },
+  { par: 4, yds: 375, path: [[0,0],[3,200],[-3,375]], fw: [165,360,19], cor: 21, green: { rx: 12, ry: 11, rot: 0, ff: [3.5, 1.4] }, pin: [1, 3],
+    bunkers: [[230,8,3.5,3.5,0,1],[252,-8,3.5,3.5,0,1],[272,6,3.5,3.5,0,1],[368,-12,4,4,0,1],[370,12,4,4,0,1]], waste: [], water: [], side: 20, elev: [[0,48],[375,40]] },
+  { par: 3, yds: 200, path: [[0,0],[-4,200]], fw: null, cor: 28, green: { rx: 12, ry: 12, rot: -4 }, pin: [-2, 2],
+    bunkers: [[194,15,5,4,0],[190,-15,4,4,0,1]], waste: [], water: [{ t: 'lake', s0: 100, s1: 130, d0: -80, d1: 80 }], wl: 25, elev: [[0,62],[60,60],[92,22],[140,22],[170,58],[200,58]] },
+  // a fade round the first corner, then a draw round the second
+  { par: 5, yds: 590, path: [[0,0],[0,225],[92,356],[56,558]], fw: [180,575,24], cor: 24, oaks: [[123,13],[169,18]], green: { rx: 12, ry: 11, rot: -10, ff: [4, 1.5] }, pin: [-2, 3],
+    bunkers: [[255,-15,10,5,0],[475,16,10,5,0],[583,13,5,4,0,1],[596,-12,4,4,0,1]], waste: [], water: [], side: 20, elev: [[0,38],[225,32],[450,48],[590,56]] },
+  { par: 4, yds: 450, path: [[0,0],[0,220],[-132,408]], fw: [180,435,23], cor: 24, oaks: [[111,-14],[158,-20]], green: { rx: 13, ry: 11, rot: -8, ff: [4, 1.6] }, pin: [-2, 3],
+    bunkers: [[250,16,10,5,0],[443,14,5,4,0],[457,-12,4,4,0,1]], waste: [], water: [], side: -25, elev: [[0,36],[220,40],[450,72]] },
+] },
+{ id: 'kiji-valley', name: 'Kiji Valley', place: 'Nagano, Japan', sub: 'Cedar Course', seed: 23, mix: [0, 0], sig: 2,
+  mtn: true, flora: { cedar: 0.8, hardwood: 0.2 }, treeK: 0.85, treeTop: 64, corner: 'bigSpruce', wind: [6, 22], fog: 0.0004, fogC: 0xc6cdd2,
+  range: { h: 1400, d: 3200, near: 450, hills: 110, az: 0.8, tree: 1500, snow: 2300 }, farPal: { forest: [30, 46, 30], forest2: [44, 56, 32], rock: [118, 112, 104] },
+  leaf: { hardwood: [[0.78, 0.16, 0.07, 2], [0.86, 0.42, 0.1, 1], [0.3, 0.42, 0.14, 2]], shrub: [[0.24, 0.36, 0.13, 2], [0.7, 0.2, 0.1, 1]] },
+  pal: { rough: [64, 94, 44], floor: 'leaf', straw: 'Cedar litter' }, palmetto: 0, edgeMix: { shrub: 1 }, holes: [
+  { par: 4, yds: 400, path: [[0,0],[0,215],[-98,372]], fw: [175,385,23], cor: 24, oaks: [[111,-13],[140,-18],[169,-21]], green: { rx: 12, ry: 11, rot: -6 }, pin: [-2, 2],
+    bunkers: [[245,15,10,5,0],[393,14,5,4,0],[406,-12,4,4,0,1]], waste: [], water: [], side: 25, elev: [[0,50],[215,44],[400,48]] },
+  { par: 3, yds: 170, path: [[0,0],[4,170]], fw: null, cor: 26, green: { rx: 11, ry: 13, rot: 6, tier: [0, 1.5] }, pin: [2, 5],
+    bunkers: [[166,-13,4,4,0,1],[168,14,4,4,0,1]], waste: [], water: [{ t: 'lake', s0: 85, s1: 112, d0: -80, d1: 80 }], wl: 25, elev: [[0,60],[55,58],[80,22],[118,22],[140,56],[170,56]] },
+  // draw off the tee round the first corner, then a fade round the second
+  { par: 5, yds: 580, path: [[0,0],[0,225],[-86,348],[-50,550]], fw: [180,565,24], cor: 24, oaks: [[112,-11],[158,-18]], green: { rx: 12, ry: 11, rot: 10, ff: [4, 1.5] }, pin: [2, 3],
+    bunkers: [[250,15,10,5,0],[470,-16,10,5,0],[573,-13,5,4,0,1],[586,12,4,4,0,1]], waste: [], water: [], side: -20, elev: [[0,40],[225,34],[450,52],[580,60]] },
+  { par: 4, yds: 425, path: [[0,0],[0,220],[118,388]], fw: [175,410,23], cor: 24, oaks: [[111,14],[140,19],[169,22]], green: { rx: 13, ry: 11, rot: 8, tier: [1, 1.5] }, pin: [2, -4],
+    bunkers: [[250,-15,10,5,0],[418,-13,5,4,0],[430,12,4,4,0,1]], waste: [], water: [], side: 30, elev: [[0,56],[220,50],[425,46]] },
+  { par: 4, yds: 360, path: [[0,0],[0,220],[-10,360]], fw: [170,345,38], cor: 30, stand: [[240,0,8]], green: { rx: 11, ry: 11, rot: 12 }, pin: [2, 2],
+    bunkers: [[353,-13,5,4,0,1],[343,-16,4,4,0,1]], waste: [], water: [], elev: [[0,46],[360,42]] },
+  { par: 3, yds: 205, path: [[0,0],[-6,205]], fw: null, cor: 26, green: { rx: 12, ry: 12, rot: -8, ff: [4, 1.5] }, pin: [-1, 3],
+    bunkers: [[196,-13,4,4,0,1],[198,14,4,4,0,1],[220,0,4,3,0,1]], waste: [], water: [], elev: [[0,110],[205,50]] },
+  // a creek crosses 60 yards short of the green
+  { par: 4, yds: 470, path: [[0,0],[0,230],[-120,438]], fw: [180,455,24], cor: 25, oaks: [[112,-12],[146,-17],[181,-19]], green: { rx: 12, ry: 12, rot: -6 }, pin: [-2, 2],
+    bunkers: [[260,16,10,5,0],[478,-12,4,4,0,1]], waste: [], water: [{ t: 'lake', s0: 402, s1: 420, d0: -60, d1: 60 }], wl: 17,
+    side: -20, elev: [[0,44],[230,40],[385,40],[402,14],[420,14],[440,42],[470,42]] },
+  // the gap in the cedars to a landing pad on the inside of the corner
+  { par: 5, yds: 540, path: [[0,0],[0,240],[-30,268],[-275,295]], fw: [180,525,24], cor: 24, green: { rx: 13, ry: 11, rot: -5, tier: [2, 1.5] }, pin: [-2, -4],
+    alt: [[40,-15,340,-38,0,16],[340,-38,340,-38,28,36]],
+    bunkers: [[263,18,10,6,0],[430,12,9,5,0],[533,-14,5,4,0,1],[545,14,5,4,0,1]], waste: [], water: [], side: -25, elev: [[0,50],[240,44],[540,30]] },
+  { par: 4, yds: 440, path: [[0,0],[0,215],[129,399]], fw: [175,425,23], cor: 24, oaks: [[124,18],[159,22],[194,22]], green: { rx: 12, ry: 11, rot: 8 }, pin: [2, 2],
+    bunkers: [[240,-9,3.5,3.5,0,1],[262,-16,3.5,3.5,0,1],[432,-12,4,4,0,1],[446,12,4,4,0,1]], waste: [], water: [], side: 25, elev: [[0,40],[215,36],[440,44]] },
+  // blind over a crest at 185, then left
+  { par: 4, yds: 415, path: [[0,0],[0,225],[-109,381]], fw: [180,400,23], cor: 24, oaks: [[112,-13],[140,-18],[169,-21]], green: { rx: 12, ry: 11, rot: -8 }, pin: [-2, 2],
+    bunkers: [[252,16,10,5,0],[408,14,5,4,0],[420,-12,4,4,0,1]], waste: [], water: [], side: -20, elev: [[0,36],[185,58],[255,44],[415,40]] },
+  { par: 3, yds: 190, path: [[0,0],[3,190]], fw: null, cor: 26, green: { rx: 12, ry: 13, rot: -8, tier: [1, 1.5, 30] }, pin: [-3, -4],
+    bunkers: [[183,15,4,4,0,1],[185,-14,4,4,0,1],[203,-4,4,3,0,1]], waste: [], water: [], elev: [[0,58],[190,50]] },
+  { par: 5, yds: 565, path: [[0,0],[0,235],[165,521]], fw: [180,550,24], cor: 24, oaks: [[135,15],[176,17]], green: { rx: 12, ry: 11, rot: 6 }, pin: [2, 2],
+    bunkers: [[265,-16,10,5,0],[558,-13,5,4,0,1],[572,12,5,4,0]], waste: [], water: [{ t: 'lake', s0: 345, s1: 375, d0: -80, d1: 80 }], wl: 13,
+    side: 25, elev: [[0,46],[310,40],[340,10],[380,10],[410,40],[565,48]] },
+  { par: 4, yds: 335, path: [[0,0],[0,195],[30,225],[150,245]], fw: [140,325,24], cor: 24, green: { rx: 11, ry: 12, rot: 15 }, pin: [1, 2],
+    alt: [[16,10,46,28,10,16],[46,28,326,10,10,16]], bunkers: [[210,-15,9,5,0],[330,-12,4,4,0,1],[340,13,4,4,0,1]], waste: [], water: [], elev: [[0,42],[335,38]] },
+  { par: 4, yds: 455, path: [[0,0],[0,220],[-135,413]], fw: [180,440,24], cor: 25, oaks: [[111,-14],[146,-19],[183,-21]], green: { rx: 13, ry: 12, rot: -6 }, pin: [-2, -2],
+    bunkers: [[255,16,10,5,0],[448,13,5,4,0],[462,-11,4,4,0,1]], waste: [], water: [], side: 30, elev: [[0,52],[220,44],[455,40]] },
+  { par: 3, yds: 155, path: [[0,0],[5,155]], fw: null, cor: 26, green: { rx: 11, ry: 11, rot: 8, ff: [3.5, 1.4] }, pin: [1, 3],
+    bunkers: [[148,-12,4,4,0,1],[170,4,4,3,0,1]], waste: [], water: [{ t: 'lake', s0: 92, s1: 128, d0: -35, d1: 35 }], wl: 49, elev: [[0,48],[155,46]] },
+  { par: 5, yds: 590, path: [[0,0],[0,225],[92,356],[56,558]], fw: [180,575,24], cor: 24, oaks: [[112,13],[146,18],[180,21]], green: { rx: 12, ry: 11, rot: -10 }, pin: [-2, 3],
+    bunkers: [[255,-15,10,5,0],[475,16,10,5,0],[583,13,5,4,0,1],[596,-12,4,4,0,1]], waste: [], water: [], side: 20, elev: [[0,38],[225,34],[450,50],[590,58]] },
+  { par: 4, yds: 420, path: [[0,0],[-3,210],[3,420]], fw: [170,405,19], cor: 21, green: { rx: 13, ry: 11, rot: 0, tier: [-1, -1.6] }, pin: [1, 5],
+    bunkers: [[245,-9,3.5,3.5,0,1],[268,8,3.5,3.5,0,1],[290,-6,3.5,3.5,0,1],[413,-12,4,4,0,1],[415,12,4,4,0,1]], waste: [], water: [], side: 20, elev: [[0,50],[420,42]] },
+  { par: 4, yds: 460, path: [[0,0],[0,225],[125,424]], fw: [180,445,23], cor: 24, oaks: [[111,12],[140,17],[169,20]], green: { rx: 13, ry: 11, rot: 18 }, pin: [2, 2],
+    bunkers: [[250,-15,10,5,0],[466,12,4,4,0,1]], waste: [], water: [{ t: 'lake', s0: 400, s1: 418, d0: -60, d1: 60 }], wl: 16,
+    side: -20, elev: [[0,36],[225,32],[385,36],[400,13],[418,13],[440,44],[460,46]] },
+] },
+{ id: 'ptarmigan-pass', name: 'Ptarmigan Pass', place: 'Bernese Oberland, Switzerland', sub: 'Alpine Course', seed: 24, mix: [0, 0], sig: 2,
+  mtn: true, flora: { spruce: 0.7, dfir: 0.3 }, treeK: 0.8, treeTop: 62, corner: 'bigSpruce', wind: [6, 22], fog: 0.00012, fogC: 0xc4d4e4,
+  range: { h: 2600, d: 3000, near: 380, hills: 120, az: 0.3, tree: 500, snow: 850 }, farPal: { forest: [26, 44, 30], forest2: [40, 58, 34], rock: [128, 124, 118] },
+  leaf: { shrub: [[0.24, 0.38, 0.14, 2], [0.5, 0.42, 0.2, 1]] }, pal: { rough: [70, 100, 46], floor: 'conifer', straw: 'Spruce needles' }, palmetto: 0, edgeMix: { shrub: 1 }, boulders: 1.4, lakeC: 0x3a8a9a, holes: [
+  { par: 4, yds: 420, path: [[0,0],[0,215],[-109,389]], fw: [175,405,23], cor: 24, oaks: [[135,-17],[176,-20]], green: { rx: 12, ry: 11, rot: -6 }, pin: [-2, 2],
+    bunkers: [[245,15,10,5,0],[413,14,5,4,0],[426,-12,4,4,0,1]], waste: [], water: [], side: 60, elev: [[0,300],[215,250],[420,210]] },
+  { par: 5, yds: 560, path: [[0,0],[0,230],[165,516]], fw: [180,545,24], cor: 24, oaks: [[135,15],[176,18]], green: { rx: 12, ry: 11, rot: 6, ff: [4, 1.5] }, pin: [2, 3],
+    bunkers: [[260,-16,10,5,0],[553,-13,5,4,0,1],[566,12,4,4,0,1]], waste: [], water: [], side: -50, elev: [[0,210],[230,222],[560,280]] },
+  // drops 130 feet to a perched green with shaved banks
+  { par: 3, yds: 195, path: [[0,0],[5,195]], fw: null, cor: 28, green: { rx: 12, ry: 12, rot: 6 }, raise: 2.5, runoff: 10, pin: [2, 2],
+    bunkers: [[168,-11,4,4,0,1],[166,12,4,4,0,1],[221,-3,4,3,0,1]], waste: [], water: [], side: 40, elev: [[0,330],[195,200]] },
+  // along the cliff: the lake is a hundred feet down on the left
+  { par: 4, yds: 445, path: [[0,0],[0,220],[119,411]], fw: [175,430,23], cor: 24, oaks: [[123,16],[159,20],[194,19]], green: { rx: 12, ry: 11, rot: 8 }, pin: [2, 2],
+    bunkers: [[250,-14,10,5,0],[438,-13,5,4,0],[450,12,4,4,0,1]], waste: [], water: [{ t: 'strip', side: -1, s0: 40, s1: 470, d0: 30, d1: 200 }], wl: 90,
+    side: 80, elev: [[0,200],[220,184],[445,160]] },
+  // uphill and blind over a crest, split by a stand of spruces
+  { par: 4, yds: 380, path: [[0,0],[0,220],[10,380]], fw: [170,365,36], cor: 30, stand: [[245,0,8]], green: { rx: 11, ry: 11, rot: -12 }, pin: [-2, 2],
+    bunkers: [[373,13,5,4,0,1],[363,16,4,4,0,1]], waste: [], water: [], side: -40, elev: [[0,160],[200,205],[260,212],[380,220]] },
+  { par: 5, yds: 590, path: [[0,0],[0,235],[-177,542]], fw: [185,575,24], cor: 25, oaks: [[123,-14],[158,-18],[193,-18]], green: { rx: 12, ry: 12, rot: -4 }, raise: 2.5, runoff: 9, pin: [-2, 2],
+    bunkers: [[265,16,10,5,0],[430,-14,9,5,0],[564,-11,4,4,0,1],[563,12,4,4,0,1]], waste: [], water: [], side: 70, elev: [[0,330],[235,290],[590,180]] },
+  { par: 4, yds: 350, path: [[0,0],[0,205],[30,235],[150,255]], fw: [145,340,24], cor: 24, green: { rx: 11, ry: 12, rot: 15 }, pin: [1, 2],
+    alt: [[17,10,49,29,10,16],[49,29,341,11,10,16]], bunkers: [[220,-15,9,5,0],[345,-12,4,4,0,1],[355,13,4,4,0,1]], waste: [], water: [], side: 40, elev: [[0,230],[350,180]] },
+  { par: 3, yds: 215, path: [[0,0],[-5,215]], fw: null, cor: 28, green: { rx: 12, ry: 12, rot: -6 }, raise: 3.0, runoff: 10, pin: [-2, 2],
+    bunkers: [[190,-12,4,4,0,1],[188,12,4,4,0,1],[240,3,4,3,0,1]], waste: [], water: [], side: -40, elev: [[0,180],[215,220]] },
+  { par: 4, yds: 460, path: [[0,0],[0,220],[-138,417]], fw: [180,445,23], cor: 24, oaks: [[111,-14],[159,-21]], green: { rx: 13, ry: 11, rot: -8, tier: [-2, 1.4] }, pin: [-2, 4],
+    bunkers: [[250,16,10,5,0],[453,14,5,4,0],[466,-12,4,4,0,1]], waste: [], water: [], side: 50, elev: [[0,200],[220,214],[460,250]] },
+  { par: 4, yds: 430, path: [[0,0],[0,215],[123,391]], fw: [175,415,23], cor: 24, oaks: [[135,19],[177,22]], green: { rx: 12, ry: 11, rot: 8, ff: [4, 1.5] }, pin: [2, 3],
+    bunkers: [[245,-15,10,5,0],[423,-13,5,4,0],[436,12,4,4,0,1]], waste: [], water: [], side: -60, elev: [[0,360],[215,300],[430,240]] },
+  { par: 5, yds: 575, path: [[0,0],[0,245],[30,272],[290,300]], fw: [180,560,24], cor: 24, green: { rx: 13, ry: 11, rot: 5 }, pin: [2, -3],
+    alt: [[40,15,345,38,0,16],[345,38,345,38,28,36]],
+    bunkers: [[268,-18,10,6,0],[440,-12,9,5,0],[568,14,5,4,0,1],[580,-14,5,4,0,1]], waste: [], water: [], side: 40, elev: [[0,240],[245,226],[575,200]] },
+  // drops 100 feet over the tarn to a green with a false front
+  { par: 3, yds: 165, path: [[0,0],[4,165]], fw: null, cor: 28, green: { rx: 11, ry: 11, rot: 6, ff: [3.5, 1.4] }, pin: [1, 3],
+    bunkers: [[158,-12,4,4,0,1],[178,4,4,3,0,1]], waste: [], water: [{ t: 'lake', s0: 75, s1: 130, d0: -45, d1: 45 }], wl: 198,
+    elev: [[0,300],[45,285],[75,196],[130,196],[150,205],[165,205]] },
+  // the cliff on the right, the lake a hundred feet below the outside of the corner
+  { par: 4, yds: 470, path: [[0,0],[0,225],[-130,433]], fw: [180,455,24], cor: 25, oaks: [[111,-13],[146,-19],[181,-21]], green: { rx: 13, ry: 12, rot: -6 }, pin: [-2, -2],
+    bunkers: [[255,16,10,5,0],[448,13,5,4,0],[478,-11,4,4,0,1]], waste: [], water: [{ t: 'strip', side: 1, s0: 40, s1: 500, d0: 31, d1: 200 }], wl: 70,
+    side: -80, elev: [[0,205],[225,190],[470,170]] },
+  { par: 4, yds: 400, path: [[0,0],[0,215],[98,372]], fw: [175,385,23], cor: 24, oaks: [[101,10],[135,16],[169,19],[206,19]], green: { rx: 12, ry: 11, rot: 8 }, pin: [2, 2],
+    bunkers: [[245,-15,10,5,0],[393,-13,5,4,0],[406,12,4,4,0,1]], waste: [], water: [], side: 40, elev: [[0,170],[195,232],[250,236],[400,260]] },
+  // falls 140 feet: a fade round the first corner, then a draw round the second
+  { par: 5, yds: 600, path: [[0,0],[0,225],[95,360],[58,567]], fw: [185,585,24], cor: 24, oaks: [[123,14],[169,18]], green: { rx: 12, ry: 11, rot: -10, tier: [2, 1.5] }, pin: [-2, -4],
+    bunkers: [[255,-15,10,5,0],[480,16,10,5,0],[593,13,5,4,0,1],[606,-12,4,4,0,1]], waste: [], water: [], side: 60, elev: [[0,330],[225,290],[450,230],[600,190]] },
+  { par: 3, yds: 185, path: [[0,0],[-3,185]], fw: null, cor: 26, green: { rx: 11, ry: 12, rot: -6 }, raise: 3.0, runoff: 9, pin: [-2, 2],
+    bunkers: [[161,-11,4,4,0,1],[160,12,4,4,0,1],[208,3,4,3,0,1]], waste: [], water: [], side: -30, elev: [[0,190],[185,220]] },
+  { par: 4, yds: 420, path: [[0,0],[0,220],[-115,384]], fw: [175,405,23], cor: 24, oaks: [[134,-18],[175,-21]], green: { rx: 12, ry: 11, rot: -6, ff: [4, 1.5] }, pin: [-1, 3],
+    bunkers: [[245,15,10,5,0],[413,14,5,4,0],[426,-12,4,4,0,1]], waste: [], water: [], side: 50, elev: [[0,260],[220,230],[420,200]] },
+  // climbs 80 feet to a perched home green
+  { par: 4, yds: 455, path: [[0,0],[0,225],[115,424]], fw: [180,435,23], cor: 24, oaks: [[123,13],[169,17]], green: { rx: 13, ry: 12, rot: 6 }, raise: 2.5, runoff: 9, pin: [2, -2],
+    bunkers: [[250,-15,10,5,0],[428,-11,4,4,0,1],[427,12,4,4,0,1]], waste: [], water: [], side: -50, elev: [[0,200],[225,220],[455,280]] },
+] },
 ];
 let CI = 0, COURSE = COURSES[0], HOLES = COURSE.holes, PAR_TOTAL = 0, YDS_TOTAL = 0;
 function useCourse(i) {
@@ -4012,7 +4165,7 @@ const aimLine = new THREE.Line(aimGeo, new THREE.LineDashedMaterial({ color: 0xf
 const TV = {
   on: !/[?&]classic\b/.test(location.search),
   // address camera: metres behind the ball, height above it, height of the aim point 45 m out
-  back: 5.4, up: 1.9, lookY: -1.0,
+  back: 5.4, up: 1.9, lookY: -1.0, dropTilt: 0.25, liftBack: 2,
   // tracer width in pixels: wNear within nearD metres of the camera, thinning toward wFar with distance
   wNear: 8, wFar: 1.6, nearD: 5, fall: 0.65,
   // the camera stays at the tee until the ball has climbed chaseAt of the way to its apex, then blends to the follow
@@ -4025,7 +4178,7 @@ const TV = {
   // under the follow camera, and shrinks past that (power ballFall), never under ballMin pixels. The old ball stayed
   // about 10 px however far away it was.
   ballD: 20, ballFall: 0.65, ballMin: 2.5,
-  old: { back: 3.7, up: 1.55, lookY: 1.2, width: 5, holdT: 0.9 },
+  old: { back: 3.7, up: 1.55, lookY: 1.2, dropTilt: 0.6, liftBack: 0, width: 5, holdT: 0.9 },
 };
 // Shot tracer: a screen-width line (pixels, not meters) so it stays readable far down the fairway. Each segment end
 // carries its own width (instanceWidth), so the line can be thick near the camera and thin far away.
@@ -4673,7 +4826,7 @@ const TERRAINS = [
   { name: 'Mountain', blurb: 'Big drops from high tees, forested hillsides, creeks and lakes', ids: ['talus-ridge', 'osprey-creek', 'kettle-lake', 'sourwood-gap'] },
   { name: 'Island', blurb: 'Hawaii and the Caribbean: lava and coral shores, palms and bays to carry', ids: ['frigate-point', 'tern-reef', 'petrel-cliffs', 'tropicbird-bay'] },
   { name: 'Desert', blurb: 'Target golf over the desert, dry washes, red rock canyons and an oasis', ids: ['roadrunner-wash', 'condor-canyon', 'pinon-mesa', 'verdin-springs'] },
-  { name: 'Old Growth', blurb: 'The hardest set: giant trees, tight doglegs that need a draw or a fade, pot bunkers and false fronts', ids: ['murrelet-grove'], hard: true },
+  { name: 'Old Growth', blurb: 'The hardest set: giant trees, tight doglegs that need a draw or a fade, pot bunkers and false fronts', ids: ['murrelet-grove', 'capercaillie-wood', 'kiji-valley', 'ptarmigan-pass'], hard: true },
   { name: 'Range', blurb: 'A floodlit driving range with seven target greens, open to everyone', ids: [], isRange: true },
 ];
 const RANGE_TI = TERRAINS.findIndex(t => t.isRange);
@@ -6235,8 +6388,9 @@ function addressCam(outPos, outLook, bp = G.ball.p) {
     outPos.copy(bp).addScaledVector(a, -A.back).addScaledVector(r, 0.3); outPos.y = bp.y + A.up; outLook.copy(bp).addScaledVector(a, 45); outLook.y = bp.y + A.lookY;
     // when the landing area sits well below the ball (a downhill tee shot in the mountains), rise and tilt down so the
     // edge of the tee does not hide it
+    // (TV framing already looks down a little, so it tilts less and backs off as it rises, keeping the golfer's feet in view)
     const cr = Math.max(45, expectedCarry(G.club)), lx = bp.x + a.x * cr, lz = bp.z + a.z * cr, drop = Math.min(0, hW(lx, lz) - bp.y + 4), lift = Math.min(2.4, -drop * 0.08);
-    outPos.y += lift; outLook.y += drop * 45 / cr * 0.6 + lift * 0.5;
+    outPos.y += lift; outLook.y += drop * 45 / cr * A.dropTilt + lift * 0.5; outPos.addScaledVector(a, -lift * A.liftBack);
   }
   outPos.y = Math.max(outPos.y, hW(outPos.x, outPos.z) + 0.9);
 }
