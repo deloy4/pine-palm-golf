@@ -205,6 +205,19 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 /* coins, shop, challenges, hot streak */
 .coin { width: 1em; height: 1em; vertical-align: -.14em; margin-right: .3em; }
 #who .coins b { color: var(--gold); }
+#who { align-items: center; }
+/* the golfer they will play as: a big card on the right of the main screen, in the column under the title on a phone */
+#gCard { position: fixed; right: max(16px, 5vw); bottom: max(16px, 6vh); display: grid; justify-items: center; gap: 6px; width: min(300px, 26vw); padding: 14px 14px 16px; border: 1px solid var(--line); border-radius: 14px; background: rgba(4,12,8,.82); color: var(--ink); font: inherit; text-align: center; cursor: pointer; }
+#gCard:hover { border-color: rgba(232,195,90,.7); }
+#gCard img { width: 100%; height: min(320px, 46vh); object-fit: contain; border-radius: 10px; background: radial-gradient(ellipse at 50% 85%, rgba(232,195,90,.2), rgba(255,255,255,.04) 70%); }
+#gCard small { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); font-weight: 600; }
+#gCard b { font-family: var(--display); font-size: 34px; font-weight: 800; line-height: .95; text-transform: uppercase; letter-spacing: .01em; }
+#gCard i { font-style: normal; color: var(--gold); font-weight: 600; font-size: 14px; }
+@media (max-width: 760px) {
+  #gCard { position: static; width: auto; grid-template-columns: 96px 1fr; grid-template-rows: auto auto auto; justify-items: start; align-content: center; column-gap: 14px; row-gap: 2px; padding: 8px 14px 8px 8px; text-align: left; }
+  #gCard img { grid-row: 1 / 4; width: 96px; height: 120px; }
+  #gCard b { font-size: 30px; }
+}
 .tag.wk { color: #f0a35a; }
 #streak { display: grid; align-content: center; gap: 1px; padding: 6px 14px 6px 12px; border-left: 1px solid var(--line); }
 #streak[hidden] { display: none; }
@@ -487,6 +500,7 @@ html.touch #help { display: none; }
     <section id="home" class="step">
       <h1 class="mid">Pine &amp; Palm Golf</h1>
       <div id="who"></div>
+      <button id="gCard" title="Change golfer"></button>
       <div id="tabs" role="tablist" aria-label="Terrain"></div>
       <div class="tblurb" id="tBlurb"></div>
       <div id="courseList" class="pickList"></div>
@@ -5298,7 +5312,7 @@ function renderShop() {
     $('shMsg').textContent = `Bought ${it.slot === 'golfer' ? it.name : it.name.toLowerCase()} for ${it.price.toLocaleString()} coins.`;
   }; });
 }
-$('shClose').onclick = () => { $('shop').hidden = true; };
+$('shClose').onclick = () => { $('shop').hidden = true; if (!$('title').hidden) showWho(); };
 Player.on(() => { applyLooks(); if (!$('shop').hidden) renderShop(); if (!$('chal').hidden) renderChal(); });
 applyLooks();
 
@@ -5530,8 +5544,12 @@ function showWho() {
   w.innerHTML = Player.signedIn() && me ? `<span>Playing as <b>${esc(me.player.name)}</b></span>${extra}<button id="whoP">Profile and stats ›</button>`
     : `<span>Playing as a guest</span>${extra}<button id="whoS">Sign in</button><button id="whoP">Stats ›</button>`;
   w.insertAdjacentHTML('beforeend', '<button id="whoC">Challenges ›</button><button id="whoShop">Shop ›</button>');
+  // the golfer they will play as; clicking the card opens the shop on the Golfers tab
+  const g = SHOP_ITEM[worn().golfer];
+  $('gCard').innerHTML = `<img src="characters/${g.file || 'classic'}.png" alt=""><small>Your golfer</small><b>${esc(g.name)}</b><i>Change golfer ›</i>`;
   $('whoP').onclick = openProfile; if ($('whoS')) $('whoS').onclick = () => openSignIn();
   $('whoC').onclick = openChal; $('whoShop').onclick = openShop;
+  $('gCard').onclick = () => { shopTab = 'golfer'; openShop(); };
 }
 Player.on(() => { if (!$('title').hidden) showHome(); });
 
