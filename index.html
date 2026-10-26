@@ -4202,8 +4202,11 @@ const TV = {
 // turns to keep the ball in view; a tap (click or Space, shorter than holdT seconds) flies the camera up behind the ball over
 // zoom seconds, back metres behind it, up metres above and side metres off to one side (so the flight is seen as an arc,
 // not end-on), then it stops there and the ball flies away from it. Holding the button or Space fast-forwards.
+// 2026-10-26: Chris wanted the TV follow camera back (holds at the tee, then moves up to the ball as it nears the apex),
+// so the jump camera is off unless ?jumpcam is in the address; the smoke trail stays. A tap now hurries the ball again.
 const FLY = {
   on: () => !!HOLE && !/[?&]nofly\b/.test(location.search),
+  jump: () => FLY.on() && /[?&]jumpcam\b/.test(location.search),
   trail: 40 * YD, trailPutt: 3 * YD, life: 2.5, lifePutt: 1.6, gap: 0.3, holdT: 0.22, back: 5, up: 2, side: 9, zoom: 0.9,
 };
 // Shot tracer: a screen-width line (pixels, not meters) so it stays readable far down the fairway. Each segment end
@@ -6458,7 +6461,7 @@ function teeCam(b, outPos, outLook) {
 // Jump camera (FLY): a quick press during the flight moves the camera to the ball, just behind and above it, and it stays
 // there watching the ball fly away; a press held past FLY.holdT fast-forwards until it is let go.
 function flyPress() { if (!G.press) G.press = { t: 0, held: false }; }
-function flyRelease(quiet) { const P = G.press; G.press = null; if (!P) return; if (P.held) G.ff = false; else if (!quiet && G.mode === 'flight') jumpCam(); }
+function flyRelease(quiet) { const P = G.press; G.press = null; if (!P) return; if (P.held) G.ff = false; else if (!quiet && G.mode === 'flight') { if (FLY.jump()) jumpCam(); else G.ff = true; } }
 function jumpCam() {
   const S = G.shot; if (!S || S.club.putter || G.ball.mode === 'rest') return;
   S.zoom = { t: 0, from: camPos.clone() };
@@ -6528,7 +6531,7 @@ function updateCamera(dt) {
     G.flightT = (G.flightT || 0) + dt;
     const hv = new V3(b.v.x, 0, b.v.z), sp = hv.length(); if (sp > 0.5) hv.divideScalar(sp); else hv.copy(aimVec());
     if (G.lastPutt) { const sp0 = G.shot.camPos, a = aimVec(), along = (b.p.x - G.shot.start.x) * a.x + (b.p.z - G.shot.start.z) * a.z; wantPos.copy(sp0).addScaledVector(a, Math.max(0, along - 5)); wantLook.copy(b.p); k = 3; }
-    else if (FLY.on()) {
+    else if (FLY.jump()) {
       // stay at the tee (or where the last jump left the camera) and turn to watch the ball; after a jump the camera looks
       // straight at the ball with no smoothing, or it would lag behind a ball moving this fast
       // (during a zoom the camera eases from where it was toward the moving ball, then stops where the zoom ended)
