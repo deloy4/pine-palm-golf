@@ -60,8 +60,10 @@ obstacle (trees, a mound, a stand) that makes the second shot very hard, or is i
 
 ## Checking a hole
 
-Before a risk/reward hole is done, run shot sweeps through the real hole (the page test hooks and the fly/guard search
-used for Old Growth) and confirm three things. A straight 100% shot does not reach the reward. The risky shot (112%, the
+Before a risk/reward hole is done, run shot sweeps through the real hole and confirm three things. The local helpers
+`_golftest.js` and `_golfsweep.js` (kept out of git) do this in a `#test` page: `fly()` sends one exact shot (100% or 112%,
+a draw or fade as face against path, any aim and wind) through the hole and reports where it stops, and `swXY()` sweeps a
+row of aims round a point on the map. A straight 100% shot does not reach the reward. The risky shot (112%, the
 draw or fade, the wind it needs) does reach it inside a small aim window, a few degrees, not a wide one. And the misses on
 either side of that window land in the penalty the hole promises: water, a drop or a pitch-out. Write the
 measured windows into the hole's notes in the README.

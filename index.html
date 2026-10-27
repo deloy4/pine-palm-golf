@@ -1857,6 +1857,688 @@ const COURSES = [
   { par: 4, yds: 455, path: [[0,0],[0,225],[115,424]], fw: [180,435,23], cor: 24, oaks: [[123,13],[169,17]], green: { rx: 13, ry: 12, rot: 6 }, raise: 2.5, runoff: 9, pin: [2, -2],
     bunkers: [[250,-15,10,5,0],[428,-11,4,4,0,1],[427,12,4,4,0,1]], waste: [], water: [], side: -50, elev: [[0,200],[225,220],[455,280]] },
 ] },
+// ---- Links ----
+// Links: no trees, firm fairways that run out about 40 yards, humps and hollows all through the ground (rumple), pot
+// bunkers, burns across the holes and gorse past a thin band of fescue rough (gorse: a buried ball hacks out or drops).
+{ id: 'curlew-links', name: 'Curlew Links', place: 'East Lothian, Scotland', sub: 'Links Course', seed: 25, mix: [0, 0], sig: 8,
+  coast: true, gorse: true, rumple: 0.45, flora: { shrub: 1 }, treeK: 0.3, beach: 20, mounds: 4, wind: [10, 26], far: [132, 128, 84],
+  turf: { fair: { e: 0.38, mu: 0.28, plow: 0.04, drag: 0.1, roll: 0.45 }, cut: { e: 0.24, roll: 1.15 }, straw: { e: 0.03, mu: 0.95, tq: 0.2, plow: 0.6, bite: 0, drag: 4, roll: 9 } },
+  leaf: { shrub: [[0.17, 0.26, 0.09, 3], [0.7, 0.6, 0.08, 1]] }, edgeMix: { shrub: 1 }, palmetto: 0.55,
+  pal: { rough: [118, 122, 70], fair: [104, 136, 58], cut: [94, 120, 52], scrub: 'gorse', straw: 'Gorse' }, tuft: [1.45, 1.3, 0.8], tuftOut: 3, holes: [
+  // a burn crosses 15 yards short of the green
+  { par: 4, yds: 425, path: [[0,0],[6,250],[-4,425]], fw: [170,405,36], cor: 32, green: { rx: 14, ry: 14, rot: 0 }, pin: [2, 3],
+    bunkers: [[252,-17,3.5,3.5,0,1],[270,15,3.5,3.5,0,1],[414,-15,4,4,0,1],[420,15,4,4,0,1]], waste: [],
+    water: [{ t: 'lake', s0: 378, s1: 394, d0: -70, d1: 70 }], sea: [[0,-82,440,-76,18]], elev: [[0,14],[425,10]] },
+  // three-shotter for a 100% drive, which finishes in the wide part. A 112% draw runs on into the neck between the gorse
+  // and the pots, 270 out, and from there a 3 wood runs up onto the open-fronted green.
+  { par: 5, yds: 615, path: [[0,0],[0,300],[-15,470],[-10,615]], fw: [190,600,38], cor: 34, stand: [[352,-26,10],[356,27,10]], green: { rx: 15, ry: 13, rot: -4 }, pin: [-2, 3],
+    bunkers: [[334,-10,3.5,3.5,0,1],[364,9,3.5,3.5,0,1],[480,14,4,4,0,1],[606,-16,4,4,0,1],[612,15,4,4,0,1]], waste: [], water: [], elev: [[0,12],[300,18],[615,14]] },
+  { par: 3, yds: 180, path: [[0,0],[-4,180]], fw: null, cor: 30, green: { rx: 12, ry: 14, rot: -6 }, pin: [-2, 2],
+    bunkers: [[166,-14,4,4,0,1],[170,14,4,4,0,1],[194,2,4,3,0,1]], waste: [], water: [], sea: [[0,-62,200,-50,12]], elev: [[0,22],[180,12]] },
+  // drivable: a 100% drive stops about 50 short; a 112% draw can run on, but the landing area tilts left onto the beach
+  { par: 4, yds: 358, path: [[0,0],[-4,200],[-36,355]], fw: [150,345,32], cor: 30, green: { rx: 14, ry: 15, rot: -10 }, pin: [-2, 1],
+    bunkers: [[283,15,4,4,0,1],[300,17,4,4,0,1]], bunkersXY: [[-38,313,4,4,0,1],[-50,335,4,4,0,1],[-12,340,4,4,0,1],[-22,372,4,3,0,1]], waste: [], water: [], tilt: [[260,340,-4]],
+    sea: [[0,-72,240,-64,16],[240,-64,395,-36,8]], elev: [[0,16],[358,12]] },
+  { par: 4, yds: 450, path: [[0,0],[0,250],[30,290],[110,440]], fw: [180,435,34], cor: 30, green: { rx: 13, ry: 13, rot: 8 }, pin: [2, 2],
+    bunkers: [[268,-17,4,4,0,1],[284,-19,4,4,0,1],[440,-13,4,4,0,1],[446,14,4,4,0,1]], waste: [], water: [], elev: [[0,10],[450,18]] },
+  // a burn at 330 to 345 catches a 112% drive; a 100% drive stops short of it
+  { par: 4, yds: 470, path: [[0,0],[4,260],[-4,470]], fw: [180,455,36], cor: 32, green: { rx: 14, ry: 13, rot: -4 }, pin: [-2, -3],
+    bunkers: [[262,1,3.5,3.5,0,1],[300,-15,3.5,3.5,0,1],[458,-15,4,4,0,1],[466,15,4,4,0,1]], waste: [],
+    water: [{ t: 'lake', s0: 330, s1: 345, d0: -70, d1: 70 }], elev: [[0,18],[470,14]] },
+  { par: 3, yds: 215, path: [[0,0],[3,215]], fw: [170,205,26], cor: 30, green: { rx: 13, ry: 14, rot: 4 }, pin: [2, -2],
+    bunkers: [[190,-12,4,4,0,1],[198,13,4,4,0,1],[226,-6,4,3,0,1]], waste: [], water: [], elev: [[0,20],[215,16]] },
+  { par: 4, yds: 400, path: [[0,0],[0,230],[-30,400]], fw: [170,385,34], cor: 30, green: { rx: 13, ry: 12, rot: -6 }, pin: [-2, 2],
+    bunkers: [[245,16,3.5,3.5,0,1],[262,-16,3.5,3.5,0,1],[392,-14,4,4,0,1],[396,14,4,4,0,1]], waste: [], water: [], sea: [[0,-95,420,-72,18]], elev: [[0,12],[400,16]] },
+  // over the burn's mouth: the safe line lays up to the corner and plays it as a three-shotter; the brave line carries the
+  // water to a strip of fairway running at the green, which takes a draw or a 112% drive (a straight 100% drive comes up in it)
+  { par: 5, yds: 575, path: [[0,0],[0,250],[-40,285],[-280,320]], fw: [180,560,32], cor: 30, green: { rx: 13, ry: 13, rot: -10 }, pin: [-3, 2],
+    altXY: [[-172,196,-232,265,22,30]],
+    bunkers: [[244,16,4,4,0,1],[470,12,4,4,0,1],[566,14,4,4,0,1],[570,-14,4,4,0,1]], waste: [],
+    water: [{ t: 'pond', x: -125, y: 143, rx: 72, ry: 70, rot: 131 }], elev: [[0,12],[575,10]] },
+  { par: 4, yds: 440, path: [[0,0],[-6,250],[4,440]], fw: [175,425,34], cor: 32, green: { rx: 14, ry: 13, rot: 4 }, pin: [2, 3],
+    bunkers: [[255,-17,3.5,3.5,0,1],[275,15,3.5,3.5,0,1],[430,-15,4,4,0,1],[438,15,4,4,0,1]], waste: [], water: [], sea: [[0,84,460,78,18]], elev: [[0,10],[440,14]] },
+  // the left side runs closest to the beach and tilts to it; a 112% draw that holds it reaches 345 and the green in two
+  { par: 5, yds: 600, path: [[0,0],[4,300],[14,460],[6,600]], fw: [190,585,40], cor: 34, green: { rx: 14, ry: 13, rot: 4 }, pin: [2, 2],
+    bunkers: [[300,12,4,4,0,1],[316,18,4,4,0,1],[470,-16,4,4,0,1],[590,-15,4,4,0,1],[596,15,4,4,0,1]], waste: [], water: [], tilt: [[300,380,-4]],
+    sea: [[0,-62,620,-60,16]], elev: [[0,14],[600,12]] },
+  { par: 3, yds: 160, path: [[0,0],[-9,160]], fw: null, cor: 30, green: { rx: 11, ry: 13, rot: -8 }, raise: 1.6, pin: [1, 2],
+    bunkers: [[148,-12,4,4,0,1],[150,13,4,4,0,1],[172,-8,4,3,0,1],[174,9,4,3,0,1]], waste: [], water: [], sea: [[0,70,190,62,14]], elev: [[0,18],[160,14]] },
+  // drivable over the burn: a 100% drive stops short; a 112% draw runs on, past a burn that bends along the left
+  { par: 4, yds: 355, path: [[0,0],[2,190],[-6,355]], fw: [140,340,30], cor: 30, green: { rx: 13, ry: 15, rot: -6 }, pin: [-2, 2],
+    bunkers: [[282,14,4,4,0,1],[340,16,4,4,0,1],[372,9,4,3,0,1],[318,-17,4,4,0,1],[348,-22,4,4,0,1]], waste: [], tilt: [[260,340,-3]],
+    water: [{ t: 'strip', side: -1, s0: 230, s1: 368, d0: 27, d1: 44 }], elev: [[0,12],[355,10]] },
+  // drivable across the corner: a 112% drive carries the gorse to a strip of fairway that runs onto the green; a 100% drive
+  // comes down in the gorse. The way round is an iron to the corner and a short iron in.
+  { par: 4, yds: 405, path: [[0,0],[0,230],[30,262],[150,272]], fw: [150,392,32], cor: 26, green: { rx: 13, ry: 14, rot: 30 }, pin: [1, 1],
+    altXY: [[129,234,146,264,24,32]],
+    bunkers: [[214,-15,4,4,0,1],[228,-17,4,4,0,1],[398,-14,4,4,0,1],[416,8,4,3,0,1]], waste: [], water: [], elev: [[0,14],[405,16]] },
+  // the hidden strip: a 112% drive (or 100% with a tailwind) carries the gorse inside the corner and finds a strip of
+  // fairway running at the green, in reach in two; short of it, or off either side, is gorse. The safe line lays up at the
+  // corner, about 300 from the green.
+  { par: 5, yds: 565, path: [[0,0],[0,250],[45,285],[270,340]], fw: [180,550,34], cor: 30, green: { rx: 14, ry: 13, rot: 20 }, pin: [2, 3],
+    altXY: [[169,213,215,270,22,30]],
+    bunkers: [[262,-14,4,4,0,1],[470,-12,4,4,0,1],[552,-14,4,4,0,1],[560,14,4,4,0,1]], waste: [], water: [], elev: [[0,16],[565,12]] },
+  { par: 3, yds: 230, path: [[0,0],[-3,230]], fw: [180,215,28], cor: 30, green: { rx: 15, ry: 14, rot: -4 }, pin: [-2, 3],
+    bunkers: [[205,-11,4,4,0,1],[208,12,4,4,0,1],[246,0,4,3,0,1]], waste: [], water: [], elev: [[0,14],[230,12]] },
+  { par: 4, yds: 465, path: [[0,0],[0,250],[24,300],[60,465]], fw: [180,450,34], cor: 32, green: { rx: 14, ry: 12, rot: 12 }, pin: [2, -3],
+    bunkers: [[270,-17,4,4,0,1],[450,-15,4,4,0,1],[466,12,4,4,0,1]], waste: [], water: [], tilt: [[280,400,4]],
+    sea: [[0,110,480,96,18]], elev: [[0,12],[465,10]] },
+  // home: a 100% drive stops short of the burn at 333 to 348, a 112% drive runs into it
+  { par: 4, yds: 430, path: [[0,0],[-4,250],[2,430]], fw: [180,415,38], cor: 34, green: { rx: 15, ry: 15, rot: 0 }, pin: [0, -3],
+    bunkers: [[258,-16,3.5,3.5,0,1],[276,15,3.5,3.5,0,1],[418,-16,4,4,0,1],[424,16,4,4,0,1]], waste: [],
+    water: [{ t: 'lake', s0: 333, s1: 348, d0: -70, d1: 70 }], elev: [[0,12],[430,10]] },
+] },
+
+// Gannet Strand: big Kerry dunes, holes running through the valleys between them, tees and greens up on the dune tops
+{ id: 'gannet-strand', name: 'Gannet Strand', place: 'County Kerry, Ireland', sub: 'Dunes Course', seed: 26, mix: [0, 0], sig: 10,
+  coast: true, gorse: true, rumple: 0.55, flora: { shrub: 1 }, treeK: 0.3, beach: 24, mounds: 6, wind: [10, 26], far: [126, 130, 80],
+  turf: { fair: { e: 0.38, mu: 0.28, plow: 0.04, drag: 0.1, roll: 0.45 }, cut: { e: 0.24, roll: 1.15 }, straw: { e: 0.03, mu: 0.95, tq: 0.2, plow: 0.6, bite: 0, drag: 4, roll: 9 } },
+  leaf: { shrub: [[0.16, 0.25, 0.09, 3], [0.72, 0.62, 0.08, 1]] }, edgeMix: { shrub: 1 }, palmetto: 0.55,
+  pal: { rough: [112, 120, 66], fair: [98, 138, 56], cut: [90, 122, 50], scrub: 'gorse', straw: 'Gorse' }, tuft: [1.4, 1.3, 0.8], tuftOut: 3, holes: [
+  { par: 4, yds: 395, path: [[0,0],[0,170],[45,250],[70,395]], fw: [165,380,34], cor: 32, green: { rx: 13, ry: 13, rot: 8 }, pin: [2, 3],
+    bunkers: [[240,-15,3.5,3.5,0,1],[262,16,3.5,3.5,0,1],[386,-14,4,4,0,1],[392,14,4,4,0,1]], waste: [], water: [], elev: [[0,44],[200,22],[395,34]] },
+  // the neck: from 320 a burn runs down the left and four pots sit on the right, leaving 20 yards of fairway between them.
+  // A 100% drive stops in the wide part, 285 from the green; a 112% drive that threads the neck has a 3 wood in.
+  { par: 5, yds: 590, path: [[0,0],[0,200],[25,330],[30,590]], fw: [190,575,38], cor: 34, green: { rx: 15, ry: 13, rot: -6 }, pin: [-2, 3],
+    bunkers: [[322,10,3.5,3.5,0,1],[334,15,3.5,3.5,0,1],[344,8,3.5,3.5,0,1],[356,13,3.5,3.5,0,1],[580,-15,4,4,0,1],[588,15,4,4,0,1]], waste: [],
+    water: [{ t: 'strip', side: -1, s0: 320, s1: 395, d0: 15, d1: 32 }], elev: [[0,3],[590,3]] },
+  { par: 4, yds: 455, path: [[0,0],[0,200],[-50,265],[-95,455]], fw: [175,440,34], cor: 30, green: { rx: 13, ry: 13, rot: -6 }, raise: 1.4, pin: [-2, 2],
+    bunkers: [[218,17,4,4,0,1],[236,19,4,4,0,1],[444,-13,4,4,0,1],[450,14,4,4,0,1]], waste: [], water: [], elev: [[0,24],[260,34],[455,48]] },
+  // down off the dune into a hollow green ringed by pots
+  { par: 3, yds: 140, path: [[0,0],[6,140]], fw: null, cor: 30, green: { rx: 11, ry: 12, rot: 6 }, pin: [1, 1],
+    bunkers: [[128,-11,3.5,3.5,0,1],[130,12,3.5,3.5,0,1],[152,2,4,3,0,1],[147,-11,3.5,3,0,1]], waste: [], water: [], elev: [[0,56],[140,26]] },
+  // drivable, bending right along the beach: a 100% drive stops about 25 short; a straight 112% drive runs onto the green.
+  // The landing area tilts right toward the sand and the sea; pots wait on the left.
+  { par: 4, yds: 330, path: [[0,0],[0,170],[28,330]], fw: [150,320,30], cor: 30, green: { rx: 14, ry: 15, rot: 10 }, pin: [2, 1],
+    bunkers: [[296,-15,4,4,0,1],[318,-17,4,4,0,1],[345,-12,4,3,0,1]], bunkersXY: [[43,311,4,4,0,1],[44,300,3.5,3.5,0,1]], waste: [], water: [], tilt: [[240,325,4]],
+    sea: [[0,72,220,60,12],[220,60,370,40,8]], elev: [[0,22],[330,18]] },
+  { par: 4, yds: 470, path: [[0,0],[-50,250],[-40,470]], fw: [180,455,34], cor: 32, green: { rx: 14, ry: 13, rot: 4 }, pin: [2, -3],
+    bunkers: [[262,16,3.5,3.5,0,1],[290,-15,3.5,3.5,0,1],[458,-15,4,4,0,1],[464,15,4,4,0,1]], waste: [], water: [], elev: [[0,52],[250,24],[470,36]] },
+  // over the dune valley: the valley floor and its far slope are gorse, and the fairway starts on the far ridge 285 out. A
+  // 100% drive comes down on the slope in the gorse; a 112% drive reaches the ridge and leaves a 3 wood in. The safe play
+  // is an iron to the pad short of the valley, leaving 350.
+  { par: 5, yds: 545, path: [[0,0],[6,300],[0,545]], fw: [285,530,34], cor: 30, green: { rx: 14, ry: 13, rot: -4 }, pin: [-2, 2],
+    altXY: [[0,140,3,195,30,36]], standXY: [[4,222,24],[5,258,22]],
+    bunkers: [[320,-15,3.5,3.5,0,1],[440,14,4,4,0,1],[536,-14,4,4,0,1],[542,14,4,4,0,1]], waste: [], water: [],
+    elev: [[0,40],[160,38],[205,14],[255,14],[295,40],[545,42]] },
+  // up onto a raised dune-top green
+  { par: 3, yds: 205, path: [[0,0],[-5,205]], fw: [165,195,26], cor: 30, green: { rx: 12, ry: 14, rot: -4 }, raise: 1.6, pin: [-1, 2],
+    bunkers: [[186,-12,4,4,0,1],[190,12,4,4,0,1]], waste: [], water: [], elev: [[0,20],[205,46]] },
+  { par: 4, yds: 430, path: [[0,0],[35,180],[30,430]], fw: [170,415,34], cor: 32, green: { rx: 14, ry: 13, rot: 6 }, pin: [2, 2],
+    bunkers: [[250,-16,3.5,3.5,0,1],[268,15,3.5,3.5,0,1],[420,-15,4,4,0,1],[426,15,4,4,0,1]], waste: [], water: [], sea: [[0,90,450,72,20]], elev: [[0,30],[430,22]] },
+  { par: 4, yds: 415, path: [[0,0],[0,270],[-55,415]], fw: [170,400,34], cor: 32, green: { rx: 13, ry: 13, rot: -4 }, pin: [-2, 2],
+    bunkers: [[255,-16,3.5,3.5,0,1],[270,16,3.5,3.5,0,1],[405,-14,4,4,0,1],[411,14,4,4,0,1]], waste: [], water: [], elev: [[0,26],[415,36]] },
+  // a cape round the dune lake: the hole goes up the right and turns left at 220, but the green sits across the water,
+  // 308 away in a straight line. A 112% drive carries the lake and runs up onto the green; a 100% drive finds the water.
+  { par: 4, yds: 350, path: [[0,0],[0,220],[-112,288]], fw: [140,340,30], cor: 30, green: { rx: 13, ry: 14, rot: -40 }, pin: [-1, 1],
+    altXY: [[-96,250,-104,270,26,34]],
+    bunkers: [[205,17,4,4,0,1],[230,20,4,4,0,1],[354,12,4,3,0,1]], bunkersXY: [[-86,273,4,4,0,1],[-80,281,4,4,0,1],[-74,268,3.5,3.5,0,1]], waste: [], water: [{ t: 'pond', x: -76, y: 192, rx: 56, ry: 30, rot: 112 }], elev: [[0,5],[360,4]] },
+  // across the valley with the sea on the right
+  { par: 3, yds: 170, path: [[0,0],[4,170]], fw: null, cor: 30, green: { rx: 12, ry: 14, rot: 8 }, pin: [2, 2],
+    bunkers: [[156,-13,4,4,0,1],[182,-4,4,3,0,1]], waste: [], water: [], sea: [[0,62,200,50,12]], elev: [[0,46],[90,24],[170,42]] },
+  { par: 5, yds: 590, path: [[0,0],[-40,250],[-50,420],[-10,590]], fw: [190,575,36], cor: 32, green: { rx: 14, ry: 13, rot: -4 }, pin: [-2, 3],
+    bunkers: [[270,-16,3.5,3.5,0,1],[300,16,3.5,3.5,0,1],[430,-14,4,4,0,1],[580,-15,4,4,0,1],[586,15,4,4,0,1]], waste: [], water: [], elev: [[0,34],[300,28],[590,36]] },
+  { par: 4, yds: 465, path: [[0,0],[20,160],[-20,330],[-30,465]], fw: [180,450,34], cor: 32, green: { rx: 14, ry: 13, rot: 4 }, pin: [2, -2],
+    bunkers: [[250,14,3.5,3.5,0,1],[280,-16,3.5,3.5,0,1],[452,-14,4,4,0,1],[460,14,4,4,0,1]], waste: [], water: [], elev: [[0,40],[465,30]] },
+  // a burn cuts across on the diagonal, nearest on the left at about 335: a 100% drive stops short of it anywhere across the
+  // fairway, a 112% drive down the left or the middle runs in
+  { par: 4, yds: 440, path: [[0,0],[-30,200],[-30,300],[10,440]], fw: [180,425,36], cor: 32, green: { rx: 14, ry: 14, rot: -4 }, pin: [-2, 2],
+    bunkers: [[262,-16,3.5,3.5,0,1],[280,16,3.5,3.5,0,1],[428,-15,4,4,0,1],[434,15,4,4,0,1]], waste: [],
+    water: [{ t: 'pond', x: -16, y: 352, rx: 64, ry: 7, rot: 18 }], elev: [[0,4],[440,4]] },
+  // a long par 3 with a fairway in front, for a running shot
+  { par: 3, yds: 235, path: [[0,0],[8,235]], fw: [180,222,30], cor: 30, green: { rx: 15, ry: 14, rot: 4 }, pin: [2, 3],
+    bunkers: [[212,-12,4,4,0,1],[214,13,4,4,0,1],[250,0,4,3,0,1]], waste: [], water: [], elev: [[0,30],[235,28]] },
+  // split fairway: the main fairway on the left has a burn across it at 304 that a driver runs into, so it plays as a
+  // three-shotter with a 3 wood off the tee. Up on the right,
+  // past a gorse ridge, a strip of fairway runs from 290 to 350; a 112% drive reaches it and has 240 to the green.
+  { par: 5, yds: 565, path: [[0,0],[-10,280],[0,565]], fw: [180,550,34], cor: 30, green: { rx: 14, ry: 13, rot: 6 }, pin: [2, 2],
+    altXY: [[46,292,48,350,22,30]], standXY: [[22,238,12],[24,268,12]],
+    bunkers: [[420,-14,4,4,0,1],[556,-14,4,4,0,1],[562,14,4,4,0,1]], waste: [],
+    water: [{ t: 'lake', s0: 304, s1: 318, d0: -60, d1: 12 }], elev: [[0,24],[565,22]] },
+  { par: 4, yds: 450, path: [[0,0],[0,300],[50,450]], fw: [180,435,36], cor: 34, green: { rx: 15, ry: 15, rot: -2 }, pin: [0, -3],
+    bunkers: [[258,-16,3.5,3.5,0,1],[276,15,3.5,3.5,0,1],[438,-16,4,4,0,1],[444,16,4,4,0,1]], waste: [], water: [], elev: [[0,30],[450,26]] },
+] },
+// Dunlin Sands: flat Fife links, burns across or beside most holes
+{ id: 'dunlin-sands', name: 'Dunlin Sands', place: 'Fife, Scotland', sub: 'Burns Course', seed: 27, mix: [0, 0], sig: 1,
+  coast: true, gorse: true, rumple: 0.4, flora: { shrub: 1 }, treeK: 0.3, beach: 22, mounds: 3, wind: [10, 24], far: [138, 132, 88],
+  turf: { fair: { e: 0.38, mu: 0.28, plow: 0.04, drag: 0.1, roll: 0.45 }, cut: { e: 0.24, roll: 1.15 }, straw: { e: 0.03, mu: 0.95, tq: 0.2, plow: 0.6, bite: 0, drag: 4, roll: 9 } },
+  leaf: { shrub: [[0.18, 0.27, 0.1, 3], [0.68, 0.58, 0.08, 1]] }, edgeMix: { shrub: 1 }, palmetto: 0.55,
+  pal: { rough: [122, 124, 72], fair: [108, 136, 60], cut: [96, 120, 54], scrub: 'gorse', straw: 'Gorse' }, tuft: [1.5, 1.32, 0.82], tuftOut: 3, holes: [
+  // a burn crosses 30 yards short of the green
+  { par: 4, yds: 410, path: [[0,0],[-16,230],[0,410]], fw: [170,395,36], cor: 32, green: { rx: 14, ry: 14, rot: 4 }, pin: [2, 3],
+    bunkers: [[250,16,3.5,3.5,0,1],[268,-15,3.5,3.5,0,1],[402,-15,4,4,0,1],[408,15,4,4,0,1]], waste: [],
+    water: [{ t: 'lake', s0: 362, s1: 376, d0: -70, d1: 70 }], sea: [[0,90,430,84,20]], elev: [[0,10],[410,8]] },
+  // a short par 4 with two fairways split by a spine of gorse from 145 to 290: a 100% drive down either one stops 20 short of
+  // the green, one down the middle stops in the gorse. A straight 112% drive carries the end of the spine and runs on.
+  { par: 4, yds: 318, path: [[0,0],[0,318]], fw: [292,306,40], cor: 40, green: { rx: 13, ry: 16, rot: 0 }, pin: [0, 2],
+    altXY: [[-17,150,-14,296,18,18],[17,150,14,296,18,18]],
+    bunkers: [[308,-19,4,4,0,1],[310,19,4,4,0,1],[338,0,4,3,0,1]], waste: [],
+    standXY: [[0,150,8],[0,162,8],[0,174,8],[0,186,8],[0,198,8],[0,210,8],[0,222,8],[0,234,8],[0,246,8],[0,258,8],[0,270,8],[0,282,8],[0,290,6]], water: [], elev: [[0,8],[318,8]] },
+  // a burn across at 430 to 444 for the second shot
+  { par: 5, yds: 610, path: [[0,0],[40,250],[60,400],[20,610]], fw: [190,595,36], cor: 32, green: { rx: 14, ry: 13, rot: -4 }, pin: [-2, 3],
+    bunkers: [[275,-16,3.5,3.5,0,1],[300,16,3.5,3.5,0,1],[600,-15,4,4,0,1],[606,15,4,4,0,1]], waste: [],
+    water: [{ t: 'lake', s0: 430, s1: 444, d0: -70, d1: 70 }], elev: [[0,10],[300,14],[610,10]] },
+  // over a burn just in front of the green
+  { par: 3, yds: 155, path: [[0,0],[-5,155]], fw: null, cor: 30, green: { rx: 12, ry: 14, rot: -6 }, pin: [-2, 3],
+    bunkers: [[146,14,4,4,0,1],[168,-6,4,3,0,1]], waste: [], water: [{ t: 'lake', s0: 118, s1: 132, d0: -70, d1: 70 }], elev: [[0,12],[155,10]] },
+  // the burn runs diagonally across the inside of the corner: carry it and the gorse beyond with a 112% drive and a strip
+  // of fairway runs at the green, in reach in two. A 100% drive over the burn comes down in the gorse. The safe line lays up
+  // at the corner, 320 from the green.
+  { par: 5, yds: 560, path: [[0,0],[0,240],[60,290],[250,380]], fw: [180,545,34], cor: 30, green: { rx: 14, ry: 13, rot: 30 }, pin: [2, 2],
+    altXY: [[147,224,187,284,22,30]],
+    bunkers: [[255,-14,4,4,0,1],[480,-12,4,4,0,1],[548,-14,4,4,0,1],[556,14,4,4,0,1]], waste: [],
+    water: [{ t: 'pond', x: 128, y: 194, rx: 86, ry: 8, rot: 33 }], elev: [[0,6],[560,6]] },
+  { par: 4, yds: 480, path: [[0,0],[0,180],[-30,260],[-40,480]], fw: [180,465,34], cor: 30, green: { rx: 14, ry: 13, rot: -4 }, pin: [-2, -2],
+    bunkers: [[200,16,4,4,0,1],[270,15,3.5,3.5,0,1],[467,-15,4,4,0,1],[475,15,4,4,0,1]], waste: [],
+    water: [{ t: 'strip', side: -1, s0: 280, s1: 430, d0: 26, d1: 40 }], elev: [[0,10],[480,12]] },
+  { par: 3, yds: 210, path: [[0,0],[-8,210]], fw: [165,198,26], cor: 30, green: { rx: 13, ry: 14, rot: -6 }, pin: [-2, -2],
+    bunkers: [[188,12,4,4,0,1],[196,-13,4,4,0,1],[222,4,4,3,0,1]], waste: [], water: [], sea: [[0,-55,230,-45,14]], elev: [[0,14],[210,10]] },
+  // drivable through the gap: a row of pots crosses at 300 to 310 with one gap on the right. A 100% drive down the right stops
+  // short of it (down the left it can reach a pot); a 112% drive through the gap runs onto the green, anywhere else into a pot.
+  { par: 4, yds: 320, path: [[0,0],[-20,170],[-10,320]], fw: [150,312,36], cor: 32, green: { rx: 14, ry: 17, rot: 10 }, pin: [2, 1],
+    bunkers: [[300,-15,3.5,3.5,0,1],[302,-7,3.5,3.5,0,1],[305,-1,3.5,3.5,0,1],[310,-22,3.5,3.5,0,1],[336,-14,4,3,0,1]], waste: [], water: [], elev: [[0,4],[320,4]] },
+  { par: 4, yds: 440, path: [[0,0],[26,250],[34,440]], fw: [175,425,34], cor: 32, green: { rx: 14, ry: 13, rot: 2 }, pin: [-2, 3],
+    bunkers: [[262,-16,3.5,3.5,0,1],[282,15,3.5,3.5,0,1],[430,-15,4,4,0,1],[436,15,4,4,0,1]], waste: [],
+    water: [{ t: 'strip', side: -1, s0: 150, s1: 300, d0: 28, d1: 42 }], elev: [[0,10],[440,12]] },
+  { par: 4, yds: 400, path: [[0,0],[0,150],[30,260],[34,400]], fw: [170,385,34], cor: 32, green: { rx: 13, ry: 13, rot: -6 }, pin: [-2, 2],
+    bunkers: [[245,-16,3.5,3.5,0,1],[262,16,3.5,3.5,0,1],[392,-14,4,4,0,1],[398,14,4,4,0,1]], waste: [], water: [], elev: [[0,10],[400,12]] },
+  // the squeeze: from 320 the fairway runs between the beach on the left (the ground tilts toward it) and a line of pots on
+  // the right. A 100% drive stops before it with 290 to go; a 112% drive into it leaves a 3 wood.
+  { par: 5, yds: 590, path: [[0,0],[-10,310],[-50,590]], fw: [190,575,38], cor: 32, green: { rx: 14, ry: 13, rot: -6 }, pin: [-2, 2],
+    bunkers: [[318,7,3.5,3.5,0,1],[330,11,3.5,3.5,0,1],[342,6,3.5,3.5,0,1],[354,10,3.5,3.5,0,1],[470,14,4,4,0,1],[580,-15,4,4,0,1],[586,15,4,4,0,1]], waste: [], tilt: [[310,380,-4]],
+    water: [], sea: [[0,-60,620,-46,14]], elev: [[0,8],[590,8]] },
+  { par: 4, yds: 450, path: [[0,0],[0,200],[-60,320],[-80,450]], fw: [180,435,34], cor: 32, green: { rx: 14, ry: 13, rot: 8 }, pin: [2, -2],
+    bunkers: [[268,-16,3.5,3.5,0,1],[290,16,3.5,3.5,0,1],[440,-14,4,4,0,1],[446,14,4,4,0,1]], waste: [], water: [], elev: [[0,10],[450,12]] },
+  // a small green in a ring of pots
+  { par: 3, yds: 125, path: [[0,0],[3,125]], fw: null, cor: 30, green: { rx: 9, ry: 10, rot: 4 }, pin: [0, 1],
+    bunkers: [[113,-9,3,3,0,1],[115,9,3,3,0,1],[134,-8,3,3,0,1],[136,8,3,3,0,1]], waste: [], water: [], elev: [[0,10],[125,12]] },
+  // a burn at the corner, 345 to 359: a 100% drive stops short of it, a 112% drive runs in
+  { par: 4, yds: 450, path: [[0,0],[0,300],[70,450]], fw: [180,435,36], cor: 32, green: { rx: 14, ry: 13, rot: 20 }, pin: [2, 2],
+    bunkers: [[262,-16,3.5,3.5,0,1],[285,16,3.5,3.5,0,1],[440,-14,4,4,0,1],[446,14,4,4,0,1]], waste: [],
+    water: [{ t: 'pond', x: 0, y: 352, rx: 70, ry: 7, rot: 0 }], elev: [[0,6],[450,6]] },
+  { par: 4, yds: 435, path: [[0,0],[0,180],[-40,300],[-45,435]], fw: [175,420,34], cor: 32, green: { rx: 14, ry: 13, rot: -2 }, pin: [-2, 2],
+    bunkers: [[255,16,3.5,3.5,0,1],[275,-15,3.5,3.5,0,1],[426,-15,4,4,0,1],[432,15,4,4,0,1]], waste: [],
+    water: [{ t: 'strip', side: -1, s0: 300, s1: 435, d0: 24, d1: 40 }], elev: [[0,10],[435,10]] },
+  // a long par 3 with a burn all down the right
+  { par: 3, yds: 240, path: [[0,0],[6,240]], fw: [185,228,30], cor: 30, green: { rx: 15, ry: 14, rot: 4 }, pin: [1, 3],
+    bunkers: [[218,-12,4,4,0,1],[256,-2,4,3,0,1]], waste: [], water: [{ t: 'strip', side: 1, s0: 80, s1: 255, d0: 20, d1: 34 }], elev: [[0,10],[240,10]] },
+  // a burn across at 268 to 282 makes the tee shot a lay-up; another guards the front of the green
+  { par: 5, yds: 555, path: [[0,0],[-6,240],[-60,380],[-110,555]], fw: [170,540,34], cor: 32, green: { rx: 14, ry: 13, rot: -10 }, pin: [-2, 2],
+    bunkers: [[230,15,3.5,3.5,0,1],[400,16,4,4,0,1],[546,-14,4,4,0,1],[552,14,4,4,0,1]], waste: [],
+    water: [{ t: 'lake', s0: 268, s1: 282, d0: -70, d1: 70 }, { t: 'lake', s0: 515, s1: 527, d0: -60, d1: 60 }], elev: [[0,4],[555,4]] },
+  // home: a burn in front of the green, 395 to 410
+  { par: 4, yds: 460, path: [[0,0],[8,260],[16,460]], fw: [180,445,38], cor: 34, green: { rx: 15, ry: 15, rot: 2 }, pin: [2, -3],
+    bunkers: [[258,-16,3.5,3.5,0,1],[276,15,3.5,3.5,0,1],[450,-16,4,4,0,1],[456,16,4,4,0,1]], waste: [],
+    water: [{ t: 'lake', s0: 405, s1: 420, d0: -70, d1: 70 }], sea: [[0,-90,480,-84,20]], elev: [[0,10],[460,8]] },
+] },
+// Skua Head: Orkney clifftop links 70 to 80 feet above the sea, with geos (sea gullies) and coves cut into the cliffs
+{ id: 'skua-head', name: 'Skua Head', place: 'Orkney, Scotland', sub: 'Cliffs Course', seed: 28, mix: [0, 0], sig: 1,
+  coast: true, coves: true, gorse: true, rumple: 0.4, flora: { shrub: 1 }, treeK: 0.3, beach: 0, mounds: 3, wind: [14, 30], far: [118, 124, 84],
+  turf: { fair: { e: 0.38, mu: 0.28, plow: 0.04, drag: 0.1, roll: 0.45 }, cut: { e: 0.24, roll: 1.15 }, straw: { e: 0.03, mu: 0.95, tq: 0.2, plow: 0.6, bite: 0, drag: 4, roll: 9 } },
+  leaf: { shrub: [[0.16, 0.24, 0.1, 3], [0.66, 0.56, 0.1, 1]] }, edgeMix: { shrub: 1 }, palmetto: 0.55,
+  pal: { rough: [106, 116, 66], fair: [96, 134, 58], cut: [88, 118, 52], scrub: 'gorse', straw: 'Gorse', cliff: [112, 104, 96] }, tuft: [1.35, 1.3, 0.85], tuftOut: 3, holes: [
+  { par: 4, yds: 425, path: [[0,0],[0,200],[-50,300],[-60,425]], fw: [170,410,34], cor: 32, green: { rx: 14, ry: 13, rot: 4 }, pin: [2, 3],
+    bunkers: [[250,16,3.5,3.5,0,1],[268,-15,3.5,3.5,0,1],[415,-15,4,4,0,1],[421,15,4,4,0,1]], waste: [], water: [], sea: [[0,95,445,80]], elev: [[0,80],[425,76]] },
+  // drivable over the cove: a cove cuts across the hole from 243 to 267 and its cliffs reach out to about 232 and 280. A 100%
+  // drive comes down in it; a 112% drive carries it and runs onto the headland green. The safe play is an iron short of it.
+  { par: 4, yds: 318, path: [[0,0],[28,120],[38,318]], fw: [150,310,32], cor: 30, green: { rx: 13, ry: 14, rot: 0 }, pin: [0, 1],
+    bunkers: [[214,-15,4,4,0,1],[300,-15,4,4,0,1],[304,15,4,4,0,1]], waste: [], water: [{ t: 'pond', x: 35, y: 255, rx: 70, ry: 12, rot: 0 }], elev: [[0,78],[318,76]] },
+  // over a cove to the green
+  { par: 3, yds: 190, path: [[0,0],[-6,190]], fw: null, cor: 30, green: { rx: 12, ry: 14, rot: -6 }, pin: [-2, 2],
+    bunkers: [[200,8,4,3,0,1],[178,14,4,4,0,1]], waste: [], water: [{ t: 'pond', x: -3, y: 100, rx: 45, ry: 32, rot: 0 }], elev: [[0,76],[190,72]] },
+  // a geo runs diagonally across the fairway at 240 to 275: a 100% drive comes down in it, a 112% drive carries it and leaves
+  // a 3 wood to the green. The safe play is an iron short of it, which leaves 340.
+  { par: 5, yds: 565, path: [[0,0],[30,220],[20,400],[-30,565]], fw: [180,550,34], cor: 32, green: { rx: 14, ry: 13, rot: 4 }, pin: [2, 2],
+    bunkers: [[330,15,3.5,3.5,0,1],[460,-14,4,4,0,1],[556,-14,4,4,0,1],[562,14,4,4,0,1]], waste: [],
+    water: [{ t: 'pond', x: 28, y: 257, rx: 72, ry: 8, rot: 166 }], elev: [[0,72],[565,70]] },
+  { par: 4, yds: 450, path: [[0,0],[30,230],[60,450]], fw: [175,435,34], cor: 32, green: { rx: 14, ry: 13, rot: 6 }, pin: [2, 2],
+    bunkers: [[250,-16,3.5,3.5,0,1],[272,16,3.5,3.5,0,1],[440,-14,4,4,0,1],[446,14,4,4,0,1]], waste: [], water: [], sea: [[0,-90,470,-60]], elev: [[0,70],[450,78]] },
+  { par: 4, yds: 435, path: [[0,0],[-15,120],[-15,300],[25,435]], fw: [175,420,34], cor: 32, green: { rx: 14, ry: 13, rot: -6 }, pin: [-2, 2],
+    bunkers: [[262,16,3.5,3.5,0,1],[280,-15,3.5,3.5,0,1],[425,-15,4,4,0,1],[431,15,4,4,0,1]], waste: [], water: [], elev: [[0,78],[435,74]] },
+  // to a green out on a headland, sea on both sides
+  { par: 3, yds: 150, path: [[0,0],[5,150]], fw: null, cor: 30, green: { rx: 12, ry: 12, rot: 4 }, pin: [1, 2],
+    bunkers: [[140,-12,3.5,3.5,0,1],[164,6,4,3,0,1]], waste: [], water: [], sea: [[60,48,190,40]], elev: [[0,82],[150,76]] },
+  // the squeeze along the cliff: from 320 the fairway narrows to 20 yards between pots on both sides, with the ground tilting
+  // left toward the cliff edge. A 100% drive stops in the wide part with 295 to go; a 112% drive into the squeeze
+  // leaves a 3 wood.
+  { par: 5, yds: 600, path: [[0,0],[20,200],[30,340],[-30,600]], fw: [190,585,38], cor: 32, green: { rx: 14, ry: 13, rot: -6 }, pin: [-2, 2],
+    bunkers: [[322,10,3.5,3.5,0,1],[336,15,3.5,3.5,0,1],[348,9,3.5,3.5,0,1],[326,-11,3.5,3.5,0,1],[340,-15,3.5,3.5,0,1],[480,-14,4,4,0,1],[590,-15,4,4,0,1],[596,15,4,4,0,1]], waste: [], water: [], tilt: [[320,380,-4]],
+    sea: [[0,-62,620,-34]], elev: [[0,74],[600,72]] },
+  { par: 4, yds: 440, path: [[0,0],[40,260],[80,440]], fw: [175,425,34], cor: 32, green: { rx: 14, ry: 13, rot: -6 }, pin: [-2, 3],
+    bunkers: [[245,16,3.5,3.5,0,1],[268,-15,3.5,3.5,0,1],[430,-15,4,4,0,1],[436,15,4,4,0,1]], waste: [], water: [], elev: [[0,72],[440,76]] },
+  // a geo slants across at 320 to 355: a 100% drive stops short of it, a 112% drive runs in
+  { par: 4, yds: 445, path: [[0,0],[10,280],[30,445]], fw: [180,430,36], cor: 32, green: { rx: 14, ry: 13, rot: 6 }, pin: [2, -2],
+    bunkers: [[262,-16,3.5,3.5,0,1],[282,15,3.5,3.5,0,1],[432,-15,4,4,0,1],[438,15,4,4,0,1]], waste: [],
+    water: [{ t: 'pond', x: 16, y: 344, rx: 56, ry: 6, rot: 14 }], elev: [[0,76],[445,72]] },
+  // a long par 3 along the cliff edge
+  { par: 3, yds: 225, path: [[0,0],[4,225]], fw: [175,212,28], cor: 30, green: { rx: 14, ry: 14, rot: 4 }, pin: [-2, 2],
+    bunkers: [[202,-12,4,4,0,1],[240,-4,4,3,0,1]], waste: [], water: [], sea: [[0,44,250,34]], elev: [[0,74],[225,70]] },
+  // drivable out to the headland: from 280 the land narrows to a 20-yard neck between two coves, with the green beyond. A
+  // 100% drive stops at the neck, 25 short; a straight 112% drive runs through it onto the green. Off line is in a cove.
+  { par: 4, yds: 330, path: [[0,0],[-14,200],[10,330]], fw: [150,322,32], cor: 30, green: { rx: 13, ry: 14, rot: 4 }, pin: [0, 1],
+    bunkers: [[250,-15,4,4,0,1],[348,6,4,3,0,1]], waste: [], water: [{ t: 'pond', x: -42, y: 310, rx: 24, ry: 34, rot: 0 }, { t: 'pond', x: 46, y: 300, rx: 24, ry: 34, rot: 0 }], elev: [[0,72],[330,70]] },
+  { par: 5, yds: 590, path: [[0,0],[25,260],[60,420],[50,590]], fw: [190,575,36], cor: 32, green: { rx: 14, ry: 13, rot: -4 }, pin: [-2, 3],
+    bunkers: [[275,-16,3.5,3.5,0,1],[300,16,3.5,3.5,0,1],[440,-14,4,4,0,1],[580,-15,4,4,0,1],[586,15,4,4,0,1]], waste: [], water: [], sea: [[0,-88,620,-70]], elev: [[0,74],[590,80]] },
+  { par: 4, yds: 460, path: [[0,0],[0,240],[-70,340],[-90,460]], fw: [180,445,34], cor: 32, green: { rx: 14, ry: 13, rot: 4 }, pin: [2, -2],
+    bunkers: [[255,16,3.5,3.5,0,1],[280,-15,3.5,3.5,0,1],[448,-14,4,4,0,1],[454,14,4,4,0,1]], waste: [], water: [], elev: [[0,80],[460,74]] },
+  // over the headland gorse: the hole turns hard left at 210, and a 112% drive across the gorse finds a strip of fairway
+  // aimed at the green, leaving about 150 over a cove that guards the front. Short of the strip is gorse. The safe line lays
+  // up at the corner, 300 from the green.
+  { par: 5, yds: 545, path: [[0,0],[0,210],[-60,240],[-250,330]], fw: [180,530,34], cor: 30, green: { rx: 14, ry: 14, rot: -40 }, pin: [-2, 2],
+    altXY: [[-152,212,-182,250,22,30]],
+    bunkers: [[225,15,4,4,0,1],[540,14,4,4,0,1]], waste: [], water: [{ t: 'pond', x: -212, y: 296, rx: 22, ry: 14, rot: 0 }], elev: [[0,74],[545,72]] },
+  { par: 3, yds: 200, path: [[0,0],[-4,200]], fw: null, cor: 30, green: { rx: 13, ry: 14, rot: -4 }, pin: [-2, 2],
+    bunkers: [[182,-13,4,4,0,1],[186,13,4,4,0,1],[214,2,4,3,0,1]], waste: [], water: [], elev: [[0,78],[200,74]] },
+  { par: 4, yds: 430, path: [[0,0],[50,200],[60,430]], fw: [175,415,34], cor: 32, green: { rx: 14, ry: 13, rot: -6 }, pin: [-2, 2],
+    bunkers: [[250,-16,3.5,3.5,0,1],[268,15,3.5,3.5,0,1],[420,-14,4,4,0,1],[426,14,4,4,0,1]], waste: [], water: [], sea: [[0,-92,460,-80]], elev: [[0,74],[430,72]] },
+  { par: 4, yds: 470, path: [[0,0],[30,200],[0,330],[-10,470]], fw: [180,455,36], cor: 34, green: { rx: 15, ry: 15, rot: 6 }, pin: [0, -3],
+    bunkers: [[258,-16,3.5,3.5,0,1],[276,15,3.5,3.5,0,1],[458,-16,4,4,0,1],[464,16,4,4,0,1]], waste: [], water: [], sea: [[0,92,490,86]], elev: [[0,76],[470,70]] },
+] },
+// ---- Parkland: autumn trees, leaves under them, ponds with fieldstone walls ----
+{ id: 'grouse-hollow', name: 'Grouse Hollow', place: 'Champlain Valley, Vermont', sub: 'Maple Course', seed: 29, mix: [0, 0], sig: 0,
+  flora: { hardwood: 0.7, aspen: 0.15, pine: 0.15 }, treeK: 0.9, corner: 'bigHardwood', wind: [2, 14], far: [104, 112, 62], lakeC: 0x1f3d44, fog: 0.0003, fogC: 0xc9cfd2,
+  leaf: { hardwood: [[0.82, 0.3, 0.06, 2], [0.7, 0.12, 0.05, 1.4], [0.86, 0.62, 0.1, 1.6], [0.36, 0.44, 0.14, 1]], aspen: [[0.9, 0.74, 0.16, 1]], shrub: [[0.72, 0.16, 0.08, 1], [0.32, 0.42, 0.13, 1]] },
+  pal: { rough: [70, 98, 44], floor: 'park', straw: 'Leaves', bank: 'stone' }, palmetto: 0.3, edgeMix: { shrub: 1 }, holes: [
+  { par: 4, yds: 430, path: [[0,0],[5,240],[-3,430]], fw: [175,415,32], cor: 34, green: { rx: 14, ry: 13, rot: -4 }, pin: [-2,3],
+    bunkers: [[255,-18,11,5,0],[420,15,6,4,0],[438,-14,5,4,0]], waste: [], water: [], elev: [[0,22],[430,14]] },
+  // a gap in the maples near the tee: a 112% drive (or a draw) carries the woods inside the corner to a pad on the line at the green, in reach in two; a 100% drive comes down in the trees, and the way round lays up at the corner
+  { par: 5, yds: 555, path: [[0,0],[0,255],[-265,396]], fw: [185,540,30], cor: 30, green: { rx: 13, ry: 12, rot: -8 }, pin: [-2,2],
+    altXY: [[-7,10,-49,73,0,16],[-160,239,-186,278,26,30]], bunkers: [[267,16,10,5,0],[547,14,5,4,0],[559,-14,5,4,0]], waste: [], water: [], elev: [[0,14],[555,16]] },
+  { par: 3, yds: 175, path: [[0,0],[-2,90],[3,175]], fw: null, cor: 34, green: { rx: 12, ry: 14, rot: 6 }, pin: [2,2],
+    bunkers: [[188,13,6,4,0],[172,-15,5,4,0]], waste: [], water: [{ t: 'pond', x: 0, y: 104, rx: 40, ry: 28, rot: 0 }], elev: [[0,26],[175,16]] },
+  // drivable: a 100% drive stops 45 short; a 112% draw runs on, but the landing area tilts left into the pond
+  { par: 4, yds: 330, path: [[0,0],[-6,190],[-24,330]], fw: [150,318,30], cor: 32, green: { rx: 13, ry: 14, rot: -6 }, pin: [-1,1],
+    bunkers: [[248,17,10,5,0],[340,13,5,4,0]], waste: [], tilt: [[255,322,-4]], water: [{ t: 'pond', x: -58, y: 292, rx: 44, ry: 19, rot: 94 }], elev: [[0,12],[330,10]] },
+  { par: 4, yds: 465, path: [[0,0],[0,245],[95,440]], fw: [175,450,32], cor: 32, oaksXY: [[22,236]], green: { rx: 13, ry: 13, rot: 10 }, pin: [2,2],
+    bunkers: [[262,-17,11,5,0],[450,-14,5,4,0],[462,14,5,4,0]], waste: [], water: [], elev: [[0,16],[465,20]] },
+  { par: 4, yds: 440, path: [[0,0],[-3,230],[6,440]], fw: [170,425,38], cor: 34, stand: [[258,2,7]], green: { rx: 13, ry: 12, rot: -6 }, pin: [-2,-2],
+    bunkers: [[300,-19,10,5,0],[430,15,6,4,0],[446,-13,5,4,0]], waste: [], water: [], elev: [[0,14],[440,24]] },
+  { par: 3, yds: 215, path: [[0,0],[3,120],[-7,214]], fw: [165,205,26], cor: 34, green: { rx: 13, ry: 14, rot: -8 }, pin: [-2,3],
+    bunkers: [[206,-15,6,4,0],[224,12,5,4,0]], waste: [], water: [], elev: [[0,40],[215,22]] },
+  // the corner can be cut: a 112% drive over the maples finds a strip that runs onto the green; a 100% drive comes down in the trees. The way round is an iron to the corner and a short iron in
+  { par: 4, yds: 400, path: [[0,0],[0,200],[197,235]], fw: [150,388,30], cor: 28, green: { rx: 15, ry: 14, rot: 40 }, pin: [1,-3],
+    altXY: [[6,8,51,61,0,16],[178,212,189,225,22,28]], bunkers: [[214,-16,10,5,0],[403,-14,5,4,0]], waste: [], water: [], elev: [[0,14],[400,16]] },
+  // a three-shotter for a 100% drive; a 112% draw started out over the pond on the right runs through the neck between two stands of maples, about 245 out, in reach of a 3 wood
+  { par: 5, yds: 575, path: [[0,0],[6,280],[-8,445],[2,575]], fw: [190,560,34], cor: 34, standXY: [[-22,336,9],[28,342,9]], green: { rx: 14, ry: 13, rot: 2 }, pin: [0,2],
+    bunkers: [[302,-15,10,5,0],[565,-15,6,4,0],[570,15,6,4,0]], waste: [], water: [{ t: 'pond', x: 44, y: 318, rx: 30, ry: 15, rot: 90 }], elev: [[0,12],[575,18]] },
+  { par: 4, yds: 450, path: [[0,0],[0,225],[-120,415]], fw: [170,435,32], cor: 32, oaksXY: [[-20,220]], green: { rx: 13, ry: 12, rot: -10 }, pin: [-2,2],
+    bunkers: [[240,17,11,5,0],[440,14,5,4,0],[448,-14,5,4,0]], waste: [], water: [], elev: [[0,20],[450,16]] },
+  { par: 4, yds: 475, path: [[0,0],[4,260],[-6,475]], fw: [180,460,34], cor: 34, green: { rx: 14, ry: 13, rot: -2 }, pin: [-1,-3],
+    bunkers: [[268,-17,11,5,0],[290,18,10,5,0],[465,-15,6,4,0],[470,15,5,4,0]], waste: [], water: [], elev: [[0,16],[475,10]] },
+  { par: 3, yds: 170, path: [[0,0],[1,80],[7,169]], fw: null, cor: 32, green: { rx: 12, ry: 12, rot: 10 }, pin: [3,1],
+    bunkers: [[160,-14,6,4,0],[186,-6,5,3,0]], waste: [], water: [{ t: 'pond', x: 37, y: 163, rx: 22, ry: 14, rot: 90 }], elev: [[0,18],[170,20]] },
+  // over the pond: a 112% drive (or a draw started right) carries the water and the trees beyond it to a pad running at the green, in reach in two; a 100% drive comes down in the trees. The way round lays up at the corner
+  { par: 5, yds: 540, path: [[0,0],[0,245],[274,356]], fw: [175,525,30], cor: 30, green: { rx: 13, ry: 12, rot: 8 }, pin: [2,2],
+    altXY: [[5,6,49,63,0,18],[172,223,200,260,28,30]], bunkers: [[257,-16,10,5,0],[532,-14,5,4,0],[544,14,5,4,0]], waste: [], water: [{ t: 'pond', x: 108, y: 141, rx: 72, ry: 58, rot: 52 }], elev: [[0,14],[540,16]] },
+  { par: 4, yds: 425, path: [[0,0],[-8,180],[10,300],[4,425]], fw: [170,412,32], cor: 32, green: { rx: 13, ry: 12, rot: 4 }, pin: [1,2],
+    bunkers: [[200,16,10,5,0],[318,-16,10,5,0],[418,14,5,4,0]], waste: [], water: [], elev: [[0,18],[425,12]] },
+  { par: 4, yds: 410, path: [[0,0],[-10,150],[6,290],[22,410]], fw: [165,398,32], cor: 34, green: { rx: 13, ry: 12, rot: 8 }, pin: [2,2],
+    bunkers: [[178,15,10,5,0],[300,-16,10,5,0],[404,-13,5,4,0]], waste: [], water: [], elev: [[0,16],[410,22]] },
+  { par: 3, yds: 190, path: [[0,0],[2,100],[-5,191]], fw: null, cor: 32, green: { rx: 12, ry: 14, rot: -4 }, pin: [-2,2],
+    bunkers: [[200,10,5,4,0],[180,15,5,4,0]], waste: [], water: [{ t: 'pond', x: -10, y: 118, rx: 36, ry: 30, rot: 0 }], elev: [[0,16],[190,14]] },
+  { par: 4, yds: 460, path: [[0,0],[-4,250],[48,455]], fw: [175,445,32], cor: 32, green: { rx: 13, ry: 13, rot: 12 }, pin: [2,-2],
+    bunkers: [[265,-17,11,5,0],[290,17,10,5,0],[450,-14,5,4,0]], waste: [], water: [], elev: [[0,12],[460,18]] },
+  // home: a creek crosses 50 yards short of the green, so a second shot has to carry it
+  { par: 5, yds: 580, path: [[0,0],[0,290],[-25,440],[-15,580]], fw: [190,565,34], cor: 34, green: { rx: 14, ry: 14, rot: -4 }, pin: [-2,-2],
+    bunkers: [[300,17,11,5,0],[452,-15,10,5,0],[572,14,6,4,0]], waste: [], water: [{ t: 'lake', s0: 516, s1: 532, d0: -80, d1: 80 }], elev: [[0,14],[580,12]] },
+] },
+{ id: 'wood-duck-run', name: 'Wood Duck Run', place: 'Northern Michigan', sub: 'Creek Course', seed: 30, mix: [0, 0], sig: 2,
+  flora: { hardwood: 0.45, aspen: 0.3, pine: 0.25 }, treeK: 0.95, corner: 'bigHardwood', wind: [3, 15], far: [92, 108, 64], lakeC: 0x1a3640, fog: 0.00034, fogC: 0xc4ccd0,
+  leaf: { hardwood: [[0.8, 0.22, 0.06, 1.6], [0.88, 0.56, 0.1, 2], [0.62, 0.5, 0.12, 1], [0.34, 0.44, 0.14, 0.8]], aspen: [[0.92, 0.78, 0.2, 2], [0.7, 0.66, 0.2, 1]], shrub: [[0.62, 0.14, 0.08, 1], [0.34, 0.42, 0.14, 1]] },
+  pal: { rough: [66, 96, 44], floor: 'park', straw: 'Leaves', bank: 'stone' }, palmetto: 0.35, edgeMix: { shrub: 1 }, holes: [
+  // a creek crosses 200 yards out, an easy carry from the tee
+  { par: 4, yds: 410, path: [[0,0],[-6,230],[4,410]], fw: [220,395,32], cor: 34, green: { rx: 13, ry: 13, rot: 4 }, pin: [2,2],
+    bunkers: [[248,-17,10,5,0],[400,15,6,4,0]], waste: [], water: [{ t: 'lake', s0: 193, s1: 207, d0: -90, d1: 90 }], elev: [[0,18],[410,14]] },
+  // drivable across the pond: a 112% drive carries the water inside the corner onto a strip that runs onto the green; a 100% drive comes down in the pond. The way round is an iron to the corner and a short iron in
+  { par: 4, yds: 350, path: [[0,0],[0,185],[-140,272]], fw: [150,338,30], cor: 28, green: { rx: 15, ry: 14, rot: -29 }, pin: [-1,-3],
+    altXY: [[-4,7,-41,80,0,16],[-129,250,-134,260,22,28]], bunkers: [[199,16,10,5,0],[353,14,5,4,0]], waste: [], water: [{ t: 'pond', x: -86, y: 168, rx: 79, ry: 26, rot: 117 }], elev: [[0,14],[350,16]] },
+  // over the pond: a 112% drive carries the water and the aspens past it to a pad on the line at the green, in reach in two; a 100% drive comes down in the trees. The way round lays up at the corner
+  { par: 5, yds: 590, path: [[0,0],[0,230],[-360,230]], fw: [160,575,30], cor: 30, green: { rx: 13, ry: 12, rot: -8 }, pin: [-2,2],
+    altXY: [[-7,4,-67,43,0,18],[-238,152,-276,177,28,30]], bunkers: [[242,16,10,5,0],[582,14,5,4,0],[594,-14,5,4,0]], waste: [], water: [{ t: 'pond', x: -147, y: 94, rx: 70, ry: 50, rot: 147 }], elev: [[0,14],[590,16]] },
+  { par: 3, yds: 160, path: [[0,0],[4,84],[-3,161]], fw: null, cor: 32, green: { rx: 12, ry: 13, rot: -6 }, pin: [-2,2],
+    bunkers: [[172,-12,5,4,0],[150,14,5,4,0]], waste: [], water: [{ t: 'lake', s0: 96, s1: 122, d0: -60, d1: 60 }], elev: [[0,20],[161,14]] },
+  { par: 4, yds: 455, path: [[0,0],[0,236],[-112,438]], fw: [175,440,32], cor: 32, oaksXY: [[-19,232]], green: { rx: 13, ry: 12, rot: -8 }, pin: [-2,2],
+    bunkers: [[255,17,11,5,0],[446,13,5,4,0]], waste: [], water: [{ t: 'strip', side: 1, s0: 120, s1: 460, d0: 30, d1: 46 }], elev: [[0,16],[455,12]] },
+  // a short dogleg turning early: a 112% drive over the aspens inside the corner finds a strip that runs onto the green; a 100% drive comes down in the trees. The way round is a mid iron to the corner and another in
+  { par: 4, yds: 330, path: [[0,0],[0,150],[127,277]], fw: [150,318,30], cor: 28, green: { rx: 15, ry: 14, rot: 22 }, pin: [1,-3],
+    altXY: [[4,9,33,73,0,16],[115,252,122,265,22,28]], bunkers: [[164,-16,10,5,0],[333,-14,5,4,0]], waste: [], water: [{ t: 'strip', side: -1, s0: 160, s1: 330, d0: 22, d1: 36 }], elev: [[0,14],[330,16]] },
+  { par: 4, yds: 430, path: [[0,0],[5,210],[-3,320],[2,430]], fw: [175,418,32], cor: 34, green: { rx: 14, ry: 13, rot: 2 }, pin: [1,-2],
+    bunkers: [[240,-17,10,5,0],[420,-14,6,4,0]], waste: [], water: [{ t: 'pond', x: 42, y: 268, rx: 30, ry: 18, rot: 80 }], elev: [[0,14],[430,20]] },
+  { par: 3, yds: 205, path: [[0,0],[-6,102],[2,206]], fw: [160,196,26], cor: 32, green: { rx: 13, ry: 14, rot: 4 }, pin: [2,-3],
+    bunkers: [[198,14,6,4,0],[214,-10,5,4,0]], waste: [], water: [{ t: 'pond', x: -30, y: 180, rx: 18, ry: 13, rot: 90 }], elev: [[0,30],[206,20]] },
+  // a three-shotter for a 100% drive; a 112% draw runs on between the pond on the left and a stand of aspens, about 250 out, in reach of a 3 wood
+  { par: 5, yds: 580, path: [[0,0],[-14,310],[10,470],[22,580]], fw: [190,565,34], cor: 34, standXY: [[16,338,10]], green: { rx: 14, ry: 13, rot: 5 }, pin: [1,2],
+    bunkers: [[296,16,10,5,0],[570,15,6,4,0],[563,-15,6,4,0]], waste: [], water: [{ t: 'pond', x: -50, y: 322, rx: 34, ry: 16, rot: 92 }], elev: [[0,14],[580,12]] },
+  { par: 4, yds: 445, path: [[0,0],[3,252],[35,445]], fw: [180,430,32], cor: 34, green: { rx: 13, ry: 13, rot: 8 }, pin: [2,-2],
+    bunkers: [[266,-17,11,5,0],[284,18,10,5,0],[437,-14,5,4,0]], waste: [], water: [], elev: [[0,12],[445,18]] },
+  // a gap in the trees near the tee: a 112% drive carries the woods inside the long corner to a pad on the line at the green, in reach in two; a 100% drive comes down in the trees. The way round lays up at the corner
+  { par: 5, yds: 570, path: [[0,0],[0,290],[229,451]], fw: [220,555,30], cor: 30, green: { rx: 13, ry: 12, rot: 8 }, pin: [2,2],
+    altXY: [[5,11,40,78,0,16],[128,251,148,292,26,30]], bunkers: [[302,-16,10,5,0],[562,-14,5,4,0],[574,14,5,4,0]], waste: [], water: [{ t: 'strip', side: -1, s0: 330, s1: 540, d0: 24, d1: 40 }], elev: [[0,14],[570,16]] },
+  { par: 3, yds: 180, path: [[0,0],[-3,95],[5,181]], fw: null, cor: 32, green: { rx: 12, ry: 14, rot: 8 }, pin: [2,2],
+    bunkers: [[190,12,5,4,0],[170,-15,5,4,0]], waste: [], water: [{ t: 'pond', x: -22, y: 128, rx: 30, ry: 26, rot: 10 }], elev: [[0,16],[181,18]] },
+  { par: 4, yds: 460, path: [[0,0],[-4,240],[-40,460]], fw: [175,445,32], cor: 34, green: { rx: 13, ry: 13, rot: -6 }, pin: [-2,-2],
+    bunkers: [[258,17,11,5,0],[450,13,5,4,0]], waste: [], water: [{ t: 'lake', s0: 388, s1: 402, d0: -80, d1: 80 }], elev: [[0,20],[460,14]] },
+  { par: 4, yds: 420, path: [[0,0],[2,140],[-14,300],[-6,420]], fw: [160,408,32], cor: 34, green: { rx: 13, ry: 13, rot: -4 }, pin: [-1,2],
+    bunkers: [[160,16,10,5,0],[310,-16,10,5,0],[412,13,5,4,0]], waste: [], water: [{ t: 'pond', x: 24, y: 372, rx: 14, ry: 22, rot: 0 }], elev: [[0,12],[420,14]] },
+  { par: 4, yds: 470, path: [[0,0],[6,260],[-10,470]], fw: [180,455,34], cor: 34, green: { rx: 14, ry: 13, rot: -4 }, pin: [-1,3],
+    bunkers: [[275,17,11,5,0],[460,-15,6,4,0],[466,15,5,4,0]], waste: [], water: [{ t: 'lake', s0: 318, s1: 332, d0: -80, d1: 80 }], elev: [[0,14],[470,12]] },
+  { par: 3, yds: 225, path: [[0,0],[5,110],[-1,224]], fw: [180,214,28], cor: 32, green: { rx: 14, ry: 14, rot: -2 }, pin: [-2,2],
+    bunkers: [[216,-14,6,4,0],[220,15,6,4,0]], waste: [], water: [], elev: [[0,22],[224,16]] },
+  { par: 4, yds: 395, path: [[0,0],[-3,220],[70,385]], fw: [165,382,32], cor: 32, oaksXY: [[16,214]], green: { rx: 13, ry: 12, rot: 12 }, pin: [2,2],
+    bunkers: [[238,-17,10,5,0],[388,-12,5,4,0]], waste: [], water: [{ t: 'pond', x: 86, y: 340, rx: 22, ry: 14, rot: 20 }], elev: [[0,14],[395,18]] },
+  { par: 5, yds: 560, path: [[0,0],[5,285],[-12,430],[-6,560]], fw: [190,545,34], cor: 34, green: { rx: 14, ry: 13, rot: -4 }, pin: [1,2],
+    bunkers: [[300,17,11,5,0],[440,15,10,5,0],[552,14,6,4,0]], waste: [], water: [{ t: 'pond', x: -42, y: 548, rx: 26, ry: 14, rot: 90 }], elev: [[0,12],[560,10]] },
+] },
+{ id: 'bobolink-farm', name: 'Bobolink Farm', place: 'Litchfield Hills, Connecticut', sub: 'Farm Course', seed: 31, mix: [0, 0], sig: 4,
+  flora: { hardwood: 0.75, pine: 0.15, aspen: 0.1 }, treeK: 0.75, corner: 'bigHardwood', wind: [3, 16], far: [124, 122, 70], lakeC: 0x223f45, fog: 0.00028, fogC: 0xcfd2cf,
+  leaf: { hardwood: [[0.74, 0.18, 0.06, 1.4], [0.84, 0.44, 0.08, 1.6], [0.8, 0.66, 0.16, 1.2], [0.4, 0.46, 0.16, 1]], aspen: [[0.88, 0.7, 0.18, 1]], shrub: [[0.66, 0.2, 0.08, 1], [0.4, 0.42, 0.14, 1]] },
+  pal: { rough: [82, 102, 46], floor: 'park', straw: 'Leaves', bank: 'stone' }, palmetto: 0.25, edgeMix: { shrub: 1 }, holes: [
+  { par: 4, yds: 420, path: [[0,0],[-4,215],[12,420]], fw: [170,405,34], cor: 38, green: { rx: 13, ry: 13, rot: 6 }, pin: [2,2],
+    bunkers: [[240,17,11,5,0],[410,-15,6,4,0]], waste: [], water: [], elev: [[0,52],[240,30],[420,22]] },
+  { par: 3, yds: 180, path: [[0,0],[-2,92],[6,182]], fw: null, cor: 36, green: { rx: 12, ry: 14, rot: 8 }, pin: [2,-2],
+    bunkers: [[176,-14,6,4,0],[194,9,5,3,0]], waste: [], water: [], elev: [[0,22],[182,36]] },
+  // drivable from the hilltop tee, 45 feet down: a 112% draw runs onto the green past the stand of maples on the right; a 100% drive stops about 40 short, and the landing area tilts left toward the bunkers
+  { par: 4, yds: 350, path: [[0,0],[10,160],[-4,290],[-12,350]], fw: [150,338,30], cor: 34, standXY: [[22,300,9]], green: { rx: 13, ry: 14, rot: -8 }, pin: [-1,1],
+    bunkers: [[262,-17,10,5,0],[318,-19,8,5,0],[360,12,5,4,0]], waste: [], tilt: [[252,330,-3]], water: [], elev: [[0,60],[120,40],[350,15]] },
+  { par: 4, yds: 445, path: [[0,0],[2,232],[-96,430]], fw: [175,430,34], cor: 36, oaksXY: [[-18,226]], green: { rx: 13, ry: 12, rot: -10 }, pin: [-2,2],
+    bunkers: [[250,18,11,5,0],[440,13,5,4,0]], waste: [], water: [], elev: [[0,18],[232,30],[445,44]] },
+  // a gap in the hedgerow trees near the tee: a 112% drive carries the woods inside the corner to a pad on the line at the green, in reach in two; a 100% drive comes down in the trees. The way round lays up at the corner
+  { par: 5, yds: 565, path: [[0,0],[0,205],[-268,446]], fw: [135,550,30], cor: 30, green: { rx: 13, ry: 12, rot: -8 }, pin: [-2,2],
+    altXY: [[-6,10,-45,75,0,16],[-146,243,-169,282,26,30]], bunkers: [[217,16,10,5,0],[557,14,5,4,0],[569,-14,5,4,0]], waste: [], water: [], elev: [[0,14],[565,16]] },
+  { par: 4, yds: 480, path: [[0,0],[6,250],[-2,480]], fw: [180,465,36], cor: 38, green: { rx: 14, ry: 13, rot: -4 }, pin: [-2,-3],
+    bunkers: [[262,-18,11,5,0],[280,18,10,5,0],[470,15,6,4,0]], waste: [], water: [], elev: [[0,20],[260,34],[480,52]] },
+  { par: 3, yds: 165, path: [[0,0],[-3,80],[2,166]], fw: null, cor: 34, green: { rx: 12, ry: 13, rot: -6 }, pin: [-1,2],
+    bunkers: [[176,-12,5,4,0],[160,14,5,4,0]], waste: [], water: [{ t: 'pond', x: -4, y: 96, rx: 34, ry: 26, rot: 4 }], elev: [[0,58],[40,52],[100,32],[166,30]] },
+  // a long par 4 bending back on itself: the way round is a drive to the corner and a mid iron, but a 112% drive over the maples finds a strip that runs onto the green; a 100% drive comes down in the trees
+  { par: 4, yds: 440, path: [[0,0],[0,290],[148,256]], fw: [150,428,30], cor: 28, green: { rx: 15, ry: 14, rot: 52 }, pin: [1,-3],
+    altXY: [[5,9,40,69,0,16],[139,240,141,245,22,28]], bunkers: [[304,-16,10,5,0],[443,-14,5,4,0]], waste: [], water: [], elev: [[0,14],[440,16]] },
+  { par: 4, yds: 445, path: [[0,0],[-6,240],[64,430]], fw: [175,430,34], cor: 36, oaksXY: [[15,236]], green: { rx: 13, ry: 13, rot: 12 }, pin: [2,-2],
+    bunkers: [[256,-17,11,5,0],[438,-13,5,4,0]], waste: [], water: [], elev: [[0,30],[445,16]] },
+  { par: 4, yds: 440, path: [[0,0],[8,230],[-6,330],[-2,440]], fw: [170,425,34], cor: 36, stand: [[262,-3,7]], green: { rx: 13, ry: 12, rot: 2 }, pin: [1,2],
+    bunkers: [[300,17,10,5,0],[432,-14,5,4,0]], waste: [], water: [], elev: [[0,16],[440,40]] },
+  // a three-shotter for a 100% drive; a 112% draw runs through the neck between the big bunker on the right and the stand of maples on the left, about 250 out, in reach of a 3 wood
+  { par: 5, yds: 580, path: [[0,0],[12,240],[0,420],[16,580]], fw: [190,565,34], cor: 36, standXY: [[-20,336,10]], green: { rx: 14, ry: 13, rot: 5 }, pin: [1,2],
+    bunkers: [[565,-15,6,4,0],[572,15,6,4,0]], bunkersXY: [[27,318,13,6,0]], waste: [], water: [], elev: [[0,20],[580,22]] },
+  { par: 3, yds: 200, path: [[0,0],[4,104],[-4,201]], fw: [160,190,26], cor: 34, green: { rx: 13, ry: 14, rot: -4 }, pin: [-2,2],
+    bunkers: [[194,-14,6,4,0],[206,14,5,4,0]], waste: [], water: [], elev: [[0,48],[201,24]] },
+  { par: 4, yds: 465, path: [[0,0],[-5,258],[31,465]], fw: [180,450,34], cor: 36, green: { rx: 13, ry: 13, rot: 8 }, pin: [2,2],
+    bunkers: [[272,17,11,5,0],[456,-14,5,4,0]], waste: [], water: [], elev: [[0,24],[258,14],[465,30]] },
+  // over the farm pond: a 112% drive carries the water and the trees past it to a pad 50 short of the green, a wedge in two; a 100% drive comes down in the trees. The way round lays up at the corner
+  { par: 5, yds: 565, path: [[0,0],[0,215],[345,154]], fw: [145,550,30], cor: 30, green: { rx: 13, ry: 12, rot: 8 }, pin: [2,2],
+    altXY: [[7,3,68,31,0,18],[258,115,300,134,28,30]], bunkers: [[227,-16,10,5,0],[557,-14,5,4,0],[569,14,5,4,0]], waste: [], water: [{ t: 'pond', x: 158, y: 70, rx: 72, ry: 46, rot: 24 }], elev: [[0,14],[565,16]] },
+  { par: 4, yds: 425, path: [[0,0],[4,220],[-28,425]], fw: [170,410,34], cor: 36, green: { rx: 13, ry: 12, rot: -8 }, pin: [-2,2],
+    bunkers: [[238,-17,10,5,0],[255,17,10,5,0],[418,13,5,4,0]], waste: [], water: [], elev: [[0,40],[425,20]] },
+  { par: 4, yds: 385, path: [[0,0],[-6,120],[4,260],[-8,385]], fw: [150,372,32], cor: 34, green: { rx: 13, ry: 13, rot: -6 }, pin: [-2,2],
+    bunkers: [[230,-16,10,5,0],[272,17,10,5,0],[392,12,5,4,0]], waste: [], water: [{ t: 'pond', x: 36, y: 330, rx: 16, ry: 26, rot: 0 }], elev: [[0,14],[385,24]] },
+  { par: 3, yds: 215, path: [[0,0],[-4,110],[3,214]], fw: [170,204,26], cor: 34, green: { rx: 13, ry: 14, rot: 4 }, pin: [2,-2],
+    bunkers: [[206,15,6,4,0],[222,-8,5,3,0]], waste: [], water: [], elev: [[0,36],[214,30]] },
+  // home: up the hill past the barn pond, which takes a second shot pulled left
+  { par: 5, yds: 575, path: [[0,0],[-6,280],[14,440],[6,575]], fw: [190,560,34], cor: 36, green: { rx: 14, ry: 14, rot: -2 }, pin: [-2,2],
+    bunkers: [[296,17,11,5,0],[452,-15,10,5,0],[566,14,6,4,0]], waste: [], water: [{ t: 'pond', x: -36, y: 500, rx: 30, ry: 16, rot: 80 }], elev: [[0,20],[575,46]] },
+] },
+{ id: 'cardinal-oaks', name: 'Cardinal Oaks', place: 'Central Ohio', sub: 'Oak Course', seed: 32, mix: [0, 0], sig: 1,
+  flora: { hardwood: 0.85, pine: 0.15 }, treeK: 0.85, corner: 'bigHardwood', wind: [4, 16], far: [112, 116, 66], lakeC: 0x24434a, fog: 0.00026, fogC: 0xd2d0c8,
+  leaf: { hardwood: [[0.62, 0.24, 0.08, 1.6], [0.72, 0.14, 0.06, 1.2], [0.7, 0.46, 0.14, 1.4], [0.5, 0.36, 0.12, 1], [0.36, 0.42, 0.14, 0.6]], shrub: [[0.66, 0.16, 0.08, 1], [0.38, 0.4, 0.14, 1]] },
+  pal: { rough: [74, 100, 46], floor: 'park', straw: 'Leaves', bank: 'stone' }, palmetto: 0.3, edgeMix: { shrub: 1 }, holes: [
+  // a lone oak stands in the right half of the fairway at 262
+  { par: 4, yds: 435, path: [[0,0],[-4,245],[6,435]], fw: [175,420,36], cor: 34, oaksXY: [[9,262]], green: { rx: 13, ry: 13, rot: 4 }, pin: [1,2],
+    bunkers: [[240,-18,10,5,0],[426,15,6,4,0]], waste: [], water: [], elev: [[0,14],[435,12]] },
+  // drivable: a 112% draw started out over the pond on the right runs onto the green; drawn too much it finds the oak short left of the green; a 100% drive stops about 45 short
+  { par: 4, yds: 335, path: [[0,0],[-3,170],[5,250],[0,333]], fw: [150,320,30], cor: 32, oaksXY: [[-22,300]], green: { rx: 13, ry: 14, rot: 2 }, pin: [0,1],
+    bunkers: [[244,-17,10,5,0],[344,-12,5,4,0]], waste: [], tilt: [[250,322,3.5]], water: [{ t: 'pond', x: 40, y: 298, rx: 34, ry: 18, rot: 88 }], elev: [[0,10],[335,10]] },
+  { par: 3, yds: 185, path: [[0,0],[3,96],[-4,186]], fw: null, cor: 34, oaksXY: [[-26,176]], green: { rx: 12, ry: 14, rot: -6 }, pin: [-2,2],
+    bunkers: [[196,10,5,4,0],[176,15,5,4,0]], waste: [], water: [], elev: [[0,16],[186,12]] },
+  { par: 4, yds: 450, path: [[0,0],[5,230],[-8,340],[-2,450]], fw: [170,435,36], cor: 34, stand: [[268,-2,7]], green: { rx: 13, ry: 12, rot: 4 }, pin: [1,2],
+    bunkers: [[300,17,10,5,0],[442,-14,5,4,0]], waste: [], water: [], elev: [[0,12],[450,16]] },
+  // a gap in the oaks near the tee: a 112% drive carries the woods inside the square corner to a pad on the line at the green, in reach in two; a 100% drive comes down in the trees. The way round lays up at the corner
+  { par: 5, yds: 565, path: [[0,0],[0,300],[-264,323]], fw: [230,550,30], cor: 30, green: { rx: 13, ry: 12, rot: -8 }, pin: [-2,2],
+    altXY: [[-8,9,-56,68,0,16],[-178,218,-208,254,26,30]], bunkers: [[312,16,10,5,0],[557,14,5,4,0],[569,-14,5,4,0]], waste: [], water: [], elev: [[0,14],[565,16]] },
+  { par: 4, yds: 480, path: [[0,0],[2,265],[-26,480]], fw: [180,465,34], cor: 34, oaksXY: [[-14,286]], green: { rx: 14, ry: 13, rot: -6 }, pin: [-2,-2],
+    bunkers: [[262,17,11,5,0],[470,14,6,4,0]], waste: [], water: [], elev: [[0,10],[480,14]] },
+  // a long par 4 round a square corner: the way round is a drive and a mid iron, but a 112% drive over the oaks finds a strip that runs onto the green; a 100% drive comes down in the trees
+  { par: 4, yds: 435, path: [[0,0],[0,232],[-204,218]], fw: [150,423,30], cor: 28, green: { rx: 15, ry: 14, rot: -47 }, pin: [-1,-3],
+    altXY: [[-7,7,-55,58,0,16],[-189,202,-195,209,22,28]], bunkers: [[246,16,10,5,0],[438,14,5,4,0]], waste: [], water: [], elev: [[0,14],[435,16]] },
+  { par: 3, yds: 210, path: [[0,0],[-5,100],[2,211]], fw: [165,200,26], cor: 34, green: { rx: 13, ry: 14, rot: 6 }, pin: [2,-2],
+    bunkers: [[204,15,6,4,0],[218,-9,5,4,0]], waste: [], water: [{ t: 'pond', x: -34, y: 190, rx: 18, ry: 12, rot: 90 }], elev: [[0,12],[211,14]] },
+  { par: 5, yds: 570, path: [[0,0],[8,290],[-14,440],[-6,570]], fw: [190,555,34], cor: 34, oaksXY: [[-34,470]], green: { rx: 14, ry: 13, rot: -4 }, pin: [-1,2],
+    bunkers: [[305,-17,11,5,0],[452,15,10,5,0],[560,15,6,4,0]], waste: [], water: [], elev: [[0,12],[570,16]] },
+  // a three-shotter for a 100% drive; a 112% draw runs through the neck between a stand of oaks on the left and a lone oak on the right, about 250 out, in reach of a 3 wood round the bend
+  { par: 5, yds: 575, path: [[0,0],[4,250],[-12,400],[-46,570]], fw: [190,560,34], cor: 34, standXY: [[-28,334,9]], oaksXY: [[18,346]], green: { rx: 14, ry: 13, rot: -10 }, pin: [0,2],
+    bunkers: [[300,15,10,5,0],[566,15,6,4,0],[560,-15,6,4,0]], waste: [], water: [], elev: [[0,12],[575,10]] },
+  { par: 4, yds: 440, path: [[0,0],[0,228],[-90,422]], fw: [170,428,34], cor: 34, oaksXY: [[-18,224]], green: { rx: 13, ry: 12, rot: -12 }, pin: [-2,2],
+    bunkers: [[246,17,11,5,0],[436,13,5,4,0]], waste: [], water: [], elev: [[0,14],[440,10]] },
+  { par: 3, yds: 165, path: [[0,0],[2,86],[-3,166]], fw: null, cor: 32, oaksXY: [[-14,128]], green: { rx: 12, ry: 13, rot: -4 }, pin: [2,2],
+    bunkers: [[176,10,5,4,0],[156,15,5,4,0]], waste: [], water: [], elev: [[0,12],[166,10]] },
+  // over the pond: a 112% drive carries the water and the oaks past it to a pad on the line at the green, about 215 out, in reach of a 3 wood; a 100% drive comes down in the trees. The way round lays up at the corner
+  { par: 5, yds: 590, path: [[0,0],[0,260],[233,493]], fw: [190,575,30], cor: 30, green: { rx: 13, ry: 12, rot: 8 }, pin: [2,2],
+    altXY: [[3,7,32,68,0,18],[120,255,140,297,28,30]], bunkers: [[272,-16,10,5,0],[582,-14,5,4,0],[594,14,5,4,0]], waste: [], water: [{ t: 'pond', x: 74, y: 156, rx: 72, ry: 40, rot: 65 }], elev: [[0,14],[590,16]] },
+  { par: 4, yds: 465, path: [[0,0],[6,255],[50,465]], fw: [180,450,34], cor: 34, green: { rx: 13, ry: 13, rot: 10 }, pin: [2,-2],
+    bunkers: [[270,-17,11,5,0],[290,17,10,5,0],[456,-14,5,4,0]], waste: [], water: [{ t: 'pond', x: 74, y: 430, rx: 20, ry: 14, rot: 30 }], elev: [[0,10],[465,14]] },
+  // a lone oak stands in the left half of the fairway at 245
+  { par: 4, yds: 430, path: [[0,0],[3,235],[-12,430]], fw: [170,415,36], cor: 34, oaksXY: [[-9,245]], green: { rx: 13, ry: 13, rot: -4 }, pin: [-2,2],
+    bunkers: [[268,16,10,5,0],[420,14,6,4,0]], waste: [], water: [], elev: [[0,12],[430,12]] },
+  { par: 3, yds: 195, path: [[0,0],[6,100],[1,196]], fw: null, cor: 32, green: { rx: 12, ry: 14, rot: 4 }, pin: [1,2],
+    bunkers: [[206,-10,5,4,0],[186,-15,5,4,0]], waste: [], water: [{ t: 'pond', x: 2, y: 118, rx: 34, ry: 24, rot: 0 }], elev: [[0,14],[196,12]] },
+  // drivable across the pond: a 112% drive carries the water inside the corner onto a strip that runs onto the green; a 100% drive comes down in the pond. The way round is an iron to the corner and a wedge in
+  { par: 4, yds: 355, path: [[0,0],[0,210],[132,269]], fw: [150,343,30], cor: 28, green: { rx: 15, ry: 14, rot: 33 }, pin: [1,-3],
+    altXY: [[4,7,40,81,0,16],[124,252,126,257,22,28]], bunkers: [[224,-16,10,5,0],[358,-14,5,4,0]], waste: [], water: [{ t: 'pond', x: 83, y: 170, rx: 79, ry: 26, rot: 64 }], elev: [[0,14],[355,16]] },
+  // home: a creek crosses at 300, short of a 100% drive but in reach of a 112% one
+  { par: 4, yds: 460, path: [[0,0],[-6,250],[8,460]], fw: [180,445,36], cor: 34, green: { rx: 15, ry: 14, rot: 2 }, pin: [1,-3],
+    bunkers: [[258,17,10,5,0],[450,-15,6,4,0],[456,15,6,4,0]], waste: [], water: [{ t: 'lake', s0: 296, s1: 310, d0: -80, d1: 80 }], elev: [[0,12],[460,14]] },
+] },
+// ---- Quarry: fairways on ledges between flooded pits with rock walls ----
+// Quarry: old stone quarries, fairways on ledges between flooded pits. The pits are ponds sunk 30 to 90 feet below the
+// land (coast + coves turn their shores into rock walls); a ball on the wall rolls into the water.
+{ id: 'peregrine-quarry', name: 'Peregrine Quarry', place: 'Barre, Vermont', sub: 'Granite Course', seed: 33, mix: [0, 0], sig: 1,
+  coast: true, coves: true, quarry: true, beach: 0, flora: { fir: 0.4, aspen: 0.35, pine: 0.25 }, treeK: 0.5, corner: 'bigFir', mounds: 2, wind: [3, 16], far: [112, 114, 94], lakeC: 0x1d4f5a,
+  leaf: { aspen: [[0.86, 0.72, 0.18, 2], [0.4, 0.5, 0.16, 1]], shrub: [[0.3, 0.4, 0.14, 1]] }, rock: [1.05, 1.05, 1.05],
+  pal: { rough: [92, 104, 58], scrub: 'rubble', straw: 'Rubble', cliff: [150, 148, 142] }, tuft: [1.2, 1.15, 0.95], palmetto: 0, edgeMix: { shrub: 1 }, holes: [
+  { par: 4, yds: 436, path: [[0,0],[0,245],[-20,420]], fw: [170,421,32], cor: 32, green: { rx: 13, ry: 12, rot: -6 }, pin: [-2,2],
+    bunkers: [[262,18,12,6,0],[410,15,7,4,0]], waste: [], water: [{ t: 'pond', x: -80, y: 255, rx: 60, ry: 36, rot: 90 }], wl: 34, elev: [[0,72],[420,66]] },
+  // over the pit: lay up at the corner, about 300 from the green, or carry the pit on the straight line to the
+  // green (112%, or a 100% draw) to a strip of fairway running at the green, in reach in two
+  { par: 5, yds: 555, path: [[0,0],[0,235],[-350.8,315.8]], fw: [175,540,32], cor: 30, green: { rx: 13, ry: 13, rot: -12 }, pin: [-2,2],
+    altXY: [[-208.8,188,-261.6,235.5,24,27],[0,18,-208.8,188,0,60]], bunkers: [[227,16,10,5,0],[545,15,7,4,0]], waste: [], water: [{ t: 'pond', x: -145.3, y: 130.8, rx: 71.5, ry: 58, rot: 138 }], elev: [[0,66],[555,64]] },
+  { par: 3, yds: 186, path: [[0,0],[9,186]], fw: null, cor: 30, green: { rx: 12, ry: 13, rot: 6 }, pin: [2,2],
+    bunkers: [[196,10,5,4,0]], waste: [], water: [{ t: 'pond', x: 0, y: 95, rx: 60, ry: 55, rot: 0 }], elev: [[0,76],[185,68]] },
+  // drivable: a 100% drive stops about 50 short; a 112% draw can run on, but the landing area tilts left into the pit
+  { par: 4, yds: 336, path: [[0,0],[3,170],[-14,336]], fw: [150,326,32], cor: 30, green: { rx: 14, ry: 15, rot: -8 }, pin: [-2,1],
+    bunkers: [[288,17,10,5,0]], bunkersXY: [[-33,312,8,5,0],[-37,325,6,4,0]], waste: [], tilt: [[245,330,-4]], water: [{ t: 'pond', x: -74, y: 292, rx: 62, ry: 26, rot: 84 }], elev: [[0,70],[336,64]] },
+  { par: 4, yds: 470, path: [[0,0],[5,250],[30,455]], fw: [180,455,34], cor: 34, green: { rx: 14, ry: 13, rot: 8 }, pin: [2,3],
+    bunkers: [[265,-20,12,6,0],[445,-17,7,4,0]], waste: [], water: [{ t: 'pond', x: 98, y: 440, rx: 40, ry: 32, rot: 0 }], elev: [[0,86],[200,66],[455,62]] },
+  { par: 3, yds: 164, path: [[0,0],[-11,164]], fw: null, cor: 30, green: { rx: 11, ry: 12, rot: -4 }, pin: [-1,2],
+    bunkers: [[178,8,5,4,0]], waste: [], water: [{ t: 'pond', x: -9, y: 92, rx: 50, ry: 38, rot: 0 }, { t: 'pond', x: -60, y: 167, rx: 34, ry: 16, rot: 90 }], elev: [[0,74],[165,66]] },
+  { par: 4, yds: 430, path: [[0,0],[0,240],[50,430]], fw: [175,415,32], cor: 32, oaksXY: [[24,236],[31,266]], green: { rx: 13, ry: 12, rot: 10 }, pin: [2,2],
+    bunkers: [[262,-18,12,6,0],[420,-16,7,4,0]], waste: [], water: [{ t: 'pond', x: -40, y: 395, rx: 36, ry: 28, rot: 90 }], elev: [[0,66],[430,70]] },
+  // drivable round the pit: an iron to the corner and a wedge is the safe way; a 112% drive across the pit finds a
+  // strip that runs onto the green, and a 100% drive on that line comes down in the water
+  { par: 4, yds: 374, path: [[0,0],[0,225],[-179.9,247.6]], fw: [150,361,32], cor: 26, green: { rx: 13, ry: 14, rot: 0 }, pin: [0,1],
+    altXY: [[-165.2,227.3,-172.8,237.9,24,27],[0,18,-165.2,227.3,0,60]], bunkers: [[213,15,8,4,0]], waste: [], water: [{ t: 'pond', x: -113.1, y: 155.7, rx: 74.5, ry: 42, rot: 126 }], elev: [[0,66],[374,64]] },
+  // a 100% drive stops in the wide part, about 300 out; a 112% draw runs on to the ledge between the two pits, about
+  // 250 out and in reach in two; either side of the ledge is a pit
+  { par: 5, yds: 580, path: [[0,0],[0,580]], fw: [190,568,36], cor: 36, green: { rx: 14, ry: 13, rot: 0 }, pin: [0,3],
+    bunkers: [[250,-20,12,6,0],[450,20,10,5,0],[575,-16,7,4,0]], waste: [], water: [{ t: 'pond', x: -54, y: 335, rx: 38, ry: 22, rot: 90 }, { t: 'pond', x: 54, y: 335, rx: 38, ry: 22, rot: 90 }], elev: [[0,70],[580,66]] },
+  { par: 4, yds: 460, path: [[0,0],[-5,250],[5,445]], fw: [180,445,34], cor: 34, green: { rx: 14, ry: 13, rot: 4 }, pin: [2,2],
+    bunkers: [[258,-20,12,6,0],[436,-16,7,4,0]], waste: [], water: [{ t: 'pond', x: 68, y: 320, rx: 50, ry: 30, rot: 80 }], elev: [[0,96],[180,72],[445,68]] },
+  { par: 4, yds: 465, path: [[0,0],[0,250],[-40,465]], fw: [180,450,32], cor: 32, oaksXY: [[-22,240],[-28,270]], green: { rx: 13, ry: 12, rot: -8 }, pin: [-2,2],
+    bunkers: [[265,20,12,6,0],[455,15,7,4,0]], waste: [], water: [{ t: 'pond', x: -92, y: 492, rx: 26, ry: 30, rot: 90 }], elev: [[0,66],[465,72]] },
+  { par: 3, yds: 220, path: [[0,0],[-4,220]], fw: null, cor: 30, green: { rx: 13, ry: 14, rot: -4 }, pin: [-2,2],
+    bunkers: [[232,8,5,4,0],[212,-16,6,4,0]], waste: [], water: [{ t: 'pond', x: -2, y: 108, rx: 72, ry: 48, rot: 90 }], elev: [[0,84],[220,70]] },
+  // over two pits the other way: the corner lay-up leaves about 290; the straight line carries both pits to a
+  // strip running at the green
+  { par: 5, yds: 555, path: [[0,0],[0,268],[299.2,383]], fw: [175,540,32], cor: 30, green: { rx: 13, ry: 13, rot: 12 }, pin: [2,2],
+    altXY: [[173,221.4,219.2,280.5,24,27],[0,18,173,221.4,0,60]], bunkers: [[260,-16,10,5,0],[545,-15,7,4,0]], waste: [], water: [{ t: 'pond', x: 91, y: 141.6, rx: 45.4, ry: 52.7, rot: 64 }, { t: 'pond', x: 152.8, y: 165.4, rx: 45.4, ry: 55.8, rot: 37 }], elev: [[0,66],[555,64]] },
+  { par: 4, yds: 440, path: [[0,0],[4,260],[-6,440]], fw: [180,425,34], cor: 34, green: { rx: 14, ry: 13, rot: -4 }, pin: [-2,2],
+    bunkers: [[270,18,12,6,0],[430,16,7,4,0]], waste: [], water: [{ t: 'pond', x: -78, y: 412, rx: 40, ry: 26, rot: 70 }], elev: [[0,70],[440,64]] },
+  // drivable through the gap: a 100% drive stops short of two pits that pinch the approach; a 112% drive through the
+  // gap runs onto the green behind them
+  { par: 4, yds: 336, path: [[0,0],[-34,150],[-48.5,331.5]], fw: [150,322,30], cor: 30, green: { rx: 13, ry: 15, rot: 0 }, pin: [0,1],
+    bunkers: [[250,16,10,5,0]], waste: [], water: [{ t: 'pond', x: -87.2, y: 295, rx: 20, ry: 18, rot: 104 }, { t: 'pond', x: -4.3, y: 308.1, rx: 20, ry: 18, rot: 94 }], elev: [[0,70],[336,66]] },
+  { par: 3, yds: 161, path: [[0,0],[-8,161]], fw: null, cor: 30, green: { rx: 11, ry: 12, rot: 6 }, pin: [1,2],
+    bunkers: [[172,-8,5,4,0]], waste: [], water: [{ t: 'pond', x: -3, y: 88, rx: 44, ry: 36, rot: 0 }, { t: 'pond', x: 41, y: 160, rx: 32, ry: 16, rot: 90 }], elev: [[0,78],[160,66]] },
+  { par: 4, yds: 492, path: [[0,0],[0,260],[25,480]], fw: [180,477,34], cor: 34, green: { rx: 14, ry: 13, rot: 6 }, pin: [2,-2],
+    bunkers: [[275,-19,12,6,0],[470,-16,7,4,0]], waste: [], water: [{ t: 'pond', x: 78, y: 255, rx: 70, ry: 30, rot: 90 }], elev: [[0,72],[480,64]] },
+  { par: 5, yds: 560, path: [[0,0],[-10,280],[0,560]], fw: [190,472,34], cor: 34, green: { rx: 14, ry: 14, rot: 0 }, pin: [0,-2],
+    bunkers: [[290,18,12,6,0],[555,-17,7,4,0],[570,16,6,4,0]], waste: [], water: [{ t: 'pond', x: -2, y: 505, rx: 45, ry: 18, rot: 0 }], elev: [[0,66],[560,70]] },
+] },
+{ id: 'swallow-pit', name: 'Swallow Pit', place: 'Southern Indiana', sub: 'Limestone Course', seed: 34, mix: [0, 0], sig: 7,
+  coast: true, coves: true, quarry: true, beach: 0, flora: { hardwood: 0.6, aspen: 0.2, pine: 0.2 }, treeK: 0.55, corner: 'bigHardwood', mounds: 2, wind: [3, 15], far: [128, 124, 96], lakeC: 0x2a6f6a,
+  leaf: { hardwood: [[0.32, 0.44, 0.14, 2], [0.42, 0.52, 0.16, 1]], aspen: [[0.5, 0.6, 0.2, 1]], shrub: [[0.3, 0.42, 0.14, 1]] }, rock: [1.15, 1.1, 0.98],
+  pal: { rough: [96, 108, 60], scrub: 'rubble', straw: 'Rubble', cliff: [214, 204, 178] }, tuft: [1.2, 1.15, 0.95], palmetto: 0, edgeMix: { shrub: 1 }, holes: [
+  { par: 4, yds: 428, path: [[0,0],[2,255],[17,415]], fw: [175,413,34], cor: 32, green: { rx: 13, ry: 13, rot: 6 }, pin: [2,2],
+    bunkers: [[262,-19,12,6,0],[405,16,7,4,0]], waste: [], water: [{ t: 'pond', x: 74, y: 248, rx: 50, ry: 28, rot: 90 }], elev: [[0,95],[110,95],[160,70],[415,70]] },
+  { par: 4, yds: 448, path: [[0,0],[0,236],[-46,448]], fw: [180,433,32], cor: 32, oaksXY: [[-22,230],[-30,262]], green: { rx: 13, ry: 12, rot: -8 }, pin: [-2,2],
+    bunkers: [[255,20,12,6,0],[438,15,7,4,0]], waste: [], water: [{ t: 'pond', x: -82, y: 215, rx: 45, ry: 30, rot: 90 }], elev: [[0,70],[270,70],[310,86],[448,86]] },
+  // a 100% drive stops in the wide part, about 300 out; a 112% draw threads the neck between the pit on the left and
+  // the trees on the right, about 255 out, in reach in two
+  { par: 5, yds: 580, path: [[0,0],[0,330],[48,580]], fw: [185,567,38], cor: 36, standXY: [[44,336,18]], green: { rx: 14, ry: 13, rot: 6 }, pin: [2,2],
+    bunkers: [[245,-21,12,6,0],[470,-14,9,5,0],[572,16,7,4,0]], waste: [], water: [{ t: 'pond', x: -47, y: 338, rx: 34, ry: 20, rot: 90 }], elev: [[0,70],[580,66]] },
+  { par: 3, yds: 200, path: [[0,0],[-3,200]], fw: null, cor: 30, green: { rx: 12, ry: 14, rot: -4 }, pin: [-2,2],
+    bunkers: [[212,8,5,4,0]], waste: [], water: [{ t: 'pond', x: 0, y: 100, rx: 55, ry: 50, rot: 0 }], elev: [[0,96],[60,96],[200,70]] },
+  // drivable to a green on a point: a 100% drive stops about 50 short; a 112% draw started out over the pit on the
+  // right runs onto it, and the landing area tilts toward the pit
+  { par: 4, yds: 340, path: [[0,0],[-24,172],[42.7,329.3]], fw: [150,318,30], cor: 30, green: { rx: 13, ry: 14, rot: 10 }, pin: [1,0],
+    bunkers: [[240,-17,10,5,0]], bunkersXY: [[20.6,329.7,6,4,6]], waste: [], tilt: [[250,325,4]], water: [{ t: 'pond', x: 112.5, y: 285.8, rx: 40, ry: 46, rot: 84 }, { t: 'pond', x: 70.2, y: 380.7, rx: 34, ry: 16, rot: -6 }], elev: [[0,70],[340,66]] },
+  { par: 4, yds: 465, path: [[0,0],[4,260],[-6,465]], fw: [180,450,34], cor: 34, green: { rx: 14, ry: 13, rot: -4 }, pin: [-2,2],
+    bunkers: [[275,18,12,6,0],[455,-16,7,4,0]], waste: [], water: [{ t: 'pond', x: -74, y: 272, rx: 60, ry: 30, rot: 90 }, { t: 'pond', x: 84, y: 445, rx: 35, ry: 30, rot: 0 }], elev: [[0,70],[465,66]] },
+  { par: 3, yds: 172, path: [[0,0],[4,172]], fw: null, cor: 30, green: { rx: 11, ry: 12, rot: 6 }, pin: [1,2],
+    bunkers: [[184,-8,5,4,0]], waste: [], water: [{ t: 'pond', x: -32, y: 92, rx: 45, ry: 38, rot: 0 }, { t: 'pond', x: 56, y: 172, rx: 30, ry: 16, rot: 90 }], elev: [[0,72],[172,66]] },
+  // over the pit to the right: lay up at the corner, or carry two pits on the straight line to a strip running at
+  // the green (it takes 112%)
+  { par: 5, yds: 566, path: [[0,0],[0,215],[390.7,273.6]], fw: [175,551,32], cor: 30, green: { rx: 13, ry: 13, rot: 12 }, pin: [2,2],
+    altXY: [[230.2,161.2,288.3,201.9,24,27],[0,18,230.2,161.2,0,60]], bunkers: [[207,-16,10,5,0],[556,-15,7,4,0]], waste: [], water: [{ t: 'pond', x: 120.7, y: 101.6, rx: 50.2, ry: 47.6, rot: 47 }, { t: 'pond', x: 189.8, y: 112.4, rx: 50.2, ry: 50.4, rot: 20 }], elev: [[0,66],[566,64]] },
+  { par: 4, yds: 432, path: [[0,0],[0,242],[44,432]], fw: [175,417,32], cor: 32, oaksXY: [[22,238],[28,268]], green: { rx: 13, ry: 12, rot: 10 }, pin: [2,2],
+    bunkers: [[260,-18,12,6,0],[422,-16,7,4,0]], waste: [], water: [{ t: 'pond', x: -48, y: 402, rx: 34, ry: 26, rot: 90 }], elev: [[0,98],[100,98],[160,72],[432,72]] },
+  { par: 4, yds: 452, path: [[0,0],[-6,248],[6,438]], fw: [175,437,40], cor: 36, green: { rx: 14, ry: 13, rot: 4 }, pin: [2,2],
+    bunkers: [[260,-22,12,6,0],[428,-16,7,4,0]], waste: [], water: [{ t: 'pond', x: 78, y: 268, rx: 48, ry: 26, rot: 90 }], elev: [[0,72],[438,70]] },
+  // over a long narrow pit beside the first leg: lay up at the corner, or carry the pit to a strip running at the green
+  { par: 5, yds: 536, path: [[0,0],[0,282],[-253.3,405.4]], fw: [175,521,32], cor: 30, green: { rx: 13, ry: 13, rot: -12 }, pin: [-2,2],
+    altXY: [[-148.9,238.3,-190.8,305.3,24,27],[0,18,-148.9,238.3,0,60]], bunkers: [[274,16,10,5,0],[526,15,7,4,0]], waste: [], water: [{ t: 'pond', x: -119.7, y: 165.2, rx: 63.5, ry: 36, rot: 122 }], elev: [[0,66],[536,64]] },
+  // drivable round the pit to the right: a 112% drive across the pit lands on a strip that runs onto the green;
+  // the way round is an iron to the corner and a wedge
+  { par: 4, yds: 380, path: [[0,0],[0,205],[212.1,212.1]], fw: [150,367,32], cor: 26, green: { rx: 13, ry: 14, rot: 0 }, pin: [0,1],
+    altXY: [[198.7,198.7,203.6,203.6,24,27],[0,18,198.7,198.7,0,60]], bunkers: [[193,-15,8,4,0]], waste: [], water: [{ t: 'pond', x: 136.1, y: 136.1, rx: 74.5, ry: 48, rot: 45 }], elev: [[0,66],[380,64]] },
+  { par: 3, yds: 226, path: [[0,0],[-9,226]], fw: null, cor: 30, green: { rx: 13, ry: 14, rot: 6 }, pin: [2,2],
+    bunkers: [[236,-8,5,4,0],[214,16,6,4,0]], waste: [], water: [{ t: 'pond', x: -5, y: 110, rx: 74, ry: 46, rot: 90 }], elev: [[0,66],[225,58]] },
+  { par: 4, yds: 472, path: [[0,0],[0,252],[22,472]], fw: [180,457,34], cor: 34, green: { rx: 14, ry: 13, rot: 6 }, pin: [2,-2],
+    bunkers: [[262,-19,12,6,0],[464,16,7,4,0]], waste: [], water: [{ t: 'pond', x: -58, y: 472, rx: 30, ry: 28, rot: 90 }], wl: 22, elev: [[0,70],[200,70],[245,55],[472,55]] },
+  // drivable across the corner of a diagonal pit: a 100% drive on the line to the green comes down in it, and the
+  // fairway to the left leaves a pitch; a 112% drive carries the corner and runs onto the green
+  { par: 4, yds: 355, path: [[0,0],[-44,150],[85.8,317.1]], fw: [140,316,30], cor: 30, green: { rx: 13, ry: 14, rot: 12 }, pin: [1,1],
+    altXY: [[4.7,17.4,65.7,241.6,0,44],[72.5,268.8,81.9,303.6,26,30]], bunkers: [[220,-16,10,5,0]], bunkersXY: [[99.4,304,6,4,12]], waste: [], water: [{ t: 'pond', x: 106.2, y: 220.7, rx: 46, ry: 24, rot: 138 }], elev: [[0,58],[355,56]] },
+  { par: 3, yds: 154, path: [[0,0],[10,154]], fw: null, cor: 30, green: { rx: 11, ry: 12, rot: -6 }, pin: [-1,2],
+    bunkers: [[166,8,5,4,0]], waste: [], water: [{ t: 'pond', x: 0, y: 82, rx: 40, ry: 34, rot: 0 }], elev: [[0,56],[155,74]] },
+  { par: 4, yds: 452, path: [[0,0],[0,246],[-37,452]], fw: [180,437,32], cor: 32, green: { rx: 13, ry: 12, rot: -8 }, pin: [-2,2],
+    bunkers: [[268,-19,12,6,0],[442,15,7,4,0]], waste: [], water: [{ t: 'pond', x: 76, y: 262, rx: 52, ry: 28, rot: 90 }], elev: [[0,74],[452,70]] },
+  { par: 5, yds: 562, path: [[0,0],[-12,282],[2,562]], fw: [190,474,34], cor: 34, green: { rx: 14, ry: 14, rot: 0 }, pin: [0,-2],
+    bunkers: [[290,18,12,6,0],[557,-17,7,4,0],[572,16,6,4,0]], waste: [], water: [{ t: 'pond', x: -2, y: 507, rx: 45, ry: 18, rot: 0 }, { t: 'pond', x: 62, y: 562, rx: 30, ry: 22, rot: 90 }], elev: [[0,70],[562,74]] },
+] },
+{ id: 'raven-ledge', name: 'Raven Ledge', place: 'Northern Minnesota', sub: 'Pink Granite Course', seed: 35, mix: [0, 0], sig: 8,
+  coast: true, coves: true, quarry: true, beach: 0, flora: { pine: 0.6, fir: 0.25, aspen: 0.15 }, treeK: 0.6, corner: 'bigFir', mounds: 2, wind: [4, 18], far: [96, 104, 80], lakeC: 0x183c48,
+  leaf: { aspen: [[0.62, 0.68, 0.2, 2], [0.86, 0.74, 0.2, 1]], shrub: [[0.28, 0.38, 0.13, 1]] }, rock: [1.12, 0.9, 0.86],
+  pal: { rough: [86, 100, 54], scrub: 'rubble', straw: 'Rubble', cliff: [176, 128, 118] }, tuft: [1.15, 1.15, 0.95], palmetto: 0, edgeMix: { shrub: 1 }, holes: [
+  { par: 4, yds: 428, path: [[0,0],[-8,230],[12,405]], fw: [170,413,32], cor: 32, green: { rx: 13, ry: 12, rot: 8 }, pin: [2,2],
+    bunkers: [[250,20,12,6,0],[396,-15,7,4,0]], waste: [], water: [{ t: 'pond', x: -70, y: 215, rx: 46, ry: 30, rot: 100 }], elev: [[0,80],[405,72]] },
+  // drivable round the pit: the corner turns hard left at 190; a 112% drive across the pit lands on a strip that
+  // runs onto the green, a 100% drive on that line is in the water
+  { par: 4, yds: 390, path: [[0,0],[0,190],[-239.6,187.2]], fw: [150,377,32], cor: 26, green: { rx: 13, ry: 14, rot: 0 }, pin: [0,1],
+    altXY: [[-221.4,173,-230.1,179.8,24,27],[0,18,-221.4,173,0,60]], bunkers: [[178,15,8,4,0]], waste: [], water: [{ t: 'pond', x: -151.7, y: 118.5, rx: 74.5, ry: 52, rot: 142 }], elev: [[0,70],[390,68]] },
+  { par: 3, yds: 200, path: [[0,0],[6,192]], fw: null, cor: 30, green: { rx: 12, ry: 13, rot: 8 }, pin: [2,-2],
+    bunkers: [[202,-9,5,4,0],[186,15,5,4,0]], waste: [], water: [{ t: 'pond', x: 10, y: 100, rx: 64, ry: 44, rot: 15 }], elev: [[0,80],[192,68]] },
+  { par: 4, yds: 470, path: [[0,0],[12,240],[-14,452]], fw: [180,455,34], cor: 34, green: { rx: 14, ry: 13, rot: -6 }, pin: [-2,2],
+    bunkers: [[255,24,12,6,0],[444,16,7,4,0]], waste: [], water: [{ t: 'pond', x: 72, y: 410, rx: 40, ry: 30, rot: 70 }], wl: 40, elev: [[0,68],[220,76],[452,76]] },
+  // drivable over a narrow pit: a 100% drive on the line comes down in it, and the way round is an iron short of it;
+  // a 112% drive carries it and runs onto the green
+  { par: 4, yds: 322, path: [[0,0],[6,160],[-8,322]], fw: [150,312,32], cor: 30, green: { rx: 13, ry: 15, rot: -4 }, pin: [0,0],
+    bunkers: [[300,16,8,4,0],[318,-16,6,4,0]], waste: [], water: [{ t: 'pond', x: 0, y: 269, rx: 58, ry: 10, rot: 0 }], elev: [[0,74],[322,72]] },
+  { par: 4, yds: 458, path: [[0,0],[0,262],[34,440]], fw: [180,443,32], cor: 32, oaksXY: [[20,255],[24,284]], green: { rx: 13, ry: 12, rot: 8 }, pin: [2,2],
+    bunkers: [[272,-18,12,6,0],[430,-16,7,4,0]], waste: [], water: [{ t: 'pond', x: -50, y: 290, rx: 30, ry: 24, rot: 90 }], elev: [[0,72],[440,64]] },
+  { par: 3, yds: 174, path: [[0,0],[-5,168]], fw: null, cor: 30, green: { rx: 11, ry: 13, rot: -6 }, pin: [-2,2],
+    bunkers: [[178,10,5,4,0]], waste: [], water: [{ t: 'pond', x: -26, y: 96, rx: 40, ry: 34, rot: 160 }, { t: 'pond', x: -58, y: 170, rx: 30, ry: 16, rot: 80 }], elev: [[0,64],[168,56]] },
+  { par: 4, yds: 486, path: [[0,0],[-6,250],[18,470]], fw: [180,471,34], cor: 34, green: { rx: 14, ry: 13, rot: 8 }, pin: [2,2],
+    bunkers: [[262,22,12,6,0],[462,-16,7,4,0]], waste: [], water: [{ t: 'pond', x: -74, y: 300, rx: 66, ry: 28, rot: 95 }], elev: [[0,56],[470,54]] },
+  // over the pit to a pad: lay up at the corner, about 300 out, or carry the pit on the straight line to a round pad
+  // (a 112% drive); short is the pit, long is the rubble
+  { par: 5, yds: 553, path: [[0,0],[0,250],[321.2,356.7]], fw: [175,538,32], cor: 30, green: { rx: 13, ry: 13, rot: 12 }, pin: [2,2],
+    altXY: [[200.7,222.9,200.7,222.9,40,44],[0,18,187.4,208.1,0,60]], bunkers: [[242,-16,10,5,0],[543,-15,7,4,0]], waste: [], water: [{ t: 'pond', x: 129.5, y: 143.8, rx: 73.5, ry: 56, rot: 48 }], elev: [[0,66],[553,64]] },
+  { par: 4, yds: 448, path: [[0,0],[4,244],[-22,430]], fw: [175,433,32], cor: 32, green: { rx: 13, ry: 12, rot: -8 }, pin: [-2,2],
+    bunkers: [[258,-20,12,6,0],[422,15,7,4,0]], waste: [], water: [{ t: 'pond', x: 60, y: 250, rx: 44, ry: 30, rot: 80 }], elev: [[0,84],[150,68],[430,68]] },
+  // a ledge on a slant between two pits: a 100% drive stops in the wide part, about 300 out; a 112% draw that lands on
+  // the ledge leaves about 250, in reach in two
+  { par: 5, yds: 582, path: [[0,0],[40,296],[41.3,579.6]], fw: [190,565,38], cor: 36, green: { rx: 14, ry: 13, rot: -8 }, pin: [-2,2],
+    bunkers: [[248,22,12,6,0],[470,15,9,5,0],[572,-16,7,4,0]], waste: [], water: [{ t: 'pond', x: -2.4, y: 343.6, rx: 30, ry: 16, rot: 80 }, { t: 'pond', x: 96.2, y: 338.4, rx: 30, ry: 16, rot: 80 }], elev: [[0,68],[582,64]] },
+  { par: 3, yds: 222, path: [[0,0],[3,214]], fw: null, cor: 30, green: { rx: 13, ry: 14, rot: 4 }, pin: [2,2],
+    bunkers: [[226,-8,5,4,0],[206,16,6,4,0]], waste: [], water: [{ t: 'pond', x: -4, y: 104, rx: 70, ry: 46, rot: 92 }], elev: [[0,82],[214,68]] },
+  { par: 4, yds: 466, path: [[0,0],[0,258],[-30,448]], fw: [180,451,34], cor: 34, green: { rx: 14, ry: 13, rot: -6 }, pin: [-2,2],
+    bunkers: [[268,20,12,6,0],[440,15,7,4,0]], waste: [], water: [{ t: 'pond', x: -78, y: 236, rx: 52, ry: 28, rot: 90 }], elev: [[0,68],[448,74]] },
+  // drivable past a long cut: a 112% drive carries the cut on the line to the green and runs on; a 100% drive on that
+  // line is in it; the way round is an iron to the corner
+  { par: 4, yds: 365, path: [[0,0],[0,232],[155,268.5]], fw: [150,352,32], cor: 26, green: { rx: 13, ry: 14, rot: 0 }, pin: [0,1],
+    altXY: [[140.5,243.4,149,258.1,24,27],[0,18,140.5,243.4,0,60]], bunkers: [[220,-15,8,4,0]], waste: [], water: [{ t: 'pond', x: 123.3, y: 169.6, rx: 68.4, ry: 58.5, rot: 175 }], elev: [[0,72],[365,70]] },
+  { par: 5, yds: 572, path: [[0,0],[10,270],[-6,548]], fw: [190,559,36], cor: 34, green: { rx: 14, ry: 13, rot: -4 }, pin: [-2,3],
+    bunkers: [[282,-20,12,6,0],[540,16,7,4,0],[548,-16,6,4,0]], waste: [], water: [{ t: 'pond', x: 70, y: 520, rx: 36, ry: 28, rot: 0 }], elev: [[0,72],[548,66]] },
+  { par: 3, yds: 158, path: [[0,0],[2,158]], fw: null, cor: 30, green: { rx: 11, ry: 12, rot: 0 }, pin: [0,2],
+    bunkers: [[170,-8,5,4,0]], waste: [], water: [{ t: 'pond', x: 0, y: 86, rx: 42, ry: 34, rot: 0 }, { t: 'pond', x: 46, y: 158, rx: 30, ry: 15, rot: 90 }], elev: [[0,62],[158,54]] },
+  // a ten-yard chute through the pines inside the dogleg runs straight at the green, about 310 away: a 100% drive down
+  // it stops about 30 short, a 112% drive runs on; a ball that misses the chute is in the pines
+  { par: 4, yds: 338, path: [[0,0],[0,250],[90.2,297.2]], fw: [150,326,32], cor: 26, green: { rx: 13, ry: 14, rot: 0 }, pin: [0,1],
+    altXY: [[7.2,24,86,283.1,12,18]], bunkers: [[218,-15,8,4,0],[364,-14,6,4,0]], waste: [], water: [{ t: 'pond', x: -97, y: 235, rx: 30, ry: 24, rot: 92 }], elev: [[0,70],[338,68]] },
+  { par: 5, yds: 578, path: [[0,0],[-14,276],[4,556]], fw: [190,492,34], cor: 34, green: { rx: 14, ry: 14, rot: 0 }, pin: [0,-2],
+    bunkers: [[288,18,12,6,0],[551,-17,7,4,0],[566,16,6,4,0]], waste: [], water: [{ t: 'pond', x: -2, y: 503, rx: 46, ry: 18, rot: 0 }, { t: 'pond', x: -64, y: 540, rx: 26, ry: 30, rot: 90 }], elev: [[0,68],[556,72]] },
+] },
+{ id: 'kingfisher-cut', name: 'Kingfisher Cut', place: 'Eastern Pennsylvania', sub: 'Slate Course', seed: 36, mix: [0, 0], sig: 8,
+  coast: true, coves: true, quarry: true, beach: 0, flora: { hardwood: 0.5, pine: 0.3, fir: 0.2 }, treeK: 0.6, corner: 'bigHardwood', mounds: 2, wind: [3, 15], far: [104, 110, 82], lakeC: 0x1a3038,
+  leaf: { hardwood: [[0.3, 0.42, 0.14, 2], [0.62, 0.5, 0.14, 1]], shrub: [[0.28, 0.4, 0.14, 1]] }, rock: [0.82, 0.86, 0.94],
+  pal: { rough: [84, 100, 56], scrub: 'rubble', straw: 'Rubble', cliff: [92, 96, 104] }, tuft: [1.15, 1.15, 1.0], palmetto: 0, edgeMix: { shrub: 1 }, holes: [
+  { par: 4, yds: 418, path: [[0,0],[-4,238],[16,418]], fw: [172,403,34], cor: 32, green: { rx: 13, ry: 13, rot: 6 }, pin: [2,2],
+    bunkers: [[258,-19,12,6,0],[408,16,7,4,0]], waste: [], water: [{ t: 'pond', x: -58, y: 300, rx: 110, ry: 16, rot: 88 }], elev: [[0,66],[418,62]] },
+  // the cut runs up the left: the fairway bends right round it and leaves a pitch; a 112% drive straight at the green
+  // carries the end of the cut and runs on, and a 100% drive on that line is in it
+  { par: 4, yds: 350, path: [[0,0],[30,180],[-75,321.9]], fw: [140,320,30], cor: 30, green: { rx: 13, ry: 14, rot: -8 }, pin: [-1,1],
+    bunkers: [[300,15,8,4,0]], waste: [], water: [{ t: 'pond', x: -61.7, y: 177, rx: 85, ry: 14, rot: 102 }], elev: [[0,64],[350,62]] },
+  { par: 3, yds: 178, path: [[0,0],[-4,178]], fw: null, cor: 30, green: { rx: 12, ry: 13, rot: -6 }, pin: [-2,2],
+    bunkers: [[190,9,5,4,0]], waste: [], water: [{ t: 'pond', x: -10, y: 92, rx: 90, ry: 22, rot: 8 }], elev: [[0,70],[178,62]] },
+  // along the cut: a 100% drive stops in the wide part, about 300 out; a 112% draw that holds the strip between the cut and
+  // the bunkers leaves about 250, in reach in two
+  { par: 5, yds: 583, path: [[0,0],[0,285],[-24,582]], fw: [190,571,40], cor: 36, green: { rx: 14, ry: 13, rot: -4 }, pin: [-2,3],
+    bunkers: [[240,20,12,6,0],[575,16,7,4,0]], bunkersXY: [[9,322,10,5,0],[11,352,10,5,0]], waste: [], water: [{ t: 'pond', x: -52, y: 350, rx: 90, ry: 15, rot: 92 }], elev: [[0,62],[583,60]] },
+  { par: 4, yds: 446, path: [[0,0],[8,256],[36,446]], fw: [180,431,34], cor: 34, green: { rx: 14, ry: 13, rot: 8 }, pin: [2,2],
+    bunkers: [[268,-20,12,6,0],[436,-16,7,4,0]], waste: [], water: [{ t: 'pond', x: 84, y: 250, rx: 96, ry: 18, rot: 88 }], elev: [[0,72],[446,66]] },
+  { par: 4, yds: 432, path: [[0,0],[0,236],[-48,432]], fw: [175,417,32], cor: 32, oaksXY: [[-24,232],[-30,262]], green: { rx: 13, ry: 12, rot: -10 }, pin: [-2,2],
+    bunkers: [[255,20,12,6,0],[422,15,7,4,0]], waste: [], water: [{ t: 'pond', x: -86, y: 330, rx: 26, ry: 40, rot: 0 }], elev: [[0,64],[432,70]] },
+  { par: 3, yds: 204, path: [[0,0],[12,204]], fw: null, cor: 30, green: { rx: 12, ry: 14, rot: 6 }, pin: [2,2],
+    bunkers: [[216,-9,5,4,0],[198,16,6,4,0]], waste: [], water: [{ t: 'pond', x: 4, y: 104, rx: 100, ry: 20, rot: -4 }], elev: [[0,74],[205,64]] },
+  { par: 4, yds: 455, path: [[0,0],[-6,260],[20,455]], fw: [180,440,34], cor: 34, green: { rx: 14, ry: 13, rot: 6 }, pin: [2,-2],
+    bunkers: [[270,20,12,6,0],[446,-16,7,4,0]], waste: [], water: [{ t: 'pond', x: -60, y: 240, rx: 92, ry: 16, rot: 92 }], elev: [[0,66],[455,62]] },
+  // carry the cut to a pad: lay up at the corner, about 320 from the green, or carry the cut on the straight line to a
+  // round pad (it takes 112%) with a pit just past it, and the green is in reach in two
+  { par: 5, yds: 557, path: [[0,0],[0,250],[-298,402]], fw: [175,542,32], cor: 30, green: { rx: 13, ry: 13, rot: -10 }, pin: [-2,2],
+    altXY: [[-172,232,-172,232,40,44],[0,18,-160,215,0,60]], bunkers: [[240,15,10,5,0],[500,14,7,4,0]], waste: [], water: [{ t: 'pond', x: -136, y: 183, rx: 72, ry: 32, rot: 36.6 }, { t: 'pond', x: -210, y: 283, rx: 24, ry: 24, rot: 0 }], elev: [[0,64],[557,62]] },
+  { par: 4, yds: 440, path: [[0,0],[6,248],[-12,440]], fw: [180,425,34], cor: 34, green: { rx: 14, ry: 13, rot: -4 }, pin: [-2,2],
+    bunkers: [[262,-20,12,6,0],[432,15,7,4,0]], waste: [], water: [{ t: 'pond', x: 70, y: 330, rx: 100, ry: 16, rot: 95 }], elev: [[0,62],[440,58]] },
+  { par: 4, yds: 462, path: [[0,0],[0,254],[34,462]], fw: [180,447,32], cor: 32, oaksXY: [[20,250],[26,278]], green: { rx: 13, ry: 12, rot: 8 }, pin: [2,2],
+    bunkers: [[265,-20,12,6,0],[452,-15,7,4,0]], waste: [], water: [{ t: 'pond', x: -60, y: 430, rx: 30, ry: 40, rot: 90 }], elev: [[0,58],[462,64]] },
+  // drivable across the cut: the cut runs up the right of the first leg and a pit sits inside the corner; a 112% drive
+  // straight at the green carries both and lands on a strip that runs on, a 100% drive on that line finds the pit
+  { par: 4, yds: 395, path: [[0,0],[0,200],[230.6,218.3]], fw: [150,353,32], cor: 26, green: { rx: 13, ry: 14, rot: 0 }, pin: [0,1],
+    altXY: [[210.7,198.9,222.5,210.6,24,27],[13.7,14.2,175.4,166,0,50]], bunkers: [[226,-15,8,4,0]], waste: [], water: [{ t: 'pond', x: 117.1, y: 117, rx: 110, ry: 20, rot: 70 }, { t: 'pond', x: 187.1, y: 177.7, rx: 20, ry: 20, rot: -20 }], elev: [[0,64],[395,62]] },
+  { par: 3, yds: 166, path: [[0,0],[-14,166]], fw: null, cor: 30, green: { rx: 11, ry: 12, rot: 4 }, pin: [1,2],
+    bunkers: [[176,-8,5,4,0]], waste: [], water: [{ t: 'pond', x: -7, y: 88, rx: 80, ry: 26, rot: 0 }, { t: 'pond', x: 33, y: 170, rx: 30, ry: 15, rot: 90 }], elev: [[0,68],[165,62]] },
+  // two cuts across the hole: a 100% drive can carry neither, so it lays up short of the first or on the strip of land
+  // between them; a 112% drive (or a 100% draw) carries both and leaves about 235, in reach in two
+  { par: 5, yds: 541, path: [[0,0],[-40,296],[-103.6,530.1]], fw: [175,529,34], cor: 34, green: { rx: 14, ry: 13, rot: -4 }, pin: [-2,2],
+    bunkers: [[320,-18,12,6,0],[530,16,7,4,0]], waste: [], water: [{ t: 'pond', x: -29.5, y: 167.4, rx: 95, ry: 10, rot: 10 }, { t: 'pond', x: -38.8, y: 243, rx: 95, ry: 10, rot: 10 }], elev: [[0,64],[541,62]] },
+  // drivable to a green on a spit between the cut and a pit: a 100% drive stops about 50 short; a 112% draw runs out
+  // along the spit onto the green, and the landing area tilts toward the cut
+  { par: 4, yds: 333, path: [[0,0],[-6,176],[-87.6,314.1]], fw: [150,315,30], cor: 30, green: { rx: 13, ry: 13, rot: -6 }, pin: [-1,0],
+    bunkers: [[262,17,10,5,0]], waste: [], tilt: [[250,330,-3]], water: [{ t: 'pond', x: -123, y: 278.5, rx: 70, ry: 18, rot: 109 }, { t: 'pond', x: -41, y: 338.1, rx: 26, ry: 16, rot: 104 }], elev: [[0,62],[333,60]] },
+  { par: 3, yds: 218, path: [[0,0],[-3,218]], fw: null, cor: 30, green: { rx: 13, ry: 14, rot: -4 }, pin: [-2,2],
+    bunkers: [[230,8,5,4,0],[210,-16,6,4,0]], waste: [], water: [{ t: 'pond', x: -4, y: 110, rx: 70, ry: 36, rot: 92 }], elev: [[0,70],[218,60]] },
+  { par: 4, yds: 476, path: [[0,0],[-4,262],[18,476]], fw: [180,461,34], cor: 34, green: { rx: 14, ry: 13, rot: 6 }, pin: [2,-2],
+    bunkers: [[272,20,12,6,0],[466,-16,7,4,0]], waste: [], water: [{ t: 'pond', x: -64, y: 262, rx: 120, ry: 16, rot: 90 }], wl: 26, elev: [[0,62],[476,56]] },
+  { par: 5, yds: 566, path: [[0,0],[12,284],[-4,566]], fw: [190,476,34], cor: 34, green: { rx: 14, ry: 14, rot: 0 }, pin: [0,-2],
+    bunkers: [[294,-18,12,6,0],[561,17,7,4,0],[576,-16,6,4,0]], waste: [], water: [{ t: 'pond', x: 0, y: 512, rx: 70, ry: 16, rot: 0 }], elev: [[0,58],[566,64]] },
+] },
 ];
 let CI = 0, COURSE = COURSES[0], HOLES = COURSE.holes, PAR_TOTAL = 0, YDS_TOTAL = 0;
 function useCourse(i) {
@@ -1888,6 +2570,14 @@ const SURF = [
   { name: 'Beach',      e: 0.06, mu: 0.75, tq: 0.35, plow: 0.35, bite: 0.05, drag: 1.6, roll: 5.0, lv: 0.82, ls: 0.70 },
   { name: 'Rocks',      e: 0.45, mu: 0.3, tq: 0.4, plow: 0.03, bite: 0.1, drag: 0.1, roll: 1.4, lv: 0.80, ls: 0.60 },
 ];
+
+// Per-course turf: COURSE.turf { fair: {...}, cut: {...}, straw: {...}, ... } overrides these surfaces while that course's
+// holes are built (links fairways run firm and fast; gorse stops a ball dead). The range always plays the stock turf.
+const SURF0 = SURF.map(o => ({ ...o })), TURF_KEY = { straw: 0, rough: 1, cut: 2, fair: 3, fringe: 4, green: 5, sand: 6 };
+function applyTurf(range) {
+  SURF.forEach((o, i) => Object.assign(o, SURF0[i]));
+  if (!range && COURSE.turf) for (const k in COURSE.turf) Object.assign(SURF[TURF_KEY[k]], COURSE.turf[k]);
+}
 
 // Clubs: ball speed m/s, launch °, backspin rpm, cf = how much a crooked stroke matters.
 const CLUBS = [
@@ -2427,9 +3117,18 @@ function disposeHole() {
 //   iceplant: sage scrub and gold grass with mats of ice plant, some in pink flower; dune: open sand with marram grass;
 //   sea-oats: pale dune sand and sea oats near the beach, pine straw under the trees; chaparral: dusty sage, tan grass, dark brush.
 const _c3 = [0, 0, 0];
+const FAIR_C = [88, 134, 50], CUT_C = [76, 112, 44];
 function coastScrub(kind, m, blot, fine, x, y) {
   const rr = [74, 98, 44], c = _c3, big = tn(x * 0.11 + 70, y * 0.11 + 20);
-  if (kind === 'dune') {
+  if (kind === 'gorse') {
+    // links gorse: dark spiny green in clumps, yellow where it flowers, with tan fescue between the bushes
+    c[0] = 50 + blot * 12; c[1] = 68 + blot * 14; c[2] = 30 + blot * 6;
+    if (fine > 0.42 && big > -0.2) { c[0] = 196; c[1] = 168; c[2] = 46; } else if (big < -0.3) { c[0] = 150 + blot * 16; c[1] = 140 + blot * 12; c[2] = 86 + blot * 8; }
+  } else if (kind === 'rubble') {
+    // quarry spoil: grey granite chips and slabs, with birch scrub and weeds pushing through
+    c[0] = 128 + blot * 22; c[1] = 126 + blot * 20; c[2] = 120 + blot * 18;
+    if (fine > 0.5) { c[0] *= 0.72; c[1] *= 0.72; c[2] *= 0.74; } else if (big > 0.25 && fine < -0.1) { c[0] = 84; c[1] = 100; c[2] = 54; }
+  } else if (kind === 'dune') {
     const sand = smooth(-0.1, 0.35, big + 0.3 * blot);
     c[0] = lerp(140 + blot * 18, 214 + blot * 10, sand); c[1] = lerp(140 + blot * 14, 198 + blot * 10, sand); c[2] = lerp(88 + blot * 8, 158 + blot * 8, sand);
     if (sand > 0.5 && fine > 0.5) { c[0] = 150; c[1] = 148; c[2] = 96; }
@@ -2477,6 +3176,10 @@ function forestFloor(kind, m, blot, fine, x, y, sl, hh = 0) {
   } else if (kind === 'highdesert') {
     c[0] = 168 + blot * 18; c[1] = 156 + blot * 16; c[2] = 128 + blot * 12;
     if (fine > 0.3) { c[0] = 118 + blot * 12; c[1] = 128 + blot * 12; c[2] = 104 + blot * 8; }
+  } else if (kind === 'park') {
+    // parkland: mown grass under the trees with fallen leaves drifted in red, orange and brown
+    c[0] = 70 + blot * 12; c[1] = 98 + blot * 14; c[2] = 42 + blot * 6;
+    const lf = smooth(0.05, 0.4, big + 0.25 * blot); if (fine > 0.25 - 0.5 * lf) { const u = fine * 7 % 1; c[0] = u < 0.35 ? 168 : u < 0.7 ? 190 : 128; c[1] = u < 0.35 ? 58 : u < 0.7 ? 112 : 84; c[2] = u < 0.35 ? 34 : u < 0.7 ? 34 : 44; }
   } else if (kind === 'leaf') {
     c[0] = 118 + blot * 26; c[1] = 80 + blot * 16; c[2] = 44 + blot * 8;
     if (fine > 0.4) { c[0] = 146; c[1] = 74; c[2] = 36; } else if (big > 0.3) { c[0] = lerp(c[0], 70, 0.5); c[1] = lerp(c[1], 86, 0.5); c[2] = lerp(c[2], 40, 0.5); }
@@ -2492,7 +3195,7 @@ function forestFloor(kind, m, blot, fine, x, y, sl, hh = 0) {
 }
 
 function buildHole(idx) {
-  disposeHole();
+  disposeHole(); applyTurf(false);
   const spec = HOLES[idx], rng = mulberry(4242 + idx * 977 + COURSE.seed * 104729);
   WL = WL0 + (spec.wl || 0) * FT;
   // centerline
@@ -2522,11 +3225,16 @@ function buildHole(idx) {
   const gux = gd0[0] * Math.cos(gr) + gd0[1] * Math.sin(gr), guy = -gd0[0] * Math.sin(gr) + gd0[1] * Math.cos(gr);
   const green = mkEll(gc[0], gc[1], gux, guy, spec.green.rx * YD, spec.green.ry * YD, 0.45, 11);
   const toEll = (b, wob, off) => { const c = pointAt(b[0] * YD, b[1] * YD), dd = dirAt(b[0] * YD), r = (b[4] || 0) * DEG; return mkEll(c[0], c[1], dd[0] * Math.cos(r) + dd[1] * Math.sin(r), -dd[0] * Math.sin(r) + dd[1] * Math.cos(r), b[2] * YD, b[3] * YD, wob, off); };
-  const bunkers = spec.bunkers.map((b, i) => toEll(b, 0.7, 40 + i * 23));
+  const bunkers = spec.bunkers.map((b, i) => toEll(b, 0.7, 40 + i * 23)), bunkerP = spec.bunkers.map(b => b[5] || 0);
+  // bunkersXY: bunkers placed on the map in the path's own frame [x, y, half-length, half-width, rot°, pot]
+  for (const [bx, by, hl, hw, rot, pot] of spec.bunkersXY || []) { const r = (rot || 0) * DEG; bunkers.push(mkEll(bx * YD * k0, by * YD * k0, Math.sin(r), Math.cos(r), hl * YD, hw * YD, 0.7, 40 + bunkers.length * 23)); bunkerP.push(pot || 0); }
   const wastes = spec.waste.map((b, i) => toEll(b, 2.2, 140 + i * 31));
   // a dry wash is listed with the water like a lake (a box in path space, d signed) but is a sandy channel cut dep feet
   // (default 4) below the ground; it plays as a waste area
-  const toW = w => ({ ...w, s0: w.s0 * YD, s1: w.s1 * YD, d0: w.d0 * YD, d1: w.d1 * YD }), waterF = spec.water.filter(w => w.t !== 'wash').map(toW), washF = spec.water.filter(w => w.t === 'wash').map(toW);
+  // a pond { t: 'pond', x, y, rx, ry, rot } is an oval placed on the map in the path's own frame (yards right and forward of
+  // the tee, scaled with the path), rx along the direction rot° (counterclockwise from straight right), ry across it
+  const toW = w => w.t === 'pond' ? { ...w, x: w.x * YD * k0, y: w.y * YD * k0, rx: w.rx * YD * k0, ry: w.ry * YD * k0, ca: Math.cos((w.rot || 0) * DEG), sa: Math.sin((w.rot || 0) * DEG), s0: 0 }
+    : ({ ...w, s0: w.s0 * YD, s1: w.s1 * YD, d0: w.d0 * YD, d1: w.d1 * YD }), waterF = spec.water.filter(w => w.t !== 'wash').map(toW), washF = spec.water.filter(w => w.t === 'wash').map(toW);
   const walks = (spec.walk || []).map(w => w.map(v => v * YD));
   const islandR = spec.island ? spec.island * YD : 0;
   const fw = spec.fw ? { s0: spec.fw[0] * YD, s1: spec.fw[1] * YD, h: spec.fw[2] * YD / 2 } : null;
@@ -2534,10 +3242,16 @@ function buildHole(idx) {
   const tilts = (spec.tilt || []).map(([a, b, ft]) => [a * YD, b * YD, ft * FT]);
   const opens = (spec.open || []).map(([ss, sd, sr]) => [...pointAt(ss * YD, sd * YD), sr * YD]);
   const stands = (spec.stand || []).map(([ss, sd, sr]) => [...pointAt(ss * YD, sd * YD), sr * YD]);
+  // standXY / openXY: the same clumps and clearings placed on the map in the path's own frame [x, y, radius]
+  for (const [x, y, r] of spec.standXY || []) stands.push([x * YD * k0, y * YD * k0, r * YD]);
+  for (const [x, y, r] of spec.openXY || []) opens.push([x * YD * k0, y * YD * k0, r * YD]);
   // extra strips cut through the woods, alt: [[s0, d0, s1, d1, fairway width, cleared width], ...] (yards, hole coordinates):
   // a second fairway for a split hole, a very narrow chute, or (s0 = s1, d0 = d1) a round landing pad. Fairway width 0 leaves
   // the strip as rough, a gap in the trees to play through; the cleared width defaults to the fairway width plus 8 yards.
   const alts = (spec.alt || []).map(([s0, d0, s1, d1, fwY, clY]) => { const a = pointAt(s0 * YD, d0 * YD), b = pointAt(s1 * YD, d1 * YD); return { ax: a[0], ay: a[1], bx: b[0], by: b[1], fw: fwY * YD / 2, cl: (clY ?? fwY + 8) * YD / 2 }; });
+  // altXY: the same strips given as map points in the path's own frame ([right, forward] yards from the tee, scaled with the
+  // path), for strips across a bent part of the hole, where a spot along and across the smoothed centreline is hard to place
+  for (const [x0, y0, x1, y1, fwY, clY] of spec.altXY || []) alts.push({ ax: x0 * YD * k0, ay: y0 * YD * k0, bx: x1 * YD * k0, by: y1 * YD * k0, fw: fwY * YD / 2, cl: (clY ?? fwY + 8) * YD / 2 });
   const altDist = (a, x, y) => { const vx = a.bx - a.ax, vy = a.by - a.ay, l2 = vx * vx + vy * vy, t = l2 ? clamp(((x - a.ax) * vx + (y - a.ay) * vy) / l2, 0, 1) : 0; return Math.hypot(x - a.ax - vx * t, y - a.ay - vy * t); };
   // Ocean: each sea entry [s0, d0, s1, d1, beach] is a straight shoreline through two points given in hole coordinates
   // (yards along and across the hole); the sea is the side away from the tee. In the hole the line wanders into coves and
@@ -2618,13 +3332,17 @@ function buildHole(idx) {
     const ad = Math.abs(d); o.s = s; o.d = d; o.ad = ad;
     o.tD = Math.max(Math.abs(s) - 5.5, ad - 4.5);
     o.gD = ellDist(green, x, y, o); o.gu = o.du; o.gv = o.dv;
-    let b = 60; o.bP = 0; for (let i = 0; i < bunkers.length; i++) { const v = ellDist(bunkers[i], x, y, null); if (v < b) { b = v; o.bP = spec.bunkers[i][5] || 0; } } o.bD = b;
+    let b = 60; o.bP = 0; for (let i = 0; i < bunkers.length; i++) { const v = ellDist(bunkers[i], x, y, null); if (v < b) { b = v; o.bP = bunkerP[i]; } } o.bD = b;
     let w = 60; for (const e of wastes) { const v = ellDist(e, x, y, null); if (v < w) w = v; } o.wsD = w;
     let wat = -60; o.B = 0; o.lk = true;
     if (waterF.length || seaL.length) {
       const nz = 1.6 * tn(x * 1.5 + 33, y * 1.5 + 77) + 3.5 * tn(x * 0.45 + 120, y * 0.45 + 60);
       for (const f of waterF) {
         let m;
+        if (f.t === 'pond') {
+          const dx = x - f.x, dy = y - f.y, u = (dx * f.ca + dy * f.sa) / f.rx, v = (-dx * f.sa + dy * f.ca) / f.ry;
+          m = (1 - Math.hypot(u, v)) * Math.min(f.rx, f.ry) + nz + (mtn ? 4 * tn(x * 0.3 + 71, y * 0.3 + 13) : 0); if (m > wat) wat = m; continue;
+        }
         // in the mountains a creek bends as it crosses the hole, and one running beside it wanders in and out
         const dd = (f.t === 'strip' ? f.side * d : d) + (mtn && f.t === 'strip' ? 5 * Math.sin(s * 0.045 + f.s0) : 0), sc = mtn && f.t === 'lake' ? s + 7 * Math.sin(d * 0.045 + f.s0 * 0.1) : s;
         const hs = (f.s1 - f.s0) / 2, hd = (f.d1 - f.d0) / 2, rr = Math.min(mtn ? 30 : 16, hs, hd);
@@ -2721,6 +3439,8 @@ function buildHole(idx) {
     let h = 1.3 * tn(x * 0.5, y * 0.5) + small * (1 - 0.75 * smooth(4, -4, o.fF));
     h += (COURSE.mounds || 2.6) * smooth(0, 24, o.fC) * (0.5 + 0.5 * tn(x * 1.3 + 11, y * 1.3 + 7));
     h += 0.5 * smooth(2, 14, o.fF) * smooth(4, -6, o.fC) * (0.5 + 0.5 * tn(x * 1.8 + 90, y * 1.8 + 40));
+    // links: the whole hole rolls in humps and hollows, fairways included, so a ball can kick off line or into a pot
+    if (COURSE.rumple) h += COURSE.rumple * (0.7 * tn(x * 0.16 + 211, y * 0.16 + 37) + 0.3 * tn(x * 0.42 + 19, y * 0.42 + 153));
     // on the coast the land keeps its height right out to the cliffs; inland a raised hole sits on a rise
     h += elevAt(o.s) * (coast || mtn ? 1 : 1 - 0.65 * smooth(cor + 12, cor + 80, o.ad));
     // side slopes: between s0 and s1 the ground falls ft feet across 30 yards (+ falls to the right), so a ball landing on
@@ -2826,11 +3546,11 @@ function buildHole(idx) {
   if (HOLE.hasWater) {
     // ocean holes get a sea that runs out to the horizon, bluer and with bigger swell than a lake
     const sea = seaL.length > 0, wg = sea ? new THREE.PlaneGeometry(16000, 16000) : new THREE.PlaneGeometry(nx + 500, ny + 500);
-    const water = new Water(wg, { textureWidth: 512, textureHeight: 512, waterNormals, sunDirection: sunDir.clone(), sunColor: 0xfff2dc, waterColor: sea ? COURSE.seaC || 0x0f3a56 : mtn ? COURSE.lakeC || 0x163a40 : 0x24525a, distortionScale: sea ? 0.6 : 0.45, fog: true, alpha: 1 });
+    const water = new Water(wg, { textureWidth: 512, textureHeight: 512, waterNormals, sunDirection: sunDir.clone(), sunColor: 0xfff2dc, waterColor: sea ? COURSE.seaC || 0x0f3a56 : COURSE.lakeC || (mtn ? 0x163a40 : 0x24525a), distortionScale: sea ? 0.6 : 0.45, fog: true, alpha: 1 });
     water.rotation.x = -Math.PI / 2; water.position.set((minX + maxX) / 2, WL, -(minY + maxY) / 2);
     water.material.uniforms.size.value = sea ? 1.8 : 3.0;
     // the open sea mirrors less of the hazy sky than a still lake, so it stays a deep blue except at the horizon
-    if (sea || mtn) water.material.fragmentShader = water.material.fragmentShader.replace('( vec3( 0.1 ) + reflectionSample * 0.9 + reflectionSample * specularLight )', '( vec3( 0.02, 0.07, 0.11 ) + reflectionSample * vec3( 0.42, 0.56, 0.66 ) + reflectionSample * specularLight )');
+    if (sea || mtn || COURSE.lakeC) water.material.fragmentShader = water.material.fragmentShader.replace('( vec3( 0.1 ) + reflectionSample * 0.9 + reflectionSample * specularLight )', '( vec3( 0.02, 0.07, 0.11 ) + reflectionSample * vec3( 0.42, 0.56, 0.66 ) + reflectionSample * specularLight )');
     holeGroup.add(water); HOLE.water = water;
   }
 
@@ -2851,7 +3571,7 @@ function buildHole(idx) {
       buildFarMountains(islandH, () => farH, 250);
     }
   }
-  if (coast) { buildRocks(rng); if (seaL.length || waterF.length) buildSurf(); }
+  if (coast) { buildRocks(rng); if (seaL.length || (waterF.length && !COURSE.quarry)) buildSurf(); }
   if (mtn) buildBoulders(rng);
   buildPinAndTee();
   buildSlopeArrows();
@@ -2940,6 +3660,8 @@ function buildHole(idx) {
     }
     const corner = COURSE.corner || 'bigOak';
     for (const [os, od] of spec.oaks || []) { const p = pointAt(os * YD * L / (spec.yds * YD), od * YD); add(corner, null, p[0], p[1], sampleField(F.h, p[0], p[1]) - 0.1, 0.9 + r() * 0.2); }
+    // oaksXY: corner trees placed on the map in the path's own frame [x, y]
+    for (const [ox, oy] of spec.oaksXY || []) { const x = ox * YD * k0, y = oy * YD * k0; add(corner, null, x, y, sampleField(F.h, x, y) - 0.1, 0.9 + r() * 0.2); }
     HOLE.treeAO = [];
     const mk = (geo, arr, shadow, ci = 1) => {
       if (!arr.length) return;
@@ -3006,14 +3728,15 @@ function buildHole(idx) {
           if (fine > 0.66 && wet > 0.2) { r = 84; g = 76; b = 52; }
         }
         else if (mtn && wat > -1.6) { const st = fine > 0.15 ? 0.7 + 0.2 * blot : 1; r = 132 * st; g = 128 * st; b = 118 * st; }   // river stones
+        else if (!coast && wat > -0.9 && pal && pal.bank === 'stone') { const st = fine > 0.2 ? 0.66 + 0.18 * blot : 0.95 + 0.1 * blot; r = 138 * st; g = 134 * st; b = 124 * st; }   // fieldstone pond walls
         else if (!coast && wat > -0.9) { const plank = (Math.floor((s + d) * 2.2) & 1) ? 1 : 0.86; r = 92 * plank; g = 70 * plank; b = 46 * plank; }
         else if (wsD < 0 && S4(Fwh) > -1) { const st = fine > 0.3 ? 0.62 + 0.2 * blot : 1; r = 200 * st + blot * 14; g = 184 * st + blot * 12; b = 152 * st + blot * 10; }   // wash: pale sand and stones
         else if (wsD < 0) { r = 184 + blot * 18; g = 168 + blot * 16; b = 134 + blot * 12; if (fine > 0.55) { r = 110; g = 116; b = 72; } }
-        else if (fF < 0) { const st = ((Math.floor(s / 8) & 1) ? 1.06 : 0.94); r = 88 * st; g = 134 * st; b = 50 * st; }
-        else if (fF < 1.8 || gD < 3.6) { r = 76; g = 112; b = 44; }
+        else if (fF < 0) { const st = ((Math.floor(s / 8) & 1) ? 1.06 : 0.94), fc = (pal && pal.fair) || FAIR_C; r = fc[0] * st; g = fc[1] * st; b = fc[2] * st; }
+        else if (fF < 1.8 || gD < 3.6) { const cc = (pal && pal.cut) || CUT_C; r = cc[0]; g = cc[1]; b = cc[2]; }
         else if (fC < 0) { r = 64 + blot * 10; g = 94 + blot * 12; b = 38 + blot * 4; if (blot > 0.35) { r += 8; g += 4; } if (pal) { const u = 0.5 + 0.5 * blot; r = lerp(r, pal.rough[0], u); g = lerp(g, pal.rough[1], u); b = lerp(b, pal.rough[2], u); } }
         else if (coast) { [r, g, b] = coastScrub(pal.scrub, smooth(0, 4, fC), blot, fine, x, y); }
-        else if (mtn) { [r, g, b] = forestFloor(pal.floor, smooth(0, 4, fC), blot, fine, x, y, Math.hypot(Fh[k + 1] - Fh[k], Fh[k + nx] - Fh[k]), Fh[k]); }
+        else if (mtn || (pal && pal.floor)) { [r, g, b] = forestFloor(pal.floor, smooth(0, 4, fC), blot, fine, x, y, Math.hypot(Fh[k + 1] - Fh[k], Fh[k + nx] - Fh[k]), Fh[k]); }
         else {
           const m = smooth(0, 3, fC); const sr = 124 + blot * 26, sg = 86 + blot * 18, sb = 48 + blot * 10;
           r = lerp(64, sr, m); g = lerp(94, sg, m); b = lerp(38, sb, m);
@@ -3098,7 +3821,8 @@ function buildHole(idx) {
       let sc, sy, hh;
       if (rk < 0 && w < 0) { const h0 = sampleField(F.h, x, y); if (h0 > WL + 3.5 || r() > 0.4) continue; sc = 0.8 + r() * 2.2; sy = 0.7 + r() * 0.6; hh = h0 - sc * 0.25; }
       else if (w > 0.4 && w < 10) { if (r() > 0.05) continue; sc = 0.7 + r() * 2.2; sy = 0.8 + r() * 0.7; hh = WL - sc * 0.22; }
-      else if (w > 24 && stacks < 5 && r() < 0.004) { stacks++; sc = 4 + r() * 5; sy = 1.8 + r() * 1.6; hh = WL - sc * 0.3; }
+      // (sea stacks only out in the sea, not in a pond or a quarry pit)
+      else if (w > 24 && stacks < 5 && r() < 0.004 && seaL.length && seaStraight(x, y) > 0) { stacks++; sc = 4 + r() * 5; sy = 1.8 + r() * 1.6; hh = WL - sc * 0.3; }
       else continue;
       E3.set((r() - 0.5) * 0.4, r() * 6.28, (r() - 0.5) * 0.4); Q.setFromEuler(E3); S.set(sc * (0.8 + r() * 0.5), sc * sy, sc * (0.8 + r() * 0.5)); P.set(x, hh, -y);
       const rt = COURSE.rock || [1, 0.97, 0.93]; lists[(r() * 3) | 0].push([M4.compose(P, Q, S).clone(), new THREE.Color(tint * rt[0], tint * rt[1], tint * rt[2])]);
@@ -4000,7 +4724,11 @@ const LIE_Q = {
 // on the desert courses the ground past the rough is desert: hardpan, or the ball in among stones and brush
 const DESERT_Q = [['ok', 'on hardpan', 0.45], ['bad', 'in the rocks', 0.55]];
 const desertLie = () => COURSE.desert && !(HOLE && HOLE.isRange);
-const lieQ = lie => lie === T_STRAW && desertLie() ? DESERT_Q : LIE_Q[lie];
+// on the links courses the ground past the rough is gorse: the ball is buried in a thorny bush, so the only shots are a
+// hack out sideways or a drop
+const GORSE_Q = [['bad', 'buried', 1]];
+const gorseLie = () => COURSE.gorse && !(HOLE && HOLE.isRange);
+const lieQ = lie => lie === T_STRAW && desertLie() ? DESERT_Q : lie === T_STRAW && gorseLie() ? GORSE_Q : LIE_Q[lie];
 const qName = (lie, q) => (lieQ(lie) || []).find(e => e[0] === q)?.[1] || '';
 function rollLie(lie, x, y) {
   const Q = lieQ(lie); if (!Q) return '';
@@ -4020,6 +4748,7 @@ function lieModel(c, lie, q) {
       if (q === 'down') return { m: 0.8 - 0.3 * k - 0.08 * W, sd: 0.04 + 0.08 * k, bad: [0.08 + 0.15 * k, 0.35, 0.6], dir: 3, pull: 1.5 * k };
       return { m: 0.9 - 0.2 * k - 0.06 * W, sd: 0.03 + 0.07 * k, bad: [0.05 + 0.12 * k, 0.5, 0.7], fly: [wood ? 0 : 0.05, 1.02, 1.05], dir: 2, pull: 0.8 * k };
     case T_STRAW:
+      if (gorseLie()) return { m: 0.5 - 0.3 * k - 0.1 * W, sd: 0.1, bad: [0.35 + 0.25 * k, 0.12, 0.35], dir: 9 };
       if (desertLie()) return q === 'bad' ? { m: 0.78 - 0.25 * k - 0.08 * W, sd: 0.06 + 0.06 * k, bad: [0.12 + 0.15 * k, 0.3, 0.6], dir: 3.5, pull: k }
         : { m: 0.92 - 0.14 * k - 0.04 * W, sd: 0.04 + 0.05 * k, bad: [0.06 + 0.1 * k, 0.45, 0.7], fly: [wood ? 0 : 0.08, 1.03, 1.08], dir: 2 };
       return q === 'bad' ? { m: 0.85 - 0.2 * k - 0.05 * W, sd: 0.04 + 0.06 * k, bad: [0.06 + 0.12 * k, 0.4, 0.65], dir: 2.5 }
@@ -4876,6 +5605,9 @@ const TERRAINS = [
   { name: 'Mountain', blurb: 'Big drops from high tees, forested hillsides, creeks and lakes', ids: ['talus-ridge', 'osprey-creek', 'kettle-lake', 'sourwood-gap'] },
   { name: 'Island', blurb: 'Hawaii and the Caribbean: lava and coral shores, palms and bays to carry', ids: ['frigate-point', 'tern-reef', 'petrel-cliffs', 'tropicbird-bay'] },
   { name: 'Desert', blurb: 'Target golf over the desert, dry washes, red rock canyons and an oasis', ids: ['roadrunner-wash', 'condor-canyon', 'pinon-mesa', 'verdin-springs'] },
+  { name: 'Links', blurb: 'Treeless seaside links: firm fairways that run out, pot bunkers, burns, gorse and wind', ids: ['curlew-links', 'gannet-strand', 'dunlin-sands', 'skua-head'] },
+  { name: 'Parkland', blurb: 'Autumn parkland: tree-lined fairways in red and gold, ponds with stone walls, trees standing on the line', ids: ['grouse-hollow', 'wood-duck-run', 'bobolink-farm', 'cardinal-oaks'] },
+  { name: 'Quarry', blurb: 'Old stone quarries: fairways on ledges between flooded pits, rock walls and carries over deep water', ids: ['peregrine-quarry', 'swallow-pit', 'raven-ledge', 'kingfisher-cut'] },
   { name: 'Old Growth', blurb: 'The hardest set: giant trees, tight doglegs that need a draw or a fade, pot bunkers and false fronts', ids: ['murrelet-grove', 'capercaillie-wood', 'kiji-valley', 'ptarmigan-pass'], hard: true },
   { name: 'Range', blurb: 'A floodlit driving range with seven target greens, open to everyone', ids: [], isRange: true },
 ];
@@ -6072,7 +6804,7 @@ function rangeMesh(geos, mat, shadow = false) { if (!geos.length) return null; c
 function textTex(w, h, draw) { const cv = document.createElement('canvas'); cv.width = w; cv.height = h; draw(cv.getContext('2d'), w, h); return canvasTex(cv); }
 
 function buildRange() {
-  disposeHole();
+  disposeHole(); applyTurf(true);
   const { NX, NY, NH, BX, BD, LV, ROOF } = RNG;
   const minX = -170, maxX = 170, minY = -60, maxY = 360, nx = maxX - minX + 1, ny = maxY - minY + 1, N = nx * ny;
   const fill = v => new Float32Array(N).fill(v), neg = fill(-50), pos = fill(50), h = new Float32Array(N);
@@ -6744,5 +7476,6 @@ if (TEST) {
   };
   Object.assign(window.__golf, { Player, coinBalance, worn, applyLooks, LOOK, SHOP_ITEM, celebrate, tasksFor, roundSummary, startChallenge, contestEnd, openShop, openChal,
     get CH() { return CH; }, set CH(v) { CH = v; }, showHome, toMenu, finishShot, onRest, get OUTFIT() { return OUTFIT; } });
+  Object.assign(window.__golf, { DRAW, CARRY, applyTurf, unlockState, TERRAINS, get COURSE() { return COURSE; }, get WLv() { return WL; }, autoAim, expectedTotal });
 }
 </script>
