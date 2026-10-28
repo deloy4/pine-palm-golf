@@ -92,6 +92,17 @@ blind tee shots, with wind of 6 to 22 mph that holds for the whole hole.
 | Swallow Pit, Limestone Course | Cream limestone benches, tees up to 25 feet above the fairways; a neck between a pit and a stand of trees on the par 5 3rd, a drivable 5th to a green on a point, carries over pits to strips on the par 5 8th and 11th, a drivable 12th round a pit, a drivable 15th across the corner of a diagonal pit | 7,220 |
 | Raven Ledge, Pink Granite Course | Pink granite and pines, pits up to 90 feet deep; a drivable 2nd round a pit, a drivable 5th over a narrow pit, a carry to a round pad on the par 5 9th, a slanted ledge between two pits on the par 5 11th, a drivable 14th past a long cut, a ten-yard chute through the pines to the 17th green | 7,210 |
 | Kingfisher Cut, Slate Course | A long flooded slate cut that the holes play along and across; a drivable 2nd over the end of the cut, a strip between the cut and bunkers on the par 5 4th, a carry over the cut to a pad on the par 5 9th, a drivable 12th across the cut and a pit, two cuts across the par 5 14th, a drivable 15th to a green on a spit | 7,220 |
+| Nightjar Heath, Heath Course | Surrey heath: heather rough, Scots pine and birch, small greens on three or four levels; a 112% draw through the neck between bunkers on the par 5 2nd, a drivable 3rd tilting into a pond, a 112% drive or fade across the pines to the green on the 6th, a 112% draw round the corner of the par 5 8th, a draw past the bunker run on the par 5 12th, a drivable 13th with a pond right, a pond in front of the par 5 17th's green | 7,207 |
+| Woodlark Common, Pine Course | Scots pine and birch woods over heather on gentle ground: a gap in the pines to a pad on the par 5 2nd, a drivable 5th tilting into two bunkers, corners to cut over the pines on 8 and 14, a neck between two stands of pines on the par 5 11th, a par 5 17th reachable past a row of bunkers | 7,247 |
+| Stonechat Down, Open Heath Course | Open heath with only a few pines, heather everywhere past the fairway, big sandy bunkers and more wind: a drivable 3rd tilting into a big bunker, a valley of deep heather to carry on the par 5 6th, a corner cut over heather and bunkers on 9, a neck between two big bunkers on the par 5 12th, a split-fairway drivable 17th, a par 5 18th reachable through a tilted neck | 7,145 |
+| Whinchat Moor, Moor Course | Moorland heath in the Perthshire hills with broom, birch and burns, tees 60 to 120 feet up: a neck beside a burn on the par 5 2nd, a drivable downhill 4th beside the burn, a lochan to carry to a strip on the par 5 7th, a corner cut over a lochan on 10, a neck beside a burn on the par 5 13th, a drivable downhill 17th with a burn down the right | 7,103 |
+| Woodlark Common | 20-33% | 51-73% |
+| Stonechat Down | 22-29% | 53-77% |
+| Whinchat Moor | 21-31% | 60-73% |
+| Thrasher Creek, Azalea Course | Augusta-style pines and azaleas on rolling ground with drops of 20 to 60 feet: a gap in the pines on the par 5 2nd to a pad in reach in two, a drivable 3rd beside the creek that tilts toward it, a 112% neck on the uphill par 5 8th, a gap at the corner of the long 11th, a pond carry to a strip on the par 5 13th with the creek in front of the green, a neck on the downhill par 5 15th short of a pond | 7,397 |
+| Bobwhite Plantation, Longleaf Course | A flat old quail plantation of longleaf pine and pine straw with sandy waste areas: a drivable 2nd tilting toward a pond, a neck by a waste area on the par 5 3rd, a gap at the corner of the 5th, a pond across the par 5 8th that a 112% drive carries, a gap in the pines on the par 5 11th to a pad, the 13th drivable across the corner over waste and pines, a neck between two waste areas on the par 5 16th | 7,213 |
+| Pileated Ridge, Ridge Course | North Georgia hills near Dahlonega: hardwoods, pines and hemlock with redbud and dogwood, mountain laurel, leaf litter, high tees and mountain streams; a canopy gap to a pad on the par 5 2nd, a drivable 5th from the high tee that tilts into the stream, a stream that catches a 112% drive on 4, a 112% drive into the neck on the par 5 8th, a dogleg 10th cut over a ravine pond, a stream carry to the strip on the par 5 11th, a drivable 14th that tilts into a pond | 7,200 |
+| Towhee Lake, Lake Course | Pines and azaleas round the coves of a big lake: a cape across a cove on the drivable 2nd, a split fairway over a cove on the par 5 5th, a drivable 7th that tilts into a cove, a 112% drive into the neck by the lake on the par 5 11th, a cove carry to a pad on the par 5 16th, a cove inlet that catches a 112% drive on 18 | 7,208 |
 
 ### Measured risk and reward windows
 
@@ -223,6 +234,109 @@ reward. One sweep result was not repeatable: a 112% draw at -10° on Swallow Pit
 - Hole 14 (par 5, 541 yds): 100% straight: never; water at -10° to 14°; 100% draw: on fairway in reach in two (255 or less) at 5° to 10° (239-242 yds to the pin); 112% straight: on fairway in reach in two (255 or less) at -1° to 6° (234-250 yds to the pin); 112% draw: on fairway in reach in two (255 or less) at 6° to 11° (212-215 yds to the pin)
 - Hole 15 (par 4, 333 yds): 100% straight: never; water at -9° to -4°; 112% straight: never; water at -9° to -3°; 112% draw: on the green at 6° to 8° (5-11 yds to the pin); 112% fade: never; water at -10°
 
+### Heathland and Georgia: measured windows and greens
+
+Same shots as above, no wind, aims in whole degrees from the hole's line (s100 = 100% straight, s112 = 112% straight,
+draw112/fade112 = 112% with the face 3° closed or open to the path). Every green was also checked with `greenMap`
+(`_golfputt.js`): from each point the putt that would stop dead on the cup is struck 5% soft and 5% hard. Across the 144
+greens, 20 to 41% of each green leaves both under 4 feet and 45 to 79% leaves one over 6 feet (Heronwood's 1st, for
+comparison: 76% and 0%). From where a safe drive finishes, the iron that holds the pin's section has a carry window of a few
+yards (3 to 9 on the holes measured), and the same shot 5% short or long finishes on another level or off the green.
+
+Nightjar Heath
+- 2 (par 5 585, neck between bunkers at 300-330): s100 -4..0 fairway leaving 305 (no reach); s112 -3..0 leaving 282;
+  draw112 +3..+5 (3°) leaving 257-259 (3 wood); misses in the bunkers or heather.
+- 3 (par 4 328, drivable, pond left of the landing area, tilting to it): s100 +1..+3 fairway 47-50 short; draw112 +7 on the
+  green (1°), +8 fringe; s112 in the pond; misses in the pond or heather.
+- 6 (par 4 325, dogleg right round a stand of pines): s100 +5..+8 fairway 31-39 short round the corner; s112 +8..+11 on the
+  green or fringe; fade112 +2..+4 on the green; misses in the pines left, rough right.
+- 8 (par 5 580, dogleg left): s100 -2..+6 fairway leaving 293; s112 +1..+4 leaving 268-271; draw112 +6..+8 (3°) leaving 245;
+  misses in the pines and heather.
+- 12 (par 5 590, bunker run at 300-340): s100 -3..+1 leaving 308; s112 -1..+1 leaving 284-287; draw112 +5..+7 (3°) leaving
+  259-260 (3 wood); misses in the bunkers or heather.
+- 13 (par 4 322, drivable from a high tee, pond right): s100 -2..0 fairway 37 short, the pond from +4; draw112 +5..+7 on or
+  at the edge of the green; misses in the bunkers left, heather or the pond.
+- 17 (par 5 575, pond in front of the green): s100 -5..-1 leaving 291, and a 3 wood from there carries the pond but stops
+  about 35 short; s112 -4..-1 leaving 268, a 3 wood reaches; draw112 +3..+6 leaving 242, a 5 wood holds the green; a 5 wood
+  or 4 iron from 291 is in the pond.
+
+Woodlark Common
+- 2 (par 5 560, gap to a pad): 112% straight -2 to +2 (5°) leaves 210-223; 112% draw +4 to +7 leaves 186-220; 112% fade -9 to -5 leaves 214-227. 100% in the woods at every aim. Misses in the woods.
+- 5 (drivable 340): 112% draw +4 to +5 (2°) on the green. 100% stops 48 short; 112% straight 27-31 short. Misses: deep heather left, rough and bunkers right.
+- 8 (corner cut, 365): 112% straight -1 to +1 (3°) on the green; 112% draw +5, fade -7 also on. 100% stops 33 short at best or in the trees.
+- 11 (par 5 580, neck between pine stands): 112% draw +1 to +3 (3°) leaves 253-254. 100% leaves 300, 112% straight 276-278. Misses deep heather.
+- 14 (corner cut, 425): 112% draw +4 to +5 (2°) on the green. 100% in the woods or the pine stand short of the green at every aim; 112% straight short of the green in heather/woods.
+- 17 (par 5 580, reachable past a bunker row): 112% draw +8 to +11 (4°) leaves 240-242. 100% leaves 287-293, 112% straight 267-270. Misses sand left (+6/+7), rough right.
+
+Stonechat Down
+- 3 (drivable 315): 112% straight 0 to +1 (2°) on the green; 112% draw +5 and fade -7 also on. 100% stops 32 short. Misses the big bunker left, deep heather.
+- 6 (par 5 565, heather valley carry): 112% straight -1 to +2 (4°) leaves 249-252; 112% draw +4 to +8 (5°) leaves 227-247. 100% in the valley's deep heather at every aim. Safe play: a 6 iron (fairway, 5° window) leaves about 360.
+- 9 (corner cut, 360): 112% draw +5 to +6 (2°) on the green. 100% in deep heather on the cut line (best fairway finish 60 out round the corner).
+- 12 (par 5 585, neck between two big bunkers): 112% draw +9 to +12 (4°) leaves 246-250. 100% leaves 295-298, 112% straight 272-275. Misses in the bunkers either side.
+- 17 (split-fairway drivable, 310): 112% fade -8 to -7 (2°) on the green down the right-hand fairway. 100% on the safe left fairway stops 18-26 short.
+- 18 (par 5 560, tilted neck): 112% straight 0 to +1 (2°) leaves 254; 112% draw +5 to +7 (3°) leaves 229-230. 100% leaves 278-280. Misses the big bunker right, deep heather.
+
+Whinchat Moor
+- 2 (par 5 565, neck beside a burn): 112% straight +2 leaves 251, 112% draw +8 leaves 225, 112% fade -5 leaves 255 (about 1° each). 100% leaves 274. Misses in the burn right, sand left. Narrow.
+- 4 (drivable downhill 335): 112% draw +6 to +7 (2°) on the green. 100% stops 28 short; 112% straight 10-11 short. Misses in the burn left.
+- 7 (par 5 560, lochan carry to a strip): 112% straight -2 to +1 (4°) leaves 199-213; 112% fade -9 to -5 (5°) leaves 201-252. 100% in the lochan at every aim on that line.
+- 10 (corner cut over a lochan, 370): 112% draw +5 to +7 (3°) on the green. 100% in the lochan, the heather or the woods on the cut line. Safe play: a 6 iron to the corner (4° window).
+- 13 (par 5 575, neck beside a burn): 112% draw +5 (1°) leaves 250. 100% leaves 297-299, 112% straight 274. Misses in the burn left. Narrow.
+- 17 (drivable downhill 318): 112% straight -1 to 0 (2°) on the green; 112% draw +5 also on. 100% stops 22-29 short. Misses in the burn right.
+
+Thrasher Creek
+- 2 (par 5 575, gap to a pad over the corner): aimed at the pad, s100 in the pines at every aim; s112 -3..0 on the pad
+  fairway, 1..3 its first cut, leaving 220-228 (3 wood); draw112 in the pines at every aim; misses -4 and +4 in the trees.
+- 3 (par 4 312, drivable, creek left, landing tilts left): s100 -1..1 fairway 26-27 short (safe); s112 0 on the green (1°),
+  -3..-1 rough short-left, -4 the creek; draw112 +4 and +6 on the green, -3..+3 and +5 the creek.
+- 8 (par 5 560 uphill, neck at 310-330): s100 -6..-2 fairway leaving 279-282 (no reach); draw112 +2..+4 fairway leaving
+  231-233 (3 wood/5 wood); 0..+1 the bunker, left of that rough and trees.
+- 11 (par 4 510, gap at the corner): aimed at the pad, s100 in the trees short of it (pitch out); s112 -2..0 pad leaving
+  179-184, draw112 0..+1 pad leaving 165; +1 and wider clips the pines near the tee. The way round (5 wood, 6° window)
+  leaves about 247 over the creek.
+- 13 (par 5 560, pond inside the corner, strip beyond): aimed at the strip, s100 in the pond at every aim; s112 -1..+2 on
+  the strip leaving 220-223 over the creek; draw112 in the trees. Safe: 4 iron or 5 iron to the corner (4.5°+ window).
+- 15 (par 5 560 downhill, pond in front of the green): s100 0..+4 fairway leaving 267-269 (no reach); s112 +1..+4 fairway
+  leaving 245-246 (3 wood); fade112 -6..-3 leaving 247-254; misses in the pines or rough.
+
+Bobwhite Plantation
+- 2 (par 4 318, drivable, pond right, landing tilts right): s100 -2..0 fairway 33-35 short (safe); draw112 +7..+8 on the
+  green (+6 fringe, +4..+5 bunker); s112 0 and -1 fairway 12 short; fade112 into the pond.
+- 3 (par 5 590, neck by the waste area at 320): s100 -6..-3 fairway leaving 304-306 (no reach); s112 -5..-2 leaving
+  279-282 (no reach); draw112 +1..+4 fairway leaving 255-258 (3 wood); -1..0 the waste area.
+- 5 (par 4 480, gap at the corner): aimed at the pad, s100 in the trees short of it; s112 -1..+2 pad leaving 146-154;
+  fade112 -1..+2 finishes on the second leg 164-175 out. The way round (3 wood, 5.5°) leaves about 220.
+- 8 (par 5 530, pond across at 252-274): s100 in the pond at every aim; s112 -2..+1 fairway beyond it leaving 218-220,
+  +2 a bunker; safe play is a 4 iron or 5 iron short of the pond (5° window), leaving about 300.
+- 11 (par 5 540, gap to a pad over the corner): aimed at the pad, s100 in the trees at every aim; s112 -3..0 pad leaving
+  189-191; draw112 +1..+4 pad edge leaving 169-189.
+- 13 (par 4 320, drivable across the corner over waste and pines): aimed at the green, s100 in the waste or the pines;
+  s112 +1 on the green (1°), -1..0 fairway/fringe 15-17 short; the way round is a 4 iron to the corner (6° window) and a
+  wedge of about 95.
+- 16 (par 5 580, neck between two waste areas at 330-345): s100 -4..0 fairway leaving 303-304 (no reach); s112 -3..0
+  leaving 279-280 (no reach); draw112 +4..+6 fairway leaving 255 (3 wood), +3 the waste area.
+
+Pileated Ridge
+- 2 (par 5 565, gap in the hardwoods to a pad on the line at the green): s100 at the pad in the trees at every aim; s112 -2..+1 (4°) on the pad, 207-209 out (a 5 iron/5 wood reaches); misses in the trees. Way round: 3 wood to the corner, 280 out.
+- 4 (par 4 445, stream across at 318-330): s100 -5..-2 on the fairway 153-156 out, short of it; s112 in it at -5..-1.
+- 5 (par 4 345, drivable from a 48 ft high tee, stream left, landing by the green tilts left): s100 0..+2 fairway 43-45 short (left of that the stream from -4); s112 0..+1 fairway 21-22 short; draw112 +6 on the green (1°), +7 greenside bunker; draws aimed left of +6 hook into the stream.
+- 8 (par 5 565, neck between the stream left and a stand of hardwoods right): s100 +1..+5 fairway 281-284 out (three-shotter); s112 +3..+4 (2°) fairway 260-261 out (3 wood); draw112 +9 fairway 235; fade112 -4..-3 fairway 264-265; misses left in the stream from -6..+2.
+- 10 (par 4 340, dogleg left round a ravine pond, cleared line at the green): s100 on the cut line in the trees at -5..+1; s112 0 on the green, -1 and +1..+3 fairway 21-25 short (5°); draw112 +4 rough 14 short; safe 5 wood to the corner (-10..-5, 92 out).
+- 11 (par 5 545, from a 52 ft high tee, stream crossing diagonally at 250-290): s100 in the stream at -4..+3; s112 -1..+2 (4°) on the strip 227 out (3 wood reaches); draw112 +6..+8 strip 201-202; fade112 -8..-7 strip 229-233. Way round: 5 iron (-3..+2 fairway, 318 out); a 4 iron off the high tee reaches the stream.
+- 14 (par 4 330, drivable, pond left of the green with the ground tilting to it): s100 -1..+3 fairway 40-44 short; s112 +1..+3 fairway 17-23 short; draw112 +6 on the green (1°), +7..+8 in the pond.
+
+Narrow windows: 5 and 14 (draw112 1° on the green, both next to water), 8 (draw112 1°).
+
+Towhee Lake
+- 2 (par 4 328, cape across a cove, cleared line over the trees to the green): s100 at the green in the cove at -3..+1 (rough 26-31 out right of it at +2..+3); s112 0 on the green (1°), -2..-1 rough 13-14 and +1 fairway 13 by the green; safe 5 wood to the corner (-2.5..+0.5, 75 out).
+- 5 (par 5 560, split fairway: the strip over the cove runs at the green): s100 at the strip in the cove at every aim -5..+4; s112 -1..+2 (4°) on the strip 235-236 out (in reach in two); misses in rough/trees or the cove. Main fairway: Dr -1.5..+1.5 (3.5°), 275 out.
+- 7 (par 4 335, drivable, landing by the green tilts right into a cove): s100 -4..0 fairway 42-48 short; s112 -3..-1 fairway 19-25 short; draw112 +4..+6 (3°) on the green; fade112 into the cove from -2.
+- 11 (par 5 575, neck between the lake right and a stand of pines left): s100 -2..+1 fairway 292 out; s112 -2..0 (3°) fairway 268-269 out (3 wood); draw112 +5..+6 fairway 244 (2°); fade112 -8..-6 fairway 273; lake from +5.
+- 16 (par 5 545, cove carry to a pad on the line at the green): s100 in the cove at -5..+4; s112 -2..+1 (4°) on the pad 194-205 out; draw112 +5 pad 171 (1°); misses in the cove or the trees.
+- 18 (par 4 460, cove inlet across at 305-318): s100 -3..0 fairway 187-188 out, short of it; s112 in it at -3..+2.
+
+Narrow windows: 2 (s112 1° on the green, near misses finish 13-14 yds from the pin).
+
 The Links set (Scotland, Ireland and Orkney) has no trees. Its fairways are firm, so a drive carries about 264 yards and
 runs out to about 306 (a 7 iron runs about 10), the ground rolls in humps and hollows all through the fairways, pot
 bunkers sit in the landing areas and round the greens, burns cross the holes, and past a thin band of fescue rough is
@@ -230,7 +344,13 @@ gorse: a ball in it is buried, a wedge hacks it out 25 to 75 yards (often still 
 runs 10 to 26 mph. The Parkland set is inland in autumn: fairways lined with maples, oaks and birches in red, orange and
 gold, fallen leaves under the trees, ponds with fieldstone walls, and trees standing on the line of the doglegs. The
 Quarry set plays across old stone quarries: fairways and greens on ledges between flooded pits with rock walls 30 to 90
-feet down to the water, so a miss off a ledge is wet.
+feet down to the water, so a miss off a ledge is wet. The Heathland set is inland on sandy heath in
+southern England and Perthshire: a fairway 20 to 30 yards wide, then about 10 yards of heather and then deep heather under
+Scots pine and birch (a ball in heather comes out about two thirds of its distance, a buried one only hacks out), firm
+fairways, big ragged bunkers and small quick greens on three or four levels. The Georgia set plays through tall pines with
+azaleas and dogwoods, pine straw under the trees, creeks, ponds and a lake, and very fast greens on several levels. On
+both sets each green has a section round the pin, about 8 to 10 yards across, from which a two-putt is easy; from the
+rest of the green it isn't.
 
 Before designing a new course, read `COURSE-DESIGN.md`: the risk and reward rules every course follows.
 
@@ -268,12 +388,18 @@ Parkland courses use `pal.floor: 'park'` (grass with drifted leaves under the tr
 pond walls instead of timber). Quarry courses are coast courses with `coves: true`, `quarry: true` (still water, no surf
 line), `beach: 0` and no sea: their ponds are the pits, and the land standing well above the water makes the rock walls;
 `pal.cliff` colours the rock and `pal.scrub: 'rubble'` the ground past the rough. `lakeC` sets the lake colour on any course.
+Heathland courses add `heather: true`: the rough is heather, with its own lies (sitting up, in the heather, buried), and the
+ground past it is deep heather (named by `pal.straw`) where the ball is buried more often. From an average lie in heather a
+mid iron comes out about two thirds of its distance, and a buried ball only hacks out. `pal.floor: 'heath'` paints heather,
+bracken and bare sand under the pines and birches. On any course `green.tier` can be a list of ridges
+(`[[yards, feet, turn°], ...]`) for a green on three or four levels, and `turf.green` sets the green speed (a lower `roll`
+is faster).
 Island courses are ocean courses with a `range` as well, which puts mountains (and an optional volcano, `cone`)
 inland behind the far land; `pal.cliff` and `pal.sand` colour the shore rock and the beach.
 
 ## Scores
 
-The home screen is one screen: tabs for the terrains (Florida, Ocean, Mountain, Island, Desert, Links, Parkland, Quarry, Old Growth and the Range) above that terrain's four
+The home screen is one screen: tabs for the terrains (Florida, Ocean, Mountain, Island, Desert, Links, Parkland, Quarry, Heathland, Georgia, Old Growth and the Range) above that terrain's four
 courses, and clicking a course opens it in place with its course record, Play for a score, Practice and its leaderboard.
 Play for a score starts at the 1st tee and plays all 18 holes once; finishing the 18th opens the scorecard with Post to
 leaderboard. Leaving a score round early (Menu, after a check) ends it with no score. Practice opens the 18 holes under
@@ -313,7 +439,7 @@ from the third round. A differential is the score minus the course rating, and `
 out from every player's rounds (each round against that player's own average, pulled toward par until a course has a good
 number of rounds). Each course gives a bronze, silver or gold trophy for the best round (+10, +5, par) and a badge for a
 birdie or better on all 18 holes across its rounds. Florida is open; each next terrain (Ocean, Mountain, Island, Desert,
-Links, Parkland, Quarry) opens once two courses on the one before have a round at +5 or better, and Verdin Springs also needs a round under par. Old Growth skips the chain: it opens
+Links, Parkland, Quarry, Heathland, Georgia) opens once two courses on the one before have a round at +5 or better, and Verdin Springs also needs a round under par. Old Growth skips the chain: it opens
 after score rounds under par on three different courses. Locked courses can't be practised.
 
 ## Coins, the shop, hot streaks and challenges

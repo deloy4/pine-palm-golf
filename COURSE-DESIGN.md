@@ -58,6 +58,64 @@ pitch out sideways or take a drop before they have a clean shot.
 Or the distance is set so it takes a full 112% shot with a fade to get there. A shot that comes up short is behind an
 obstacle (trees, a mound, a stand) that makes the second shot very hard, or is in the water and loses a stroke.
 
+## Fairways, rough and bunkers
+
+Chris played the Links, Parkland and Quarry courses on 2026-10-27. He liked how they were designed but found them a
+little easy: the fairways were still easy to hit, a missed fairway did not cost enough, and a couple of bunkers could not
+be escaped. Those courses stay as they are. These rules are for the next courses.
+
+Make the fairway in a driving zone 20 to 30 yards wide, most of them 24 to 26, not the 32 to 40 used on those courses.
+Keep the rough beside it a thin band, about 10 yards, so a drive that misses by more than that is in the trouble past it:
+gorse, woods, rubble or a pit. `cor` is the half-width of that corridor, so set it to about half the fairway width plus 10.
+
+Make a missed fairway cost close to a stroke on a long hole. The rough lie model today takes about 17% off a mid
+iron from an average lie and 30% when the ball sits down. A deeper rough for the course (more balls sitting down, about 70% of the stock distance from an
+average lie) was tried in test sweeps, but Chris set aside a 50% rough on 2026-10-21, so ask him before adding it.
+
+Every bunker has to be escapable with a sand wedge or lob wedge from wherever the ball stops in it, including at the foot
+of the face nearest the green. The pot bunker shape in the game now (bunker entry `[..., 1]`) is about 2.2 m from lip to
+floor with the face reached 1.6 m in, and a full sand wedge from the foot of that face stays in the bunker on almost every
+pot. A pot 1.2 m deep with the face reached 2 m in let a wedge out from about 96% of spots while a 4 iron or 7 iron still
+caught the face two times in three. Change the pot shape before the next course that uses pots, and check every bunker
+with a wedge from its centre and from the foot of the face nearest the pin.
+
+## Greens
+
+Chris, 2026-10-28: greens have to be harder. Each green needs a specific landing zone, and an approach that misses it
+should leave a two-putt that is hard to make.
+
+The greens on the Links, Parkland and Quarry courses average about 180 square yards (`rx` × `ry`). Each one is a single
+surface: a back-to-front tilt and a few random swales, with the contours scaled down until 95% of the green is 3.3% or
+less. None of them uses a tier or a false front. The Old Growth greens average about 138 and use both.
+
+On a new course, split most greens into two or three levels with `green.tier` (a ridge about 1.5 feet high, turned with its
+third value) and the swales. The pin sits on one level, and that level is the landing zone: about 8 to 10 yards across.
+An approach that lands on another level leaves a long putt up or down the tier. Keep the greens smaller, `rx` and `ry`
+about 10 to 12, so the levels stay small. Put a false front (`green.ff`) on the greens where a short approach should roll back
+off, and a runoff (`runoff` on the hole, in metres) at the back or side where a long one should run down the bank. Keep the cup at least 4 m from
+a tier or false front, because neither is scaled down with the contours.
+
+Check it from the green itself with `_golfputt.js` (local, kept out of git, load it after `_golftest.js`). `greenMap(h)`
+lays a 2.5 m grid over the green with the hole's pin. From each point it finds the putt a good reader hits (the line and
+pace that would stop dead on the cup) and then strikes it 5% soft and 5% hard. Each point is marked `.` if both leave
+under 4 feet, `+` for 4 to 6 feet, `#` for over 6 feet. On a Heronwood green that came out 76% under 4 feet and none over
+6, which is what Chris found too easy. On a Murrelet Grove green with a back tier, the pin's level was all under 4 feet
+and the other level all over 6. Aim for that: the region round the pin under 4 feet is 20 to 40% of the green, about 8 to
+10 yards across, and at least 40% of the green is over 6 feet.
+
+What got there on the Heathland and Georgia greens (2026-10-28): ridges of 1.3 to 1.5 feet were too gentle. Two ridges per
+green about 2 feet high (1.4 to 2.0 on the faster Georgia greens), one across the line and one along it, put the pin in a
+section about a quarter of the green, e.g. `tier: [[0, 2.1, 0], [2.5, 1.8, 90]]`. Keep the pin at least 4.5 yards from
+each ridge: with the pin at [right, back], its distance from a ridge [offset, feet, turn] is
+|back × cos(turn) + right × sin(turn) − offset|. On a drivable hole a raised back level can stop a running drive short of
+the green, so let the green fall away to the pin's section there. A bunker beside the high corner of a tiered green gets
+a face too tall to clear; keep bunkers by the low sections.
+
+Then check the approach (`_golfappr.js`, `approach(h)`). From where a 100% drive finishes, hit the stock approach at the pin's level: it should hold that
+level inside a window of a few yards, and the same shot 5% short or long should finish on another level, down a false
+front or off the back. `_golfbunk.js` (`bunkHole(h)`) checks every bunker on a hole with a sand wedge and lob wedge from
+the centre, the side nearest the pin and the far side.
+
 ## Checking a hole
 
 Before a risk/reward hole is done, run shot sweeps through the real hole and confirm three things. The local helpers
