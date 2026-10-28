@@ -512,8 +512,8 @@ html.touch #help { display: none; }
 <div id="confirm" class="overlay" hidden>
   <div class="sheet narrow">
     <h2 class="sc-title" id="cfTitle">End this round?</h2>
-    <p class="cf-body" id="cfBody">You are playing for a score. If you leave now the round ends, nothing goes on the leaderboard, and none of its holes count toward your stats, XP or achievements.</p>
-    <div class="sc-actions"><button class="btn" id="cfNo">Keep playing</button><button class="btn gold" id="cfYes">End round</button></div>
+    <p class="cf-body" id="cfBody">You are playing for a score. If you leave now the round ends, nothing goes on the leaderboard, and none of its holes count toward your stats, XP or achievements. Restart round drops it the same way and starts again at the 1st tee.</p>
+    <div class="sc-actions"><button class="btn" id="cfNo">Keep playing</button><button class="btn" id="cfRestart">Restart round</button><button class="btn gold" id="cfYes">End round</button></div>
   </div>
 </div>
 
@@ -5309,11 +5309,13 @@ projRest.renderOrder = 5; projG.add(projRest);
 // The flight shown is always the clean-lie shot (as if from the fairway): from rough, sand or straw the player has to
 // work out for themselves how much shorter and less predictable it will come out. It is also flown over level ground at the
 // ball's height, so the landing spot is the flat carry: playing up or down a hill, the player allows for the drop or climb
-// (the real flight does that by itself, about a yard for every 3 feet with a mid iron).
+// (the real flight does that by itself, about a yard for every 3 feet with a mid iron). It is flown with no wind, so the
+// player judges the wind for themselves.
+const NO_WIND = new THREE.Vector3();
 const LEVEL_N = (x, z, o) => o.set(0, 1, 0);
 function projectShot() {
   const c = CLUBS[G.club]; if (c.putter || !HOLE) return null;
-  const gy = G.ball.p.y - BR, pe = { ...env, h: () => gy, normal: LEVEL_N, trees: false, cup: null, oob: null }, b = newBall(); b.p.copy(G.ball.p); b.p.y += 0.002;
+  const gy = G.ball.p.y - BR, pe = { ...env, h: () => gy, normal: LEVEL_N, wind: NO_WIND, trees: false, cup: null, oob: null }, b = newBall(); b.p.copy(G.ball.p); b.p.y += 0.002;
   const sp = spinAt(0), lf = loftFx(c, G.loft);
   b.w = launchVel(c, 1, sp.s * lf.s, G.aim, b.v, sp.la + lf.la, sp.v * lf.v); b.mode = 'fly'; b.rel = lf.rel;
   const air = [b.p.clone()], roll = []; let apex = 0, end = null;
@@ -6787,12 +6789,14 @@ function leaveRound() {
   if (dayLive || (G.round && G.round.type === '18' && !roundComplete() && !G.round.recorded)) {
     $('cfTitle').textContent = dayLive ? 'Leave the daily hole?' : 'End this round?';
     $('cfBody').textContent = dayLive ? "Today's one try started with your first shot. If you leave now it ends with no score, and the daily hole can't be played for the board again today." : CF_ROUND;
-    $('confirm').hidden = false; $('cfNo').focus(); return;
+    $('cfRestart').hidden = dayLive; $('confirm').hidden = false; $('cfNo').focus(); return;
   }
   toMenu();
 }
 $('cfNo').onclick = () => { $('confirm').hidden = true; };
 $('cfYes').onclick = () => { $('confirm').hidden = true; G.round = null; toMenu(); };
+// restart: the round so far is dropped (as with End round) and a new one starts at the 1st tee of the same course
+$('cfRestart').onclick = () => { $('confirm').hidden = true; $('holeDone').hidden = true; $('scorecard').hidden = true; G.round = null; startRound('18', 0, true); };
 function toMenu() {
   const wasRange = !!(HOLE && HOLE.isRange && !$('hud').hidden); document.documentElement.classList.remove('range', 'setup'); $('session').hidden = true; $('bCard').textContent = 'Scorecard';
   $('holeDone').hidden = true; $('scorecard').hidden = true; $('hud').hidden = true; $('title').hidden = false; $('confirm').hidden = true;

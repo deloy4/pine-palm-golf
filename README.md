@@ -25,7 +25,7 @@ ball stops (in rough it can sit up, sit in the grass or sit down; in sand it can
 there comes out a little different. A wedge cuts through and stays close to its normal distance; a long iron or a wood
 gets grabbed and comes out shorter and much less predictable, and it can be caught heavy. A ball sitting up in rough can
 come out as a flier, long and with no spin. The projected flight and the carry always show the clean-lie shot, as if from
-the fairway, so the player has to work out how much the lie will take off.
+the fairway and with no wind, so the player has to work out how much the lie and the wind will add or take off.
 
 Elevation works the same way. The projected flight, the carry readout and the club numbers show the carry over level
 ground, and the panel shows how far the pin sits above or below the ball. The ball itself flies the real hill: in this
@@ -402,7 +402,8 @@ inland behind the far land; `pal.cliff` and `pal.sand` colour the shore rock and
 The home screen is one screen: tabs for the terrains (Florida, Ocean, Mountain, Island, Desert, Links, Parkland, Quarry, Heathland, Georgia, Old Growth and the Range) above that terrain's four
 courses, and clicking a course opens it in place with its course record, Play for a score, Practice and its leaderboard.
 Play for a score starts at the 1st tee and plays all 18 holes once; finishing the 18th opens the scorecard with Post to
-leaderboard. Leaving a score round early (Menu, after a check) ends it with no score. Practice opens the 18 holes under
+leaderboard. Leaving a score round early (Menu, after a check) ends it with no score; the same check offers Restart round, which drops
+the round the same way and starts a new one at the 1st tee. Practice opens the 18 holes under
 the course; the player picks any hole, replays it, and moves between holes with the Hole and Restart buttons; nothing is
 recorded. Each course has its own board on the shared arcade scoreboard (game `golf-<course id>`), and golf boards rank the
 lowest round first.
